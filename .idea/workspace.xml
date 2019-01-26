@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="08aed675-e718-443c-a3ec-df68cbbb0f9d" name="Default Changelist" comment="" />
+    <list default="true" id="08aed675-e718-443c-a3ec-df68cbbb0f9d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style.css" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -14,15 +17,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="References.action.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" selection-start-line="2" selection-end-line="3" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="DashBoard.reducer.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_reducers/reducers/Secretariat/DashBoards/DashBoard.reducer.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -32,11 +26,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_constants/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
               <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/style.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="serviceWorker.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/serviceWorker.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -151,7 +165,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/_components/Automations/DashBoards/References.js" />
         <option value="$PROJECT_DIR$/src/App/App.js" />
         <option value="$PROJECT_DIR$/src/_actions/WorkGrid/workgrid.action.js" />
         <option value="$PROJECT_DIR$/src/_actions/WorkGrid/workgrid.js" />
@@ -202,6 +215,7 @@
         <option value="$PROJECT_DIR$/src/_constants/User/index.js" />
         <option value="$PROJECT_DIR$/src/_constants/index.js" />
         <option value="$PROJECT_DIR$/src/_reducers/reducers/Secretariat/DashBoards/DashBoard.reducer.js" />
+        <option value="$PROJECT_DIR$/src/style.css" />
       </list>
     </option>
   </component>
@@ -244,55 +258,6 @@
               <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="_components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="_constants" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="_constants" type="462c0819:PsiDirectoryNode" />
-              <item name="User" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="_reducers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="_reducers" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="_reducers" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
-              <item name="Secretariat" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="_reducers" type="462c0819:PsiDirectoryNode" />
-              <item name="reducers" type="462c0819:PsiDirectoryNode" />
-              <item name="Secretariat" type="462c0819:PsiDirectoryNode" />
-              <item name="DashBoards" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -358,25 +323,25 @@
       <workItem from="1548059441552" duration="294000" />
       <workItem from="1548059837328" duration="28553000" />
       <workItem from="1548229569418" duration="17488000" />
-      <workItem from="1548499472376" duration="2485000" />
+      <workItem from="1548499472376" duration="4871000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="130969000" />
+    <option name="totallyTimeSpent" value="133355000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24597365" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24597365" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5036603" side_tool="true" weight="0.3211679" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49633968" visible="true" weight="0.32554746" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49633968" visible="true" weight="0.32554746" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.0058565154" />
@@ -397,14 +362,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/MainCalendar/FullCalendar.js" />
-    <entry file="file://$PROJECT_DIR$/src/_components/NoMatch.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/_components/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -742,10 +699,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/serviceWorker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/_constants/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="13" lean-forward="true" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
         </state>
       </provider>
     </entry>
