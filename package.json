@@ -1,0 +1,49 @@
+{
+  "name": "newradv1",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "ag-grid-community": "^19.1.4",
+    "ag-grid-enterprise": "^19.1.4",
+    "ag-grid-react": "^19.1.2",
+    "axios": "^0.18.0",
+    "bootstrap": "^4.2.1",
+    "bootstrap-rtl": "^3.3.4",
+    "bootstrap-v4-rtl": "^4.1.1-1",
+    "config": "^3.0.1",
+    "history": "^4.7.2",
+    "react": "^16.7.0",
+    "react-datepicker-persian": "^1.0.2",
+    "react-dom": "^16.7.0",
+    "react-files": "^2.4.8",
+    "react-persian-datepicker": "^3.0.2",
+    "react-radio-buttons": "^1.2.2",
+    "react-radio-group": "^3.0.3",
+    "react-redux": "^6.0.0",
+    "react-router-dom": "^4.3.1",
+    "react-router-redux": "^4.0.8",
+    "react-scripts": "2.1.2",
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "validator": "^10.10.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "css-loader": "^2.1.0"
+  }
+}
