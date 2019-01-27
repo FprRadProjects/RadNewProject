@@ -1,5 +1,5 @@
 import axios from 'axios'
-export {BaseUrl} from '../../_helpers';
+import {BaseUrl} from '../../_helpers';
 
 export const userService = {
     login,
