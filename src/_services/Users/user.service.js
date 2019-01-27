@@ -29,7 +29,7 @@ function logout() {
     localStorage.removeItem('user');
 }
 
-
+//Gets "token" // returns token is valid or not
 function CheckToken() {
     let apiToken = localStorage.getItem("user");
     if (apiToken != null) {
@@ -41,23 +41,11 @@ function CheckToken() {
 
         return axios.post(BaseUrl+"CheckToken",null,{headers : headers})
             .then(data => {
-
-                /* let responseJson = {
-                     id: users.data.id,
-                     username: users.data.email,
-                     firstName: users.data.name,
-                     lastName: users.data.name,
-                     token: users.data.api_token
-                 };*/
-                /*localStorage.setItem("userInfo", JSON.stringify(users.data));
-                return Promise.resolve(users.data);*/
-                //console.log(data.data)
-
+                return Promise.resolve(user.data)
             })
-            .catch(error => {
-                return Promise.reject(error.message);
-            });
-
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
     } else
         return Promise.reject("No");
 }
