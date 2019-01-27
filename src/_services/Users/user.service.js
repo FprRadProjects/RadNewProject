@@ -40,7 +40,7 @@ function CheckToken() {
         }
 
         return axios.post(BaseUrl+"CheckToken",null,{headers : headers})
-            .then(data => {
+            .then(user => {
                 return Promise.resolve(user.data)
             })
             .catch((error) => {
