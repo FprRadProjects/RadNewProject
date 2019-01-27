@@ -2,34 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08aed675-e718-443c-a3ec-df68cbbb0f9d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/_actions/Alert/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/_actions/MainPage/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/_actions/MainPage/mainpage.actions.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/_contants/MainPage/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/_contants/MainPage/mainpage.contants.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/_contants/User/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/_contants/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/_services/MainPage/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/_services/MainPage/mainpage.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_actions/User/user.actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_actions/User/user.actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_actions/alert.actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_actions/Alert/alert.actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_actions/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_actions/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_components/MainPage/DashBoard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_components/MainPage/DashBoard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_constants/Alert/alert.constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_contants/Alert/alert.contants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_constants/Alert/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_contants/Alert/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_constants/Secretariat/DashBoards/DashBoard.Contants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_contants/Secretariat/DashBoards/DashBoard.Contants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_constants/Secretariat/DashBoards/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_contants/Secretariat/DashBoards/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_constants/Secretariat/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_contants/Secretariat/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_constants/User/user.constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_contants/User/user.constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_constants/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_reducers/reducers/Alert/alert.reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_reducers/reducers/Alert/alert.reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_reducers/reducers/Secretariat/DashBoards/DashBoard.reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_reducers/reducers/Secretariat/DashBoards/DashBoard.reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_reducers/reducers/Users/authentication.reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_reducers/reducers/Users/authentication.reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_reducers/reducers/Users/users.reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_reducers/reducers/Users/users.reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_services/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_services/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/style.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -86,8 +58,8 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+            <state relative-caret-position="170">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -366,12 +338,12 @@
       <workItem from="1548059837328" duration="28553000" />
       <workItem from="1548229569418" duration="17488000" />
       <workItem from="1548499472376" duration="7461000" />
-      <workItem from="1548570312480" duration="3913000" />
+      <workItem from="1548570312480" duration="4472000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139858000" />
+    <option name="totallyTimeSpent" value="140417000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -767,8 +739,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="19" selection-start-line="9" selection-start-column="19" selection-end-line="9" selection-end-column="19" />
+        <state relative-caret-position="170">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
