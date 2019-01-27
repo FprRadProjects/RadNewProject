@@ -1,3 +1,3 @@
 export * from './history';
 export * from './store';
-export * from './Info';
+export * from './config';
