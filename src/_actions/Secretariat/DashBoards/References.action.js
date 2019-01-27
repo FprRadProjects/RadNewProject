@@ -9,12 +9,10 @@ function FetchData (params){
 
     return dispatch => {
 
-        Service_Dashboard.FetchData(params)
+        Service_Dashboard.FetchData(JSON.stringify(params))
             .then(
                 data => {
-                    console.log(params)
-                    console.log(data)
-                   /* if(data.status) {
+                    if(data.status) {
                         var newobject = [];
                         Object.keys(data.data.Dashbord[0]).map(function (key) {
                             return newobject.push({headerName: "" + key + "", field: "" + key + ""});
@@ -25,7 +23,7 @@ function FetchData (params){
                     else
                     {
                         history.push('/login');
-                    }*/
+                    }
                 },
                 error => {
                     return console.log(error)

@@ -8,9 +8,23 @@ import  {DashBoard}  from "../MainPage/DashBoard";
 
 import {Works,References} from "../Secretariat/DashBoards";
 
+
+
+//teeeeeeeeeeeeeeeeeeest
+import  {WorkDetailsActionAction} from "../../_actions"
+//teeeeeeeeeeeeeeeeeeest
+
+
 class MasterPage extends React.Component {
     componentDidMount() {
         this.props.dispatch(userActions.CheckToken());
+
+
+
+//teeeeeeeeeeeeeeeeeeest
+        this.props.dispatch(WorkDetailsActionAction.RebuildWork());
+//teeeeeeeeeeeeeeeeeeest
+
     }
 
     render() {
