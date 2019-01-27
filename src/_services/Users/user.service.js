@@ -1,4 +1,5 @@
 import axios from 'axios'
+export {BaseUrl} from '../../_helpers';
 
 export const userService = {
     login,
@@ -12,7 +13,7 @@ function login(username, password) {
     let data = new FormData();
     data.append("username", username);
     data.append("password", password);
-    return axios.post("http://localhost:2535/Login", data)
+    return axios.post(BaseUrl+"Login", data)
         .then(user => {
                 localStorage.setItem("user", JSON.stringify(user.data.data));
                 return Promise.resolve(user.data)
@@ -38,7 +39,7 @@ function CheckToken() {
             "Token": newuser.Token
         }
 
-        return axios.post("http://localhost:2535/CheckToken",null,{headers : headers})
+        return axios.post(BaseUrl+"CheckToken",null,{headers : headers})
             .then(data => {
 
                 /* let responseJson = {
@@ -73,7 +74,7 @@ function GetUserInfo() {
             "Token": newuser.Token
         }
 
-        return axios.post("http://localhost:2535/GetUserInfo",null,{headers : headers})
+        return axios.post(BaseUrl+"GetUserInfo",null,{headers : headers})
             .then(data => {
 
                 /* let responseJson = {
@@ -107,7 +108,7 @@ function UserIsAdmin() {
             "Token": newuser.Token
         }
 
-        return axios.post("http://localhost:2535/UserIsAdmin",null,{headers : headers})
+        return axios.post(BaseUrl+"UserIsAdmin",null,{headers : headers})
             .then(data => {
 
                 /* let responseJson = {

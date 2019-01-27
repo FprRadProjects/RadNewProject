@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08aed675-e718-443c-a3ec-df68cbbb0f9d" name="Default Changelist" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/src/_actions/General/Automation/WorkDetails/Actions/WorkDetailsAction.action.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/_actions/General/Automation/WorkDetails/Actions/index.js" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/_actions/General/Automation/WorkDetails/index.js" afterDir="false" />
@@ -18,12 +19,16 @@
       <change beforePath="$PROJECT_DIR$/src/_components/MasterPage/MasterPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_components/MasterPage/MasterPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/References.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/References.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/_services/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_services/index.js" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/src/_helpers/Info.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_helpers/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_helpers/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_services/Users/user.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_services/Users/user.service.js" afterDir="false" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,8 +36,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+<<<<<<< HEAD
       <file leaf-file-name="WorkDetailsAction.service.js" pinned="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/_services/General/Automation/WorkDetails/Actions/WorkDetailsAction.service.js">
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/style.css">
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
               <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
@@ -40,27 +50,41 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="WorkDetailsAction.action.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_actions/General/Automation/WorkDetails/Actions/WorkDetailsAction.action.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="193">
               <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/_helpers/Info.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="References.action.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/_services/Users/index.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="459">
               <caret line="27" column="22" lean-forward="true" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
               <folding>
                 <element signature="e#0#53#0" expanded="true" />
               </folding>
+=======
+            <state relative-caret-position="17">
+              <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="AutomationGrid.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/AutomationGrid.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -68,30 +92,67 @@
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
               </folding>
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/_services/Users/user.service.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1573">
+              <caret line="110" column="35" selection-start-line="110" selection-start-column="35" selection-end-line="110" selection-end-column="35" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="Works.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="408">
               <caret line="38" column="9" lean-forward="true" selection-start-line="36" selection-start-column="8" selection-end-line="38" selection-end-column="9" />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/_helpers/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="References.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/References.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="612">
               <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/_helpers/store.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="8" column="10" lean-forward="true" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_services/index.js">
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/_helpers/history.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" selection-start-line="2" selection-end-line="3" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/AutomationGrid.js">
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
               <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
@@ -99,6 +160,7 @@
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="MasterPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_components/MasterPage/MasterPage.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -107,6 +169,22 @@
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
+=======
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/_reducers/reducers/Secretariat/DashBoards/DashBoard.reducer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/_components/MainPage/DashBoard.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="17" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="24" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
             </state>
           </provider>
         </entry>
@@ -167,11 +245,28 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/_services/Users/index.js" />
+=======
+        <option value="$PROJECT_DIR$/src/_services/Automation/DashBoards/WorkKartabl.Setvice.js" />
+        <option value="$PROJECT_DIR$/src/_actions/Automation/DashBoards/Kartabl.action.js" />
+        <option value="$PROJECT_DIR$/src/_actions/User/index.js" />
+        <option value="$PROJECT_DIR$/src/_components/LoginPage/LoginPage.js" />
+        <option value="$PROJECT_DIR$/src/_components/sections/Header.js" />
+        <option value="$PROJECT_DIR$/src/_components/MainPage/MainPage.js" />
+        <option value="$PROJECT_DIR$/src/_components/MainPage/FirstPage.js" />
+        <option value="$PROJECT_DIR$/src/_components/MainPage/index.js" />
+        <option value="$PROJECT_DIR$/src/_components/Secretariat/index.js" />
+        <option value="$PROJECT_DIR$/src/_components/MasterPage/MasterPage.js" />
+        <option value="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/index.js" />
+        <option value="$PROJECT_DIR$/src/_components/Secretariat/RecordsPage/index.js" />
+        <option value="$PROJECT_DIR$/src/_components/Secretariat/RecordsPage/ReferenceViewer.js" />
+        <option value="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/index.js" />
+        <option value="$PROJECT_DIR$/src/_actions/Secretariat/index.js" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
         <option value="$PROJECT_DIR$/src/_services/Secretariat/index.js" />
         <option value="$PROJECT_DIR$/src/_services/Secretariat/DashBoards/index.js" />
         <option value="$PROJECT_DIR$/src/_services/Secretariat/DashBoards/DashBoard.service.js" />
-        <option value="$PROJECT_DIR$/src/_services/Users/user.service.js" />
         <option value="$PROJECT_DIR$/src/_reducers/Users/index.js" />
         <option value="$PROJECT_DIR$/src/_reducers/Secretariat/index.js" />
         <option value="$PROJECT_DIR$/src/_reducers/Secretariat/DashBoards/index.js" />
@@ -216,26 +311,18 @@
         <option value="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js" />
         <option value="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/References.js" />
         <option value="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/_actions/General/Automation/WorkDetails/Actions/WorkDetailsAction.action.js" />
         <option value="$PROJECT_DIR$/src/_services/General/Automation/WorkDetails/Actions/WorkDetailsAction.service.js" />
+=======
+        <option value="$PROJECT_DIR$/src/style.css" />
+        <option value="$PROJECT_DIR$/src/_helpers/index.js" />
+        <option value="$PROJECT_DIR$/src/_helpers/Info.js" />
+        <option value="$PROJECT_DIR$/src/_services/Users/index.js" />
+        <option value="$PROJECT_DIR$/src/_services/Users/user.service.js" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
       </list>
     </option>
-  </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
-    <package-json value="$PROJECT_DIR$/package.json" />
-  </component>
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/node_modules" />
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/package.json" />
-    </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
@@ -249,29 +336,50 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
+              <item name="RadReactProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadReactProject" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
+              <item name="RadReactProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadReactProject" type="462c0819:PsiDirectoryNode" />
+              <item name="public" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RadReactProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadReactProject" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
+              <item name="RadReactProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadReactProject" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="_helpers" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
+=======
+            </path>
+            <path>
+              <item name="RadReactProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadReactProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="_services" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RadReactProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadReactProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="_services" type="462c0819:PsiDirectoryNode" />
+              <item name="Users" type="462c0819:PsiDirectoryNode" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -332,44 +440,51 @@
       <workItem from="1548059837328" duration="28553000" />
       <workItem from="1548229569418" duration="17488000" />
       <workItem from="1548499472376" duration="7461000" />
+<<<<<<< HEAD
       <workItem from="1548570312480" duration="11645000" />
+=======
+      <workItem from="1548570312480" duration="4843000" />
+      <workItem from="1548590694200" duration="340000" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="147590000" />
+=======
+    <option name="totallyTimeSpent" value="141128000" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24597365" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24553572" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32846716" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5036603" side_tool="true" weight="0.3211679" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32846716" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info id="npm" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49633968" visible="true" weight="0.15766424" />
-      <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="TypeScript" order="9" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.0058565154" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5036603" side_tool="true" weight="0.3211679" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49633968" visible="true" weight="0.15711948" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.0058565154" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/_reducers/reducers/Alert/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -392,6 +507,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/index.js">
+=======
+    <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/RecordsPage/index.js">
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="22" selection-start-column="22" selection-end-column="22" />
@@ -405,6 +523,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/_contants/Secretariat/DashBoards/DashBoard.Contants.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -413,6 +532,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/_contants/Secretariat/DashBoards/index.js">
+=======
+    <entry file="file://$PROJECT_DIR$/src/_services/Secretariat/index.js">
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="24" selection-start-column="24" selection-end-column="24" />
@@ -450,6 +572,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/_contants/Alert/alert.contants.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -458,6 +581,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/_contants/index.js">
+=======
+    <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/References.js">
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" column="25" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
@@ -527,6 +653,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/_services/Secretariat/DashBoards/DashBoard.service.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -535,6 +662,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/_contants/MainPage/mainpage.contants.js">
+=======
+    <entry file="file://$PROJECT_DIR$/src/serviceWorker.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_services/index.js">
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="21" selection-start-column="21" selection-end-column="21" />
@@ -641,6 +774,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/_services/General/Automation/WorkDetails/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -676,13 +810,62 @@
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
+=======
+    <entry file="file://$PROJECT_DIR$/src/_reducers/reducers/Users/authentication.reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="19" column="37" lean-forward="true" selection-start-line="19" selection-start-column="28" selection-end-line="19" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_contants/User/user.constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_actions/MainPage/mainpage.actions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_contants/MainPage/mainpage.contants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="21" selection-start-column="21" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#53#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/_services/index.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="51">
           <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+=======
+        <state relative-caret-position="221">
+          <caret line="13" column="20" selection-start-line="13" selection-start-column="20" selection-end-line="13" selection-end-column="20" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
         </state>
       </provider>
     </entry>
@@ -695,6 +878,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -706,11 +890,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="39" column="9" selection-start-line="39" selection-start-column="9" selection-end-line="39" selection-end-column="9" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/_reducers/reducers/Secretariat/DashBoards/DashBoard.reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="4" selection-end-column="40" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js">
+    <entry file="file://$PROJECT_DIR$/src/_components/MainPage/DashBoard.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="459">
           <caret line="27" column="22" lean-forward="true" selection-start-line="27" selection-start-column="22" selection-end-line="27" selection-end-column="22" />
           <folding>
@@ -730,6 +921,59 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
+=======
+        <state relative-caret-position="34">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_helpers/store.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="8" column="10" lean-forward="true" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_helpers/history.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" selection-start-line="2" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_helpers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="21" selection-start-line="2" selection-start-column="21" selection-end-line="2" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_services/Users/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_helpers/Info.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_services/Users/user.service.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1573">
+          <caret line="110" column="35" selection-start-line="110" selection-start-column="35" selection-end-line="110" selection-end-column="35" />
+>>>>>>> 5ad6a99775163785ce2f0326327af20c5ec50098
         </state>
       </provider>
     </entry>
