@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {BaseUrl} from '../../../../../_helpers';
 
 export const WorkDetailsAction = {
     RebuildWork
@@ -11,7 +12,7 @@ if (apiToken != null) {
 }
 
 function RebuildWork(peygir_id) {
-    return axios.post("http://localhost:2535/RebuildWork", peygir_id, {headers: headers})
+    return axios.post(BaseUrl + "RebuildWork", peygir_id, {headers: headers})
         .then(data => {
             console.log(data.data)
             //return Promise.resolve(data.data)

@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {BaseUrl} from '../../../_helpers';
 
 export const Service_Dashboard = {
     FetchData
@@ -14,7 +15,7 @@ function FetchData(params) {
             "token": newuser.Token
         }
 
-        return axios.post('http://localhost:2535/WorkDashboard', params, {headers: headers})
+        return axios.post(BaseUrl+"WorkDashboard", params, {headers: headers})
 
 
             .then(response => {
