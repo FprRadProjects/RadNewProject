@@ -1,4 +1,4 @@
-import {DashBoardContants} from "../../../../_constants/Secretariat";
+import {DashBoardContants} from "../../../../_contants/Secretariat";
 
 export function dashboards(state = {}, action) {
     switch (action.type) {

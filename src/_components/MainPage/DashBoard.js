@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { mainpageActions} from '../../_actions/MainPage';
 
 class DashBoard extends Component {
     render() {

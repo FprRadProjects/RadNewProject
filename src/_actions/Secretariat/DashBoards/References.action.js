@@ -1,6 +1,6 @@
 import {Service_Dashboard} from "../../../_services";
 import {history} from "../../../_helpers";
-import {DashBoardContants} from "../../../_constants";
+import {DashBoardContants} from "../../../_contants";
 
 export const Act_Reference= {
     FetchData
@@ -8,10 +8,13 @@ export const Act_Reference= {
 function FetchData (params){
 
     return dispatch => {
+
         Service_Dashboard.FetchData(params)
             .then(
                 data => {
-                    if(data.status) {
+                    console.log(params)
+                    console.log(data)
+                   /* if(data.status) {
                         var newobject = [];
                         Object.keys(data.data.Dashbord[0]).map(function (key) {
                             return newobject.push({headerName: "" + key + "", field: "" + key + ""});
@@ -22,7 +25,7 @@ function FetchData (params){
                     else
                     {
                         history.push('/login');
-                    }
+                    }*/
                 },
                 error => {
                     return console.log(error)

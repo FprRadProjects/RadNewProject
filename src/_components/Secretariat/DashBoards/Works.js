@@ -7,13 +7,9 @@ import ReactGrid from "./AutomationGrid";
 class Works extends Component {
     componentDidMount() {
 
-        let data = new FormData();
-        data.append("page", '1');
-        data.append("seen", '0');
-        data.append("done", '0');
-        data.append("date", '0');
-        data.append("calendar", '');
-        data.append("worker", '0');
+        let data = {
+            "page":1,"seen":0,"done":0,"date":0,"calendar":"","worker":2
+        }
 
 
         this.props.FetchData(data);
@@ -40,13 +36,9 @@ class Works extends Component {
 
 const mapDispatchToProps = dispatch => ({
     FetchData: () => {
-        let data = new FormData();
-        data.append("page", '1');
-        data.append("seen", '0');
-        data.append("done", '0');
-        data.append("date", '0');
-        data.append("calendar", '');
-        data.append("worker", '0');
+        let data = {
+            "page":1,"seen":0,"done":0,"date":0,"calendar":"","worker":2
+        }
 
         dispatch(Act_Reference.FetchData(data))
     }

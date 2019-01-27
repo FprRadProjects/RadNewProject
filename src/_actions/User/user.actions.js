@@ -1,4 +1,4 @@
-import { userConstants } from '../../_constants';
+import { userConstants } from '../../_contants';
 import { userService } from '../../_services';
 import { alertActions } from '..';
 import { history } from '../../_helpers';
