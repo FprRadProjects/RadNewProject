@@ -32,8 +32,6 @@ class Works extends Component {
         );
     }
 }
-
-
 const mapDispatchToProps = dispatch => ({
     FetchData: () => {
         let data = {

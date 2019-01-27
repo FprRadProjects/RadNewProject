@@ -5,7 +5,6 @@ import { userActions } from '../../_actions/User';
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
-
         // reset login status
         this.props.dispatch(userActions.logout());
 
@@ -14,7 +13,6 @@ class LoginPage extends React.Component {
             password: '',
             submitted: false
         };
-
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
