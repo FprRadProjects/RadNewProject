@@ -17,8 +17,8 @@ function FetchData (params){
                         Object.keys(data.data.Dashbord[0]).map(function (key) {
                             return newobject.push({headerName: "" + key + "", field: "" + key + ""});
                         });
-                        dispatch(AddColumns(newobject));
-                        dispatch(AddRows(data.data.Dashbord));
+                        /*dispatch(AddColumns(newobject));
+                        dispatch(AddRows(data.data.Dashbord));*/
                     }
                    /* else
                     {
