@@ -11,7 +11,7 @@ import {Works,References} from "../Secretariat/DashBoards";
 
 
 //teeeeeeeeeeeeeeeeeeest
-import  {WorkDetailsActionAction} from "../../_actions"
+import  {mainpageActions} from "../../_actions"
 //teeeeeeeeeeeeeeeeeeest
 
 
@@ -22,7 +22,14 @@ class MasterPage extends React.Component {
 
 
 //teeeeeeeeeeeeeeeeeeest
-        this.props.dispatch(WorkDetailsActionAction.RebuildWork());
+
+const tests = this.props.dispatch(mainpageActions.GetCounts(13081))
+        console.log(this.props.dispatch(mainpageActions.GetCounts(13081)))
+        //const {title, status} = await dispatcher.perform(runTransition(url))
+
+
+        /*var test = this.props.dispatch(mainpageActions.GetCounts(13081));
+        alert(test)*/
 //teeeeeeeeeeeeeeeeeeest
 
     }

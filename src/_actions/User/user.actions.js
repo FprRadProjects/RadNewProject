@@ -13,8 +13,6 @@ export const userActions = {
 
 function login(username, password) {
     return dispatch => {
-       // dispatch(request({ username }));
-       // dispatch(request());
         userService.login(username, password)
             .then(
                 user => {
@@ -46,17 +44,27 @@ function logout() {
 
 function CheckToken() {
     return dispatch => {
-        dispatch(request());
         userService.CheckToken()
             .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error))
+                data => {
+                    if (data.status) {
+                        //console.log(data.status)
+                    }
+                    else {
+                        /*dispatch(failure(error));
+                        dispatch(alertActions.error(error));*/
+                    }
+                },
+                error => {
+                    console.log(error)
+                }
             );
     };
 
-    function request() { return { type: userConstants.GETALL_REQUEST } }
-    function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
-    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+
+    /*function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }*/
+
 }
 
 
@@ -66,18 +74,20 @@ function GetUserInfo() {
     return dispatch => {
         userService.GetUserInfo()
             .then(
-                /*data => {
-                    console.log(data)
+                data => {
+                    if (data.status) {
+                        //console.log(data.data)
+                    }
+                    else {
+                        /*dispatch(failure(error));
+                        dispatch(alertActions.error(error));*/
+                    }
                 },
                 error => {
-                    //dispatch(failure(error));
-                    dispatch(alertActions.error(error));
-                }*/
+                    console.log(error)
+                }
             );
     };
-
-    /*function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }*/
 }
 
 
@@ -87,18 +97,19 @@ function UserIsAdmin() {
     return dispatch => {
         userService.UserIsAdmin()
             .then(
-
-
-                /*data => {
-                    console.log(data)
+                data => {
+                    if (data.status) {
+                        //console.log(data.data)
+                    }
+                    else
+                    {
+                        //console.log(data.error)
+                    }
                 },
                 error => {
                     //dispatch(failure(error));
-                    dispatch(alertActions.error(error));
-                }*/
+                    //dispatch(alertActions.error(error));
+                }
             );
     };
-
-    /*function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
-    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }*/
 }

@@ -20,10 +20,10 @@ function FetchData (params){
                         dispatch(AddColumns(newobject));
                         dispatch(AddRows(data.data.Dashbord));
                     }
-                    else
+                   /* else
                     {
                         history.push('/login');
-                    }
+                    }*/
                 },
                 error => {
                     return console.log(error)
@@ -33,10 +33,3 @@ function FetchData (params){
 
 }
 
-function AddColumns(data) {
-    return {type: DashBoardContants.SETGRID_COLUMNS, data}
-}
-
-function AddRows(data) {
-    return {type: DashBoardContants.SETGRID_ROWS, data}
-}

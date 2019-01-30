@@ -1,7 +1,7 @@
 
 
 export const DashBoardContants = {
-    SETGRID_COLUMNS: 'DASHBOARD_SETGRID_COLUMNS',
+    DefText: 'DASHBOARD_SETGRID_COLUMNS',
     SETGRID_ROWS: 'DASHBOARD_SETGRID_ROWS',
 };
 

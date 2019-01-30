@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {BaseUrl} from '../../_helpers';
-
+import {UserConfig} from '../Config.js'
 export const userService = {
     login,
     logout,
@@ -8,6 +8,7 @@ export const userService = {
     GetUserInfo,
     UserIsAdmin
 };
+
 
 function login(username, password) {
     let data = new FormData();
@@ -24,24 +25,18 @@ function login(username, password) {
 
 }
 
+
+// remove user from local storage to log user out
 function logout() {
-    // remove user from local storage to log user out
     localStorage.removeItem('user');
 }
 
 //Gets "token" // returns token is valid or not
 function CheckToken() {
-    let apiToken = localStorage.getItem("user");
-    if (apiToken != null) {
-        const newuser = JSON.parse(apiToken);
-
-        var headers = {
-            "Token": newuser.Token
-        }
-
-        return axios.post(BaseUrl+"CheckToken",null,{headers : headers})
-            .then(user => {
-                return Promise.resolve(user.data)
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(BaseUrl + "CheckToken", null, UserConfig.GetToken())
+            .then(Response => {
+                return Promise.resolve(Response.data)
             })
             .catch((error) => {
                 return Promise.reject(error.message)
@@ -54,28 +49,10 @@ function CheckToken() {
 
 //Gets "token" // returns  "username","fullname","id_user","id_role"
 function GetUserInfo() {
-    let apiToken = localStorage.getItem("user");
-    if (apiToken != null) {
-        const newuser = JSON.parse(apiToken);
-
-        var headers = {
-            "Token": newuser.Token
-        }
-
-        return axios.post(BaseUrl+"GetUserInfo",null,{headers : headers})
-            .then(data => {
-
-                /* let responseJson = {
-                     id: users.data.id,
-                     username: users.data.email,
-                     firstName: users.data.name,
-                     lastName: users.data.name,
-                     token: users.data.api_token
-                 };*/
-                /*localStorage.setItem("userInfo", JSON.stringify(users.data));
-                */
-                console.log(data)
-                return Promise.resolve(data.data.data);
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(BaseUrl + "GetUserInfo", null, UserConfig.GetToken())
+            .then(Response => {
+                return Promise.resolve(Response.data);
             })
             .catch(error => {
                 return Promise.reject(error.message);
@@ -88,32 +65,14 @@ function GetUserInfo() {
 
 //Gets "token" // returns  "isadmin"
 function UserIsAdmin() {
-    let apiToken = localStorage.getItem("user");
-    if (apiToken != null) {
-        const newuser = JSON.parse(apiToken);
-
-        var headers = {
-            "Token": newuser.Token
-        }
-
-        return axios.post(BaseUrl+"UserIsAdmin",null,{headers : headers})
-            .then(data => {
-
-                /* let responseJson = {
-                     id: users.data.id,
-                     username: users.data.email,
-                     firstName: users.data.name,
-                     lastName: users.data.name,
-                     token: users.data.api_token
-                 };*/
-                /*localStorage.setItem("userInfo", JSON.stringify(users.data));
-                */
-                return Promise.resolve(data.data.data);
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(BaseUrl+"UserIsAdmin", null, UserConfig.GetToken())
+            .then(Response => {
+                return Promise.resolve(Response.data)
             })
             .catch(error => {
                 return Promise.reject(error.message);
             });
-
     } else
         return Promise.reject("No");
 }
