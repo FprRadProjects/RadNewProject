@@ -11,14 +11,14 @@ function GetSelectProject(id_tel) {
             .then(
                 data => {
                     if (data.status) {
-                        console.log(data.data)
+                        //console.log(data.data)
                     }
                     else {
-                        console.log(data.error)
+                        //console.log(data.error)
                     }
                 },
                 error => {
-                    return console.log(error)
+                    //return console.log(error)
                 }
             );
     }

@@ -1,6 +1,6 @@
 import {BasicInfo_service} from "../../../../_services";
-import {GridCommonContants} from "../../../../_contants";
 import {alertActions} from "../../../index";
+import {AutoBasicInfo as constant} from "../../../../_constants";
 
 export const BasicInfo_action = {
     GetDefaultText
@@ -22,12 +22,12 @@ function GetDefaultText() {
                         dispatch(AddRows(data.data.DefaultText));
                     }
                     else {
-                        //dispatch(Failer(data.error));
+                        dispatch(Failer(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    //dispatch(Failer(error));
+                    dispatch(Failer(error));
                     dispatch(alertActions.error(error));
                 }
             );
@@ -36,14 +36,13 @@ function GetDefaultText() {
 
 
 function AddColumns(data) {
-    return {type: GridCommonContants.SETGRID_COLUMNS, data}
+    return {type: constant.SETGRID_COLUMNS, data}
 }
 
 function AddRows(data) {
-    return {type: GridCommonContants.SETGRID_ROWS, data}
+    return {type: constant.SETGRID_ROWS, data}
 }
-/*
 function Failer(error) {
-    return { type: AutoBasicInfo.FAILD, error }
-}*/
+    return { type: constant.FAIL, error }
+}
 

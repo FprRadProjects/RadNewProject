@@ -10,28 +10,10 @@ import {Works,References} from "../Secretariat/DashBoards";
 
 
 
-//teeeeeeeeeeeeeeeeeeest
-import  {mainpageActions} from "../../_actions"
-//teeeeeeeeeeeeeeeeeeest
-
 
 class MasterPage extends React.Component {
     componentDidMount() {
         this.props.dispatch(userActions.CheckToken());
-
-
-
-//teeeeeeeeeeeeeeeeeeest
-
-const tests = this.props.dispatch(mainpageActions.GetCounts(13081))
-        console.log(this.props.dispatch(mainpageActions.GetCounts(13081)))
-        //const {title, status} = await dispatcher.perform(runTransition(url))
-
-
-        /*var test = this.props.dispatch(mainpageActions.GetCounts(13081));
-        alert(test)*/
-//teeeeeeeeeeeeeeeeeeest
-
     }
 
     render() {

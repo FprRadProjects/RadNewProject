@@ -1,9 +1,15 @@
 import { combineReducers } from 'redux';
 
-import * as reducers from './reducers';
+import { alert } from './Alert';
+import { Common } from './General';
+import { dashboards } from './Secretariat';
+import { authentication , users } from './Users';
 
-//const allReducers = Object.assign({},alert, users, secretariat);
-
-const rootReducer = combineReducers(reducers);
+const rootReducer = combineReducers({
+    alert,
+    Common,
+    dashboards,
+    authentication, users
+});
 
 export default rootReducer;

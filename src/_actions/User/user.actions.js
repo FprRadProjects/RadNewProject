@@ -1,4 +1,4 @@
-import { userConstants } from '../../_contants';
+import { userConstants } from '../../_constants';
 import { userService } from '../../_services';
 import { alertActions } from '..';
 import { history } from '../../_helpers';
@@ -56,7 +56,7 @@ function CheckToken() {
                     }
                 },
                 error => {
-                    console.log(error)
+                    //console.log(error)
                 }
             );
     };
@@ -84,7 +84,7 @@ function GetUserInfo() {
                     }
                 },
                 error => {
-                    console.log(error)
+                    //console.log(error)
                 }
             );
     };
