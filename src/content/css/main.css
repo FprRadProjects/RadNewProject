@@ -115,10 +115,14 @@ div#root{
         border-bottom: 1px solid #25aae1;
         border-radius: 0;
     }
-
+    
         .r-login__body .form-control:focus {
             box-shadow: none;
             border-bottom-color: #25aae1;
+        }
+
+        .r-login__body .has-error .form-control,.r-login__body .has-error .form-control:focus,.r-login__body .has-error .input-group-text {
+            border-bottom-color:#dc3545; 
         }
 
         .r-login__body .form-control::placeholder {

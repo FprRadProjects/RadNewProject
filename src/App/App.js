@@ -27,7 +27,7 @@ class App extends React.Component {
                     <div className={`alert ${alert.type}`}>{alert.message}</div>
                 }
                 <Router history={history}>
-                    <div className="d-flex flex-1">
+                    <div className="flex-1">
                         <PrivateRoute exact path={history.location.pathname !== "/login" ? history.location.pathname : "/"} component={HomePage} />
                         <Route path="/login" component={LoginPage} />
                     </div>
