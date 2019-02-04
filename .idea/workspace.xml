@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="08aed675-e718-443c-a3ec-df68cbbb0f9d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/_actions/General/Automation/BasicInfo/basic_info.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_actions/General/Automation/BasicInfo/basic_info.action.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -27,11 +25,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="119">
               <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Works.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="47" column="35" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
             </state>
           </provider>
         </entry>
@@ -179,7 +186,6 @@
         <option value="$PROJECT_DIR$/src/_actions/MainPage/index.js" />
         <option value="$PROJECT_DIR$/src/_components/MainPage/DashBoard.js" />
         <option value="$PROJECT_DIR$/src/_actions/MainPage/mainpage.actions.js" />
-        <option value="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js" />
         <option value="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js" />
         <option value="$PROJECT_DIR$/src/style.css" />
         <option value="$PROJECT_DIR$/src/_helpers/index.js" />
@@ -188,6 +194,7 @@
         <option value="$PROJECT_DIR$/src/_services/Users/user.service.js" />
         <option value="$PROJECT_DIR$/src/_actions/General/Automation/BasicInfo/basic_info.action.js" />
         <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js" />
       </list>
     </option>
   </component>
@@ -229,6 +236,27 @@
               <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="_components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="_components" type="462c0819:PsiDirectoryNode" />
+              <item name="Secretariat" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="_components" type="462c0819:PsiDirectoryNode" />
+              <item name="Secretariat" type="462c0819:PsiDirectoryNode" />
+              <item name="DashBoards" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -299,12 +327,12 @@
       <workItem from="1548590694200" duration="8032000" />
       <workItem from="1548843282042" duration="1828000" />
       <workItem from="1548851770064" duration="4983000" />
-      <workItem from="1549272110599" duration="260000" />
+      <workItem from="1549272110599" duration="894000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="155931000" />
+    <option name="totallyTimeSpent" value="156565000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -415,13 +443,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/_contants/MainPage/mainpage.contants.js" />
-    <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="38" column="19" selection-start-line="38" selection-start-column="19" selection-end-line="38" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/_reducers/reducers/Secretariat/DashBoards/DashBoard.reducer.js" />
     <entry file="file://$PROJECT_DIR$/src/_components/MainPage/DashBoard.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -584,6 +605,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="47" column="35" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
         </state>
       </provider>
     </entry>
