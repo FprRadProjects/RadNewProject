@@ -8,7 +8,6 @@ import './content/css/bootstrap-rtl.min.css'
 import './content/css/main.css'
 
 render(
-
     <Provider store={store}>
         <App />
     </Provider>,

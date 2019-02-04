@@ -1,0 +1,214 @@
+@import url(iransans.css);
+
+html, body {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    font-size: 13px;
+    font-weight: 300;
+    font-family: IRANSans;
+    -ms-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    direction: rtl;
+}
+
+body {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+}
+
+div#root{
+    display: flex;
+    flex: 1;
+}
+
+.flex-1{
+    flex: 1;
+}
+
+.r-login {
+    display: flex;
+    flex: 1;
+    height: 100%;
+    background-color: #d1d2d4;
+    background-image: url(../images/login/bg.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.r-login__wrapper {
+    margin: auto;
+}
+
+
+.r-login__signin {
+    max-width: 100%;
+    width: 450px;
+}
+
+@media(max-width:500px) {
+    .r-login__wrapper {
+        width: 90%;
+    }
+
+    .r-login__signin {
+        width: 100%;
+    }
+}
+
+
+.r-login__header {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem 2rem;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+    .r-login__header h3 {
+        font-size: 20px;
+        color: #818285;
+    }
+
+    .r-login__header img {
+        position: relative;
+        margin-right: 8px;
+        margin-top: -15px;
+        max-width: 40px;
+    }
+
+.r-login__body {
+    position: relative;
+    background-color: #fff;
+    padding: 2rem 3rem;
+    border-radius: 0 0 10px 10px;
+    margin: 0;
+}
+
+    .r-login__body:after {
+        content: "";
+        height: 30px;
+        width: 100%;
+        right: 0;
+        left: 0;
+        top: 100%;
+        background-image: url('../images/box-shadow-bottom.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        position: absolute;
+    }
+
+    .r-login__body .form-control {
+        border: none;
+        border-bottom: 1px solid #25aae1;
+        border-radius: 0;
+    }
+
+        .r-login__body .form-control:focus {
+            box-shadow: none;
+            border-bottom-color: #25aae1;
+        }
+
+        .r-login__body .form-control::placeholder {
+            color: #d5d6d8;
+            opacity: 1; /* Firefox */
+        }
+
+        .r-login__body .form-control:-ms-input-placeholder {
+            color: #d5d6d8;
+        }
+
+        .r-login__body .form-control::-ms-input-placeholder {
+            color: #d5d6d8;
+        }
+
+    .r-login__body .input-group-text {
+        background-color: #fff;
+        border: none;
+        border-bottom: 1px solid #25aae1;
+        border-radius: 0;
+        padding: .7rem;
+    }
+
+    .r-login__body .r-login__icon {
+        width: 24px;
+        height: 24px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+        .r-login__body .r-login__icon.r-login__icon--username {
+            background-image: url(../images/login/username-icon.svg);
+            background-size: contain;
+        }
+
+        .r-login__body .r-login__icon.r-login__icon--password {
+            background-image: url(../images/login/password-icon.svg);
+            background-size: contain;
+        }
+
+        .r-login__body .r-login__icon.r-login__icon--captcha {
+            background-image: url(../images/login/captcha-icon.svg);
+            background-size: contain;
+        }
+
+        .r-login__body .r-login__icon.r-login__icon--refresh {
+            background-image: url(../images/login/refresh-icon.svg);
+            background-size: contain;
+            width:16px;
+            height:16px;
+        }
+
+.r-login__action {
+    padding: 2rem 1rem 0;
+    display: flex;
+    justify-content: center;
+}
+
+    .r-login__action .btn {
+        font-size: 16px;
+        background-color: #0f75bc;
+        padding: .8rem 3rem;
+        border-radius: 5px;
+        -webkit-box-shadow: 0px 5px 10px 2px rgba(37,170,225,0.19) !important;
+        box-shadow: 0px 5px 10px 2px rgba(37,170,225,0.19) !important;
+    }
+
+
+
+.r-login__captcha {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+    .r-login__captcha .input-group:first-child {
+        flex: 1 0 calc(100% - 150px)!important;
+        margin-left:15px;
+    }
+
+    .r-login__captcha .input-group:last-child {
+        flex: 1 0 150px;
+        align-items: center;
+    }
+
+        .r-login__captcha .input-group:last-child .input-group-text {
+            border: none;
+            padding:0;
+        }
+
+    .r-login__captcha img {
+        max-width: 115px;
+    }

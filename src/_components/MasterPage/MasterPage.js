@@ -20,7 +20,7 @@ class MasterPage extends React.Component {
         const { users} = this.props;
         return (
             <BrowserRouter>
-                <div>
+                <div className="flex-1">
                     <Header auth={true} users={users}/>
                     <div className="container rtl">
                         <Switch>

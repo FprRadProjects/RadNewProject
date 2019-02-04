@@ -1,24 +1,22 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { mainpageActions} from '../../_actions/MainPage';
+import { mainpageActions } from '../../_actions/MainPage';
 import FullCalendar from './FullCalendar';
 
 class DashBoard extends Component {
     render() {
         let events = [
             {
-              title: 'All Day Event',
-              start: '2019-01-25'
+                title: 'All Day Event',
+                start: '2019-01-25'
             },
             {
-              title: 'Long Event',
-              start: '2019-01-26'
+                title: 'Long Event',
+                start: '2019-01-26'
             },
-          ];
+        ];
         return (
-            <div>
-                <FullCalendar events={events} />
-            </div>
+            <FullCalendar events={events} />
         );
     }
 }
