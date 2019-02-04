@@ -1,6 +1,6 @@
 import {BasicInfo_service} from "../../../../_services";
 import {alertActions} from "../../../index";
-import {AutoBasicInfo as constant} from "../../../../_constants";
+import {AutoBasicInfoConstant as constant} from "../../../../_constants";
 
 export const BasicInfo_action = {
     GetDefaultText
