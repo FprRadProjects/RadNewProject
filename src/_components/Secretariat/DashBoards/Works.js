@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-//import GridsService from "../../../_services/Grids/GridsService";
 import {connect} from "react-redux"
-import {Act_Reference} from "../../../_actions";
+import {Act_Reference, WorkAccess_action} from "../../../_actions";
 import ReactGrid from "./AutomationGrid";
 
 class Works extends Component {
@@ -13,10 +12,26 @@ class Works extends Component {
 
 
         this.props.FetchData(data);
+
+
+        //teeeeeeeeeeeeeeeeeeeeeeeest
+        this.props.TestMe(13088);
+
+        //teeeeeeeeeeeeeeeeeeeeeeeest
+
+
+
     }
 
 
     render() {
+
+        //teeeeeeeeeeeeeeeeeeeeeeeest
+        let {CommonVal, CommonErr} = this.props;
+        //teeeeeeeeeeeeeeeeeeeeeeeest
+
+
+
         let {GridColumns, GridRows} = this.props;
         if (GridColumns === undefined)
             GridColumns = [{headerName: "peygir_id", field: "peygir_id", checkboxSelection: true}];
@@ -40,11 +55,29 @@ const mapDispatchToProps = dispatch => ({
 
         dispatch(Act_Reference.FetchData(data))
     }
+
+
+
+    //teeeeeeeeeeeeeeeeeeeeeeeest
+    , TestMe: () => {
+        dispatch(WorkAccess_action.CheckAccess(13088))
+
+    }
+
+
+    //teeeeeeeeeeeeeeeeeeeeeeeest
 });
 
 const mapStateToProps = state => ({
     GridColumns: state.dashboards.columns,
     GridRows: state.dashboards.rows
+
+
+    //teeeeeeeeeeeeeeeeeeeeeeeest
+    ,CommonVal: state.Common.Value,
+    CommonErr: state.Common.Error
+    //teeeeeeeeeeeeeeeeeeeeeeeest
+
 });
 
 

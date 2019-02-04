@@ -20,7 +20,7 @@ function WorkInfo(peygir_id) {
                     }
                 },
                 error => {
-                    return console.log(error)
+                    //return console.log(error)
                 }
             );
     }

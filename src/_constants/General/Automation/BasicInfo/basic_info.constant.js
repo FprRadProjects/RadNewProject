@@ -1,0 +1,11 @@
+
+export const AutoBasicInfoConstant = {
+    SETGRID_COLUMNS: 'SET_DEFAULTGRID_COLUMNS',
+    SETGRID_ROWS: 'SET_DEFAULTGRID_ROWS',
+    FAIL: 'DEFAUL_TEXT_FAIL'
+};
+
+
+
+
+

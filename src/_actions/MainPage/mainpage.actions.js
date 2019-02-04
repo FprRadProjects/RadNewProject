@@ -1,4 +1,4 @@
-import { mainpageContants } from '../../_contants';
+import { mainpageConstant } from '../../_constants';
 import {mainpageService} from '../../_services'
 
 export const mainpageActions = {
@@ -15,7 +15,6 @@ function GetCounts(param) {
             .then(
                 data => {
                     if (data.status) {
-                        console.log(data.data)
                         return data.data;
                     }
                     else {
@@ -23,7 +22,7 @@ function GetCounts(param) {
                     }
                 },
                 error => {
-                    return console.log(error)
+                    //return console.log(error)
                 }
             );
     }
@@ -31,13 +30,13 @@ function GetCounts(param) {
 
 
 function success(message) {
-    return { type: mainpageContants.SUCCESS, message };
+    return { type: mainpageConstant.SUCCESS, message };
 }
 
 function error(message) {
-    return { type: mainpageContants.ERROR, message };
+    return { type: mainpageConstant.ERROR, message };
 }
 
 function clear() {
-    return { type: mainpageContants.CLEAR };
+    return { type: mainpageConstant.CLEAR };
 }

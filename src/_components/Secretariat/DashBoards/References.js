@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux"
 import {Act_Reference} from "../../../_actions";
 import ReactGrid from "./AutomationGrid";
-import {dashboards} from "../../../_reducers/reducers/Secretariat";
+import {dashboards} from "../../../_reducers/Secretariat";
 
 class References extends Component {
     componentDidMount() {
