@@ -10,28 +10,12 @@ class Works extends Component {
             "page":1,"seen":0,"done":0,"date":0,"calendar":"","worker":2
         }
 
-
         this.props.FetchData(data);
-
-
-        //teeeeeeeeeeeeeeeeeeeeeeeest
-        this.props.TestMe(13088);
-
-        //teeeeeeeeeeeeeeeeeeeeeeeest
-
-
 
     }
 
 
     render() {
-
-        //teeeeeeeeeeeeeeeeeeeeeeeest
-        let {CommonVal, CommonErr} = this.props;
-        //teeeeeeeeeeeeeeeeeeeeeeeest
-
-
-
         let {GridColumns, GridRows} = this.props;
         if (GridColumns === undefined)
             GridColumns = [{headerName: "peygir_id", field: "peygir_id", checkboxSelection: true}];
@@ -57,27 +41,11 @@ const mapDispatchToProps = dispatch => ({
     }
 
 
-
-    //teeeeeeeeeeeeeeeeeeeeeeeest
-    , TestMe: () => {
-        dispatch(WorkAccess_action.CheckAccess(13088))
-
-    }
-
-
-    //teeeeeeeeeeeeeeeeeeeeeeeest
 });
 
 const mapStateToProps = state => ({
     GridColumns: state.dashboards.columns,
     GridRows: state.dashboards.rows
-
-
-    //teeeeeeeeeeeeeeeeeeeeeeeest
-    ,CommonVal: state.Common.Value,
-    CommonErr: state.Common.Error
-    //teeeeeeeeeeeeeeeeeeeeeeeest
-
 });
 
 

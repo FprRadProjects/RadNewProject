@@ -1,5 +1,5 @@
 import React from 'react';
-import {Router, Route} from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { history } from '../_helpers';
@@ -22,19 +22,17 @@ class App extends React.Component {
         const { alert } = this.props;
 
         return (
-                <div >
-                    <div >
-                        {alert.message &&
-                        <div className={`alert ${alert.type}`}>{alert.message}</div>
-                        }
-                        <Router history={history}>
-                            <div>
-                                <PrivateRoute exact path={history.location.pathname!=="/login"?history.location.pathname:"/"} component={HomePage} />
-                                <Route path="/login" component={LoginPage} />
-                            </div>
-                        </Router>
+            <div className="d-flex flex-1">
+                {alert.message &&
+                    <div className={`alert ${alert.type}`}>{alert.message}</div>
+                }
+                <Router history={history}>
+                    <div className="flex-1">
+                        <PrivateRoute exact path={history.location.pathname !== "/login" ? history.location.pathname : "/"} component={HomePage} />
+                        <Route path="/login" component={LoginPage} />
                     </div>
-                </div>
+                </Router>
+            </div>
         );
     }
 }

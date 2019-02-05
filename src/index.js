@@ -4,11 +4,10 @@ import { Provider } from 'react-redux';
 
 import { store } from './_helpers';
 import { App } from './App/App';
-import './styles/css/bootstrap-rtl.min.css'
-import './styles/css/main.css'
+import './content/css/bootstrap-rtl.min.css'
+import './content/css/main.css'
 
 render(
-
     <Provider store={store}>
         <App />
     </Provider>,
