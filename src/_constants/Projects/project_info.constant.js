@@ -1,0 +1,10 @@
+
+export const ProjectInfoConstant = {
+    SETGRID_COLUMNS: 'SET_PPROJECTGRID_COLUMNS',
+    SETGRID_ROWS: 'SET_PPROJECTGRID_ROWS',
+    FAIL: 'PROJECT_FAIL'
+};
+
+
+
+
