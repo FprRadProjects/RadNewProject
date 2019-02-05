@@ -1,4 +1,4 @@
-import {Service_Dashboard} from "../../../_services";
+import {Service_Dashboard} from "../..";
 import {history} from "../../../_helpers";
 import {DashBoardConstant} from "../../../_constants";
 

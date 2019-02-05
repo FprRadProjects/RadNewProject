@@ -1,1 +1,1 @@
-export * from './References.action.js';
+export * from '../../../_services/Secretariat/DashBoards/References.action.js';
