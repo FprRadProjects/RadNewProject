@@ -6,7 +6,7 @@ export function dashboards(state = {}, action) {
             return {
 
                 ...state,
-                totalcount:  action.data
+                totalCount:  action.data
             }
         }
 

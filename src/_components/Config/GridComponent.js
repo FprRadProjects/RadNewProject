@@ -85,13 +85,15 @@ const BooleanTypeProvider = props => (
         const {columns,booleanColumns,UrlParams,currencyColumns,hiddenColumnNames}=this.props;
         Params=UrlParams;
         this.state = {
+            rows:[],
+            totalCount: 0,
             columns: columns,
             tableColumnExtensions: [],
             filters: [],
             sorting: [],
             grouping: [],
             pageSize: 10,
-            pageSizes: [5, 10, 15, 0],
+            pageSizes: [5, 10, 15],
             currencyColumns: currencyColumns,
             booleanColumns:booleanColumns,
             currentPage: 0,
@@ -170,17 +172,13 @@ const BooleanTypeProvider = props => (
         const {sorting, pageSize, currentPage,filters} = this.state;
 
         let queryString = `${sorting + pageSize + currentPage}`;
-        if(currentPage===NaN)
-            Params.page=(currentPage + 1);
-        else Params.page=( 1);
+        Params.page=(currentPage + 1);
         Params.pagesize=(pageSize);
 
         const columnSorting = sorting[0];
         if (columnSorting) {
             const sortingDirectionString = columnSorting.direction === 'desc' ? ' desc' : 'asc';
-            if(currentPage===NaN)
-                Params.page=(currentPage + 1);
-            else Params.page=( 1);
+            Params.page=(currentPage + 1);
             Params.pagesize=(pageSize);
             Params.orderby=(columnSorting.columnName);
             Params.direction=(sortingDirectionString);
@@ -225,10 +223,11 @@ const BooleanTypeProvider = props => (
             hiddenColumnNames,
             columnWidths,booleanColumns
         } = this.state;
+        console.log(this.state)
         if(this.props.rows!==undefined)
             rows=this.props.rows;
-        if(this.props.totalcount!==undefined)
-            totalCount=this.props.totalcount;
+        if(this.props.totalCount!==undefined)
+            totalCount=this.props.totalCount;
         return (
             <div className="card" style={{position: 'relative'}}>
                 <Grid
@@ -297,7 +296,7 @@ const BooleanTypeProvider = props => (
 
 const mapStateToProps = state => ({
     rows: state.dashboards.rows,
-    totalcount: state.dashboards.totalcount
+    totalCount: state.dashboards.totalCount
 
 });
 
