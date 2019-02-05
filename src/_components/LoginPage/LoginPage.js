@@ -52,7 +52,7 @@ class LoginPage extends React.Component {
                                     <div className="input-group-prepend">
                                         <span className="input-group-text"><i className="r-login__icon r-login__icon--username"></i></span>
                                     </div>
-                                    <input className="form-control" type="text" name="username" placeholder="نام کاربری" autocomplete="off" value={username} onChange={this.handleChange} />
+                                    <input className="form-control" type="text" name="username" placeholder="نام کاربری" autoComplete="off" value={username} onChange={this.handleChange} />
                                 </div>
                                 {submitted && !username && 
                                 <div className="form-control-feedback text-danger mt-2">نام کاربری لازم به ورود است</div>
@@ -63,7 +63,7 @@ class LoginPage extends React.Component {
                                     <div className="input-group-prepend">
                                         <span className="input-group-text"><i className="r-login__icon r-login__icon--password"></i></span>
                                     </div>
-                                    <input className="form-control" type="password" name="password" placeholder="گذرواژه" autocomplete="off" value={password} onChange={this.handleChange} />
+                                    <input className="form-control" type="password" name="password" placeholder="گذرواژه" autoComplete="off" value={password} onChange={this.handleChange} />
                                 </div>
                                 {submitted && !password && 
                                 <div className="form-control-feedback text-danger mt-2">گذرواژه لازم به ورود است</div>
@@ -82,7 +82,7 @@ class LoginPage extends React.Component {
 }
 
 function mapStateToProps(state) {
-    const { loggingIn } = state.authentication;
+    const { loggingIn} = state.authentication;
     return {
         loggingIn
     };

@@ -7,7 +7,15 @@ class Works extends Component {
     componentDidMount() {
 
         let data = {
-            "page":1,"seen":0,"done":0,"date":0,"calendar":"","worker":2
+            "page": 0,
+            "pagesize": 10,
+            "seen": 0,
+            "done": 0,
+            "date": 0,
+            "calendar": "",
+            "worker": 1,
+            "orderby": "tarikhaction",
+            "direction": "desc"
         }
 
         this.props.FetchData(data);
@@ -32,11 +40,7 @@ class Works extends Component {
     }
 }
 const mapDispatchToProps = dispatch => ({
-    FetchData: () => {
-        let data = {
-            "page":1,"seen":0,"done":0,"date":0,"calendar":"","worker":2
-        }
-
+    FetchData: (data) => {
         dispatch(Act_Reference.FetchData(data))
     }
 

@@ -1,6 +1,6 @@
 import {Service_Dashboard} from "../..";
 import {history} from "../../../_helpers";
-import {DashBoardConstant} from "../../../_constants";
+import {DashBoardConstant,CommonContants} from "../../../_constants";
 
 export const Act_Reference= {
     FetchData
@@ -16,8 +16,8 @@ function FetchData (params){
                         Object.keys(data.data.rows[0]).map(function (key) {
                             return newobject.push({headerName: "" + key + "", field: "" + key + ""});
                         });
-                        dispatch(AddColumns(newobject));
-                        dispatch(AddRows(data.data.Dashbord));
+                        dispatch(AddRows(data.data.rows));
+                        dispatch(AddTotalCount(data.data.totalcount));
                     }
                    /* else
                     {
@@ -32,10 +32,10 @@ function FetchData (params){
 
 }
 
-function AddColumns(data) {
-    return {type: DashBoardConstant.SETGRID_COLUMNS, data}
+function AddTotalCount(data) {
+    return {type: CommonContants.SET_GRID_TOTALCOUNT, data}
 }
 
 function AddRows(data) {
-    return {type: DashBoardConstant.SETGRID_ROWS, data}
+    return {type: CommonContants.SETGRID_ROWS, data}
 }

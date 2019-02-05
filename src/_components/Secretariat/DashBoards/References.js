@@ -2,31 +2,42 @@ import React, {Component} from 'react';
 //import GridsService from "../../../_services/Grids/GridsService";
 import {connect} from "react-redux"
 import {Act_Reference} from "../../../_actions";
-import ReactGrid from "./AutomationGrid";
-import {dashboards} from "../../../_reducers/Secretariat";
+import {GridComponent} from "../../Config/GridComponent";
+var FetchData;
 
 class References extends Component {
-    componentDidMount() {
-
-        let data = {
-            "page":1,"seen":0,"done":0,"date":0,"calendar":"","worker":2
-        }
-        this.props.FetchData(data);
-    }
-
 
     render() {
-        let {GridColumns, GridRows} = this.props;
-        if (GridColumns === undefined)
-            GridColumns = [{headerName: "peygir_id", field: "peygir_id", checkboxSelection: true}];
-        if (GridRows === undefined)
-            GridRows = [{peygir_id: "1000"}];
 
+        const{FetchData,GridRows}= this.props;
+        const  columns= [
+            {name: 'peygir_id', title: 'شاخص کار'},
+            {name: 'worker', title: 'کاربر'},
+            {name: 'done', title: 'انجام شده'},
+            {name: 'wt_id', title: 'شاخض نوع کار'},
+            {name: 'tarikhaction', title: 'تاریخ کار'},
+            {name: 'id_tel', title: 'شاخص طرف حساب'},
+        ];
+        const  currencyColumns= ['peygir_id', 'id_tel'];
+        const  hiddenColumnNames= ['peygir_id', 'id_tel'];
+        const booleanColumns=['done'];
+        const Params = {
+            "page": 0,
+            "pagesize": 10,
+            "seen": 0,
+            "done": 0,
+            "date": 0,
+            "calendar": "",
+            "worker": 1,
+            "orderby": "tarikhaction",
+            "direction": "desc"
+        };
         return (
             <div>
-                <div>
-                    <ReactGrid columns={GridColumns} rows={GridRows}/>
-                </div>
+                <GridComponent columns={columns} booleanColumns={booleanColumns}
+                      UrlParams={Params} fetchData={FetchData.bind(this)}
+                      currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                />
             </div>
         );
     }
@@ -34,21 +45,14 @@ class References extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-    FetchData: () => {
-        let data = {
-            "page":1,"seen":0,"done":0,"date":0,"calendar":"","worker":2
-        }
-        dispatch(Act_Reference.FetchData(data))
+    FetchData: (Params) => {
+        dispatch(Act_Reference.FetchData(Params))
     }
 });
 
-const mapStateToProps = state => ({
-    GridColumns: state.dashboards.columns,
-    GridRows: state.dashboards.rows
-});
 
 
-const connectedReferences = connect(mapStateToProps, mapDispatchToProps)(References);
+const connectedReferences = connect(null, mapDispatchToProps)(References);
 export { connectedReferences as References };
 
 

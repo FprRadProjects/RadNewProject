@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@devexpress/dx-react-core": "^1.10.0",
+    "@devexpress/dx-react-grid": "^1.10.0",
+    "@devexpress/dx-react-grid-bootstrap4": "^1.10.0",
     "ag-grid-community": "^19.1.4",
     "ag-grid-enterprise": "^19.1.4",
     "ag-grid-react": "^19.1.2",

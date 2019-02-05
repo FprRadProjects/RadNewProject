@@ -1,16 +1,16 @@
-import {DashBoardConstant} from "../../../_constants/Secretariat/index";
+import {CommonContants} from "../../../_constants";
 
 export function dashboards(state = {}, action) {
     switch (action.type) {
-        case DashBoardConstant.SETGRID_COLUMNS: {
+        case CommonContants.SET_GRID_TOTALCOUNT: {
             return {
 
                 ...state,
-                columns:  action.data
+                totalcount:  action.data
             }
         }
 
-        case DashBoardConstant.SETGRID_ROWS: {
+        case CommonContants.SETGRID_ROWS: {
             return {
 
                 ...state,
@@ -23,5 +23,4 @@ export function dashboards(state = {}, action) {
     }
 };
 
-export default dashboards;
 
