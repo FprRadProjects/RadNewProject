@@ -53,8 +53,10 @@ class LoginPage extends React.Component {
                                         <span className="input-group-text"><i className="r-login__icon r-login__icon--username"></i></span>
                                     </div>
                                     <input className="form-control" type="text" name="username" placeholder="نام کاربری" autocomplete="off" value={username} onChange={this.handleChange} />
-                                    {submitted && !username && <div className="help-block">شناسه کاربری لازم به ورود است</div>}
                                 </div>
+                                {submitted && !username && 
+                                <div className="form-control-feedback text-danger mt-2">نام کاربری لازم به ورود است</div>
+                                }
                             </div>
                             <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
                                 <div className="input-group">
@@ -62,8 +64,10 @@ class LoginPage extends React.Component {
                                         <span className="input-group-text"><i className="r-login__icon r-login__icon--password"></i></span>
                                     </div>
                                     <input className="form-control" type="password" name="password" placeholder="گذرواژه" autocomplete="off" value={password} onChange={this.handleChange} />
-                                    {submitted && !password && <div className="bg-danger">رمز عبور لازم به ورود است</div>}
                                 </div>
+                                {submitted && !password && 
+                                <div className="form-control-feedback text-danger mt-2">گذرواژه لازم به ورود است</div>
+                                }
                             </div>
                             <div className="r-login__action">
                                 <button className="btn btn-primary">ورود</button>
