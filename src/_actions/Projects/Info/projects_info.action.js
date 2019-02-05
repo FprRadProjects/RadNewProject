@@ -15,7 +15,7 @@ function GetSelectProject(id_tel) {
                     if (data.status) {
 
                         var newobject = [];
-                        Object.keys(data.data.Projects[0]).map(function (key) {
+                        Object.keys(data.data.rows[0]).map(function (key) {
                             return newobject.push({headerName: "" + key + "", field: "" + key + ""});
                         });
                         dispatch(AddColumns(newobject));

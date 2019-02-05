@@ -15,7 +15,7 @@ function GetDefaultText() {
                     if (data.status) {
 
                         var newobject = [];
-                        Object.keys(data.data.DefaultText[0]).map(function (key) {
+                        Object.keys(data.data.rows[0]).map(function (key) {
                             return newobject.push({headerName: "" + key + "", field: "" + key + ""});
                         });
                         dispatch(AddColumns(newobject));
