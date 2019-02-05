@@ -9,7 +9,7 @@ class References extends Component {
 
     render() {
 
-        const{FetchData,GridRows}= this.props;
+        const{FetchData}= this.props;
         const  columns= [
             {name: 'peygir_id', title: 'شاخص کار'},
             {name: 'worker', title: 'کاربر'},
