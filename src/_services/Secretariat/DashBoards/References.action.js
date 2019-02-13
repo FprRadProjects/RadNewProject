@@ -12,10 +12,7 @@ function FetchData (params){
             .then(
                 data => {
                     if(data.status) {
-                        var newobject = [];
-                        Object.keys(data.data.rows[0]).map(function (key) {
-                            return newobject.push({headerName: "" + key + "", field: "" + key + ""});
-                        });
+
                         dispatch(AddRows(data.data.rows));
                         dispatch(AddTotalCount(data.data.totalcount));
                     }

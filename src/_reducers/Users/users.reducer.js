@@ -9,7 +9,7 @@ export function users(state = {}, action) {
         case userConstants.GETALL_SUCCESS:
             return {
                 ...state,
-                ...action.users
+                ...action.user
             }
         case userConstants.GETALL_FAILURE:
             return {

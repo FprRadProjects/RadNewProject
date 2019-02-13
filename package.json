@@ -23,6 +23,7 @@
     "react-datepicker-persian": "^1.0.2",
     "react-dom": "^16.7.0",
     "react-files": "^2.4.8",
+    "react-persian-calendar": "^1.0.3",
     "react-persian-datepicker": "^3.0.2",
     "react-radio-buttons": "^1.2.2",
     "react-radio-group": "^3.0.3",

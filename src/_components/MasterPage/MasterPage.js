@@ -13,7 +13,7 @@ import {Works,References} from "../Secretariat/DashBoards";
 
 class MasterPage extends React.Component {
     componentDidMount() {
-        this.props.dispatch(userActions.CheckToken());
+        this.props.dispatch(userActions.GetUserInfo());
     }
 
     render() {

@@ -48,7 +48,6 @@ function CheckToken() {
             .then(
                 data => {
                     if (data.status) {
-                        //console.log(data.status)
                     }
                     else {
                         /*dispatch(failure(error));
@@ -76,11 +75,11 @@ function GetUserInfo() {
             .then(
                 data => {
                     if (data.status) {
-                        //console.log(data.data)
+                        dispatch(GetInfo(data.data));
                     }
                     else {
                         /*dispatch(failure(error));
-                        dispatch(alertActions.error(error));*/
+                                              dispatch(alertActions.error(error));*/
                     }
                 },
                 error => {
@@ -88,6 +87,9 @@ function GetUserInfo() {
                 }
             );
     };
+
+    function GetInfo(user) { return { type: userConstants.GETALL_SUCCESS, user } }
+    function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
 }
 
 

@@ -1,27 +1,31 @@
 import React, {Component} from 'react';
 //import GridsService from "../../../_services/Grids/GridsService";
 import {connect} from "react-redux"
-import {Act_Reference} from "../../../_actions";
+import {Act_Reference, userActions} from "../../../_actions";
 import {GridComponent} from "../../Config/GridComponent";
-var FetchData;
+import CalendarComponent from "../../Config/CalendarComponent";
+var Params = {
+    "page": 0,
+    "pagesize": 10,
+    "seen": 0,
+    "done": 2,
+    "date": 0,
+    "calendar": "",
+    "worker": 1,
+    "orderby": "tarikhaction",
+    "direction": "desc",
+    "filter":[]
 
+};
 class References extends Component {
-
-    render() {
-
+    CalendarChange(event){
+        event= event.replace(/-/g, '/');;
+        Params.calendar = event;
         const{FetchData}= this.props;
-        const  columns= [
-            {name: 'peygir_id', title: 'شاخص کار'},
-            {name: 'worker', title: 'کاربر'},
-            {name: 'done', title: 'انجام شده'},
-            {name: 'wt_id', title: 'شاخص نوع کار'},
-            {name: 'tarikhaction', title: 'تاریخ کار'},
-            {name: 'id_tel', title: 'شاخص طرف حساب'},
-        ];
-        const  currencyColumns= ['peygir_id', 'id_tel'];
-        const  hiddenColumnNames= ['peygir_id', 'id_tel'];
-        const booleanColumns=['done'];
-        const Params = {
+        FetchData(Params);
+    }
+    render() {
+        Params = {
             "page": 0,
             "pagesize": 10,
             "seen": 0,
@@ -34,8 +38,23 @@ class References extends Component {
             "filter":[]
 
         };
+        const{FetchData}= this.props;
+        const  columns= [
+            {name: 'peygir_id', title: 'شاخص کار'},
+            {name: 'worker', title: 'کاربر'},
+            {name: 'done', title: 'انجام شده'},
+            {name: 'wt_id', title: 'شاخص نوع کار'},
+            {name: 'tarikhaction', title: 'تاریخ کار'},
+            {name: 'id_tel', title: 'شاخص طرف حساب'},
+        ];
+        const  currencyColumns= ['peygir_id', 'id_tel'];
+        const  hiddenColumnNames= ['peygir_id', 'id_tel'];
+        const booleanColumns=['done'];
+
         return (
             <div>
+
+                <CalendarComponent CalendarChange={this.CalendarChange.bind(this)}/>
                 <GridComponent  columns={columns} booleanColumns={booleanColumns}
                       UrlParams={Params} fetchData={FetchData.bind(this)}
                       currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
