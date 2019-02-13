@@ -14,7 +14,7 @@ class References extends Component {
             {name: 'peygir_id', title: 'شاخص کار'},
             {name: 'worker', title: 'کاربر'},
             {name: 'done', title: 'انجام شده'},
-            {name: 'wt_id', title: 'شاخض نوع کار'},
+            {name: 'wt_id', title: 'شاخص نوع کار'},
             {name: 'tarikhaction', title: 'تاریخ کار'},
             {name: 'id_tel', title: 'شاخص طرف حساب'},
         ];
@@ -25,16 +25,18 @@ class References extends Component {
             "page": 0,
             "pagesize": 10,
             "seen": 0,
-            "done": 0,
+            "done": 2,
             "date": 0,
             "calendar": "",
             "worker": 1,
             "orderby": "tarikhaction",
-            "direction": "desc"
+            "direction": "desc",
+            "filter":[]
+
         };
         return (
             <div>
-                <GridComponent columns={columns} booleanColumns={booleanColumns}
+                <GridComponent  columns={columns} booleanColumns={booleanColumns}
                       UrlParams={Params} fetchData={FetchData.bind(this)}
                       currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                 />

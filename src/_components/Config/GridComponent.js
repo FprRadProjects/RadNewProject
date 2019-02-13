@@ -50,7 +50,7 @@ const TableRow = ({row, ...restProps}) => (
 );
 
 const BooleanFormatter = ({ value }) => (
-    <input type="checkbox" defaultChecked={value} disabled={"disabled"} />
+    <input type="checkbox" checked={value?true:false} disabled={"disabled"} />
 
 );
 
@@ -62,6 +62,9 @@ const BooleanEditor = ({ value, onValueChange }) => (
     >
         <option value={null}>
             همه
+        </option>
+        <option value={null}>
+            خالی
         </option>
         <option value={0}>
             انتخاب نشده
@@ -100,6 +103,8 @@ const BooleanTypeProvider = props => (
             loading: true,
             hiddenColumnNames: hiddenColumnNames,
             columnWidths: [],
+            booleanFilterOperations: ['boolean'],
+            currencyFilterOperations: ['equals'],
 
         };
         this.changeSorting = this.changeSorting.bind(this);
@@ -170,30 +175,30 @@ const BooleanTypeProvider = props => (
 
     queryString() {
         const {sorting, pageSize, currentPage,filters} = this.state;
+        let queryString = `${URL}?take=${pageSize}&skip=${pageSize * currentPage}`;
 
-        let queryString = `${sorting + pageSize + currentPage}`;
         Params.page=(currentPage + 1);
         Params.pagesize=(pageSize);
 
         const columnSorting = sorting[0];
+
         if (columnSorting) {
             const sortingDirectionString = columnSorting.direction === 'desc' ? ' desc' : 'asc';
             Params.page=(currentPage + 1);
             Params.pagesize=(pageSize);
             Params.orderby=(columnSorting.columnName);
             Params.direction=(sortingDirectionString);
-
-            queryString = `${queryString}&orderby=${columnSorting.columnName}${sortingDirectionString}`;
+            queryString = `${queryString}orderby=${columnSorting.columnName}${sortingDirectionString}`;
         }
+
         let filter = filters.reduce((acc, { columnName, value }) => {
             acc.push(`["${columnName}", "contains", "${encodeURIComponent(value)}"]`);
             return acc;
         }, []).join(',"and",');
-
-        if (filters.length > 1) {
+        if (filters.length > 0) {
             filter = `[${filter}]`;
+            queryString = `${queryString}&filter=${filter}`;
         }
-
         return queryString;
     }
 
@@ -201,9 +206,12 @@ const BooleanTypeProvider = props => (
         const queryString = this.queryString();
         if (queryString === this.lastQuery) {
             this.setState({loading: false});
+            console.log(queryString === this.lastQuery)
             return;
         }
         const {fetchData}=this.props;
+        Params.filter=this.state.filters;
+        console.log(Params)
         fetchData(Params);
         this.lastQuery = queryString;
     }
@@ -221,9 +229,11 @@ const BooleanTypeProvider = props => (
             loading,
             tableColumnExtensions,
             hiddenColumnNames,
-            columnWidths,booleanColumns
+            columnWidths,
+            booleanColumns,
+            booleanFilterOperations,
+            currencyFilterOperations
         } = this.state;
-        console.log(this.state)
         if(this.props.rows!==undefined)
             rows=this.props.rows;
         if(this.props.totalCount!==undefined)
@@ -237,9 +247,11 @@ const BooleanTypeProvider = props => (
                     <DragDropProvider/>
                     <CurrencyTypeProvider
                         for={currencyColumns}
+                        availableFilterOperations={currencyFilterOperations}
                     />
                     <BooleanTypeProvider
                         for={booleanColumns}
+                        availableFilterOperations={booleanFilterOperations}
                     />
                     <SortingState
                         sorting={sorting}
