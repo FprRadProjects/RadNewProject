@@ -19,13 +19,10 @@ class App extends React.Component {
     }
 
     render() {
-        const { alert } = this.props;
 
         return (
             <div className="d-flex flex-1">
-                {alert.message &&
-                    <div className={`alert ${alert.type}`}>{alert.message}</div>
-                }
+
                 <Router history={history}>
                     <div className="flex-1">
                         <PrivateRoute exact path={history.location.pathname !== "/login" ? history.location.pathname : "/"} component={HomePage} />
@@ -37,13 +34,6 @@ class App extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
 
-    const { alert } = state;
-    return {
-        alert
-    };
-}
-
-const connectedApp = connect(mapStateToProps)(App);
+const connectedApp = connect(null)(App);
 export { connectedApp as App };

@@ -1,5 +1,6 @@
 import {mainpageConstant as constants } from '../../_constants';
 import {mainpageService} from '../../_services'
+import {alertActions} from "../Alert";
 
 export const mainpageActions = {
     GetCounts,
@@ -39,11 +40,11 @@ function GetEvents(param) {
                         dispatch(successEvent(data.data));
                     }
                     else {
-                        //console.log(data.error)
+                        dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    //return console.log(error)
+                    dispatch(alertActions.error(error));
                 }
             );
     }

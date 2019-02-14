@@ -1,6 +1,7 @@
 import {Service_Dashboard} from "../../../_services";
 import {history} from "../../../_helpers";
 import {DashBoardConstant,CommonContants} from "../../../_constants";
+import {alertActions} from "../../Alert";
 
 export const Act_Reference= {
     FetchData
@@ -15,13 +16,12 @@ function FetchData (params){
                         dispatch(AddTotalCount(data.data.totalcount));
                         dispatch(AddRows(data.data.rows));
                     }
-                   /* else
-                    {
-                        history.push('/login');
-                    }*/
+                    else {
+                        dispatch(alertActions.error(data.error));
+                    }
                 },
                 error => {
-                    //return console.log(error)
+                    dispatch(alertActions.error(error));
                 }
             );
     }

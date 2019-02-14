@@ -22,12 +22,10 @@ function RebuildWork(peygir_id) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );
@@ -45,12 +43,10 @@ function SeenWork(peygir_id) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );
@@ -75,12 +71,10 @@ function SaveWorkInfo(form, dataform) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );
@@ -99,12 +93,10 @@ function DeleteWork(peygir_id) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );

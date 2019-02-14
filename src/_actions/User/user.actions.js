@@ -20,14 +20,11 @@ function login(username, password) {
                         dispatch(success(JSON.stringify(user.data)));
                         history.push('/');
                     }
-                    else
-                    {
-                        dispatch(failure(user.error));
+                    else {
                         dispatch(alertActions.error(user.error));
                     }
                 },
                 error => {
-                    dispatch(failure(error));
                     dispatch(alertActions.error(error));
                 }
             );

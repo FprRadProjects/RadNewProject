@@ -30,7 +30,7 @@ class DashBoard extends Component {
             "startdate": "",
             "enddate": ""
         };
-        const {GetEvents, GetCounts} = this.props;
+        const {GetEvents, GetCounts,alert} = this.props;
 
 
         return (
@@ -38,6 +38,9 @@ class DashBoard extends Component {
 
                 <FullCalendar GetCounts={GetCounts} GetEvent={GetEvents} Params={CalParams}/>
                 <LeftCounts GetCounts={GetCounts} Params={CalParams} />
+                {alert.message &&
+                <div className={`alert ${alert.type}`}>{alert.message}</div>
+                }
             </div>
         );
     }
@@ -53,8 +56,14 @@ const mapDispatchToProps = dispatch => ({
         dispatch(mainpageActions.GetEvents(Params))
     }
 });
+function mapStateToProps(state) {
+    const {alert} = state;
+    return {
+        alert
+    };
+}
 
-const connectedDashBoard = connect(null, mapDispatchToProps)(DashBoard);
+const connectedDashBoard = connect(mapStateToProps, mapDispatchToProps)(DashBoard);
 export {connectedDashBoard as DashBoard};
 
 
