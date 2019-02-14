@@ -5,13 +5,15 @@ import { Common } from './General';
 import { dashboards } from './Secretariat';
 import { authentication , users } from './Users';
 import { projects } from './Projects';
+import { MainPage } from './MainPage';
 
 const rootReducer = combineReducers({
     alert,
     Common,
     dashboards,
     authentication, users,
-    projects
+    projects,
+    MainPage
 });
 
 export default rootReducer;
