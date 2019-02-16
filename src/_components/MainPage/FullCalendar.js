@@ -58,7 +58,7 @@ class FullCalendar extends Component {
     render() {
 
         return (
-            <div ref='calendar'  className="col-lg-9"></div>
+            <div ref='calendar'  className="col-lg-6"></div>
         );
     }
 }

@@ -4,7 +4,7 @@ import {mainpageActions} from '../../_actions/MainPage';
 import {FullCalendar} from './FullCalendar';
 import {LeftCounts} from './LeftCounts';
 import PropTypes from "prop-types"
-import {setLanguage} from "redux-i18n";
+import {ModalFilter} from './ModalFilter';
 
 var CalParams = {
     "seen": 2,
@@ -32,21 +32,13 @@ class DashBoard extends Component {
 
     }
     render() {
-        CalParams = {
-            "seen": 2,
-            "done": 0,
-            "date": 4,
-            "calendar": "",
-            "worker": 0,
-            "typ_id": "0",
-            "startdate": "",
-            "enddate": ""
-        };
+
         const {GetEvents, GetCounts, alert} = this.props;
 
         return (
             <div className="row">
 
+                <ModalFilter Params={CalParams}  GetCounts={GetCounts} GetEvent={GetEvents}/>
                 <FullCalendar GetCounts={GetCounts} GetEvent={GetEvents} Params={CalParams}/>
                 <LeftCounts GetCounts={GetCounts} Params={CalParams}/>
                 {alert.message &&
