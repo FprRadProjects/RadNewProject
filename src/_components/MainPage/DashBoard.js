@@ -18,6 +18,7 @@ var CalParams = {
 
 class DashBoard extends Component {
 <<<<<<< HEAD
+<<<<<<< HEAD
     componentDidMount() {
         const {GetCounts}=this.props;
         let data = {"seen":2,"done":1,"date":0,"calendar":"","worker":0,"typ_id":"0"}
@@ -77,6 +78,22 @@ class DashBoard extends Component {
         const {GetEvents, GetCounts,alert} = this.props;
 
         return (
+=======
+    render() {
+        CalParams = {
+            "seen": 2,
+            "done": 0,
+            "date": 4,
+            "calendar": "",
+            "worker": 0,
+            "typ_id": "0",
+            "startdate": "",
+            "enddate": ""
+        };
+        const {GetEvents, GetCounts,alert} = this.props;
+
+        return (
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
             <div className="row">
 
                 <FullCalendar GetCounts={GetCounts} GetEvent={GetEvents} Params={CalParams}/>
@@ -84,6 +101,9 @@ class DashBoard extends Component {
                 {alert.message &&
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
                 }
+<<<<<<< HEAD
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+=======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
             </div>
         );
@@ -106,16 +126,22 @@ DashBoard.contextTypes = {
 
 function mapStateToProps(state) {
 <<<<<<< HEAD
+<<<<<<< HEAD
     const { Value} = state.Common;
    console.log(Value)
     return {
         Value
 =======
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     const {alert} = state;
     const {lang} = state.i18nState
     return {
         alert,
         lang
+<<<<<<< HEAD
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+=======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     };
 }
@@ -126,8 +152,13 @@ const mapDispatchToProps = dispatch => ({
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const connectedDashBoard = connect(mapStateToProps,mapDispatchToProps)(DashBoard);
 export { connectedDashBoard as DashBoard };
+=======
+const connectedDashBoard = connect(mapStateToProps, mapDispatchToProps)(DashBoard);
+export {connectedDashBoard as DashBoard};
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 const connectedDashBoard = connect(mapStateToProps, mapDispatchToProps)(DashBoard);
 export {connectedDashBoard as DashBoard};

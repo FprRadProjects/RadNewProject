@@ -5,12 +5,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 <<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
       <change beforePath="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_services/Secretariat/DashBoards/References.action.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/index.js" afterDir="false" />
 =======
@@ -24,7 +27,10 @@
       <change beforePath="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js" afterDir="false" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 23c3db3ed34f66156144eb8f46915b522b5a4cf6
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     </list>
@@ -49,14 +55,8 @@
               <caret line="11" column="28" selection-start-line="11" selection-start-column="28" selection-end-line="11" selection-end-column="28" />
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
-    <leaf>
-      <file leaf-file-name="basic_info.action.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/_actions/General/Automation/BasicInfo/basic_info.action.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="17" column="27" lean-forward="true" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
->>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     <leaf>
@@ -66,6 +66,19 @@
             <state relative-caret-position="238">
               <caret line="17" column="27" lean-forward="true" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+=======
+<<<<<<< HEAD
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+    <leaf>
+      <file leaf-file-name="basic_info.action.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/_actions/General/Automation/BasicInfo/basic_info.action.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="17" column="27" lean-forward="true" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+>>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
     <leaf>
@@ -80,6 +93,8 @@
               <caret line="17" column="27" lean-forward="true" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 >>>>>>> 23c3db3ed34f66156144eb8f46915b522b5a4cf6
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
               <folding>
@@ -106,6 +121,7 @@
           <provider selected="true" editor-type-id="text-editor">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             <state relative-caret-position="323">
               <caret line="21" column="26" lean-forward="true" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
 =======
@@ -113,6 +129,8 @@
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 <<<<<<< HEAD
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
             <state relative-caret-position="-272">
               <caret line="5" column="36" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
 =======
@@ -124,7 +142,10 @@
               <caret line="16" column="20" lean-forward="true" selection-start-line="16" selection-start-column="20" selection-end-line="16" selection-end-column="21" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 23c3db3ed34f66156144eb8f46915b522b5a4cf6
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
             </state>
@@ -149,6 +170,7 @@
               <caret line="5" column="13" lean-forward="true" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       <file leaf-file-name="project_info.constant.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_constants/Projects/project_info.constant.js">
@@ -178,6 +200,8 @@
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
       <file leaf-file-name="project_info.constant.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_constants/Projects/project_info.constant.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -190,6 +214,9 @@
       </file>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/References.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -217,6 +244,9 @@
         </entry>
       </file>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 <<<<<<< HEAD
@@ -285,6 +315,7 @@
                 <element signature="e#0#25#0" expanded="true" />
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/_reducers/index.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -305,6 +336,20 @@
                 <element signature="e#0#40#0" expanded="true" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 <<<<<<< HEAD
+=======
+=======
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/_reducers/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+>>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+<<<<<<< HEAD
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 =======
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
@@ -330,6 +375,7 @@
               <caret line="15" column="15" selection-start-line="15" selection-start-column="15" selection-end-line="15" selection-end-column="34" />
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
             <state>
               <caret lean-forward="true" selection-end-line="10" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
@@ -338,6 +384,8 @@
               <caret lean-forward="true" selection-end-line="10" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 =======
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
             <state>
               <caret lean-forward="true" selection-end-line="10" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
@@ -345,6 +393,9 @@
             <state>
               <caret lean-forward="true" selection-end-line="10" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+<<<<<<< HEAD
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+=======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
             </state>
           </provider>
@@ -478,6 +529,7 @@
         <option value="$PROJECT_DIR$/src/_actions/General/Automation/BasicInfo/basic_info.action.js" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/src/_actions/Secretariat/DashBoards/References.action.js" />
 =======
 <<<<<<< HEAD
@@ -485,6 +537,11 @@
 =======
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 >>>>>>> 23c3db3ed34f66156144eb8f46915b522b5a4cf6
+=======
+>>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+=======
+>>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 =======
@@ -673,9 +730,30 @@
 =======
               <item name="_actions" type="462c0819:PsiDirectoryNode" />
               <item name="General" type="462c0819:PsiDirectoryNode" />
+<<<<<<< HEAD
               <item name="Automation" type="462c0819:PsiDirectoryNode" />
               <item name="BasicInfo" type="462c0819:PsiDirectoryNode" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+=======
+<<<<<<< HEAD
+            </path>
+            <path>
+              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="_actions" type="462c0819:PsiDirectoryNode" />
+              <item name="General" type="462c0819:PsiDirectoryNode" />
+              <item name="Automation" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RadNewProject" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="_actions" type="462c0819:PsiDirectoryNode" />
+              <item name="General" type="462c0819:PsiDirectoryNode" />
+              <item name="Automation" type="462c0819:PsiDirectoryNode" />
+              <item name="BasicInfo" type="462c0819:PsiDirectoryNode" />
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
             </path>
             <path>
               <item name="RadReactProject" type="b2602c69:ProjectViewProjectNode" />
@@ -720,7 +798,10 @@
               <item name="General" type="462c0819:PsiDirectoryNode" />
               <item name="Automation" type="462c0819:PsiDirectoryNode" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+<<<<<<< HEAD
 >>>>>>> 23c3db3ed34f66156144eb8f46915b522b5a4cf6
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
             </path>
             <path>
               <item name="RadNewProject" type="b2602c69:ProjectViewProjectNode" />
@@ -789,7 +870,10 @@
               <item name="Automation" type="462c0819:PsiDirectoryNode" />
               <item name="BasicInfo" type="462c0819:PsiDirectoryNode" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+<<<<<<< HEAD
 >>>>>>> 23c3db3ed34f66156144eb8f46915b522b5a4cf6
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
             </path>
           </expand>
           <select />
@@ -872,13 +956,17 @@
 =======
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 23c3db3ed34f66156144eb8f46915b522b5a4cf6
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     <option name="totallyTimeSpent" value="163054000" />
@@ -895,6 +983,8 @@
 >>>>>>> 23c3db3ed34f66156144eb8f46915b522b5a4cf6
 =======
 <<<<<<< HEAD
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     <option name="totallyTimeSpent" value="160259000" />
 =======
     <option name="totallyTimeSpent" value="161408000" />
@@ -902,6 +992,9 @@
 =======
     <option name="totallyTimeSpent" value="161408000" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+<<<<<<< HEAD
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+=======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
   </component>
   <component name="ToolWindowManager">
@@ -1165,80 +1258,7 @@
     <entry file="file://$PROJECT_DIR$/src/_constants/General/index.js">
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
 <<<<<<< HEAD
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="23" selection-start-column="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
 <<<<<<< HEAD
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="47" column="35" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/_components/MasterPage/MasterPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-97">
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/_actions/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="17" selection-start-column="17" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="302">
-          <caret line="28" column="42" lean-forward="true" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/_reducers/Secretariat/DashBoards/DashBoard.reducer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="27" lean-forward="true" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/_reducers/Projects/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="38" selection-start-column="38" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/_reducers/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
-=======
-    <entry file="file://$PROJECT_DIR$/src/_constants/General/Automation/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="23" selection-start-column="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/_constants/General/Automation/BasicInfo/index.js">
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
       <provider selected="true" editor-type-id="text-editor">
@@ -1282,6 +1302,88 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="302">
           <caret line="28" column="42" lean-forward="true" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_reducers/Secretariat/DashBoards/DashBoard.reducer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="27" lean-forward="true" selection-end-line="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_reducers/Projects/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="38" selection-start-column="38" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_reducers/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+=======
+    <entry file="file://$PROJECT_DIR$/src/_constants/General/Automation/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_constants/General/Automation/BasicInfo/index.js">
+<<<<<<< HEAD
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+    <entry file="file://$PROJECT_DIR$/src/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_components/Secretariat/DashBoards/Works.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="47" column="35" selection-start-line="47" selection-start-column="35" selection-end-line="47" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_components/MasterPage/MasterPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-97">
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/_actions/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="17" selection-start-column="17" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="28" column="42" lean-forward="true" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
           <folding>
             <element signature="e#0#40#0" expanded="true" />
@@ -1373,6 +1475,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+<<<<<<< HEAD
 =======
     <entry file="file://$PROJECT_DIR$/src/_constants/General/Automation/index.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1515,6 +1618,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
           <folding>
             <element signature="e#0#40#0" expanded="true" />
           </folding>
@@ -1533,6 +1638,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/_constants/index.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+=======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
         <state relative-caret-position="102">
@@ -1584,18 +1692,24 @@
             <element signature="e#0#25#0" expanded="true" />
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 23c3db3ed34f66156144eb8f46915b522b5a4cf6
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     <entry file="file://$PROJECT_DIR$/src/_actions/Projects/Info/projects_info.action.js">
       <provider selected="true" editor-type-id="text-editor">
+=======
+    <entry file="file://$PROJECT_DIR$/src/_actions/Projects/Info/projects_info.action.js">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
 =======
     <entry file="file://$PROJECT_DIR$/src/_actions/Projects/Info/projects_info.action.js">
       <provider selected="true" editor-type-id="text-editor">
 =======
     <entry file="file://$PROJECT_DIR$/src/_actions/Projects/Info/projects_info.action.js">
       <provider selected="true" editor-type-id="text-editor">
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
-    <entry file="file://$PROJECT_DIR$/src/_actions/Projects/Info/projects_info.action.js">
-      <provider selected="true" editor-type-id="text-editor">
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
         <state relative-caret-position="238">
@@ -1627,6 +1741,7 @@
             <element signature="e#108#143#0" expanded="true" />
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     <entry file="file://$PROJECT_DIR$/src/_actions/General/Automation/BasicInfo/basic_info.action.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -1635,6 +1750,16 @@
           <folding>
             <element signature="e#0#56#0" expanded="true" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
+=======
+    <entry file="file://$PROJECT_DIR$/src/_actions/General/Automation/BasicInfo/basic_info.action.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="17" column="27" lean-forward="true" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#56#0" expanded="true" />
+>>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+<<<<<<< HEAD
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     <entry file="file://$PROJECT_DIR$/src/_actions/General/Automation/BasicInfo/basic_info.action.js">
@@ -1653,6 +1778,8 @@
           <folding>
             <element signature="e#0#56#0" expanded="true" />
 >>>>>>> d8066155a9d94c60a4a1b53dfb4226119a527d98
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
           </folding>

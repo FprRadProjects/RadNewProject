@@ -67,9 +67,13 @@ class LoginPage extends React.Component {
                                     <div className="input-group-prepend">
                                         <span className="input-group-text"><i className="r-login__icon r-login__icon--username"></i></span>
                                     </div>
+<<<<<<< HEAD
 
                                     <input className="form-control" type="text" name="username" placeholder={this.context.t("username")} autoComplete="off" value={username} onChange={this.handleChange} />
 
+=======
+                                    <input className="form-control" type="text" name="username" placeholder={this.context.t("username")} autoComplete="off" value={username} onChange={this.handleChange} />
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
                                 </div>
                                 {submitted && !username && 
                                 <div className="form-control-feedback text-danger mt-2">{this.context.t("required_username")}</div>
@@ -80,9 +84,13 @@ class LoginPage extends React.Component {
                                     <div className="input-group-prepend">
                                         <span className="input-group-text"><i className="r-login__icon r-login__icon--password"></i></span>
                                     </div>
+<<<<<<< HEAD
 
                                     <input className="form-control" type="password" name="password" placeholder={this.context.t("password")} autoComplete="off" value={password} onChange={this.handleChange} />
 
+=======
+                                    <input className="form-control" type="password" name="password" placeholder={this.context.t("password")} autoComplete="off" value={password} onChange={this.handleChange} />
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
                                 </div>
                                 {submitted && !password && 
                                 <div className="form-control-feedback text-danger mt-2">{this.context.t("required_password")}</div>
@@ -108,7 +116,10 @@ LoginPage.contextTypes = {
 }
 function mapStateToProps(state) {
     const { loggingIn} = state.authentication;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     const {alert} = state;
     const {lang,translations} = state.i18nState
 
