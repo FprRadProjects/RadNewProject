@@ -6,10 +6,7 @@ export const translations = {
         login: 'ورود',
         required_username: 'نام کاربری لازم به ورود است',
         required_password: 'گذرواژه لازم به ورود است',
-        Login: {
-            username: 'شناسه کاربری',
-            password: 'رمز عبور'
-        }
+        work_kartable: 'کارتابل کار',
     },
     en: {
         SoftWare_Name: 'Rad Web automation',
@@ -18,9 +15,7 @@ export const translations = {
         login: 'login',
         required_username: "Username is required to login",
         required_password: 'Password required to login',
-        Login: {
-            username: 'UserName',
-            password: 'PassWord'
-        }
+        work_kartable: 'work kartable',
+
     },
 }

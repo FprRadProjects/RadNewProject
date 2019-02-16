@@ -3,6 +3,8 @@ import {Link} from 'react-router-dom'
 import NavItem from "./NavItem";
 import {userActions} from '../../_actions/User';
 import {history} from "../../_helpers";
+import PropTypes from "prop-types"
+import {connect} from 'react-redux';
 
 class Header extends Component {
     handleLogout = (event) => {
@@ -12,10 +14,6 @@ class Header extends Component {
 
     render() {
         const {auth: isAuthenticated, users} = this.props;
-        //var useremail =  userActions.GetUserInfo(users);
-
-
-
 
         return (
 
@@ -29,7 +27,7 @@ class Header extends Component {
                 <div className="collapse navbar-collapse" id="navbarsExample04">
                     <ul className="navbar-nav mr-auto">
                         <NavItem className="nav-link" activeOnlyWhenExact={true} to="/">خانه</NavItem>
-                        <NavItem className="nav-link" to="/works">کار تابل کار</NavItem>
+                        <NavItem className="nav-link" to="/works">{this.context.t("work_kartable")}</NavItem>
                         <NavItem className="nav-link" to="/references">کار تابل ارجاعات</NavItem>
                         {users && users !== "Network Error" ?
                             <label className="text-white">
@@ -57,5 +55,17 @@ class Header extends Component {
         );
     }
 }
+Header.contextTypes = {
+    t: PropTypes.func.isRequired
+}
 
-export default Header;
+function mapStateToProps(state) {
+    const {lang} = state.i18nState
+    return {
+        lang
+    };
+}
+
+
+const connectedHeader = connect(mapStateToProps,null)(Header);
+export { connectedHeader as Header };

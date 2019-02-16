@@ -2,7 +2,7 @@ import React from 'react';
 import {BrowserRouter, Route,  Switch} from "react-router-dom";
 import {connect} from 'react-redux';
 import {userActions} from '../../_actions/User';
-import Header from "../sections/Header";
+import {Header} from "../sections/Header";
 import NoMatch from "../NoMatch";
 import  {DashBoard}  from "../MainPage/DashBoard";
 
