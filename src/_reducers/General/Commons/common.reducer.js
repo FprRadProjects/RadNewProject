@@ -22,5 +22,3 @@ export function Common(state = {}, action) {
             return state;
     }
 };
-
-export default Common;

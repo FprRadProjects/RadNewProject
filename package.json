@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@devexpress/dx-react-core": "^1.10.0",
+    "@devexpress/dx-react-grid": "^1.10.0",
+    "@devexpress/dx-react-grid-bootstrap4": "^1.10.0",
     "ag-grid-community": "^19.1.4",
     "ag-grid-enterprise": "^19.1.4",
     "ag-grid-react": "^19.1.2",
@@ -20,6 +23,7 @@
     "react-datepicker-persian": "^1.0.2",
     "react-dom": "^16.7.0",
     "react-files": "^2.4.8",
+    "react-persian-calendar": "^1.0.3",
     "react-persian-datepicker": "^3.0.2",
     "react-radio-buttons": "^1.2.2",
     "react-radio-group": "^3.0.3",

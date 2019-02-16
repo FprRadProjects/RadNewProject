@@ -1,11 +1,10 @@
-import { mainpageConstant } from '../../_constants';
+import {CommonContants as common } from '../../_constants';
 import {mainpageService} from '../../_services'
 
 export const mainpageActions = {
     GetCounts,
     success,
     error,
-    clear
 };
 
 
@@ -15,7 +14,7 @@ function GetCounts(param) {
             .then(
                 data => {
                     if (data.status) {
-                        return data.data;
+                        dispatch(success(data.data));
                     }
                     else {
                         //console.log(data.error)
@@ -29,14 +28,11 @@ function GetCounts(param) {
 }
 
 
-function success(message) {
-    return { type: mainpageConstant.SUCCESS, message };
+function success(data) {
+    return { type: common.SUCCESS, data };
 }
 
 function error(message) {
-    return { type: mainpageConstant.ERROR, message };
+    return { type: common.ERROR, message };
 }
 
-function clear() {
-    return { type: mainpageConstant.CLEAR };
-}

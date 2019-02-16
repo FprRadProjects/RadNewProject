@@ -12,7 +12,6 @@ class Header extends Component {
 
     render() {
         const {auth: isAuthenticated, users} = this.props;
-
         //var useremail =  userActions.GetUserInfo(users);
 
 
@@ -34,7 +33,7 @@ class Header extends Component {
                         <NavItem className="nav-link" to="/references">کار تابل ارجاعات</NavItem>
                         {users && users !== "Network Error" ?
                             <label className="text-white">
-                                کاربر
+                               کاربر: {users.username}
                             </label>
                             : <h5>اطلاعات کاربر در دسترس نیست</h5>}
                         {

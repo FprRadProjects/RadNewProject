@@ -1,4 +1,4 @@
-import {Service_Dashboard} from "../../../_services";
+import {Service_Dashboard} from "../..";
 import {history} from "../../../_helpers";
 import {DashBoardConstant,CommonContants} from "../../../_constants";
 
@@ -12,8 +12,9 @@ function FetchData (params){
             .then(
                 data => {
                     if(data.status) {
-                        dispatch(AddTotalCount(data.data.totalcount));
+
                         dispatch(AddRows(data.data.rows));
+                        dispatch(AddTotalCount(data.data.totalcount));
                     }
                    /* else
                     {

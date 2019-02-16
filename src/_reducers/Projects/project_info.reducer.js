@@ -23,5 +23,3 @@ export function projects(state = {}, action) {
     }
 };
 
-export default projects;
-
