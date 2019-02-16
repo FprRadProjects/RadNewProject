@@ -68,9 +68,13 @@ class LoginPage extends React.Component {
                                         <span className="input-group-text"><i className="r-login__icon r-login__icon--username"></i></span>
                                     </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                                     <input className="form-control" type="text" name="username" placeholder={this.context.t("username")} autoComplete="off" value={username} onChange={this.handleChange} />
 
+=======
+                                    <input className="form-control" type="text" name="username" placeholder={this.context.t("username")} autoComplete="off" value={username} onChange={this.handleChange} />
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
                                     <input className="form-control" type="text" name="username" placeholder={this.context.t("username")} autoComplete="off" value={username} onChange={this.handleChange} />
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
@@ -85,10 +89,13 @@ class LoginPage extends React.Component {
                                         <span className="input-group-text"><i className="r-login__icon r-login__icon--password"></i></span>
                                     </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
                                     <input className="form-control" type="password" name="password" placeholder={this.context.t("password")} autoComplete="off" value={password} onChange={this.handleChange} />
 
 =======
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
                                     <input className="form-control" type="password" name="password" placeholder={this.context.t("password")} autoComplete="off" value={password} onChange={this.handleChange} />
                                 </div>
                                 {submitted && !password && 
@@ -116,7 +123,10 @@ LoginPage.contextTypes = {
 function mapStateToProps(state) {
     const { loggingIn} = state.authentication;
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     const {alert} = state;

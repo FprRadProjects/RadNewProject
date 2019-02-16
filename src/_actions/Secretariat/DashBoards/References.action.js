@@ -3,6 +3,10 @@ import {history} from "../../../_helpers";
 import {DashBoardConstant,CommonContants} from "../../../_constants";
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import {alertActions} from "../../Alert";
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
 import {alertActions} from "../../Alert";
 >>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
@@ -24,6 +28,12 @@ function FetchData (params){
                         dispatch(AddRows(data.data.rows));
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                    }
+                    else {
+                        dispatch(alertActions.error(data.error));
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
 =======
                     }
                     else {
