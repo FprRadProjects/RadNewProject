@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {mainpageActions} from '../../_actions/MainPage';
 import {FullCalendar} from './FullCalendar';
 import {LeftCounts} from './LeftCounts';
+import PropTypes from "prop-types"
 
 var CalParams = {
     "seen": 2,
@@ -16,9 +17,6 @@ var CalParams = {
 };
 
 class DashBoard extends Component {
-
-
-
     render() {
         CalParams = {
             "seen": 2,
@@ -31,7 +29,6 @@ class DashBoard extends Component {
             "enddate": ""
         };
         const {GetEvents, GetCounts,alert} = this.props;
-
 
         return (
             <div className="row">
@@ -56,10 +53,16 @@ const mapDispatchToProps = dispatch => ({
         dispatch(mainpageActions.GetEvents(Params))
     }
 });
+DashBoard.contextTypes = {
+    t: PropTypes.func.isRequired
+}
+
 function mapStateToProps(state) {
     const {alert} = state;
+    const {lang} = state.i18nState
     return {
-        alert
+        alert,
+        lang
     };
 }
 

@@ -6,6 +6,7 @@ import jmoment from 'moment-jalaali';
 import 'fullcalendar-jalaali/fullcalendar.min.js';
 import 'fullcalendar-jalaali/locale-all.js';
 import connect from "react-redux/es/connect/connect";
+import PropTypes from "prop-types"
 
 class FullCalendar extends Component {
     componentWillUpdate(nextProps, nextState, nextContext) {
@@ -15,13 +16,14 @@ class FullCalendar extends Component {
         $(calendar).fullCalendar('removeEventSources');
         $(calendar) .fullCalendar( 'addEventSource', events )
 
+
     }
 
     componentDidMount() {
     const { calendar } = this.refs;
 
-    const{GetEvent,GetCounts,Params}=  this.props;
-    $(calendar).fullCalendar(
+    const{GetEvent,GetCounts,Params,lang}=  this.props;
+        $(calendar).fullCalendar(
         {
             header: {
                 center: 'nextYear ,next ,title ,prev ,prevYear',
@@ -41,9 +43,9 @@ class FullCalendar extends Component {
                 GetCounts(Params);
 
             },
-            isRTL: true,
-            isJalaali:true,
-            locale:"fa"
+            isRTL: lang==="fa"?true:false,
+            isJalaali: lang==="fa"?true:false,
+            locale: lang
         }
     );
 
@@ -56,10 +58,16 @@ class FullCalendar extends Component {
         );
     }
 }
+FullCalendar.contextTypes = {
+    t: PropTypes.func.isRequired
+}
+
 function mapStateToProps(state) {
     const { Events} = state.MainPage;
+    const {lang} = state.i18nState
     return {
-        Events
+        Events,
+        lang
     };
 }
 

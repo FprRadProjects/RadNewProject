@@ -6,6 +6,7 @@ import { dashboards } from './Secretariat';
 import { authentication , users } from './Users';
 import { projects } from './Projects';
 import { MainPage } from './MainPage';
+import {i18nState} from 'redux-i18n'
 
 const rootReducer = combineReducers({
     alert,
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
     dashboards,
     authentication, users,
     projects,
-    MainPage
+    i18nState,
+    MainPage,
 });
 
 export default rootReducer;
