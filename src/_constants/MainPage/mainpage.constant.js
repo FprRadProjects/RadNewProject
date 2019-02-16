@@ -1,5 +1,10 @@
 export const mainpageConstant = {
+<<<<<<< HEAD
     SUCCESS: 'MAINPAGE_SUCCESS',
+=======
+    SUCCESS_COUNT: 'MAINPAGE_SUCCESS_COUNT',
+    SUCCESS_EVENT: 'MAINPAGE_SUCCESS_EVENT',
+>>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
     ERROR: 'MAINPAGE_ERROR',
     CLEAR: 'MAINPAGE_CLEAR'
 };

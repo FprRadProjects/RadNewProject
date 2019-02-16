@@ -5,13 +5,17 @@ import { Common } from './General';
 import { dashboards } from './Secretariat';
 import { authentication , users } from './Users';
 import { projects } from './Projects';
+import { MainPage } from './MainPage';
+import {i18nState} from 'redux-i18n'
 
 const rootReducer = combineReducers({
     alert,
     Common,
     dashboards,
     authentication, users,
-    projects
+    projects,
+    i18nState,
+    MainPage,
 });
 
 export default rootReducer;

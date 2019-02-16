@@ -20,12 +20,10 @@ function CheckAccess(peygir_id) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );
@@ -42,12 +40,10 @@ function CanSetInfoOnWork(peygir_id) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );
@@ -63,12 +59,10 @@ function CanSetProjectOnWork(peygir_id) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );
@@ -85,12 +79,10 @@ function CanEditOnWork(peygir_id) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );
@@ -108,12 +100,10 @@ function CanAddWork(id_tel) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );
@@ -133,12 +123,10 @@ function CanSubOnWork(peygir_id, id_tel) {
                         dispatch(SUCCESS(data.status));
                     }
                     else {
-                        dispatch(FAIL(data.error));
                         dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    dispatch(FAIL(error));
                     dispatch(alertActions.error(error));
                 }
             );

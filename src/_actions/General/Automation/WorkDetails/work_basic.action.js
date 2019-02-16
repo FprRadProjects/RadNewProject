@@ -1,4 +1,5 @@
 import {WorkBasic_service}  from "../../../../_services";
+import {alertActions} from "../../../Alert";
 
 export const WorkBasic_action = {
     WorkInfo
@@ -16,11 +17,11 @@ function WorkInfo(peygir_id) {
                         //console.log(data.data.Info)
                     }
                     else {
-                        //console.log(data.error)
+                        dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    //return console.log(error)
+                    dispatch(alertActions.error(error));
                 }
             );
     }
