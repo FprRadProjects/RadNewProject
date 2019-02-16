@@ -7,11 +7,13 @@ import 'fullcalendar-jalaali/fullcalendar.min.js';
 import 'fullcalendar-jalaali/locale-all.js';
 import connect from "react-redux/es/connect/connect";
 import PropTypes from "prop-types"
+import {setLanguage} from "redux-i18n";
 
 class FullCalendar extends Component {
+
     componentWillUpdate(nextProps, nextState, nextContext) {
         const { calendar } = this.refs;
-        const{Events}=  nextProps;
+        const{Events,lang}=  nextProps;
         const events = Events==undefined?events:Events.AllEvent;
         $(calendar).fullCalendar('removeEventSources');
         $(calendar) .fullCalendar( 'addEventSource', events )
@@ -20,9 +22,11 @@ class FullCalendar extends Component {
     }
 
     componentDidMount() {
-    const { calendar } = this.refs;
 
-    const{GetEvent,GetCounts,Params,lang}=  this.props;
+        const lang= localStorage.getItem("lang");
+        this.props.dispatch(setLanguage(lang))
+        const { calendar } = this.refs;
+        const{GetEvent,GetCounts,Params}=  this.props;
         $(calendar).fullCalendar(
         {
             header: {
