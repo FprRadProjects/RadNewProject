@@ -14,14 +14,19 @@ function login(username, password) {
     let data = new FormData();
     data.append("username", username);
     data.append("password", password);
-    return axios.post(BaseUrl+"Login", data)
-        .then(user => {
+    console.log(UserConfig.GetToken())
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(BaseUrl+"Login", data,UserConfig.GetToken())
+            .then(user => {
+                if(user.data.data!=null)
                 localStorage.setItem("user", JSON.stringify(user.data.data));
                 return Promise.resolve(user.data)
-        })
-        .catch((error) => {
-            return Promise.reject(error.message)
-        })
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    } else
+        return Promise.reject("No");
 
 }
 

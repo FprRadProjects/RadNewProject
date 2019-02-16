@@ -107,7 +107,7 @@ function mapStateToProps(state) {
     const { loggingIn} = state.authentication;
     const {alert} = state;
     const {lang,translations} = state.i18nState
-
+    localStorage.setItem("lang", lang);
     return {
         loggingIn,
         alert,

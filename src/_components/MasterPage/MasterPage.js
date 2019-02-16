@@ -5,8 +5,10 @@ import {userActions} from '../../_actions/User';
 import {Header} from "../sections/Header";
 import NoMatch from "../NoMatch";
 import  {DashBoard}  from "../MainPage/DashBoard";
+import PropTypes from "prop-types"
 
 import {Works,References} from "../Secretariat/DashBoards";
+import {setLanguage} from "redux-i18n";
 
 
 
@@ -15,7 +17,10 @@ class MasterPage extends React.Component {
     componentDidMount() {
         this.props.dispatch(userActions.GetUserInfo());
     }
-
+    componentWillMount() {
+        const lang= localStorage.getItem("lang");
+        this.props.dispatch(setLanguage(lang))
+    }
     render() {
         const { users} = this.props;
         return (
@@ -39,7 +44,7 @@ class MasterPage extends React.Component {
 function mapStateToProps(state) {
     const {users} = state;
     return {
-        users
+        users,
     };
 }
 

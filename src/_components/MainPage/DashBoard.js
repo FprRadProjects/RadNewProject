@@ -4,6 +4,7 @@ import {mainpageActions} from '../../_actions/MainPage';
 import {FullCalendar} from './FullCalendar';
 import {LeftCounts} from './LeftCounts';
 import PropTypes from "prop-types"
+import {setLanguage} from "redux-i18n";
 
 var CalParams = {
     "seen": 2,
@@ -17,12 +18,19 @@ var CalParams = {
 };
 
 class DashBoard extends Component {
-    componentDidMount() {
-        const {GetCounts}=this.props;
-        let data = {"seen":2,"done":1,"date":0,"calendar":"","worker":0,"typ_id":"0"}
-        GetCounts(data)
+    constructor(props) {
+        super(props);
+
     }
 
+
+
+    componentDidMount() {
+        const {GetCounts} = this.props;
+        let data = {"seen": 2, "done": 1, "date": 0, "calendar": "", "worker": 0, "typ_id": "0"}
+        GetCounts(data);
+
+    }
     render() {
         CalParams = {
             "seen": 2,
@@ -34,13 +42,13 @@ class DashBoard extends Component {
             "startdate": "",
             "enddate": ""
         };
-        const {GetEvents, GetCounts,alert} = this.props;
+        const {GetEvents, GetCounts, alert} = this.props;
 
         return (
             <div className="row">
 
                 <FullCalendar GetCounts={GetCounts} GetEvent={GetEvents} Params={CalParams}/>
-                <LeftCounts GetCounts={GetCounts} Params={CalParams} />
+                <LeftCounts GetCounts={GetCounts} Params={CalParams}/>
                 {alert.message &&
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
                 }
@@ -72,8 +80,9 @@ function mapStateToProps(state) {
         lang
     };
 }
-const connectedDashBoard = connect(mapStateToProps,mapDispatchToProps)(DashBoard);
-export { connectedDashBoard as DashBoard };
+
+const connectedDashBoard = connect(mapStateToProps, mapDispatchToProps)(DashBoard);
+export {connectedDashBoard as DashBoard};
 
 
 

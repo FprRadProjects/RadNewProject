@@ -3,17 +3,23 @@ import axios from "axios/index";
 
 
 export const UserConfig = {
-    GetToken
+    GetToken,
 };
 
 
 function GetToken() {
-    let headers = null;
+    var headers = { "Token": "","lang":""};
     let apiToken = localStorage.getItem("user");
-    if (apiToken != null) {
+    let Lang = localStorage.getItem("lang");
+    if (apiToken !== null) {
         const newuser = JSON.parse(apiToken);
-        headers = { "Token": newuser.Token };
-        return {headers : headers}
+        headers.Token = newuser.Token;
     }
-    else return headers;
+    if (Lang !== null) {
+        headers.lang = Lang;
+    }
+    if (Lang === null && apiToken===null) {
+        return null;
+    }
+    return {headers : headers}
 }
