@@ -90,7 +90,6 @@ class LoginPage extends React.Component {
 
 =======
                                     <input className="form-control" type="password" name="password" placeholder={this.context.t("password")} autoComplete="off" value={password} onChange={this.handleChange} />
->>>>>>> 5fb4c5cd86af2aa19fbcaeb48924aa4d70f8caab
                                 </div>
                                 {submitted && !password && 
                                 <div className="form-control-feedback text-danger mt-2">{this.context.t("required_password")}</div>
