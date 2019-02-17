@@ -5,6 +5,7 @@ import {FullCalendar} from './FullCalendar';
 import {LeftCounts} from './LeftCounts';
 import PropTypes from "prop-types"
 import {ModalFilter} from './ModalFilter';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup } from 'reactstrap';
 
 var CalParams = {
     "seen": "2",
@@ -20,7 +21,17 @@ var CalParams = {
 class DashBoard extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            ...this.state,
+            modal: false,
+            backdrop: "static"
+        }; this.toggle = this.toggle.bind(this);
 
+    }
+    toggle() {
+        this.setState(prevState => ({
+            modal: !prevState.modal
+        }));
     }
 
 
@@ -37,8 +48,17 @@ class DashBoard extends Component {
 
         return (
             <div className="row">
-
-                <ModalFilter Params={CalParams}  GetCounts={GetCounts} GetEvent={GetEvents}/>
+                <Button color="danger" onClick={this.toggle}>نمایش فیلتر ها</Button>
+                <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} backdrop={this.state.backdrop}>
+                    <ModalHeader toggle={this.toggle}>نمایش فیلتر ها</ModalHeader>
+                    <ModalBody>
+                        <ModalFilter Params={CalParams}  GetCounts={GetCounts} GetEvent={GetEvents}/>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+                        <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    </ModalFooter>
+                </Modal>
                 <FullCalendar GetCounts={GetCounts} GetEvent={GetEvents} Params={CalParams}/>
                 <LeftCounts GetCounts={GetCounts} Params={CalParams}/>
                 {alert.message &&

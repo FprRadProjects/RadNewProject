@@ -4,40 +4,36 @@ import {connect} from "react-redux"
 import {Act_Reference, userActions} from "../../../_actions";
 import {GridComponent} from "../../Config/GridComponent";
 import CalendarComponent from "../../Config/CalendarComponent";
+import {RadioFilter} from "./RadioFilter";
+
 var Params = {
     "page": 0,
     "pagesize": 10,
-    "seen": 0,
-    "done": 2,
-    "date": 0,
+    "seen": "2",
+    "done": "0",
+    "date": "0",
     "calendar": "",
-    "worker": 1,
+    "worker": "0",
     "orderby": "tarikhaction",
     "direction": "desc",
     "filter":[]
 
 };
 class References extends Component {
+    constructor(props){
+        super(props);
+
+    }
+
     CalendarChange(event){
         event= event.replace(/-/g, '/');;
         Params.calendar = event;
+        Params.date = "0";
         const{FetchData}= this.props;
         FetchData(Params);
     }
     render() {
-        Params = {
-            "page": 0,
-            "pagesize": 10,
-            "seen": 0,
-            "done": 2,
-            "date": 0,
-            "calendar": "",
-            "worker": 1,
-            "orderby": "tarikhaction",
-            "direction": "desc",
-            "filter":[]
 
-        };
         const{FetchData}= this.props;
         const  columns= [
             {name: 'peygir_id', title: 'شاخص کار'},
@@ -54,11 +50,15 @@ class References extends Component {
         return (
             <div>
 
+                <RadioFilter Params={Params}  fetchData={FetchData.bind(this)} />
                 <CalendarComponent CalendarChange={this.CalendarChange.bind(this)}/>
                 <GridComponent  columns={columns} booleanColumns={booleanColumns}
                       UrlParams={Params} fetchData={FetchData.bind(this)}
                       currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                 />
+
+
+
             </div>
         );
     }

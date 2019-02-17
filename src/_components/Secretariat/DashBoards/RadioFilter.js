@@ -1,9 +1,10 @@
+
 import React, {Component} from 'react';
 import {RadioGroup, Radio} from 'react-radio-group'
 import connect from "react-redux/es/connect/connect";
 import PropTypes from "prop-types"
 
-class ModalFilter extends Component {
+class RadioFilter extends Component {
 
     constructor(props) {
         super(props);
@@ -22,13 +23,13 @@ class ModalFilter extends Component {
         let fields=this.state.filterFields;
         let targetName=e.target.name;
         fields[targetName]=Value;
-        const {GetEvent, GetCounts, Params} = this.props;
+        const {fetchData, Params} = this.props;
         if(targetName==="date")
             Params["calendar"] = "";
+
         this.setState({fields});
         Params[targetName] = Value;
-        GetCounts(Params)
-        GetEvent(Params)
+        fetchData(Params)
     }
 
     render() {
@@ -101,7 +102,7 @@ class ModalFilter extends Component {
 }
 
 
-ModalFilter.contextTypes = {
+RadioFilter.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
@@ -112,5 +113,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedModalFilter = connect(mapStateToProps, null)(ModalFilter);
-export {connectedModalFilter as ModalFilter};
+const connectedRadioFilter = connect(mapStateToProps, null)(RadioFilter);
+export {connectedRadioFilter as RadioFilter};
