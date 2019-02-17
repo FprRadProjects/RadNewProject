@@ -5,33 +5,28 @@ import PropTypes from "prop-types"
 
 class ModalFilter extends Component {
 
-    handleDoneChange(value) {
-        const {GetEvent, GetCounts, Params} = this.props;
-
-        Params.done = value;
-        GetCounts(Params)
-        GetEvent(Params)
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...this.state,
+            filterFields: {
+                done: "0",
+                seen: "2",
+                worker: "0",
+                date: "0"
+            }
+        }
     }
 
-    handleSeenChange(value) {
+    handleChange(Value, e) {
+        let fields=this.state.filterFields;
+        let targetName=e.target.name;
+        fields[targetName]=Value;
         const {GetEvent, GetCounts, Params} = this.props;
 
-        Params.seen = value;
-        GetCounts(Params)
-        GetEvent(Params)
-    }
-
-    handleWorkerChange(value) {
-        const {GetEvent, GetCounts, Params} = this.props;
-
-        Params.worker = value;
-        GetCounts(Params)
-        GetEvent(Params)
-    }
-    handleDateChange(value) {
-        const {GetEvent, GetCounts, Params} = this.props;
-
-        Params.date = value;
+        this.setState({fields});
+        Params[targetName] = Value;
+        console.log(Params)
         GetCounts(Params)
         GetEvent(Params)
     }
@@ -39,7 +34,8 @@ class ModalFilter extends Component {
     render() {
         return (
             <div className="col-lg-3">
-                <RadioGroup onChange={this.handleDoneChange.bind(this)}
+                <RadioGroup onChange={this.handleChange.bind(this)}
+                            selectedValue={this.state.filterFields.done}
                             name="done">
                     <label>
                         <Radio value="0"/>{this.context.t("undone")}
@@ -49,7 +45,8 @@ class ModalFilter extends Component {
                     </label>
                 </RadioGroup>
                 <br/>
-                <RadioGroup onChange={this.handleSeenChange.bind(this)}
+                <RadioGroup onChange={this.handleChange.bind(this)}
+                            selectedValue={this.state.filterFields.seen}
                             name="seen">
                     <label>
                         <Radio value="0"/>{this.context.t("unseen")}
@@ -62,7 +59,8 @@ class ModalFilter extends Component {
                     </label>
                 </RadioGroup>
                 <br/>
-                <RadioGroup onChange={this.handleWorkerChange.bind(this)}
+                <RadioGroup onChange={this.handleChange.bind(this)}
+                            selectedValue={this.state.filterFields.worker}
                             name="worker">
                     <label>
                         <Radio value="0"/>{this.context.t("worker")}
@@ -78,7 +76,8 @@ class ModalFilter extends Component {
                     </label>
                 </RadioGroup>
                 <br/>
-                <RadioGroup onChange={this.handleDateChange.bind(this)}
+                <RadioGroup onChange={this.handleChange.bind(this)}
+                            selectedValue={this.state.filterFields.date}
                             name="date">
                     <label>
                         <Radio value="0"/>{this.context.t("all")}
@@ -93,7 +92,7 @@ class ModalFilter extends Component {
                         <Radio value="3"/>{this.context.t("next_seven_days")}
                     </label>
                     <label>
-                        <Radio value="3"/>{this.context.t("Current_day")}
+                        <Radio value="4"/>{this.context.t("current_day")}
                     </label>
                 </RadioGroup>
             </div>

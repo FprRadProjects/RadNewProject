@@ -33,6 +33,7 @@ function GetCounts(param) {
 
 
 function GetEvents(param) {
+    console.log(param)
     return dispatch => {
         mainpageService.GetEvents(param)
             .then(

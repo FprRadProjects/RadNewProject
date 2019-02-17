@@ -7,11 +7,11 @@ import PropTypes from "prop-types"
 import {ModalFilter} from './ModalFilter';
 
 var CalParams = {
-    "seen": 2,
-    "done": 0,
-    "date": 4,
+    "seen": "2",
+    "done": "0",
+    "date": "0",
     "calendar": "",
-    "worker": 0,
+    "worker": "0",
     "typ_id": "0",
     "startdate": "",
     "enddate": ""
@@ -27,7 +27,7 @@ class DashBoard extends Component {
 
     componentDidMount() {
         const {GetCounts} = this.props;
-        let data = {"seen": 2, "done": 1, "date": 0, "calendar": "", "worker": 0, "typ_id": "0"}
+        let data = {"seen": "2", "done": "0", "date": "0", "calendar": "", "worker": "0", "typ_id": "0"}
         GetCounts(data);
 
     }
