@@ -26,7 +26,6 @@ class ModalFilter extends Component {
 
         this.setState({fields});
         Params[targetName] = Value;
-        console.log(Params)
         GetCounts(Params)
         GetEvent(Params)
     }
