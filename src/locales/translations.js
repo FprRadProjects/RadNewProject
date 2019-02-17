@@ -22,6 +22,7 @@ export const translations = {
         empty:"خالی",
         unselected:"انتخاب نشده",
         selected:"انتخاب شده",
+        user_login:"کاربر وارد شده",
 
         //---------------اقدام------------------شروع
         logout: 'خروج',
@@ -60,6 +61,7 @@ export const translations = {
         empty:"Empty",
         unselected:"UnSelected",
         selected:"Selected",
+        user_login:"User Login",
         //Start---------------Actions-----------------
         logout: 'Logout',
         //End-----------------Actions----------------

@@ -31,7 +31,7 @@ class Header extends Component {
                         <NavItem className="nav-link" to="/references">{this.context.t("references_dashboard")}</NavItem>
                         {users && users !== "Network Error" ?
                             <label className="text-white">
-                                {this.context.t("worker")}: {users.username}
+                                {this.context.t("user_login")}: {users.username}
                             </label>
                             : <h5>{this.context.t("user_info_not_available")}</h5>}
                         {
