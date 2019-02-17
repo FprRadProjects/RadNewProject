@@ -8,7 +8,7 @@ import './content/css/bootstrap-rtl.min.css'
 import './content/css/main.css'
 import I18n from "redux-i18n"
 
-import {translations} from "../src/locales/translations"
+import {translations} from "../src/locales"
 render(
     <Provider store={store}>
         <I18n translations={translations}  >

@@ -26,19 +26,19 @@ class Header extends Component {
 
                 <div className="collapse navbar-collapse" id="navbarsExample04">
                     <ul className="navbar-nav mr-auto">
-                        <NavItem className="nav-link"  activeOnlyWhenExact={true} to="/">خانه</NavItem>
-                        <NavItem className="nav-link" to="/works">{this.context.t("work_kartable")}</NavItem>
-                        <NavItem className="nav-link" to="/references">کار تابل ارجاعات</NavItem>
+                        <NavItem className="nav-link"  activeOnlyWhenExact={true} to="/">{this.context.t("home")}</NavItem>
+                        <NavItem className="nav-link" to="/works">{this.context.t("work_dashboard")}</NavItem>
+                        <NavItem className="nav-link" to="/references">{this.context.t("references_dashboard")}</NavItem>
                         {users && users !== "Network Error" ?
                             <label className="text-white">
-                               کاربر: {users.username}
+                                {this.context.t("worker")}: {users.username}
                             </label>
-                            : <h5>اطلاعات کاربر در دسترس نیست</h5>}
+                            : <h5>{this.context.t("user_info_not_available")}</h5>}
                         {
                             isAuthenticated
                                 ? (
                                     <Link className="btn btn-success " to="/login"
-                                          onClick={this.handleLogout.bind(this)}>خروج</Link>
+                                          onClick={this.handleLogout.bind(this)}>{this.context.t("logout")}</Link>
                                 ) : (
                                     <div>
                                     </div>

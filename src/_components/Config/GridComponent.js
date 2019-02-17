@@ -1,5 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from "prop-types"
 
 import 'bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css';
 import {
@@ -305,11 +306,14 @@ const BooleanTypeProvider = props => (
         );
     }
 }
+GridComponent.contextTypes = {
+    t: PropTypes.func.isRequired
+}
 
 const mapStateToProps = state => ({
     rows: state.dashboards.rows,
-    totalCount: state.dashboards.totalCount
-
+    totalCount: state.dashboards.totalCount,
+    lang: state.i18nState.lang
 });
 
 
