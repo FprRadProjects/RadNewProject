@@ -61,7 +61,7 @@ class LoginPage extends React.Component {
                                 ))}
                             </select>
                         </div>
-                        <form className="r-login__body" name="form" onSubmit={this.handleSubmit}>
+                        <form className="r-login__body" name="form" id="login_form" onSubmit={this.handleSubmit}>
                             <div className={'form-group' + (submitted && !username ? ' has-error' : '')}>
                                 <div className="input-group">
                                     <div className="input-group-prepend">

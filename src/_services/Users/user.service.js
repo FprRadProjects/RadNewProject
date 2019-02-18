@@ -14,6 +14,7 @@ function login(username, password) {
     let data = new FormData();
     data.append("username", username);
     data.append("password", password);
+    console.log(UserConfig.GetToken())
     if (UserConfig.GetToken() !== null) {
         return axios.post(BaseUrl+"Login", data,UserConfig.GetToken())
             .then(user => {

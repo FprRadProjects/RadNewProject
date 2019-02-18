@@ -1,8 +1,9 @@
-
-import {mainpageConstant as constants } from '../../_constants';
+import {mainpageConstant as constants} from '../../_constants';
 import {mainpageService} from '../../_services'
 import {alertActions} from "../Alert";
 import {loadingActions} from "../Loading";
+import {history} from "../../_helpers";
+import {userActions} from '../../_actions';
 
 export const mainpageActions = {
     GetCounts,
@@ -20,10 +21,13 @@ function GetCounts(param) {
                 data => {
                     if (data.status) {
                         dispatch(successCount(data.data));
-                    }
-                    else {
+                    } else if (data.code !== 0) {
                         dispatch(alertActions.error(data.error));
-                    }
+                    } else
+                      {
+                          userActions.logout();
+                          history.push("/login")
+                      }
                 },
                 error => {
                     dispatch(alertActions.error(error));
@@ -42,10 +46,13 @@ function GetEvents(param) {
                     if (data.status) {
                         dispatch(successEvent(data.data));
                         dispatch(loadingActions.HideLoading());
-                    }
-                    else {
+                    } else if (data.code !== 0) {
                         dispatch(alertActions.error(data.error));
                         dispatch(loadingActions.HideLoading());
+                    } else
+                    {
+                        userActions.logout();
+                        history.push("/login")
                     }
                 },
                 error => {
@@ -58,11 +65,11 @@ function GetEvents(param) {
 
 
 function successCount(data) {
-    return { type: constants.SUCCESS_COUNT, data };
+    return {type: constants.SUCCESS_COUNT, data};
 }
 
 function successEvent(data) {
-    return { type: constants.SUCCESS_EVENT, data };
+    return {type: constants.SUCCESS_EVENT, data};
 }
 
 
