@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-//import GridsService from "../../../_services/Grids/GridsService";
 import {connect} from "react-redux"
 import {Act_Reference, userActions} from "../../../_actions";
 import {GridComponent} from "../../Config/GridComponent";
 import CalendarComponent from "../../Config/CalendarComponent";
 import {RadioFilter} from "./RadioFilter";
+import PropTypes from "prop-types"
 
 var Params = {
     "page": 0,
@@ -34,7 +34,7 @@ class References extends Component {
     }
     render() {
 
-        const{FetchData}= this.props;
+        const{FetchData,alert}= this.props;
         const  columns= [
             {name: 'peygir_id', title: 'شاخص کار'},
             {name: 'worker', title: 'کاربر'},
@@ -56,7 +56,9 @@ class References extends Component {
                       UrlParams={Params} fetchData={FetchData.bind(this)}
                       currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                 />
-
+                {alert.message &&
+                <div className={`alert ${alert.type}`}>{alert.message}</div>
+                }
 
 
             </div>
@@ -70,10 +72,22 @@ const mapDispatchToProps = dispatch => ({
         dispatch(Act_Reference.FetchData(Params))
     }
 });
+References.contextTypes = {
+    t: PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+
+    const {alert} = state;
+    const {lang} = state.i18nState
+    return {
+        alert,
+        lang
+    };
+}
 
 
-
-const connectedReferences = connect(null, mapDispatchToProps)(References);
+const connectedReferences = connect(mapStateToProps, mapDispatchToProps)(References);
 export { connectedReferences as References };
 
 
