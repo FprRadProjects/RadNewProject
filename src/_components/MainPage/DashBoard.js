@@ -44,10 +44,16 @@ class DashBoard extends Component {
     }
     render() {
 
-        const {GetEvents, GetCounts, alert} = this.props;
+        const {GetEvents, GetCounts, alert,loading} = this.props;
 
         return (
             <div className="row">
+                {loading &&
+                <div className={`alert ${alert.type}`}>...Loading</div>
+                }
+                {alert.message &&
+                <div className={`alert ${alert.type}`}>{alert.message}</div>
+                }
                 <Button color="danger" onClick={this.toggle}>نمایش فیلتر ها</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={this.toggle}>نمایش فیلتر ها</ModalHeader>
@@ -61,9 +67,7 @@ class DashBoard extends Component {
                 </Modal>
                 <FullCalendar GetCounts={GetCounts} GetEvent={GetEvents} Params={CalParams}/>
                 <LeftCounts GetCounts={GetCounts} Params={CalParams}/>
-                {alert.message &&
-                <div className={`alert ${alert.type}`}>{alert.message}</div>
-                }
+
             </div>
         );
     }
@@ -86,9 +90,11 @@ DashBoard.contextTypes = {
 function mapStateToProps(state) {
 
     const {alert} = state;
+    const {loading} = state.loading;
     const {lang} = state.i18nState
     return {
         alert,
+        loading,
         lang
     };
 }

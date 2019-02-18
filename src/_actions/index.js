@@ -1,4 +1,5 @@
 export * from './Alert';
+export * from './Loading';
 export * from './User';
 export * from './Secretariat';
 export * from './MainPage';

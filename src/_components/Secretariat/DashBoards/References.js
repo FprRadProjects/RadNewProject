@@ -34,7 +34,7 @@ class References extends Component {
     }
     render() {
 
-        const{FetchData,alert}= this.props;
+        const{FetchData,alert,loading}= this.props;
         const  columns= [
             {name: 'peygir_id', title: 'شاخص کار'},
             {name: 'worker', title: 'کاربر'},
@@ -49,16 +49,19 @@ class References extends Component {
 
         return (
             <div>
-
+                {loading &&
+                <div className={`alert ${alert.type}`}>...Loading</div>
+                }
+                {alert.message &&
+                <div className={`alert ${alert.type}`}>{alert.message}</div>
+                }
                 <RadioFilter Params={Params}  fetchData={FetchData.bind(this)} />
                 <CalendarComponent CalendarChange={this.CalendarChange.bind(this)}/>
                 <GridComponent  columns={columns} booleanColumns={booleanColumns}
                       UrlParams={Params} fetchData={FetchData.bind(this)}
                       currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                 />
-                {alert.message &&
-                <div className={`alert ${alert.type}`}>{alert.message}</div>
-                }
+
 
 
             </div>
@@ -79,9 +82,11 @@ References.contextTypes = {
 function mapStateToProps(state) {
 
     const {alert} = state;
+    const {loading} = state.loading;
     const {lang} = state.i18nState
     return {
         alert,
+        loading,
         lang
     };
 }

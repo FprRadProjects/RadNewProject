@@ -2,18 +2,19 @@
 import {mainpageConstant as constants } from '../../_constants';
 import {mainpageService} from '../../_services'
 import {alertActions} from "../Alert";
+import {loadingActions} from "../Loading";
 
 export const mainpageActions = {
     GetCounts,
     GetEvents,
     successCount,
     successEvent,
-    error,
 };
 
 
 function GetCounts(param) {
     return dispatch => {
+        dispatch(loadingActions.ShowLoading());
         mainpageService.GetCounts(param)
             .then(
                 data => {
@@ -21,11 +22,11 @@ function GetCounts(param) {
                         dispatch(successCount(data.data));
                     }
                     else {
-                        //console.log(data.error)
+                        dispatch(alertActions.error(data.error));
                     }
                 },
                 error => {
-                    //return console.log(error)
+                    dispatch(alertActions.error(error));
                 }
             );
     }
@@ -33,20 +34,23 @@ function GetCounts(param) {
 
 
 function GetEvents(param) {
-    console.log(param)
     return dispatch => {
+        dispatch(loadingActions.ShowLoading());
         mainpageService.GetEvents(param)
             .then(
                 data => {
                     if (data.status) {
                         dispatch(successEvent(data.data));
+                        dispatch(loadingActions.HideLoading());
                     }
                     else {
                         dispatch(alertActions.error(data.error));
+                        dispatch(loadingActions.HideLoading());
                     }
                 },
                 error => {
                     dispatch(alertActions.error(error));
+                    dispatch(loadingActions.HideLoading());
                 }
             );
     }
@@ -61,7 +65,4 @@ function successEvent(data) {
     return { type: constants.SUCCESS_EVENT, data };
 }
 
-function error(message) {
-    return { type: constants.ERROR, message };
-}
 

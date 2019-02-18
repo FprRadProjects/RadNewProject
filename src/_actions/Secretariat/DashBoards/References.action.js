@@ -1,7 +1,6 @@
 import {Service_Dashboard, UserConfig} from "../../../_services";
-import {BaseUrl, history} from "../../../_helpers";
-import {DashBoardConstant,CommonContants} from "../../../_constants";
-import {alertActions} from "../../Alert";
+import {CommonContants} from "../../../_constants";
+import {alertActions,loadingActions} from "../../../_actions";
 
 export const Act_Reference= {
     FetchData
@@ -9,19 +8,23 @@ export const Act_Reference= {
 function FetchData (params){
 
     return dispatch => {
+        dispatch(loadingActions.ShowLoading());
         Service_Dashboard.FetchData(params)
             .then(
                 data => {
                     if(data.status) {
                         dispatch(AddTotalCount(data.data.totalcount));
                         dispatch(AddRows(data.data.rows));
+                        dispatch(loadingActions.HideLoading());
                     }
                     else {
                         dispatch(alertActions.error(data.error));
+                        dispatch(loadingActions.HideLoading());
                     }
                 },
                 error => {
                     dispatch(alertActions.error(error));
+                    dispatch(loadingActions.HideLoading());
                 }
             );
     }

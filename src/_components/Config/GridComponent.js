@@ -207,12 +207,10 @@ const BooleanTypeProvider = props => (
         const queryString = this.queryString();
         if (queryString === this.lastQuery) {
             this.setState({loading: false});
-            console.log(queryString === this.lastQuery)
             return;
         }
         const {fetchData}=this.props;
         Params.filter=this.state.filters;
-        console.log(Params)
         fetchData(Params);
         this.lastQuery = queryString;
     }

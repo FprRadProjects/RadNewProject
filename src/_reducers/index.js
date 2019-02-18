@@ -6,10 +6,12 @@ import { dashboards } from './Secretariat';
 import { authentication , users } from './Users';
 import { projects } from './Projects';
 import { MainPage } from './MainPage';
+import { loading } from './Loading';
 import {i18nState} from 'redux-i18n'
 
 const rootReducer = combineReducers({
     alert,
+    loading,
     Common,
     dashboards,
     authentication, users,

@@ -5,7 +5,6 @@ import {userActions} from '../../_actions/User';
 import {Header} from "../sections/Header";
 import NoMatch from "../NoMatch";
 import  {DashBoard}  from "../MainPage/DashBoard";
-import PropTypes from "prop-types"
 
 import {Works,References} from "../Secretariat/DashBoards";
 import {setLanguage} from "redux-i18n";
