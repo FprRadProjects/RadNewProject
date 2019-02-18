@@ -21,5 +21,7 @@ function GetToken() {
     if (Lang === null && apiToken===null) {
         return null;
     }
-    return {headers : headers}
+    return {headers}
 }
+
+

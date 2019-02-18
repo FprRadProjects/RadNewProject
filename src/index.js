@@ -7,6 +7,7 @@ import { App } from './App/App';
 import './content/css/bootstrap-rtl.min.css'
 import './content/css/main.css'
 import I18n from "redux-i18n"
+import './_services/utils/interceptors';
 
 import {translations} from "../src/locales"
 render(
