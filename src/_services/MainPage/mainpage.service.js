@@ -11,7 +11,7 @@ export const mainpageService = {
 
 function GetCounts(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "GetMainPageCounts", params, UserConfig.GetToken())
+        return axios.post(BaseUrl + "GetMainPageCounts", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -26,7 +26,7 @@ function GetCounts(params) {
 
 function GetEvents(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "GetMainPageEvents", params, UserConfig.GetToken())
+        return axios.post(BaseUrl + "GetMainPageEvents", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

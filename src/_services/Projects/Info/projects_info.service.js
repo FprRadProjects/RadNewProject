@@ -13,7 +13,7 @@ function GetSelectProject(id_tel) {
         var formData = new FormData();
         formData.append('id_tel', id_tel);
 
-        return axios.post(BaseUrl + "GetSelectProject", formData, UserConfig.GetToken())
+        return axios.post(BaseUrl + "GetSelectProject", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

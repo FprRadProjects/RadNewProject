@@ -13,7 +13,7 @@ function WorkInfo(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "WorkInfo", formData, UserConfig.GetToken())
+        return axios.post(BaseUrl + "WorkInfo", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {BaseUrl} from '../../_helpers';
 import {UserConfig} from '../Config.js'
+
 export const userService = {
     login,
     logout,
@@ -14,20 +15,15 @@ function login(username, password) {
     let data = new FormData();
     data.append("username", username);
     data.append("password", password);
-    console.log(UserConfig.GetToken())
-    if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl+"Login", data,UserConfig.GetToken())
-            .then(user => {
-                if(user.data.data!=null)
+    return axios.post(BaseUrl + "Login", data)
+        .then(user => {
+            if (user.data.data != null)
                 localStorage.setItem("user", JSON.stringify(user.data.data));
-                return Promise.resolve(user.data)
-            })
-            .catch((error) => {
-                return Promise.reject(error.message)
-            })
-    } else
-        return Promise.reject("No");
-
+            return Promise.resolve(user.data)
+        })
+        .catch((error) => {
+            return Promise.reject(error.message)
+        })
 }
 
 
@@ -39,7 +35,7 @@ function logout() {
 //Gets "token" // returns token is valid or not
 function CheckToken() {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "CheckToken", null, UserConfig.GetToken())
+        return axios.post(BaseUrl + "CheckToken", null)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -51,11 +47,10 @@ function CheckToken() {
 }
 
 
-
 //Gets "token" // returns  "username","fullname","id_user","id_role"
 function GetUserInfo() {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "GetUserInfo", null, UserConfig.GetToken())
+        return axios.post(BaseUrl + "GetUserInfo", null)
             .then(Response => {
                 return Promise.resolve(Response.data);
             })
@@ -71,7 +66,7 @@ function GetUserInfo() {
 //Gets "token" // returns  "isadmin"
 function UserIsAdmin() {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl+"UserIsAdmin", null, UserConfig.GetToken())
+        return axios.post(BaseUrl + "UserIsAdmin", null)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

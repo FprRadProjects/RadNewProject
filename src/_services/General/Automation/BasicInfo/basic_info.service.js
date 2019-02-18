@@ -9,7 +9,7 @@ export const BasicInfo_service = {
 function GetDefaultText() {
     if (UserConfig.GetToken() !== null) {
 
-        return axios.post(BaseUrl + "GetDefaultText", null, UserConfig.GetToken())
+        return axios.post(BaseUrl + "GetDefaultText")
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

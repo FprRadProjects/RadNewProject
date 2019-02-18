@@ -16,7 +16,7 @@ function RebuildWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "RebuildWork", formData, UserConfig.GetToken())
+        return axios.post(BaseUrl + "RebuildWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -34,7 +34,7 @@ function SeenWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "SeenWork", formData, UserConfig.GetToken())
+        return axios.post(BaseUrl + "SeenWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -61,7 +61,7 @@ function SaveWorkInfo(form, data) {
         var formData = new FormData();
         formData.append('form', form);
         formData.append('data', data);
-        return axios.post(BaseUrl + "SaveWorkInfo", {form, data}, UserConfig.GetToken())
+        return axios.post(BaseUrl + "SaveWorkInfo", {form, data})
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -81,7 +81,7 @@ function DeleteWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "DeleteWork", formData, UserConfig.GetToken())
+        return axios.post(BaseUrl + "DeleteWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

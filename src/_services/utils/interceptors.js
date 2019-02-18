@@ -9,7 +9,7 @@ axios.interceptors.request.use(
 
         if (apiToken) {
             if (apiToken !== null) {
-                config.headers.common['Authorization'] = `${newuser.Token}`
+                config.headers.common['Authorization'] = `${newuser.Authorization}`
             }
             if (Lang !== null) {
                 config.headers.common['lang'] = Lang

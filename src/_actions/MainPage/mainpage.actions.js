@@ -21,8 +21,10 @@ function GetCounts(param) {
                 data => {
                     if (data.status) {
                         dispatch(successCount(data.data));
+                        dispatch(loadingActions.HideLoading());
                     } else if (data.code !== 0) {
                         dispatch(alertActions.error(data.error));
+                        dispatch(loadingActions.HideLoading());
                     } else
                       {
                           userActions.logout();
@@ -31,6 +33,7 @@ function GetCounts(param) {
                 },
                 error => {
                     dispatch(alertActions.error(error));
+                    dispatch(loadingActions.HideLoading());
                 }
             );
     }

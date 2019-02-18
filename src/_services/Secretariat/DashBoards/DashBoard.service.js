@@ -7,9 +7,8 @@ export const Service_Dashboard = {
 };
 
 function FetchData(params) {
-
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl+"WorkDashboard", params, UserConfig.GetToken())
+        return axios.post(BaseUrl+"WorkDashboard", params)
             .then(response => {
                 return Promise.resolve(response.data)
             })
