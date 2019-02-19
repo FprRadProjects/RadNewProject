@@ -5,12 +5,19 @@ import logo from '../../content/images/login/rad.png';
 import PropTypes from "prop-types"
 import {setLanguage, setTranslations} from "redux-i18n"
 
+/*nioosha*/
+import {BasicInfo_action} from "../../_actions";
+/*nioosha*/
+
+
+
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         // reset login status
         this.languages = ["fa", "en"]
         this.props.dispatch(userActions.logout());
+
         this.state = {
             username: '',
             password: '',
@@ -20,8 +27,9 @@ class LoginPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentWillMount() {
-        this.props.dispatch(setLanguage("fa"))
+    componentDidMount() {
+        this.props.dispatch(setLanguage("fa"));
+        this.props.dispatch(BasicInfo_action.GetCompanyDetails());
     }
 
     dispatchLanguage = e => {
@@ -116,7 +124,6 @@ function mapStateToProps(state) {
 
     };
 }
-
 
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);
 export { connectedLoginPage as LoginPage };

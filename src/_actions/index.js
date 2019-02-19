@@ -5,3 +5,4 @@ export * from './Secretariat';
 export * from './MainPage';
 export  * from './General'
 export * from './Projects'
+export * from './BaseInfo'

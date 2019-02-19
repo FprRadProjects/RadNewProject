@@ -4,3 +4,4 @@ export * from './MainPage';
 export * from './General'
 export * from './Config'
 export * from './Projects'
+export * from './BasicInfo'
