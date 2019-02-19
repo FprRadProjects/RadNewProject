@@ -9,7 +9,7 @@ import './content/css/main.css'
 import I18n from "redux-i18n"
 import './_services/utils/interceptors';
 
-import {translations} from "../src/locales"
+import {translations} from "../src/locales/translations"
 render(
     <Provider store={store}>
         <I18n translations={translations}  >
