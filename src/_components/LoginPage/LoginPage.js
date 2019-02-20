@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         // reset login status
-        this.languages = ["fa", "en"]
+        this.languages = ["fa", "en"];
         this.props.dispatch(userActions.logout());
 
         this.state = {
@@ -29,8 +29,12 @@ class LoginPage extends React.Component {
 
     componentDidMount() {
         this.props.dispatch(setLanguage("fa"));
-        this.props.dispatch(BasicInfo_action.GetCompanyDetails());
+
+        /*nioosha*/
+        this.props.dispatch(BasicInfo_action.GetCompanyInfo());
+        /*nioosha*/
     }
+
 
     dispatchLanguage = e => {
         this.props.dispatch(setLanguage(e.target.value))
@@ -52,8 +56,16 @@ class LoginPage extends React.Component {
     }
 
     render() {
+
+        /*nioosha*/
+        const {name} = this.props;
+        console.log(name)
+        /*nioosha*/
+
         const { loggingIn,alert ,lang} = this.props;
         const { username, password, submitted } = this.state;
+
+
         return (
             <div className="r-login">
                 <div className="r-login__wrapper">
@@ -114,16 +126,29 @@ LoginPage.contextTypes = {
 function mapStateToProps(state) {
     const { loggingIn} = state.authentication;
     const {alert} = state;
-    const {lang,translations} = state.i18nState
+    const {name} = state.BasicInfo;
+    const {lang,translations} = state.i18nState;
     localStorage.setItem("lang", lang);
     return {
         loggingIn,
         alert,
         lang,
-        translations
-
+        translations,
+        /*nioosha*/
+        name
+        /*nioosha*/
     };
 }
+
+
+/*nioosha*/
+const mapDispatchToProps = dispatch => ({
+    GetCompanyInfo: () => {
+        dispatch(BasicInfo_action.GetCompanyInfo())
+    }
+});
+/*nioosha*/
+
 
 const connectedLoginPage = connect(mapStateToProps)(LoginPage);
 export { connectedLoginPage as LoginPage };
