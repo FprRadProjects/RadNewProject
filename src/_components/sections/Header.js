@@ -1,10 +1,17 @@
-import React, {Component} from 'react';
-import {Link} from 'react-router-dom'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import NavItem from "./NavItem";
-import {userActions} from '../../_actions/User';
-import {history} from "../../_helpers";
+import { userActions } from '../../_actions/User';
+import { history } from "../../_helpers";
 import PropTypes from "prop-types"
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
+
+
+import notifyIcon from '../../content/images/master/header/notify-icon.svg';
+import editIcon from '../../content/images/master/header/edit-icon.svg';
+import messageIcon from '../../content/images/master/header/message-icon.svg';
+import userAvatar from '../../content/images/master/header/user-avatar.svg';
+
 
 class Header extends Component {
     handleLogout = (event) => {
@@ -13,45 +20,73 @@ class Header extends Component {
     }
 
     render() {
-        const {auth: isAuthenticated, users} = this.props;
+        const { auth: isAuthenticated, users } = this.props;
 
         return (
-
-            <nav className="navbar navbar-expand-md navbar-dark bg-dark rtl">
-                <Link className="navbar-brand" to="/"></Link>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
-                        aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
-                </button>
-
-                <div className="collapse navbar-collapse" id="navbarsExample04">
-                    <ul className="navbar-nav mr-auto">
-                        <NavItem className="nav-link"  activeOnlyWhenExact={true} to="/">{this.context.t("home")}</NavItem>
-                        <NavItem className="nav-link" to="/works">{this.context.t("work_dashboard")}</NavItem>
-                        <NavItem className="nav-link" to="/references">{this.context.t("references_dashboard")}</NavItem>
-                        {users && users !== "Network Error" ?
-                            <label className="text-white">
-                                {this.context.t("user_login")}: {users.username}
+            <div className="page-main-header">
+                <div className="main-header-left">
+                    <div className="logo-wrapper">
+                        <Link to="/">اتوماسیون تحت وب راد</Link>
+                    </div>
+                    <div className="mobile-sidebar">
+                        <div className="media-body text-right switch-sm">
+                            <label className="switch">
+                                <input type="checkbox" defaultChecked="checked" className="sidebar-toggle" />
+                                <span className="switch-state"></span>
                             </label>
-                            : <h5>{this.context.t("user_info_not_available")}</h5>}
-                        {
-                            isAuthenticated
-                                ? (
-                                    <Link className="btn btn-success " to="/login"
-                                          onClick={this.handleLogout.bind(this)}>{this.context.t("logout")}</Link>
-                                ) : (
-                                    <div>
-                                    </div>
-                                )
-                        }
-                    </ul>
-                    <div className="my-2 my-lg-0">
-
+                        </div>
                     </div>
                 </div>
-            </nav>
+
+                <div className="main-header-right row">
+
+                    <div className="nav-right col-3">
+                        <ul className="nav-menus">
+                            <li>
+                                <a href="#!" className="txt-dark">
+                                    <img className="align-self-center pull-right mr-2" src={notifyIcon} alt="header-notify" />
+                                    <span className="badge notification">3</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#!" className="txt-dark">
+                                    <img className="align-self-center pull-right mr-2" src={editIcon} alt="header-edit" />
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#!" className="txt-dark">
+                                    <img className="align-self-center pull-right mr-2" src={messageIcon} alt="header-message" />
+                                    <span className="badge notification">3</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div className="d-lg-none mobile-toggle"><i className="icon-more"></i></div>
+                    </div>
+                    <div className="col-5">
+                        <ul className="breadcrumb">
+                            <li className="breadcrumb-item"><a href="#">اتوماسیون</a></li>
+                            <li className="breadcrumb-item active">تقویم</li>
+                        </ul>
+                    </div>
+                    <div className="col-4">
+                        <ul className="user">
+                            <li className="onhover-dropdown">
+                                <div className="media">
+                                    <img className="align-self-center" src={userAvatar} alt="header-user" />
+                                    <span className="badge"><i className="fa fa-angle-down"></i></span>
+                                    <div className="sep"></div>
+                                    <div className="media-body">
+                                        <h6>مهندسین مشاورد هفت شهر</h6>
+                                    </div>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
 
+            </div>
         );
     }
 }
@@ -60,12 +95,12 @@ Header.contextTypes = {
 }
 
 function mapStateToProps(state) {
-    const {lang} = state.i18nState
+    const { lang } = state.i18nState
     return {
         lang
     };
 }
 
 
-const connectedHeader = connect(mapStateToProps,null)(Header);
+const connectedHeader = connect(mapStateToProps, null)(Header);
 export { connectedHeader as Header };

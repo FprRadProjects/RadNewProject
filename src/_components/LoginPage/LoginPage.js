@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { userActions } from '../../_actions/User';
+import '../../content/css/login.css'
 import logo from '../../content/images/login/rad.png';
 import PropTypes from "prop-types"
 import {setLanguage, setTranslations} from "redux-i18n"
