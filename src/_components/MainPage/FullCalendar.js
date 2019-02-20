@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import 'fullcalendar-jalaali/fullcalendar.min.css'
+import 'fullcalendar-jalaali/fullcalendar.css'
+import '../../content/css/custom-fullcalendar.css';
 import $ from 'jquery';
 import moment from 'moment';
 import jmoment from 'moment-jalaali';
@@ -39,6 +40,10 @@ class FullCalendar extends Component {
 
                 Params.calendar=jmoment(moment(date).locale('fa').format('YYYY/MM/DD')).format('jYYYY/jMM/jDD');
                 GetCounts(Params);
+
+                var thisDate = jmoment(moment(date).locale('fa').format('YYYY/MM/DD')).format('jYYYY-jMM-jDD');
+                $('.fc-day,.fc-day-top').removeClass('fc-highlight');
+                $('[data-date="' + thisDate + '"]').addClass("fc-highlight");
             },
             viewRender: function (view, element) {
                 Params.startdate=view.start;
@@ -49,7 +54,14 @@ class FullCalendar extends Component {
             },
             isRTL: lang==="fa"?true:false,
             isJalaali: lang==="fa"?true:false,
-            locale: lang
+            locale: lang,
+            height: 550,
+            buttonIcons: {
+                prev: 'right-single-arrow',
+                next: 'left-single-arrow',
+                prevYear: 'right-double-arrow',
+                nextYear: 'left-double-arrow'
+            },
         }
     );
 
@@ -58,7 +70,7 @@ class FullCalendar extends Component {
     render() {
 
         return (
-            <div ref='calendar'  className="col-lg-6"></div>
+            <div ref='calendar'></div>
         );
     }
 }
