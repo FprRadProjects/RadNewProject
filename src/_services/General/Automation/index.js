@@ -1,2 +1,2 @@
 export * from "./WorkDetails"
-export * from "./BasicInfo"
+export * from "./AutoBasicInfo"

@@ -1,15 +1,15 @@
-import {BasicInfo_service} from "../../../../_services";
+import {AutoBasicInfo_service} from "../../../../_services";
 import {alertActions} from "../../../index";
 import {AutoBasicInfoConstant as constant, CommonContants} from "../../../../_constants";
 
-export const BasicInfo_action = {
+export const AutoBasicInfo_action = {
     GetDefaultText
 };
 
 
 function GetDefaultText() {
     return dispatch => {
-        BasicInfo_service.GetDefaultText()
+        AutoBasicInfo_service.GetDefaultText()
             .then(
                 data => {
                     if (data.status) {

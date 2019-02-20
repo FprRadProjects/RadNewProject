@@ -2,7 +2,7 @@ import axios from 'axios'
 import {BaseUrl} from '../../../../_helpers/index';
 import {UserConfig} from '../../../Config.js'
 
-export const BasicInfo_service = {
+export const AutoBasicInfo_service = {
     GetDefaultText
 };
 

@@ -8,6 +8,7 @@ import { projects } from './Projects';
 import { MainPage } from './MainPage';
 import { loading } from './Loading';
 import {i18nState} from 'redux-i18n'
+import { BasicInfo } from './BaseInfo';
 
 const rootReducer = combineReducers({
     alert,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     projects,
     i18nState,
     MainPage,
+    BasicInfo,
 });
 
 export default rootReducer;
