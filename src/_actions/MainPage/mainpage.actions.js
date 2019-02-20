@@ -7,9 +7,7 @@ import {userActions} from '../../_actions';
 
 export const mainpageActions = {
     GetCounts,
-    GetEvents,
-    successCount,
-    successEvent,
+    GetEvents
 };
 
 

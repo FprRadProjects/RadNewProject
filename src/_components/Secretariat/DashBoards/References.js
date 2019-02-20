@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
-import {Act_Reference, userActions} from "../../../_actions";
+import {Act_Reference, design_Actions} from "../../../_actions";
 import {GridComponent} from "../../Config/GridComponent";
 import CalendarComponent from "../../Config/CalendarComponent";
 import {RadioFilter} from "./RadioFilter";
@@ -73,6 +73,9 @@ class References extends Component {
 const mapDispatchToProps = dispatch => ({
     FetchData: (Params) => {
         dispatch(Act_Reference.FetchData(Params))
+    },
+    GetTemplateForm: (Params) => {
+        dispatch(design_Actions.GetTemplateForm(Params))
     }
 });
 References.contextTypes = {
