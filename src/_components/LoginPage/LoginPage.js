@@ -17,7 +17,7 @@ class LoginPage extends React.Component {
         super(props);
         // reset login status
         this.languages = ["fa", "en"];
-        this.props.dispatch(userActions.logout());
+        this.props.logout();
 
         this.state = {
             username: '',
@@ -29,16 +29,16 @@ class LoginPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(setLanguage("fa"));
+        this.props.setLanguage("fa");
 
         /*nioosha*/
-        this.props.dispatch(BasicInfo_action.GetCompanyInfo());
+        this.props.GetCompanyInfo();
         /*nioosha*/
     }
 
 
     dispatchLanguage = e => {
-        this.props.dispatch(setLanguage(e.target.value))
+        this.props.setLanguage(e.target.value);
     }
     handleChange(e) {
         const { name, value } = e.target;
@@ -145,7 +145,14 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => ({
     GetCompanyInfo: () => {
         dispatch(BasicInfo_action.GetCompanyInfo())
+    },
+    logout: () => {
+        dispatch(userActions.logout())
+    },
+    setLanguage: () => {
+        dispatch(setLanguage("fa"))
     }
+
 });
 /*nioosha*/
 
