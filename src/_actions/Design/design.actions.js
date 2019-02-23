@@ -66,15 +66,13 @@ function Set_EditText_TemplateForm(param) {
 }
 function Set_Hide_TemplateForm(param) {
     return dispatch => {
-        dispatch(loadingActions.ShowLoading());
         designService.Set_Hide_TemplateForm(param)
             .then(
                 data => {
                     if (data.status) {
-                        dispatch(loadingActions.HideLoading());
+                        dispatch(design_Actions.GetTemplateForm(param.FormId))
                     } else if (data.code !== 0) {
                         dispatch(alertActions.error(data.error));
-                        dispatch(loadingActions.HideLoading());
                     } else
                     {
                         userActions.logout();
@@ -83,7 +81,6 @@ function Set_Hide_TemplateForm(param) {
                 },
                 error => {
                     dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
                 }
             );
     }

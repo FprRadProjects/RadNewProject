@@ -13,20 +13,26 @@ import '../../content/css/font-awesome.min.css';
 import '../../content/css/main.css'
 import { Sidebar } from '../sections/Sidebar';
 import  '../../content/js/script.js';
+import {MyAwesomeMenu} from "../Config/MyAwesomeMenu";
+import {mainpageActions} from "../../_actions/MainPage";
+import {design_Actions} from "../../_actions/Design";
 
 class MasterPage extends React.Component {
     componentDidMount() {
-        this.props.dispatch(userActions.GetUserInfo());
+        this.props.GetUserInfo();
     }
     componentWillMount() {
-       // const lang = localStorage.getItem("lang");
-      //  this.props.dispatch(setLanguage(lang))
+        const lang = localStorage.getItem("lang");
+        this.props.setLanguage(lang);
     }
-  
-    render() {
-        const { users, alert, loading } = this.props;
 
+    render() {
+        const {
+            users, alert, loading,GetTemplateForm,
+            Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm
+        } = this.props;
         return (
+            <div>
             <BrowserRouter>
                 <div>
                     {loading &&
@@ -61,7 +67,14 @@ class MasterPage extends React.Component {
 
                     </div>
                 </div>
+
             </BrowserRouter>
+                <MyAwesomeMenu Set_Hide_TemplateForm={Set_Hide_TemplateForm}
+                               Set_EditText_TemplateForm={Set_EditText_TemplateForm}
+                               Set_ShortKey_TemplateForm={Set_ShortKey_TemplateForm}
+                               GetTemplateForm={GetTemplateForm}
+                               FormId="1"/>
+            </div>
         );
     }
 }
@@ -77,5 +90,32 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedHomePage = connect(mapStateToProps)(MasterPage);
+const mapDispatchToProps = dispatch => ({
+    GetCounts: (Params) => {
+        dispatch(mainpageActions.GetCounts(Params))
+    },
+    GetEvents: (Params) => {
+        dispatch(mainpageActions.GetEvents(Params))
+    },
+    GetTemplateForm: (Params) => {
+        dispatch(design_Actions.GetTemplateForm(Params))
+    },
+    Set_EditText_TemplateForm: (Params) => {
+        dispatch(design_Actions.Set_EditText_TemplateForm(Params))
+    },
+    Set_Hide_TemplateForm: (Params) => {
+        dispatch(design_Actions.Set_Hide_TemplateForm(Params))
+    },
+    Set_ShortKey_TemplateForm: (Params) => {
+        dispatch(design_Actions.Set_ShortKey_TemplateForm(Params))
+    },
+    GetUserInfo: () => {
+        dispatch(userActions.GetUserInfo())
+    },
+    setLanguage: (param) => {
+        dispatch(setLanguage(param))
+    },
+
+});
+const connectedHomePage = connect(mapStateToProps,mapDispatchToProps)(MasterPage);
 export { connectedHomePage as HomePage };

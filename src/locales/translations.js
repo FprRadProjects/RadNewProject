@@ -1,6 +1,9 @@
 export const translations = {
     fa: {
         SoftWare_Name: 'اتوماسیون تحت وب راد',
+        Language: 'زبان',
+        fa: 'فارسی',
+        en: 'انگلیسی',
         username: 'شناسه کاربری',
         password: 'گذرواژه',
         login: 'ورود',
@@ -23,9 +26,21 @@ export const translations = {
         unselected:"انتخاب نشده",
         selected:"انتخاب شده",
         user_login:"کاربر وارد شده",
+        Emails:"ایمیل ها",
+        SMS:"پیام کوتاه",
+        Messages:"پیام ها",
+        Cheques:"چک ها",
+        Notes:"یاداشت ها",
+        Works:"کار ها",
+        Secretariat:"نامه ها",
 
         //---------------اقدام------------------شروع
         logout: 'خروج',
+        Save: 'ذخیره',
+        Cancel: 'انصراف',
+        EditLabel: 'ویرایش برچسب',
+        DeleteControl: 'حذف کنترل',
+        AddToShortKey: 'افزودن به دسترسی سریع',
         //--------------اقدام------------------پایان
         //---------------پیام ها----------------شروع
         required_username: 'نام کاربری لازم به ورود است',
@@ -40,6 +55,9 @@ export const translations = {
     },
     en: {
         SoftWare_Name: 'Rad Web automation',
+        Language: 'Language',
+        fa: 'fa',
+        en: 'en',
         username: 'UserName',
         password: 'PassWord',
         login: 'login',
@@ -62,8 +80,20 @@ export const translations = {
         unselected:"UnSelected",
         selected:"Selected",
         user_login:"User Login",
+        Emails:"Emails",
+        SMS:"SMS",
+        Messages:"Messages",
+        Cheques:"Cheques",
+        Notes:"Notes",
+        Works:"Works",
+        Secretariat:"Letters",
         //Start---------------Actions-----------------
         logout: 'Logout',
+        Save: 'Save',
+        Cancel: 'Cancel',
+        EditLabel: 'Edit Label',
+        DeleteControl: 'Delete Control',
+        AddToShortKey: 'Add To Short Key',
         //End-----------------Actions----------------
 
         //Start---------------Messages----------------

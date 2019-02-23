@@ -11,9 +11,11 @@ export const designService = {
 };
 
 
-function GetTemplateForm(params) {
+function GetTemplateForm(param) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "GetTemplateForm", params)
+        let data = new FormData();
+        data.append("FormId", param);
+        return axios.post(BaseUrl + "GetTemplateForm", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

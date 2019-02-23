@@ -5,12 +5,20 @@ export function Design(state = {}, action) {
         case design.DESIGN_SUCCESS_GET_TEMPLATE: {
             return {
                 ...state,
-                Template:  action.data
+                DeletedElements:{...action.data.DeletedElements.reduce((obj,item)=>{
+                        obj[item.Element]=item;
+                        return obj;
+                    },{})},
+                EditedElements:{...action.data.EditedElements.reduce((obj,item)=>{
+                        obj[item.Element]=item;
+                        return obj;
+                    },{})},
+                ShortKeys:{...action.data.ShortKeys.reduce((obj,item)=>{
+                        obj[item.Element]=item;
+                        return obj;
+                    },{})}
             }
-
         }
-
-
         default:
             return state;
     }
