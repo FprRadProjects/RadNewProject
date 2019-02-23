@@ -12,9 +12,9 @@ function GetCompanyInfo() {
             BasicInfo_service.GetCompanyInfo()
                 .then(
                     data => {
-                        if (data.status) {
+                        if (data.status) {localStorage.setItem("CompanyInfo", JSON.stringify(data.data));
                             dispatch(PassCompInfo_Reducer(data.data));
-                            localStorage.setItem("CompanyInfo", data.data);
+
                         }
                         else {
                             dispatch(alertActions.error(data.error));
@@ -33,5 +33,5 @@ function GetCompanyInfo() {
 
 
 function PassCompInfo_Reducer(data) {
-    return {type: BasicInfoConstant.SUCCESS, data}
+    return {type: BasicInfoConstant.COMPINFO_SUCCESS, data}
 }

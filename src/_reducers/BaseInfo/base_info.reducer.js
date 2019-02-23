@@ -2,7 +2,7 @@ import {BasicInfoConstant as BaseConstant} from "../../_constants";
 
 export function BasicInfo(state = {}, action) {
     switch (action.type) {
-        case BaseConstant.SUCCESS: {
+        case BaseConstant.COMPINFO_SUCCESS: {
             return {
                 ...state,
                 ...action.data

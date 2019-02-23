@@ -60,7 +60,7 @@ class LoginPage extends React.Component {
 
         /*nioosha*/
         const {name} = this.props;
-        console.log(name)
+        //console.log(name)
         /*nioosha*/
 
         const { loggingIn,alert ,lang} = this.props;
