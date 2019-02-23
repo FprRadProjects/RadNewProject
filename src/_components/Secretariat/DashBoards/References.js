@@ -36,8 +36,12 @@ class References extends Component {
 
         const{FetchData,alert,loading}= this.props;
         const  columns= [
-            {name: 'peygir_id', title: 'شاخص کار'},
             {name: 'worker', title: 'کاربر'},
+
+
+
+
+            {name: 'peygir_id', title: 'شاخص کار'},
             {name: 'done', title: 'انجام شده'},
             {name: 'wt_id', title: 'شاخص نوع کار'},
             {name: 'tarikhaction', title: 'تاریخ کار'},

@@ -1,3 +1,3 @@
 export const BasicInfoConstant = {
-    COMPINFO_SUCCESS: 'CompInfo_SUCCESS',
+    COMPINFO_SUCCESS: 'COMPANY_INFO_SUCCESS',
 };

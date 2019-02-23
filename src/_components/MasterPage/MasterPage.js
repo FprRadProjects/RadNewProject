@@ -19,8 +19,8 @@ class MasterPage extends React.Component {
         this.props.dispatch(userActions.GetUserInfo());
     }
     componentWillMount() {
-        const lang = localStorage.getItem("lang");
-        this.props.dispatch(setLanguage(lang))
+       // const lang = localStorage.getItem("lang");
+      //  this.props.dispatch(setLanguage(lang))
     }
   
     render() {

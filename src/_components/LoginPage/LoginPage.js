@@ -26,12 +26,12 @@ class LoginPage extends React.Component {
 
     componentDidMount() {
         this.props.setLanguage("fa");
-
         this.props.GetCompanyInfo();
     }
 
 
     dispatchLanguage = e => {
+        localStorage.setItem("lang", e.target.value);
         this.props.setLanguage(e.target.value);
     }
     handleChange(e) {
@@ -46,7 +46,7 @@ class LoginPage extends React.Component {
         const { username, password } = this.state;
         const { dispatch } = this.props;
         if (username && password) {
-            dispatch(userActions.login(username, password));
+            this.props.login(username, password);
         }
     }
 
@@ -67,7 +67,7 @@ class LoginPage extends React.Component {
                         <div className="r-login__header">
                             <h3>{this.context.t("SoftWare_Name")}</h3>
                             <img src={logo} />
-                            <select value={lang} onChange={this.dispatchLanguage}>
+                            <select value={lang} onChange={this.dispatchLanguage.bind(this)}>
                                 {this.languages.map(lang => (
                                     <option key={lang} value={lang}>
                                         {lang}
@@ -123,6 +123,7 @@ function mapStateToProps(state) {
     const {alert} = state;
     const {CompanyName} = state.BasicInfo;
     const {lang,translations} = state.i18nState;
+    localStorage.setItem("lang", lang);
     return {
         loggingIn,
         alert,
@@ -140,9 +141,12 @@ const mapDispatchToProps = dispatch => ({
     logout: () => {
         dispatch(userActions.logout())
     },
-    setLanguage: () => {
-        dispatch(setLanguage("fa"))
-    }
+    setLanguage: (param) => {
+        dispatch(setLanguage(param))
+    },
+    login: (username, password) =>
+        dispatch(userActions.login(username, password))
+
 
 });
 
