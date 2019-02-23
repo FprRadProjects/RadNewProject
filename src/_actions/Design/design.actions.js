@@ -47,7 +47,7 @@ function Set_EditText_TemplateForm(param) {
             .then(
                 data => {
                     if (data.status) {
-                        dispatch(loadingActions.HideLoading());
+                        dispatch(design_Actions.GetTemplateForm(param.FormId))
                     } else if (data.code !== 0) {
                         dispatch(alertActions.error(data.error));
                         dispatch(loadingActions.HideLoading());

@@ -12,7 +12,8 @@ class MyAwesomeMenu extends Component {
         this.state = {
             ...this.state,
             modal: false,
-            backdrop: "static"
+            backdrop: "static",
+
         };
     }
 
@@ -26,91 +27,115 @@ class MyAwesomeMenu extends Component {
         if (event.target.attributes.id !== undefined) {
             const id = event.target.attributes.id.value;
             if (id.indexOf("ShortKey") === -1) {
-                var HideParam=
-                {
-                    RowId:0,
-                    FormId:this.props.FormId,
-                    IsShow:false,
-                    IsPublic:false,
-                    Element:event.target.attributes.element.value
-                };
-                const{Set_Hide_TemplateForm} =this.props;
-                Set_Hide_TemplateForm(HideParam);
+
+                this.setState(prevState => ({
+                    ...this.state,
+                    modal: !prevState.modal,
+                    event: event,
+                    public: event.target.attributes.public.value,
+                    ishide: true
+
+                }));
             }
         }
 
     }
     EditClick = ({event, props}) => {
-
         if (event.target.nodeName == "LABEL") {
             if (event.target.attributes.id !== undefined) {
-            const id = event.target.attributes.id.value;
-            if (id.indexOf("ShortKey") === -1) {
-                var text = "";
-                if (event.target.nodeName == "INPUT") {
-                    text = event.target.value;
-                } else {
-                    text = event.target.innerText;
+                const id = event.target.attributes.id.value;
+                if (id.indexOf("ShortKey") === -1) {
+                    var text = "";
+                    if (event.target.nodeName == "INPUT") {
+                        text = event.target.value;
+                    } else {
+                        text = event.target.innerText;
+                    }
+                    this.setState(prevState => ({
+                        ...this.state,
+                        modal: !prevState.modal,
+                        text: text,
+                        event: event,
+                        erowid: event.target.attributes.erowid.value,
+                        public: event.target.attributes.public.value,
+                        ishide: false
+
+                    }));
                 }
-                this.setState(prevState => ({
-                    ...this.state,
-                    modal: !prevState.modal,
-                    text: text,
-                    event: event
-                }));
-            }}
+            }
         }
     }
     ShortKeyClick = ({event, props}) => {
-        var Params=
+        var Params =
             {
-                RowId:0,
-                FormId:this.props.FormId,
-                Meta:"",
-                Element:"",
-                IsPublic:false,
+                RowId: 0,
+                FormId: this.props.FormId,
+                Meta: "",
+                Element: "",
+                IsPublic: false,
             }
         if (event.target.attributes.id !== undefined) {
             if (event.target.attributes.id.value.indexOf("ShortKey") === -1) {
-                Params.Meta= event.target.outerHTML;
-                Params.Element= event.target.attributes.id.value;
-                const{Set_ShortKey_TemplateForm} =this.props;
+                Params.Meta = event.target.outerHTML;
+                Params.Element = event.target.attributes.id.value;
+                const {Set_ShortKey_TemplateForm} = this.props;
                 Set_ShortKey_TemplateForm(Params);
             }
         }
     }
-    ChangeText = () => {
-        if (this.state.event.target.nodeName == "INPUT") {
-            this.state.event.target.value = this.state.text;
-        } else {
-            this.state.event.target.innerText = this.state.text;
-        }
-        const id = this.state.event.target.attributes.id.value;
-        var Params=
-            {
-                RowId:0,
-                FormId:this.props.FormId,
-                Title:this.state.text,
-                IsPublic:false,
-                Element:id
+    SaveChange = () => {
+        if (!this.state.ishide) {
+            if (this.state.text != "") {
+                const id = this.state.event.target.attributes.id.value;
+                var Params =
+                    {
+                        RowId: this.state.erowid,
+                        FormId: this.props.FormId,
+                        Title: this.state.text,
+                        IsPublic: this.state.public,
+                        Element: id
+                    }
+                const {Set_EditText_TemplateForm} = this.props;
+                Set_EditText_TemplateForm(Params);
+                this.setState(prevState => ({
+                    modal: !prevState.modal,
+                }));
             }
-        const{Set_EditText_TemplateForm} =this.props;
-        Set_EditText_TemplateForm(Params);
-        this.setState(prevState => ({
-            modal: !prevState.modal,
-        }));
+        }
+        else
+        {
+            var HideParam =
+                {
+                    RowId: 0,
+                    FormId: this.props.FormId,
+                    IsShow: false,
+                    IsPublic: this.state.public,
+                    Element: this.state.event.target.attributes.element.value
+                };
+            const {Set_Hide_TemplateForm} = this.props;
+            Set_Hide_TemplateForm(HideParam);
+            this.setState(prevState => ({
+                modal: !prevState.modal,
+            }));
+        }
     }
+
     onChangeInput = (event) => {
         this.setState({
             text: event.target.value,
+        });
+    }
+    onChangeCheckBox = (event) => {
+        this.setState({
+            public: event.target.checked,
         });
     }
 
     render() {
         const State = this.state;
         return (
-            <div >
-                <Menu id='menu_id' style={{zIndex:10000}}>
+            <div>
+                <Menu id='menu_id' style={{zIndex: 10000}}>
                     <Item onClick={this.HideClick.bind(this)}>{this.context.t("DeleteControl")}</Item>
                     <Separator/>
                     <Item onClick={this.EditClick.bind(this)}>{this.context.t("EditLabel")}</Item>
@@ -118,20 +143,25 @@ class MyAwesomeMenu extends Component {
                     <Item onClick={this.ShortKeyClick.bind(this)}>{this.context.t("AddToShortKey")}</Item>
                 </Menu>
                 <Modal isOpen={State.modal} className={this.props.className}>
-                    <ModalHeader >{this.context.t("EditLabel")}</ModalHeader>
+                    <ModalHeader>{State.ishide?this.context.t("DeleteControl"):this.context.t("EditLabel")}</ModalHeader>
                     <ModalBody>
-                        <input type="text" defaultValue={State.text} onChange={this.onChangeInput.bind(this)}/>
+                        {!State.ishide &&
+                        <input type="text" defaultValue={State.text} onChange={this.onChangeInput.bind(this)}/>}
+                        <label htmlFor="ispublic"> {this.context.t("IsPublic")}</label>
+                        <input id="ispublic" type="checkbox" defaultChecked={State.public === "true" ? "checked" : ""}
+                               onChange={this.onChangeCheckBox.bind(this)}/>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={this.ChangeText.bind(this)}>{this.context.t("Save")}</Button>{' '}
+                        <Button color="primary"
+                                onClick={this.SaveChange.bind(this)}>{this.context.t("Save")}</Button>{' '}
                         <Button color="secondary" onClick={this.toggle.bind(this)}>{this.context.t("Cancel")}</Button>
                     </ModalFooter>
                 </Modal>
+
             </div>
         );
     }
 }
-
 
 
 MyAwesomeMenu.contextTypes = {
@@ -145,5 +175,5 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedMyAwesomeMenu= connect(mapStateToProps, null)(MyAwesomeMenu);
+const connectedMyAwesomeMenu = connect(mapStateToProps, null)(MyAwesomeMenu);
 export {connectedMyAwesomeMenu as MyAwesomeMenu};

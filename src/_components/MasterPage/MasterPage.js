@@ -46,9 +46,7 @@ class MasterPage extends React.Component {
                             </div>
                         </div>
                     }
-                    {alert.message &&
-                        <div className={`alert ${alert.type}`}>{alert.message}</div>
-                    }
+
                     <div className="page-wrapper">
                         <Header auth={true} users={users} />
                         <div className="page-body-wrapper sidebar-close">
@@ -66,7 +64,9 @@ class MasterPage extends React.Component {
                         </div>
 
                     </div>
-                </div>
+                    {alert.message &&
+                    <div className={`alert ${alert.type}`}>{alert.message}</div>
+                    } </div>
 
             </BrowserRouter>
                 <MyAwesomeMenu Set_Hide_TemplateForm={Set_Hide_TemplateForm}

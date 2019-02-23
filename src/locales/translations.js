@@ -33,6 +33,7 @@ export const translations = {
         Notes:"یاداشت ها",
         Works:"کار ها",
         Secretariat:"نامه ها",
+        IsPublic:"برای عموم",
 
         //---------------اقدام------------------شروع
         logout: 'خروج',
@@ -87,6 +88,7 @@ export const translations = {
         Notes:"Notes",
         Works:"Works",
         Secretariat:"Letters",
+        IsPublic:"Is Public",
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
