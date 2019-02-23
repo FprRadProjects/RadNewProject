@@ -4,18 +4,14 @@ import { userActions } from '../../_actions/User';
 import '../../content/css/login.css'
 import logo from '../../content/images/login/rad.png';
 import PropTypes from "prop-types"
-import { setLanguage, setTranslations } from "redux-i18n"
-
-/*nioosha*/
+import { setLanguage } from "redux-i18n"
 import { BasicInfo_action } from "../../_actions";
-/*nioosha*/
 
 
 
 class LoginPage extends React.Component {
     constructor(props) {
         super(props);
-        // reset login status
         this.languages = ["fa", "en"];
         this.props.logout();
 
@@ -31,9 +27,7 @@ class LoginPage extends React.Component {
     componentDidMount() {
         this.props.setLanguage("fa");
 
-        /*nioosha*/
         this.props.GetCompanyInfo();
-        /*nioosha*/
     }
 
 
@@ -57,14 +51,14 @@ class LoginPage extends React.Component {
     }
 
     render() {
-        const { loggingIn,alert ,lang,name} = this.props;
+        const { loggingIn,alert ,lang,CompanyName} = this.props;
         const { username, password, submitted } = this.state;
 
 
         return (
             <div className="r-login">
                 <div className="r-login__company">
-                    <div className="r-login__company-title">{name}</div>
+                    <div className="r-login__company-title">{CompanyName}</div>
                     <div className="r-login__company-ver">ورژن 3/120 مطابق با ورژن 27/33 ویندوز</div>
                     <div className="r-login__company-date">1397/11/30</div>
                 </div>
@@ -127,21 +121,18 @@ function mapStateToProps(state) {
 
     const { loggingIn} = state.authentication;
     const {alert} = state;
-    const {name} = state.BasicInfo;
+    const {CompanyName} = state.BasicInfo;
     const {lang,translations} = state.i18nState;
     return {
         loggingIn,
         alert,
         lang,
         translations,
-        /*nioosha*/
-        name
-        /*nioosha*/
+        CompanyName
     };
 }
 
 
-/*nioosha*/
 const mapDispatchToProps = dispatch => ({
     GetCompanyInfo: () => {
         dispatch(BasicInfo_action.GetCompanyInfo())
@@ -154,7 +145,6 @@ const mapDispatchToProps = dispatch => ({
     }
 
 });
-/*nioosha*/
 
 
 const connectedLoginPage = connect(mapStateToProps,mapDispatchToProps)(LoginPage);
