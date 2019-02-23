@@ -30,9 +30,13 @@ class Header extends Component {
                     </div>
                     <div className="mobile-sidebar">
                         <div className="media-body text-right switch-sm">
-                            <label className="switch">
+                            {/* <label className="switch">
                                 <input type="checkbox" defaultChecked="checked" className="sidebar-toggle" />
                                 <span className="switch-state"></span>
+                            </label> */}
+                            <label className="sidebar-toggle">
+                                <input type="checkbox" defaultChecked="checked" />
+                                <span className="sidebar-toggle-icon"></span>
                             </label>
                         </div>
                     </div>

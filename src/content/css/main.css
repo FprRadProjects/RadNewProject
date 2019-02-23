@@ -2962,6 +2962,7 @@ table tbody .border-bottom-warning td {
         justify-content: space-around;
         z-index: 9;
         transition: all .4s ease;
+        flex-direction: column;
     }
 
         .page-main-header .main-header-left .logo-wrapper {
@@ -29852,6 +29853,9 @@ body .page-sidebar[navigation-layout="right-side-menu"] .sidebar-menu > li > a i
         margin-left: unset;
         text-align: right;
     }
+    .rtl .page-main-header .main-header-right .nav-right ul li img {
+        max-width: 30px;
+    }
 
         .rtl .page-main-header .main-header-right .nav-right ul li.onhover-dropdown {
             margin-right: 20px;
@@ -34184,4 +34188,26 @@ background-image: url(../images/modal-filter/done-work-icon.svg);
     border-radius: 50%;
     top: -10px;
     box-shadow: 0 0 0 5px #d8d8d8;
+}
+
+.sidebar-toggle{
+    margin: 0;
+    cursor: pointer;
+}
+.sidebar-toggle input {
+    display: none;
+}
+.sidebar-toggle .sidebar-toggle-icon {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+.sidebar-toggle input + .sidebar-toggle-icon {
+    background-image: url(../images/master/sidebar/menu-icon-close.svg);
+}
+.sidebar-toggle input:checked + .sidebar-toggle-icon {
+    background-image: url(../images/master/sidebar/menu-icon-open.svg);
 }

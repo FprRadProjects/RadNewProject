@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-$(document).on('click', ".mobile-sidebar .switch-state", function () {
+$(document).on('click', ".mobile-sidebar .sidebar-toggle-icon", function () {
     $(".page-body-wrapper").toggleClass("sidebar-close");
     if (!$(".page-body-wrapper").hasClass('sidebar-close')) {
         $('.page-main-header .main-header-left').css({
@@ -59,11 +59,11 @@ $(document).on('click', '.sidebar-menu li a', function (e) {
 
 $(document).ready(function () {
     if ($(window).width() <= 991) {
-        $(".sidebar-toggle").prop('checked', false);
+        $(".sidebar-toggle input").prop('checked', false);
         $(".page-body-wrapper").addClass("sidebar-close");
     }
-    $(".sidebar-toggle").change(function () {
-        if ($(".sidebar-toggle").attr('checked', true)) {
+    $(".sidebar-toggle input").change(function () {
+        if ($(".sidebar-toggle input").attr('checked', true)) {
             $(".page-sidebar").addClass("page-sidebar-open");
         }
     });
