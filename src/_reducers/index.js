@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import { alert } from './Alert';
+import { Design } from './Design';
 import { Common } from './General';
 import { dashboards } from './Secretariat';
 import { authentication , users } from './Users';
@@ -13,6 +14,7 @@ import { BasicInfo } from './BaseInfo';
 const rootReducer = combineReducers({
     alert,
     loading,
+    Design,
     Common,
     dashboards,
     authentication, users,

@@ -1,5 +1,6 @@
 export * from './Alert';
 export * from './Loading'
+export * from './Design';
 export * from './User';
 export * from './Secretariat';
 export * from './Alert';

@@ -1,47 +1,37 @@
-
 import {BasicInfoConstant} from "../../_constants";
 import {alertActions} from "../index";
 import {BasicInfo_service} from "../../_services"
 
 export const BasicInfo_action = {
-    GetCompanyDetails
+    GetCompanyInfo
 };
 
-
-function GetCompanyDetails() {
+function GetCompanyInfo() {
     return dispatch => {
-        BasicInfo_service.GetCompanyInfo()
-            .then(
-                data => {
-                    if (data.status) {
-                        localStorage.setItem("CompanyName", data.data);
+        if (localStorage.getItem("CompanyInfo") === null) {
+            BasicInfo_service.GetCompanyInfo()
+                .then(
+                    data => {
+                        if (data.status) {localStorage.setItem("CompanyInfo", JSON.stringify(data.data));
+                            dispatch(PassCompInfo_Reducer(data.data));
+
+                        }
+                        else {
+                            dispatch(alertActions.error(data.error));
+                        }
+                    },
+                    error => {
+                        dispatch(alertActions.error(error));
                     }
-                    else {
-                        dispatch(alertActions.error(data.error));
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                }
-            );
+                );
+        }
+        else {
+            dispatch(PassCompInfo_Reducer(JSON.parse(localStorage.getItem("CompanyInfo"))));
+        }
     }
-
-
-
-
-
-    return {type: BasicInfoConstant.SUCCESS};
 }
 
 
-/*
-
-function AddTotalCount(data) {
-    return {type: CommonContants.SET_GRID_TOTALCOUNT, data}
+function PassCompInfo_Reducer(data) {
+    return {type: BasicInfoConstant.COMPINFO_SUCCESS, data}
 }
-
-function AddRows(data) {
-    return {type: CommonContants.SETGRID_ROWS, data}
-}
-
-*/
