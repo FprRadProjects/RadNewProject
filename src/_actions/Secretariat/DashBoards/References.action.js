@@ -15,6 +15,7 @@ function FetchData (params){
             .then(
                 data => {
                     if(data.status) {
+                        console.log(data.data);
                         dispatch(AddTotalCount(data.data.totalcount));
                         dispatch(AddRows(data.data.rows));
                         dispatch(loadingActions.HideLoading());
