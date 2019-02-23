@@ -57,24 +57,14 @@ class LoginPage extends React.Component {
     }
 
     render() {
-<<<<<<< HEAD
-        const { loggingIn, alert, lang } = this.props;
-=======
-
-        /*nioosha*/
-        const {name} = this.props;
-        //console.log(name)
-        /*nioosha*/
-
-        const { loggingIn,alert ,lang} = this.props;
->>>>>>> 697f74a85e7a2f4638dcfeb74bfcdad6087f38a6
+        const { loggingIn,alert ,lang,name} = this.props;
         const { username, password, submitted } = this.state;
 
 
         return (
             <div className="r-login">
                 <div className="r-login__company">
-                    <div className="r-login__company-title">کرمان موتورز</div>
+                    <div className="r-login__company-title">{name}</div>
                     <div className="r-login__company-ver">ورژن 3/120 مطابق با ورژن 27/33 ویندوز</div>
                     <div className="r-login__company-date">1397/11/30</div>
                 </div>
@@ -134,17 +124,11 @@ LoginPage.contextTypes = {
     t: PropTypes.func.isRequired
 }
 function mapStateToProps(state) {
-<<<<<<< HEAD
-    const { loggingIn } = state.authentication;
-    const { alert } = state;
-    const { lang, translations } = state.i18nState
-=======
+
     const { loggingIn} = state.authentication;
     const {alert} = state;
     const {name} = state.BasicInfo;
     const {lang,translations} = state.i18nState;
->>>>>>> 697f74a85e7a2f4638dcfeb74bfcdad6087f38a6
-    localStorage.setItem("lang", lang);
     return {
         loggingIn,
         alert,
@@ -166,5 +150,5 @@ const mapDispatchToProps = dispatch => ({
 /*nioosha*/
 
 
-const connectedLoginPage = connect(mapStateToProps)(LoginPage);
+const connectedLoginPage = connect(mapStateToProps,mapDispatchToProps)(LoginPage);
 export { connectedLoginPage as LoginPage };
