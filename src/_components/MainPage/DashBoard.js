@@ -68,6 +68,8 @@ class DashBoard extends Component {
             background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
         }`;
+        var AdminclassName = CalParams.worker===1 ? 'admin-view is-active' : 'admin-view ';
+        var WorkrclassName = CalParams.worker===0 ? 'user-view  is-active' : 'user-view ';
 
         return (
             <div className="row">
@@ -111,8 +113,8 @@ class DashBoard extends Component {
                                         <div className="card-header">
                                             <h4 className="card-title text-light text-center">2 بهمن 1397</h4>
                                             <div className="task-view-mode">
-                                                <a href="#!" id="manager" onClick={this.ChangeUserMode.bind(this)} className="admin-view is-active">{this.context.t("manager")}</a>
-                                                <a href="#worker" id="worker" onClick={this.ChangeUserMode.bind(this)}  className="user-view">{this.context.t("worker")}</a>
+                                                <a href="#!" id="manager" onClick={this.ChangeUserMode.bind(this)} className={AdminclassName}>{this.context.t("manager")}</a>
+                                                <a href="#worker" id="worker" onClick={this.ChangeUserMode.bind(this)}  className={WorkrclassName}>{this.context.t("worker")}</a>
                                             </div>
                                         </div>
                                         <div className="card-body">
