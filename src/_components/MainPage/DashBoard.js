@@ -39,17 +39,20 @@ class DashBoard extends Component {
             modal: !prevState.modal
         }));
     }
+    ChangeUserMode(event) {
+        if(event.target.id=="manager")
+            CalParams.worker=1;
+        else if(event.target.id=="worker")
+            CalParams.worker=0;
+        event.target.classList.add('is-active');
+        const {GetCounts} = this.props;
+        GetCounts(CalParams);
 
-    submitChange() {
-        const {GetEvent, GetCounts, Params} = this.props;
-        GetCounts(Params);
-        GetEvent(Params);
     }
 
     componentDidMount() {
         const {GetCounts, GetTemplateForm} = this.props;
-        let data = {"seen": "2", "done": "0", "date": "0", "calendar": "", "worker": "0", "typ_id": "0"}
-        GetCounts(data);
+        GetCounts(CalParams);
         GetTemplateForm(1);
     }
 
@@ -65,6 +68,7 @@ class DashBoard extends Component {
             background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
         }`;
+
         return (
             <div className="row">
                 <div className="col-sm-12">
@@ -107,8 +111,8 @@ class DashBoard extends Component {
                                         <div className="card-header">
                                             <h4 className="card-title text-light text-center">2 بهمن 1397</h4>
                                             <div className="task-view-mode">
-                                                <a href="#!" className="admin-view is-active">{this.context.t("manager")}</a>
-                                                <a href="#!" className="user-view">{this.context.t("worker")}</a>
+                                                <a href="#!" id="manager" onClick={this.ChangeUserMode.bind(this)} className="admin-view is-active">{this.context.t("manager")}</a>
+                                                <a href="#worker" id="worker" onClick={this.ChangeUserMode.bind(this)}  className="user-view">{this.context.t("worker")}</a>
                                             </div>
                                         </div>
                                         <div className="card-body">

@@ -30,9 +30,6 @@ class ModalFilter extends Component {
         GetCounts(Params);
         GetEvent(Params);
     }
-    submitChange() {
-        const { GetEvent, GetCounts, Params } = this.props;
-    }
     render() {
         return (
             <div className="r-filter-modal__content">
@@ -49,11 +46,11 @@ class ModalFilter extends Component {
                                     name="done">
                                      <div className="radio">
                                         <Radio value="0" id="done0" />
-                                        <label for="done0">{this.context.t("undone")}</label>
+                                        <label htmlFor="done0">{this.context.t("undone")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="1" id="done1" />
-                                        <label for="done1">{this.context.t("done")}</label>
+                                        <label htmlFor="done1">{this.context.t("done")}</label>
                                     </div>
                                 </RadioGroup>
                             </div>
@@ -72,15 +69,15 @@ class ModalFilter extends Component {
                                     name="seen">
                                     <div className="radio">
                                         <Radio value="0" id="seen0" />
-                                        <label for="seen0">{this.context.t("unseen")}</label>
+                                        <label htmlFor="seen0">{this.context.t("unseen")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="1" id="seen1" />
-                                        <label for="seen1">{this.context.t("seen")}</label>
+                                        <label htmlFor="seen1">{this.context.t("seen")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="2" id="seen2" />
-                                        <label for="seen2">{this.context.t("all")}</label>
+                                        <label htmlFor="seen2">{this.context.t("all")}</label>
                                     </div>
                                 </RadioGroup>
                             </div>
@@ -98,19 +95,19 @@ class ModalFilter extends Component {
                                     name="worker">
                                     <div className="radio">
                                         <Radio value="0" id="worker0" />
-                                        <label for="worker0">{this.context.t("worker")}</label>
+                                        <label htmlFor="worker0">{this.context.t("worker")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="1" id="worker1" />
-                                        <label for="worker1">{this.context.t("manager")}</label>
+                                        <label htmlFor="worker1">{this.context.t("manager")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="2" id="worker2" />
-                                        <label for="worker2">{this.context.t("creator")}</label>
+                                        <label htmlFor="worker2">{this.context.t("creator")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="3" id="worker3" />
-                                        <label for="worker3">{this.context.t("successor")}</label>
+                                        <label htmlFor="worker3">{this.context.t("successor")}</label>
                                     </div>
                                 </RadioGroup>
                             </div>
@@ -128,23 +125,23 @@ class ModalFilter extends Component {
                                     name="date">
                                     <div className="radio">
                                         <Radio value="0" id="date0" />
-                                        <label for="date0">{this.context.t("all")}</label>
+                                        <label htmlFor="date0">{this.context.t("all")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="1" id="date1" />
-                                        <label for="date1">{this.context.t("previous_days")}</label>
+                                        <label htmlFor="date1">{this.context.t("previous_days")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="2" id="date2" />
-                                        <label for="date2">{this.context.t("next_days")}</label>
+                                        <label htmlFor="date2">{this.context.t("next_days")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="3" id="date3" />
-                                        <label for="date3">{this.context.t("next_seven_days")}</label>
+                                        <label htmlFor="date3">{this.context.t("next_seven_days")}</label>
                                     </div>
                                     <div className="radio">
                                         <Radio value="4" id="date4" />
-                                        <label for="date4">{this.context.t("current_day")}</label>
+                                        <label htmlFor="date4">{this.context.t("current_day")}</label>
                                     </div>
                                 </RadioGroup>
                             </div>
