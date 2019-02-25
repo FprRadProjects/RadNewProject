@@ -25,12 +25,15 @@ class MasterPage extends React.Component {
         const lang = localStorage.getItem("lang");
         this.props.setLanguage(lang);
     }
-
+    clicked=(event)=>{
+        alert(event.target.id)
+    }
     render() {
         const {
-            users, alert, loading,GetTemplateForm,
-            Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm
-        } = this.props;
+            users, alert, loading,GetTemplateForm,FormInfo,ShortKeys,
+            Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm,
+            Delete_ShortKeyElements_Template} = this.props;
+        console.log(ShortKeys)
         return (
             <div>
             <BrowserRouter>
@@ -72,8 +75,10 @@ class MasterPage extends React.Component {
                 <MyAwesomeMenu Set_Hide_TemplateForm={Set_Hide_TemplateForm}
                                Set_EditText_TemplateForm={Set_EditText_TemplateForm}
                                Set_ShortKey_TemplateForm={Set_ShortKey_TemplateForm}
-                               GetTemplateForm={GetTemplateForm}
-                               FormId="1"/>
+                               GetTemplateForm={GetTemplateForm} Delete_ShortKeyElements_Template={Delete_ShortKeyElements_Template}
+                               FormId={FormInfo!==undefined? FormInfo.id:0}/>
+
+
             </div>
         );
     }
@@ -83,10 +88,14 @@ function mapStateToProps(state) {
     const { alert } = state;
     const { loading } = state.loading;
     const { users } = state;
+    const { FormInfo } = state.BasicInfo;
+    const {ShortKeys} = state.Design;
     return {
         alert,
         loading,
         users,
+        FormInfo,
+        ShortKeys
     };
 }
 
@@ -107,8 +116,12 @@ const mapDispatchToProps = dispatch => ({
         dispatch(design_Actions.Set_Hide_TemplateForm(Params))
     },
     Set_ShortKey_TemplateForm: (Params) => {
-        dispatch(design_Actions.Set_ShortKey_TemplateForm(Params))
-    },
+            dispatch(design_Actions.Set_ShortKey_TemplateForm(Params))
+        },
+    Delete_ShortKeyElements_Template: (FormId,RowId) => {
+            dispatch(design_Actions.Delete_ShortKeyElements_Template(FormId,RowId))
+        },
+
     GetUserInfo: () => {
         dispatch(userActions.GetUserInfo())
     },

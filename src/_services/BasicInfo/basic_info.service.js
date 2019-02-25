@@ -3,7 +3,8 @@ import {BaseUrl} from '../../_helpers/index';
 import {UserConfig} from '../Config.js'
 
 export const BasicInfo_service = {
-    GetCompanyInfo
+    GetCompanyInfo,
+    UserAccessForm
 };
 
 function GetCompanyInfo() {
@@ -14,4 +15,17 @@ function GetCompanyInfo() {
             .catch((error) => {
                 return Promise.reject(error.message)
             })
+}
+function UserAccessForm(params) {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(BaseUrl + "UserAccessForm", params)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+
 }

@@ -1,13 +1,17 @@
 import React, {Component} from 'react';
-import {mainpageActions, design_Actions} from '../../_actions';
+import ReactDOM from 'react-dom';
+import {mainpageActions, design_Actions,BasicInfo_action} from '../../_actions';
 import {FullCalendar} from './FullCalendar';
 import {LeftCounts} from './LeftCounts';
 import PropTypes from "prop-types"
 import {connect} from 'react-redux';
-import {Menu, Item, Separator, Submenu, MenuProvider} from 'react-contexify';
 import {ModalFilter} from './ModalFilter';
+import {FormInfo} from '../../locales/';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup} from 'reactstrap';
-import {MyAwesomeMenu} from "../Config/MyAwesomeMenu";
+/*import {MenuProvider} from "react-contexify";
+import renderHTML from "react-render-html";
+*/
+
 
 var CalParams = {
     "seen": "2",
@@ -49,16 +53,17 @@ class DashBoard extends Component {
         GetCounts(CalParams);
 
     }
-
     componentDidMount() {
-        const {GetCounts, GetTemplateForm} = this.props;
+        const {GetCounts, GetTemplateForm,GetFormInfo} = this.props;
         GetCounts(CalParams);
-        GetTemplateForm(1);
+        GetFormInfo(FormInfo.web_fm_mainpage);
+        GetTemplateForm(FormInfo.web_fm_mainpage.id);
+
     }
 
     render() {
 
-        const {GetEvents, GetCounts, alert, loading} = this.props;
+        const {GetEvents, GetCounts, alert, loading,ShortKeys} = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -130,7 +135,14 @@ class DashBoard extends Component {
 
                     </div>
                 </div>
+                {/*<MenuProvider id="menu_id">
+                    {ShortKeys!==undefined && Object.keys(ShortKeys).map((keyName, i) =>  {
+                        let keyTarget=ShortKeys[keyName].Meta.replace("element=","rowid='"+ShortKeys[keyName].Id+"' element=");
+                        keyTarget=keyTarget.replace("event", "onclick")
 
+                        return  renderHTML(keyTarget);
+                    })}
+                </MenuProvider>*/}
             </div>
 
         );
@@ -147,6 +159,7 @@ function mapStateToProps(state) {
     const {alert} = state;
     const {loading} = state.loading;
     const {lang} = state.i18nState;
+    const {ShortKeys} = state.Design;
 
     const {Design} = state
 
@@ -154,6 +167,7 @@ function mapStateToProps(state) {
         alert,
         loading,
         lang,
+        ShortKeys,
         Design
     };
 }
@@ -167,7 +181,11 @@ const mapDispatchToProps = dispatch => ({
     },
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
-    }
+    },
+    GetFormInfo: (Param) => {
+        dispatch(BasicInfo_action.GetFormInfo(Param))
+    },
+
 });
 const connectedDashBoard = connect(mapStateToProps, mapDispatchToProps)(DashBoard);
 export {connectedDashBoard as DashBoard};

@@ -8,6 +8,18 @@ export function BasicInfo(state = {}, action) {
                 ...action.data
             }
         }
+        case BaseConstant.USER_ACCESS_FORM_SUCCESS: {
+            return {
+                ...state,
+                FormAccessInfo:{ ...action.data}
+            }
+        }
+        case BaseConstant.GET_FORM_INFO_SUCCESS: {
+            return {
+                ...state,
+                FormInfo:{ ...action.data}
+            }
+        }
         default:
             return state;
     }

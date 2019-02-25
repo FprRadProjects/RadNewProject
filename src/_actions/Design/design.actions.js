@@ -9,7 +9,8 @@ export const design_Actions = {
     GetTemplateForm,
     Set_EditText_TemplateForm,
     Set_Hide_TemplateForm,
-    Set_ShortKey_TemplateForm
+    Set_ShortKey_TemplateForm,
+    Delete_ShortKeyElements_Template
 
 };
 
@@ -92,7 +93,32 @@ function Set_ShortKey_TemplateForm(param) {
             .then(
                 data => {
                     if (data.status) {
+                        dispatch(design_Actions.GetTemplateForm(param.FormId))
+                    } else if (data.code !== 0) {
+                        dispatch(alertActions.error(data.error));
                         dispatch(loadingActions.HideLoading());
+                    } else
+                    {
+                        userActions.logout();
+                        history.push("/login")
+                    }
+                },
+                error => {
+                    dispatch(alertActions.error(error));
+                    dispatch(loadingActions.HideLoading());
+                }
+            );
+    }
+}
+
+function Delete_ShortKeyElements_Template(FormId,RowId) {
+    return dispatch => {
+        dispatch(loadingActions.ShowLoading());
+        designService.Delete_ShortKeyElements_Template(FormId,RowId)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(design_Actions.GetTemplateForm(FormId))
                     } else if (data.code !== 0) {
                         dispatch(alertActions.error(data.error));
                         dispatch(loadingActions.HideLoading());

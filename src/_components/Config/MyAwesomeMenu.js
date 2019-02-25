@@ -24,20 +24,24 @@ class MyAwesomeMenu extends Component {
     }
 
     HideClick = ({event, props}) => {
-        if (event.target.attributes.id !== undefined) {
-            const id = event.target.attributes.id.value;
+            const id = event.target.attributes.id !== undefined?event.target.attributes.id.value:"";
             if (id.indexOf("ShortKey") === -1) {
-
                 this.setState(prevState => ({
                     ...this.state,
                     modal: !prevState.modal,
                     event: event,
-                    public: event.target.attributes.public.value,
-                    ishide: true
+                    public: false,
+                    ishide: true,
+                    isshort: false,
 
                 }));
             }
-        }
+            else {
+                var RowId=event.target.attributes.rowid.value;
+                var FormId=this.props.FormId;
+                const {Delete_ShortKeyElements_Template} = this.props;
+                Delete_ShortKeyElements_Template(FormId,RowId);
+            }
 
     }
     EditClick = ({event, props}) => {
@@ -58,6 +62,7 @@ class MyAwesomeMenu extends Component {
                         event: event,
                         erowid: event.target.attributes.erowid.value,
                         public: event.target.attributes.public.value,
+                        isshort: false,
                         ishide: false
 
                     }));
@@ -66,25 +71,21 @@ class MyAwesomeMenu extends Component {
         }
     }
     ShortKeyClick = ({event, props}) => {
-        var Params =
-            {
-                RowId: 0,
-                FormId: this.props.FormId,
-                Meta: "",
-                Element: "",
-                IsPublic: false,
-            }
-        if (event.target.attributes.id !== undefined) {
-            if (event.target.attributes.id.value.indexOf("ShortKey") === -1) {
-                Params.Meta = event.target.outerHTML;
-                Params.Element = event.target.attributes.id.value;
-                const {Set_ShortKey_TemplateForm} = this.props;
-                Set_ShortKey_TemplateForm(Params);
-            }
+        const id = event.target.attributes.id !== undefined?event.target.attributes.id.value:"";
+        alert(id)
+        if (id.indexOf("ShortKey") === -1 && id!=="") {
+            this.setState(prevState => ({
+                ...this.state,
+                modal: !prevState.modal,
+                event: event,
+                public: false,
+                ishide: false,
+                isshort: true,
+            }));
         }
     }
     SaveChange = () => {
-        if (!this.state.ishide) {
+        if (!this.state.ishide && !this.state.isshort) {
             if (this.state.text != "") {
                 const id = this.state.event.target.attributes.id.value;
                 var Params =
@@ -101,9 +102,7 @@ class MyAwesomeMenu extends Component {
                     modal: !prevState.modal,
                 }));
             }
-        }
-        else
-        {
+        } else if(!this.state.isshort) {
             var HideParam =
                 {
                     RowId: 0,
@@ -118,8 +117,47 @@ class MyAwesomeMenu extends Component {
                 modal: !prevState.modal,
             }));
         }
+        else
+        {
+            var Params =
+                {
+                    RowId: 0,
+                    FormId: this.props.FormId,
+                    Meta: "",
+                    Element: "",
+                    IsPublic: this.state.public,
+                }
+            if (this.state.event.target.attributes.id !== undefined) {
+                if (this.state.event.target.nodeName == "I") {
+                    if (this.state.event.target.attributes.id.value.indexOf("ShortKey") === -1) {
+                        const {Set_ShortKey_TemplateForm, ShortKeys} = this.props;
+                        Params.Element = "ShortKey" + this.state.event.target.attributes.id.value;
+                        if (ShortKeys[Params.Element] === undefined) {
+                            this.state.event.target.attributes.element.value = Params.Element;
+                           Params.Meta = this.state.event.target.outerHTML.replace('id="', 'key="' + Params.Element + '" id="ShortKey');
+                            Set_ShortKey_TemplateForm(Params);
+                        }
+                    }
+                }
+            }
+            this.setState(prevState => ({
+                modal: !prevState.modal,
+            }));
+        }
     }
+    FindReact = function(dom) {
+        let key = Object.keys(dom).find(key=>key.startsWith("__reactInternalInstance$"));
+        let internalInstance = dom[key];
+        if (internalInstance == null) return null;
 
+        if (internalInstance.return) { // react 16+
+            return internalInstance._debugOwner
+                ? internalInstance._debugOwner.stateNode
+                : internalInstance.return.stateNode;
+        } else { // react <16
+            return internalInstance._currentElement._owner._instance;
+        }
+    }
     onChangeInput = (event) => {
         this.setState({
             text: event.target.value,
@@ -143,9 +181,9 @@ class MyAwesomeMenu extends Component {
                     <Item onClick={this.ShortKeyClick.bind(this)}>{this.context.t("AddToShortKey")}</Item>
                 </Menu>
                 <Modal isOpen={State.modal} className={this.props.className}>
-                    <ModalHeader>{State.ishide?this.context.t("DeleteControl"):this.context.t("EditLabel")}</ModalHeader>
+                    <ModalHeader>{State.ishide ? this.context.t("DeleteControl") : this.context.t("EditLabel")}</ModalHeader>
                     <ModalBody>
-                        {!State.ishide &&
+                        {!State.ishide && !State.isshort&&
                         <input type="text" defaultValue={State.text} onChange={this.onChangeInput.bind(this)}/>}
                         <label htmlFor="ispublic"> {this.context.t("IsPublic")}</label>
                         <input id="ispublic" type="checkbox" defaultChecked={State.public === "true" ? "checked" : ""}
@@ -170,8 +208,11 @@ MyAwesomeMenu.contextTypes = {
 
 function mapStateToProps(state) {
     const {lang} = state.i18nState;
+    const {ShortKeys} = state.Design;
     return {
         lang,
+        ShortKeys
+
     };
 }
 
