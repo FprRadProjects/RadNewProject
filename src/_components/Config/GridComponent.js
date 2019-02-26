@@ -15,7 +15,7 @@ import {
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
-    Table,
+    VirtualTable,
     TableHeaderRow,
     PagingPanel,
     TableGroupRow,
@@ -40,9 +40,11 @@ const groupingPanelMessages = {
 };
 var Params={};
 const TableRow = ({row, ...restProps}) => (
-    <Table.Row
+    <VirtualTable.Row
         {...restProps}
-        onClick={() => alert(JSON.stringify(row))}
+        onClick={(e) =>{
+            alert(JSON.stringify(row))}
+        }
         style={{
             cursor: 'pointer',
 
@@ -238,7 +240,7 @@ const BooleanTypeProvider = props => (
         if(this.props.totalCount!==undefined)
             totalCount=this.props.totalCount;
         return (
-            <div className="card" style={{position: 'relative'}}>
+            <div className="card" >
                 <Grid
                     rows={rows}
                     columns={columns}
@@ -271,7 +273,7 @@ const BooleanTypeProvider = props => (
                     <FilteringState
                         onFiltersChange={this.changeFilters}
                     />
-                    <Table rowComponent={TableRow}
+                    <VirtualTable rowComponent={TableRow}
                            columnExtensions={tableColumnExtensions}
                            messages={tableMessages}
                     />
