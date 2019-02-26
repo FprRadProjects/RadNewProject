@@ -1,1 +1,2 @@
-export * from './Commons/index'
+export * from './Commons'
+export * from './Automation'

@@ -20,6 +20,12 @@ export function BasicInfo(state = {}, action) {
                 FormInfo:{ ...action.data}
             }
         }
+        case BaseConstant.GET_GRID_ROW_DATA_SUCCESS: {
+            return {
+                ...state,
+                GridRowData:{ ...action.data}
+            }
+        }
         default:
             return state;
     }

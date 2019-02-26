@@ -22,7 +22,7 @@ class Sidebar extends Component {
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-system"></i>
-                            <span>سیستم</span>
+                            <span>{this.context.t("frm_System")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
                         <ul className="sidebar-submenu">
@@ -76,7 +76,7 @@ class Sidebar extends Component {
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-automation"></i>
-                            <span>اتوماسیون</span>
+                            <span>{this.context.t("frm_Automation")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
                         <ul className="sidebar-submenu">
@@ -125,7 +125,7 @@ class Sidebar extends Component {
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-secretariat"></i>
-                            <span>دبیرخانه</span>
+                            <span>{this.context.t("frm_Secretariat")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
                         <ul className="sidebar-submenu">
@@ -153,18 +153,24 @@ class Sidebar extends Component {
                                     <span>نامه داخلی</span>
                                 </a>
                             </li>
+                            <li>
+                                <Link to="/references" >
+                                    <i className="icon-system"></i>
+                                    <span>{this.context.t("frm_Dashboard_References")}</span>
+                                </Link>
+                            </li>
                         </ul>
                     </li>
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-project"></i>
-                            <span>پروژه</span>
+                            <span>{this.context.t("frm_Projects")}</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-financial"></i>
-                            <span>عملیات مالی</span>
+                            <span>{this.context.t("frm_Financial_Operations")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
                         <ul className="sidebar-submenu">
@@ -185,7 +191,7 @@ class Sidebar extends Component {
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-archive"></i>
-                            <span>آرشیو</span>
+                            <span>{this.context.t("frm_Archives")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
 
@@ -193,7 +199,7 @@ class Sidebar extends Component {
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-terminal"></i>
-                            <span>ترمینال داده</span>
+                            <span>{this.context.t("frm_Data_Terminal")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
 
@@ -201,20 +207,23 @@ class Sidebar extends Component {
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-dashboard"></i>
-                            <span>کارتابل ها</span>
+                            <span>{this.context.t("frm_Dashboards")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
+
                         </a>
                         <ul className="sidebar-submenu">
-                            <NavItem to="/works">
-                                <i className="icon-system"></i>
-                                <span>کارتابل کارها</span>
-                            </NavItem>
+                            <li>
+                                <Link to="/works" >
+                                    <i className="icon-dashboard"></i>
+                                    <span>{this.context.t("frm_Dashboard_Work")}</span>
+                                </Link>
+                            </li>
                         </ul>
                     </li>
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-report"></i>
-                            <span>گزارشات</span>
+                            <span>{this.context.t("frm_Reports")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
 
@@ -222,7 +231,7 @@ class Sidebar extends Component {
                     <li>
                         <a href="#" className="sidebar-header">
                             <i className="icon-setting"></i>
-                            <span>تنظیمات مدیر</span>
+                            <span>{this.context.t("frm_System_Administrator_Settings")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
 

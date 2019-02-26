@@ -33,7 +33,6 @@ class MasterPage extends React.Component {
             users, alert, loading,GetTemplateForm,FormInfo,ShortKeys,
             Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm,
             Delete_ShortKeyElements_Template} = this.props;
-        console.log(ShortKeys)
         return (
             <div>
             <BrowserRouter>

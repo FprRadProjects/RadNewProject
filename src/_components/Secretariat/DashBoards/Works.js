@@ -111,7 +111,7 @@ class Works extends Component {
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
                 }
 
-                <Button color="primary" onClick={this.toggle}></Button>
+                <Button color="primary" onClick={this.toggle}>نمایش فیلتر ها</Button>
                 <Modal isOpen={this.state.modal} toggle={this.toggle}
                        className={this.state.modalClass} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={this.toggle}></ModalHeader>

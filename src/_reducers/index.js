@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { alert } from './Alert';
 import { Design } from './Design';
 import { Common } from './General';
+import { Auto_BasicInfo } from './General';
 import { dashboards } from './Secretariat';
 import { authentication , users } from './Users';
 import { projects } from './Projects';
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
     i18nState,
     MainPage,
     BasicInfo,
+    Auto_BasicInfo
 });
 
 export default rootReducer;

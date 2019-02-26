@@ -1,17 +1,21 @@
 import {BasicInfoConstant} from "../../_constants";
 import {alertActions, loadingActions, userActions} from "../index";
-import {BasicInfo_service, designService} from "../../_services"
+import {BasicInfo_service} from "../../_services"
 import {history} from "../../_helpers";
 
 export const BasicInfo_action = {
     GetCompanyInfo,
     UserAccessForm,
-    GetFormInfo
+    GetFormInfo,
+    GetRowData
 
 };
 
 function GetFormInfo(param) {
     return dispatch => {dispatch(getFormInfo_Reducer(param));}
+}
+function GetRowData(data) {
+    return dispatch => {dispatch(getGridRowData_Reducer(data));}
 }
 function UserAccessForm(param) {
     return dispatch => {
@@ -72,4 +76,6 @@ function UserAccessForm_Reducer(data) {
     return {type: BasicInfoConstant.USER_ACCESS_FORM_SUCCESS, data}
 }function getFormInfo_Reducer(data) {
     return {type: BasicInfoConstant.GET_FORM_INFO_SUCCESS, data}
+}function getGridRowData_Reducer(data) {
+    return {type: BasicInfoConstant.GET_GRID_ROW_DATA_SUCCESS, data}
 }

@@ -49,9 +49,19 @@ export const translations = {
         user_info_not_available: 'اطلاعات کاربر در دسترس نیست',
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
-        home: 'صفحه اصلی',
-        work_dashboard: 'کارتابل کار',
-        references_dashboard: 'کار تابل ارجاعات',
+        frm_System: 'سیستم',
+        frm_Automation: 'اتوماسیون',
+        frm_Secretariat: 'دبیرخانه',
+        frm_Projects: 'پروژه',
+        frm_Financial_Operations: 'عملیات مالی',
+        frm_Archives: 'آرشیو',
+        frm_Data_Terminal: 'ترمینال داده',
+        frm_Dashboards: 'کارتابل ها',
+        frm_Reports: 'گزارشات',
+        frm_System_Administrator_Settings: 'تنظیمات مدیر سیستم',
+        frm_Home: 'صفحه اصلی',
+        frm_Dashboard_Work: 'کارتابل کار',
+        frm_Dashboard_References: 'کار تابل ارجاعات',
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -104,9 +114,19 @@ export const translations = {
         user_info_not_available: 'User information is not available',
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
-        home: 'Home',
-        work_dashboard: 'Work Dashboard',
-        references_dashboard: 'References Dashboard',
+        frm_System: 'System',
+        frm_Automation: 'Automation',
+        frm_Secretariat: 'Secretariat',
+        frm_Projects: 'Projects',
+        frm_Financial_Operations: 'Financial Operations',
+        frm_Archives: 'Archives',
+        frm_Data_Terminal: 'Data Terminal',
+        frm_Dashboards: 'Dashboards',
+        frm_Reports: 'Reports',
+        frm_System_Administrator_Settings: 'Administrator Settings',
+        frm_Home: 'Home',
+        frm_Dashboard_Work: 'Work Dashboard',
+        frm_Dashboard_References: 'References Dashboard',
         //End-------------- FORM NAME --------------
 
     },

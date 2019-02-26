@@ -1,20 +1,11 @@
 import {AutoBasicInfoConstant as constant} from "../../../../_constants";
 
-export function DefaultText(state = {}, action) {
+export function Auto_BasicInfo(state = {}, action) {
     switch (action.type) {
-        case constant.SETGRID_COLUMNS: {
+        case constant.GET_WORK_INFO_SUCCESS: {
             return {
-
                 ...state,
-                columns:  action.data
-            }
-        }
-
-        case constant.SETGRID_ROWS: {
-            return {
-
-                ...state,
-                rows:  action.data
+               ... action.data
             }
         }
 
@@ -23,5 +14,5 @@ export function DefaultText(state = {}, action) {
     }
 };
 
-export default DefaultText;
+export default Auto_BasicInfo;
 
