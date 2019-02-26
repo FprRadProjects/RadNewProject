@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
-import {Act_Reference, design_Actions} from "../../../_actions";
+import {Act_Reference, design_Actions, mainpageActions} from "../../../_actions";
 import {GridComponent} from "../../Config/GridComponent";
-import CalendarComponent from "../../Config/CalendarComponent";
 import {RadioFilter} from "./RadioFilter";
 import PropTypes from "prop-types"
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
 var Params = {
     "page": 0,
@@ -16,26 +16,31 @@ var Params = {
     "worker": "0",
     "orderby": "tarikhaction",
     "direction": "desc",
-    "filter":[]
+    "filter": []
 
 };
+
 class References extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-
+        this.state = {
+            ...this.state,
+            modal: false,
+        };
+        this.toggle = this.toggle.bind(this);
     }
 
-    CalendarChange(event){
-        event= event.replace(/-/g, '/');;
-        Params.calendar = event;
-        Params.date = "0";
-        const{FetchData}= this.props;
-        FetchData(Params);
+
+    toggle() {
+        this.setState(prevState => ({
+            modal: !prevState.modal
+        }));
     }
+
     render() {
 
-        const{FetchData,alert,loading}= this.props;
-        const  columns= [
+        const {GetEvents, GetCounts, FetchData, alert, loading} = this.props;
+        const columns = [
             {name: 'worker', title: 'کاربر'},
             {name: 'modir', title: 'مدیر'},
             {name: 'name', title: 'نام'},
@@ -46,7 +51,7 @@ class References extends Component {
             {name: 'wtype:', title: 'نوع کار'},
             {name: 'nos_id:', title: 'سریال'},
             {name: 'custom_serial', title: 'سریال سفارشی'},
-            {name: 'tarikhaction', title: 'تاریخ'},
+           {name: 'tarikhaction', title: 'تاریخ'},
             {name: 'mozo', title: 'موضوع'},
             {name: 'zam', title: 'ضمائم'},
             {name: 'vaziyat', title: 'وضعیت سند'},
@@ -89,12 +94,12 @@ class References extends Component {
             /*HIDDEN*/
 
         ];
-        const  currencyColumns= ['peygir_id', 'id_tel'];
-        const  hiddenColumnNames= ['done','tarikhaction','id_tel','olaviyat','cuser',
+        const currencyColumns = ['peygir_id', 'id_tel'];
+        const hiddenColumnNames = ['done', 'tarikhaction', 'id_tel', 'olaviyat', 'cuser',
             'c_date', 'tarikh', 'fok', 'mtarikh', 'see_date', 'fok', 'c_time', 'wt_id',
-            'suggest_time', 'sm_zaman_anjam_kar', 'see_time', 'saat', 'fsaat','proje_nos_id',
+            'suggest_time', 'sm_zaman_anjam_kar', 'see_time', 'saat', 'fsaat', 'proje_nos_id',
             'p_proje_nose_id', 'showtree_id', 'flow', 'muser', 'proje_code', 'natije'];
-        const booleanColumns=['done', 'has_peyvast', 'done', 'fok'];
+        const booleanColumns = ['done', 'has_peyvast', 'done', 'fok'];
 
         return (
             <div>
@@ -104,13 +109,23 @@ class References extends Component {
                 {alert.message &&
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
                 }
-                <RadioFilter Params={Params}  fetchData={FetchData.bind(this)} />
-                <CalendarComponent CalendarChange={this.CalendarChange.bind(this)}/>
-                <GridComponent  columns={columns} booleanColumns={booleanColumns}
-                      UrlParams={Params} fetchData={FetchData.bind(this)}
-                      currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
-                />
 
+                <Button color="primary" onClick={this.toggle}></Button>
+                <Modal isOpen={this.state.modal} toggle={this.toggle}
+                       className={this.state.modalClass} backdrop={this.state.backdrop}>
+                    <ModalHeader toggle={this.toggle}></ModalHeader>
+                    <ModalBody>
+                        <RadioFilter Params={Params} fetchData={FetchData.bind(this)}/>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button color="primary" onClick={this.toggle}></Button>
+                    </ModalFooter>
+                </Modal>
+
+                <GridComponent columns={columns} booleanColumns={booleanColumns}
+                               UrlParams={Params} fetchData={FetchData.bind(this)}
+                               currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                />
 
 
             </div>
@@ -125,6 +140,13 @@ const mapDispatchToProps = dispatch => ({
     },
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
+    },
+
+    GetCounts: (Params) => {
+        dispatch(mainpageActions.GetCounts(Params))
+    },
+    GetEvents: (Params) => {
+        dispatch(mainpageActions.GetEvents(Params))
     }
 });
 References.contextTypes = {
@@ -144,8 +166,10 @@ function mapStateToProps(state) {
 }
 
 
+
+
 const connectedReferences = connect(mapStateToProps, mapDispatchToProps)(References);
-export { connectedReferences as References };
+export {connectedReferences as References};
 
 
 
