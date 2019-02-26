@@ -65,7 +65,7 @@ export const translations = {
         //--------------نام فرم ها--------------پایان
     },
     en: {
-        SoftWare_Name: 'Rad Web automation',
+        SoftWare_Name: 'RAD AUTOMATION',
         Language: 'Language',
         fa: 'fa',
         en: 'en',

@@ -26,7 +26,7 @@ class Header extends Component {
             <div className="page-main-header">
                 <div className="main-header-left">
                     <div className="logo-wrapper">
-                        <Link to="/">اتوماسیون تحت وب راد</Link>
+                        <Link to="/">{this.context.t("SoftWare_Name")}</Link>
                     </div>
                     <div className="mobile-sidebar">
                         <div className="media-body text-right switch-sm">
