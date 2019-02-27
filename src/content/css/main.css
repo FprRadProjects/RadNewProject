@@ -2724,7 +2724,7 @@ table tbody .border-bottom-warning td {
     justify-content: center;
     position: fixed;
     background-color: #fff;
-    z-index: 11;
+    z-index: 10000000;
     top: 0;
 }
 

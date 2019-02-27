@@ -77,7 +77,7 @@ class GridComponent extends React.PureComponent {
         <VirtualTable.Row
             {...restProps}
             onClick={(e) => {
-                this.props.GetRowData(row);
+                this.props.GetWorkInfo(row);
             }
             }
             style={{
@@ -343,9 +343,12 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = dispatch => ({
-    GetRowData: (data) => {
+   /* GetRowsData: (data) => {
         dispatch(BasicInfo_action.GetRowData(data))
     },
+    GetRowData: (data) => {
+        dispatch(BasicInfo_action.GetRowData(data))
+    },*/
 });
 const connectedGrid = connect(mapStateToProps, mapDispatchToProps)(GridComponent);
 export {connectedGrid as GridComponent};

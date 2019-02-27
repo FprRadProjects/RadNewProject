@@ -15,16 +15,12 @@ class ReferenceViewer extends Component {
             backdropClassName: "test",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
+
     }
-    componentDidMount() {
-        const{GetWorkInfo,peygir_id}=this.props;
-        if(peygir_id!==undefined)
-            GetWorkInfo(peygir_id);
-    }
+
 
     render() {
         const{modal,toggle,WorkInfo}=this.props;
-        WorkInfo!=undefined && console.log(WorkInfo)
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -41,16 +37,36 @@ class ReferenceViewer extends Component {
                     <ModalHeader toggle={toggle}></ModalHeader>
                     <ModalBody>
                         {WorkInfo!==undefined&&<div>
-                            {this.context.t("PartyAccountName")}:  <label></label>
+                            <label>{this.context.t("WorkID")}:  </label>
+                            <input type="text" disabled={true} defaultValue={ WorkInfo.peygir_id}/><br/>
+                            <label>{this.context.t("PartyAccountName")}:  </label>
                             <input type="text" disabled={true} defaultValue={ WorkInfo.name}/><br/>
-                            {this.context.t("CompanyName")}:  <label></label>
+                            <label>{this.context.t("CompanyName")}: </label>
                             <input type="text" disabled={true} defaultValue={ WorkInfo.coname}/><br/>
-                            {this.context.t("Flow")}:  <label></label>
+                            <label>{this.context.t("Flow")}:  </label>
                             <input type="text" disabled={true} defaultValue={ WorkInfo.flow}/><br/>
-                            <label>{ WorkInfo.tarikhaction}</label><br/>
-                            <label>{ WorkInfo.flow}</label><br/>
-                            <label>{ WorkInfo.worker}</label><br/>
-                            <label>{ WorkInfo.ptype}</label><br/>
+                            <label>{this.context.t("WorkType")}:  </label>
+                            <input type="text" disabled={true} defaultValue={ WorkInfo.wtype}/><br/>
+                            <label>{this.context.t("creator")}:  </label>
+                            <input type="text" disabled={true} defaultValue={ WorkInfo.cuser}/>
+                            <input type="text" disabled={true} defaultValue={ WorkInfo.c_date}/>
+                            <input type="text" disabled={true} defaultValue={ WorkInfo.c_time}/><br/>
+                            <label>{this.context.t("Audience")}:  </label>
+                            <input type="text" disabled={true} defaultValue={ WorkInfo.ashkhas}/><br/>
+                            <label>{this.context.t("Description")}:  </label>
+                            <textarea type="text" disabled={true} defaultValue={ WorkInfo.tozihat}></textarea><br/>
+                            <label>{this.context.t("FileNumber")}:  </label>
+                            <input type="text" defaultValue={ WorkInfo.shomare}/><br/>
+                            <label>{this.context.t("Code")}:  </label>
+                            <input type="text" defaultValue={ WorkInfo.code}/><br/>
+                            <label>{this.context.t("Subject")}:  </label>
+                            <input type="text" defaultValue={ WorkInfo.mozo}/><br/>
+                            <label>{this.context.t("Project")}:  </label>
+                            <input type="text" defaultValue={ WorkInfo.ptype}/><br/>
+                            <label>{this.context.t("Duration_Of_Work_Short")}:  </label>
+                            <input type="text" defaultValue={ WorkInfo.modat_anjam_w}/><br/>
+                            <label>{this.context.t("Result")}:  </label>
+                            <textarea type="text" disabled={true} defaultValue={ WorkInfo.natije}></textarea><br/>
                         </div>}
                     </ModalBody>
                     <ModalFooter>
@@ -65,9 +81,6 @@ class ReferenceViewer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    GetWorkInfo: (Params) => {
-        dispatch(WorkBasic_action.GetWorkInfo(Params))
-    },
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     }
@@ -82,13 +95,10 @@ function mapStateToProps(state) {
     const {loading} = state.loading;
     const {lang} = state.i18nState
     const {GridRowData} = state.BasicInfo
-    const {WorkInfo} = state.Auto_BasicInfo;
     return {
         alert,
         loading,
         lang,
-        GridRowData,
-        WorkInfo
     };
 }
 
