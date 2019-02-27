@@ -29309,8 +29309,8 @@ body .page-sidebar[navigation-layout="right-side-menu"] .sidebar-menu > li > a i
         }
 
 .rtl .page-wrapper .sidebar-close .page-sidebar {
-    -webkit-transform: translate(255px);
-    transform: translate(255px);
+    -webkit-transform: translate(300px);
+    transform: translate(300px);
 }
 
 @media only screen and (max-width: 1199px) {
@@ -34835,4 +34835,28 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
       position: relative;
       transform: translate(0);
       right: unset;
+      box-shadow: none;
+      border-color: #3c72f5;
+      border-radius: 5px
+  }
+  #calendar div.week.names{
+      background-color: #3c72f5;
+  }
+
+  #calendar div.weeks-container > div.week span.day:last-child
+  {
+    background-color: #c5e4ff;
+  }
+  #calender-wrapper button
+  {
+    background-color: #3c72f5;
+    border: none;
+  }
+  #calendar div.week span.day.today
+  {
+      border:1px solid #3c72f5;
+  }
+  #calendar div.week span.day.selected
+  {
+    background-color: #3c72f5;
   }

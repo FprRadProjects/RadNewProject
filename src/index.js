@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import './content/css/bootstrap-rtl.min.css'
 import 'bootstrap-v4-rtl';
 import { store } from './_helpers';
 import { App } from './App/App';
