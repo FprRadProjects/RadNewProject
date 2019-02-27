@@ -70,18 +70,21 @@ const BooleanEditor = ({value, onValueChange}) => (
 
 class GridComponent extends React.PureComponent {
 
-
+    ChangeStyle=(restProps)=>{
+       
+    }
 
     TableRow = ({row, ...restProps}) => (
         <Table.Row
             {...restProps}
             onClick={(e) => {
                 this.props.GetWorkInfo(row);
+
+                this.ChangeStyle(restProps);
             }
             }
             style={{
                 cursor: 'pointer',
-
             }}
         />
     );
