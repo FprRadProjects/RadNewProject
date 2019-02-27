@@ -51,6 +51,7 @@ class LoginPage extends React.Component {
     }
 
     render() {
+        document.title = this.context.t("SoftWare_Name")
         const { loggingIn,alert ,lang,CompanyName} = this.props;
         const { username, password, submitted } = this.state;
 

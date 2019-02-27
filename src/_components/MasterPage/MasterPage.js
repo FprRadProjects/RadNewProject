@@ -5,6 +5,7 @@ import { userActions } from '../../_actions/User';
 import { Header } from "../sections/Header";
 import NoMatch from "../NoMatch";
 import { DashBoard } from "../MainPage/DashBoard";
+import PropTypes from "prop-types"
 
 import { Works, References } from "../Secretariat/DashBoards";
 import { setLanguage } from "redux-i18n";
@@ -21,14 +22,14 @@ class MasterPage extends React.Component {
     componentDidMount() {
         this.props.GetUserInfo();
     }
+
     componentWillMount() {
         const lang = localStorage.getItem("lang");
         this.props.setLanguage(lang);
     }
-    clicked=(event)=>{
-        alert(event.target.id)
-    }
+
     render() {
+        document.title = this.context.t("SoftWare_Name")
         const {
             users, alert, loading,GetTemplateForm,FormInfo,ShortKeys,
             Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm,
@@ -98,6 +99,9 @@ function mapStateToProps(state) {
     };
 }
 
+MasterPage.contextTypes = {
+    t: PropTypes.func.isRequired
+}
 const mapDispatchToProps = dispatch => ({
     GetCounts: (Params) => {
         dispatch(mainpageActions.GetCounts(Params))
