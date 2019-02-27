@@ -34,12 +34,6 @@ import {Loading} from '../../theme-sources/bootstrap4/components/loading';
 import {CurrencyTypeProvider} from '../../theme-sources/bootstrap4/components/currency-type-provider';
 import connect from "react-redux/es/connect/connect";
 
-const groupingPanelMessages = {
-    groupByColumn: 'عنوان ستون را برای گروه بندی بر اساس آن ستون بکشید',
-};
-const tableMessages = {
-    noData: 'اطلاعات موجود نیست',
-};
 var Params = {};
 
 
@@ -246,7 +240,13 @@ class GridComponent extends React.PureComponent {
             rows = this.props.rows;
         if (this.props.totalCount !== undefined)
             totalCount = this.props.totalCount;
-        console.log(rows)
+
+        const groupingPanelMessages = {
+            groupByColumn: this.context.t("grouping"),
+        };
+        const tableMessages = {
+            noData: this.context.t("NoData"),
+        };
         return (
             <div>
                 <Grid
