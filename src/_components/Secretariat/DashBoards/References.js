@@ -150,6 +150,8 @@ class References extends Component {
                                                         <i className="icon"></i>
                                                         <span>نمایش کار</span>
                                                     </a>
+                                                    <Button color="primary" onClick={this.toggleReferenceViewer}>نتیجه ارجاع</Button>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -405,7 +407,6 @@ class References extends Component {
                                 <Button color="" className="r-main-box__filter--btn" onClick={this.toggleFilter}></Button>
                             </div>
                         </div>
-                        <Button color="primary" onClick={this.toggleReferenceViewer}>نتیجه ارجاع</Button>
                         {this.state.ReferenceViewermodal && <ReferenceViewer modal={ this.state.ReferenceViewermodal}
                                                                              toggle={this.toggleReferenceViewer.bind(this)}
                                                                              WorkInfo={WorkInfo}/>}

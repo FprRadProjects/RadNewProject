@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
-import {BasicInfo_action} from "../../_actions"
 import 'bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css';
 import {
     PagingState,
@@ -15,7 +14,7 @@ import {
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
-    VirtualTable,
+    Table ,
     TableHeaderRow,
     PagingPanel,
     TableGroupRow,
@@ -74,7 +73,7 @@ class GridComponent extends React.PureComponent {
 
 
     TableRow = ({row, ...restProps}) => (
-        <VirtualTable.Row
+        <Table.Row
             {...restProps}
             onClick={(e) => {
                 this.props.GetWorkInfo(row);
@@ -294,7 +293,7 @@ class GridComponent extends React.PureComponent {
                     <FilteringState
                         onFiltersChange={this.changeFilters}
                     />
-                    <VirtualTable rowComponent={this.TableRow}
+                    <Table rowComponent={this.TableRow}
                                   columnExtensions={tableColumnExtensions}
                                   messages={tableMessages}
                     />
