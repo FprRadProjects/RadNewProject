@@ -45,7 +45,7 @@ class MasterPage extends React.Component {
                                 <div className="line"></div>
                                 <div className="line"></div>
                                 <div className="line"></div>
-                                <h4>اتوماسیون تحت وب راد</h4>
+                                <h4>{this.context.t("SoftWare_Name")}</h4>
                             </div>
                         </div>
                     }

@@ -45,24 +45,29 @@ function UserAccessForm(param) {
 
 function GetCompanyInfo() {
     return dispatch => {
+        dispatch(loadingActions.ShowLoading());
         if (localStorage.getItem("CompanyInfo") === null) {
             BasicInfo_service.GetCompanyInfo()
                 .then(
                     data => {
                         if (data.status) {localStorage.setItem("CompanyInfo", JSON.stringify(data.data));
                             dispatch(PassCompInfo_Reducer(data.data));
+                            dispatch(loadingActions.HideLoading());
 
                         }
                         else {
                             dispatch(alertActions.error(data.error));
+                            dispatch(loadingActions.HideLoading());
                         }
                     },
                     error => {
                         dispatch(alertActions.error(error));
+                        dispatch(loadingActions.HideLoading());
                     }
                 );
         }
         else {
+            dispatch(loadingActions.HideLoading());
             dispatch(PassCompInfo_Reducer(JSON.parse(localStorage.getItem("CompanyInfo"))));
         }
     }

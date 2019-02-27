@@ -52,12 +52,24 @@ class LoginPage extends React.Component {
 
     render() {
         document.title = this.context.t("SoftWare_Name")
-        const { loggingIn,alert ,lang,CompanyName} = this.props;
+        const { loggingIn,alert ,lang,CompanyName,loading} = this.props;
         const { username, password, submitted } = this.state;
 
 
         return (
+
             <div className="r-login">
+                {loading &&
+                <div className="loader-wrapper">
+                    <div className="loader">
+                        <div className="line"></div>
+                        <div className="line"></div>
+                        <div className="line"></div>
+                        <div className="line"></div>
+                        <h4>اتوماسیون تحت وب راد</h4>
+                    </div>
+                </div>
+                }
                 <div className="r-login__company">
                     <div className="r-login__company-title">{CompanyName}</div>
                     <div className="r-login__company-ver">ورژن 3/120 مطابق با ورژن 27/33 ویندوز</div>
@@ -120,6 +132,7 @@ LoginPage.contextTypes = {
 }
 function mapStateToProps(state) {
 
+    const { loading } = state.loading;
     const { loggingIn} = state.authentication;
     const {alert} = state;
     const {CompanyName} = state.BasicInfo;
@@ -127,6 +140,7 @@ function mapStateToProps(state) {
     localStorage.setItem("lang", lang);
     return {
         loggingIn,
+        loading,
         alert,
         lang,
         translations,
