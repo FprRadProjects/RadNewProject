@@ -71,7 +71,7 @@ const BooleanEditor = ({value, onValueChange}) => (
 class GridComponent extends React.PureComponent {
 
     ChangeStyle=(restProps)=>{
-       
+
     }
 
     TableRow = ({row, ...restProps}) => (
