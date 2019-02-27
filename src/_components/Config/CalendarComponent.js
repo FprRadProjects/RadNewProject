@@ -8,7 +8,7 @@ class CalendarComponent extends Component {
     render() {
         const{CalendarChange}=this.props;
         return (
-            <div>
+            <div className="col">
                 <Calendar onChange={CalendarChange} />
 
             </div>

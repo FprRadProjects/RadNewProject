@@ -47,7 +47,7 @@ class RadioFilter extends Component {
         return (
             <div className="r-filter-modal__content">
                 <div className="row">
-                    <div className="col-lg-3">
+                    <div className="col">
                         <div className="card ">
                             <div className="card-header">
                                 <i className="done-work">
@@ -70,7 +70,7 @@ class RadioFilter extends Component {
                         </div>
 
                     </div>
-                    <div className="col-lg-3">
+                    <div className="col">
                         <div className="card ">
                             <div className="card-header">
                                 <i className="seen-work">
@@ -96,7 +96,7 @@ class RadioFilter extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-3">
+                    <div className="col">
                         <div className="card ">
                             <div className="card-header">
                                 <i className="user-mode">
@@ -126,7 +126,7 @@ class RadioFilter extends Component {
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-3">
+                    <div className="col">
                         <div className="card ">
                             <div className="card-header">
                                 <i className="range-date">

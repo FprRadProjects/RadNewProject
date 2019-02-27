@@ -21,10 +21,10 @@ class App extends React.Component {
     render() {
 
         return (
-            <div className="d-flex flex-1">
+            <div>
 
                 <Router history={history}>
-                    <div className="flex-1">
+                    <div>
 
                         <PrivateRoute exact
                                       path={history.location.pathname !== "/login" ? history.location.pathname : "/"}

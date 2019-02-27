@@ -25,6 +25,22 @@ $('.loader-wrapper').fadeOut('slow', function () {
 $(document).on('click', '.mobile-toggle', function (e) {
     $(".nav-menus").toggleClass("open");
 });
+
+$(document).on('click', '.ellipsis', function (e) {
+    e.preventDefault();
+    if (!$('.radialnav').hasClass('active'))
+        $('.radialnav').addClass('active');
+    else
+        $('.radialnav').removeClass('active');
+});
+
+$(document).on('change', '#sidebar-toggle', function (e) {
+    if ($(this).is(":checked"))
+        $(".tab-content").hide();
+    else
+        $(".tab-content").show();
+});
+
 $(document).on('click', '.sidebar-menu li a', function (e) {
     var $this = $(this);
     var checkElement = $this.next();
