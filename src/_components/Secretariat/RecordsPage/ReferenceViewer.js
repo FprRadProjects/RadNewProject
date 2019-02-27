@@ -41,7 +41,12 @@ class ReferenceViewer extends Component {
                     <ModalHeader toggle={toggle}></ModalHeader>
                     <ModalBody>
                         {WorkInfo!==undefined&&<div>
-                            <label>{ WorkInfo.peygir_id}</label><br/>
+                            {this.context.t("PartyAccountName")}:  <label></label>
+                            <input type="text" disabled={true} defaultValue={ WorkInfo.name}/><br/>
+                            {this.context.t("CompanyName")}:  <label></label>
+                            <input type="text" disabled={true} defaultValue={ WorkInfo.coname}/><br/>
+                            {this.context.t("Flow")}:  <label></label>
+                            <input type="text" disabled={true} defaultValue={ WorkInfo.flow}/><br/>
                             <label>{ WorkInfo.tarikhaction}</label><br/>
                             <label>{ WorkInfo.flow}</label><br/>
                             <label>{ WorkInfo.worker}</label><br/>

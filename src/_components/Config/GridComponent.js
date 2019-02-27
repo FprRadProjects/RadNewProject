@@ -256,6 +256,9 @@ class GridComponent extends React.PureComponent {
         const tableMessages = {
             noData: this.context.t("NoData"),
         };
+        const filterMessages = {
+            filterPlaceholder: this.context.t("GrigFilter"),
+        };
 
         return (
             <div>
@@ -314,7 +317,9 @@ class GridComponent extends React.PureComponent {
                         hiddenColumnNames={hiddenColumnNames}
                         onHiddenColumnNamesChange={this.hiddenColumnNamesChange}
                     />
-                    <TableFilterRow/>
+                    <TableFilterRow
+                        messages={filterMessages}
+                    />
                     <Toolbar/>
                     <ColumnChooser/>
                     <GroupingPanel showGroupingControls={true} showSortingControls LocalizationMessages

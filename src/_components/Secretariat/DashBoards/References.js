@@ -6,7 +6,6 @@ import {RadioFilter} from "./RadioFilter";
 import {ReferenceViewer} from "../RecordsPage/ReferenceViewer";
 import PropTypes from "prop-types"
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {FormInfo} from "../../../locales";
 import {setLanguage} from "redux-i18n";
 
 var currencyColumns = [];
@@ -123,10 +122,11 @@ componentDidMount() {
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
                 }
                 <Button color="primary" onClick={this.toggleReferenceViewer}>نتیجه ارجاع</Button>
-                { this.state.ReferenceViewermodal&& <ReferenceViewer modal={peygir_id!==undefined &&peygir_id!==0 && this.state.ReferenceViewermodal} toggle={this.toggleReferenceViewer.bind(this)}
-                                 peygir_id={peygir_id}
-                />}
+
                 <Button color="primary" onClick={this.toggleFilter}>نمایش فیلتر ها</Button>
+                { this.state.ReferenceViewermodal&& <ReferenceViewer modal={peygir_id!==undefined &&peygir_id!==0 && this.state.ReferenceViewermodal} toggle={this.toggleReferenceViewer.bind(this)}
+                                                                     peygir_id={peygir_id}
+                />}
                 <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter}
                        className={this.state.modalClass} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={this.toggleFilter}></ModalHeader>
