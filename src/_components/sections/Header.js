@@ -14,14 +14,8 @@ import userAvatar from '../../content/images/master/header/user-avatar.svg';
 
 
 class Header extends Component {
-    handleLogout = (event) => {
-        userActions.logout();
-        history.push("/login")
-    }
-
     render() {
-        const { auth: isAuthenticated, users } = this.props;
-
+        const { CompanyName ,FormInfo,lang} = this.props;
         return (
             <div className="page-main-header">
                 <div className="main-header-left">
@@ -68,8 +62,12 @@ class Header extends Component {
                     </div>
                     <div className="col-5">
                         <ul className="breadcrumb">
-                            <li className="breadcrumb-item"><a href="#">اتوماسیون</a></li>
-                            <li className="breadcrumb-item active">تقویم</li>
+                            {lang ==='fa' && FormInfo!==undefined? FormInfo.fa_module_name2!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.fa_module_name2:""}</a></li>:""}
+                            {lang ==='en' && FormInfo!==undefined? FormInfo.en_module_name2!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.en_module_name2:""}</a></li>:""}
+                            {lang ==='fa' && FormInfo!==undefined? FormInfo.fa_module_name1!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.fa_module_name1:""}</a></li>:""}
+                            {lang ==='en' && FormInfo!==undefined? FormInfo.en_module_name1!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.en_module_name1:""}</a></li>:""}
+                            {lang ==='fa' && FormInfo!==undefined? FormInfo.form_name!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.form_name:""}</a></li>:""}
+                            {lang ==='en' && FormInfo!==undefined? FormInfo.en_form_name!==""&&<li className="breadcrumb-item active"><a href="#">{FormInfo!==undefined? FormInfo.en_form_name:""}</a></li>:""}
                         </ul>
                     </div>
                     <div className="col-4">
@@ -80,7 +78,7 @@ class Header extends Component {
                                     <span className="badge"><i className="fa fa-angle-down"></i></span>
                                     <div className="sep"></div>
                                     <div className="media-body">
-                                        <h6>مهندسین مشاورد هفت شهر</h6>
+                                        <h6>{CompanyName}</h6>
                                     </div>
                                 </div>
 
@@ -100,8 +98,12 @@ Header.contextTypes = {
 
 function mapStateToProps(state) {
     const { lang } = state.i18nState
+    const {CompanyName} = state.BasicInfo;
+    const { FormInfo } = state.BasicInfo;
     return {
-        lang
+        lang,
+        FormInfo,
+        CompanyName
     };
 }
 

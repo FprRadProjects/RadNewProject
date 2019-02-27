@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
-import {Act_Reference, design_Actions, mainpageActions, WorkBasic_action} from "../../../_actions";
+import {Act_Reference, BasicInfo_action, design_Actions, mainpageActions, WorkBasic_action} from "../../../_actions";
 import {GridComponent} from "../../Config/GridComponent";
 import {RadioFilter} from "./RadioFilter";
 import {ReferenceViewer} from "../RecordsPage/ReferenceViewer";
 import PropTypes from "prop-types"
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {FormInfo} from "../../../locales";
 var columns = [
     {name: 'worker', title: 'کاربر'},
     {name: 'modir', title: 'مدیر'},
@@ -107,7 +108,10 @@ class References extends Component {
             ReferenceViewermodal: !prevState.ReferenceViewermodal
         }));
     }
-
+    componentDidMount() {
+        const { GetTemplateForm,GetFormInfo} = this.props;
+        GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
+    }
     render() {
 
         const {FetchData, alert, loading,peygir_id} = this.props;
@@ -154,6 +158,9 @@ const mapDispatchToProps = dispatch => ({
     },
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
+    },
+    GetFormInfo: (Param) => {
+        dispatch(BasicInfo_action.GetFormInfo(Param))
     },
 
 });

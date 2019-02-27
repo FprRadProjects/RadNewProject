@@ -246,8 +246,9 @@ class GridComponent extends React.PureComponent {
             rows = this.props.rows;
         if (this.props.totalCount !== undefined)
             totalCount = this.props.totalCount;
+        console.log(rows)
         return (
-            <div className="card">
+            <div>
                 <Grid
                     rows={rows}
                     columns={columns}

@@ -31,7 +31,7 @@ class MasterPage extends React.Component {
     render() {
         document.title = this.context.t("SoftWare_Name")
         const {
-            users, alert, loading,GetTemplateForm,FormInfo,ShortKeys,
+            users, alert, loading,GetTemplateForm,FormInfo,
             Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm,
             Delete_ShortKeyElements_Template} = this.props;
         return (

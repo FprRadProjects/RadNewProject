@@ -388,7 +388,9 @@ export const FormInfo =
         fm_pub_kartablkar: {
             "id": 79,
             "form_name": "کارتابل کارها",
-            "sys_name": "fm_pub_kartablkar"
+            "sys_name": "fm_pub_kartablkar",
+            "module_name1": "اتوماسیون",
+            "module_name2": "",
         },
         fm_flo_makhzankar: {
             "id": 81,
@@ -1482,8 +1484,14 @@ export const FormInfo =
         },
         fm_dabir_kartabl_erjaat: {
             "id": 342,
+            "sys_name": "fm_dabir_kartabl_erjaat",
             "form_name": "کارتابل ارجاعات",
-            "sys_name": "fm_dabir_kartabl_erjaat"
+            "fa_module_name1": "دبیرخانه",
+            "fa_module_name2": "",
+            "en_form_name": "References Dashboard",
+            "en_module_name1": "Secretariat",
+            "en_module_name2": "",
+
         },
         fm_pub_rep_gallary: {
             "id": 343,
@@ -2287,8 +2295,13 @@ export const FormInfo =
         } ,
         web_fm_mainpage: {
             "id": 9998,
-            "form_name": "تقویم کاری وب",
-            "sys_name": "web_fm_mainpage"
+            "sys_name": "web_fm_mainpage",
+            "form_name": "تقویم کاری",
+            "fa_module_name1": "اتوماسیون",
+            "fa_module_name2": "",
+            "en_form_name": "Work Calendar",
+            "en_module_name1": "Automation",
+            "en_module_name2": "",
         },
     }
 
