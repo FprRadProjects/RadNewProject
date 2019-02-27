@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {history} from '../_helpers/index';
 import {alertActions} from '../_actions/index';
 import {PrivateRoute} from '../_components/index';
+import {LoginPage} from '../_components/LoginPage/';
 import {HomePage} from '../_components/MasterPage/index';
-import {LoginPage} from '../_components/LoginPage/index';
 
 class App extends React.Component {
     constructor(props) {
@@ -19,17 +19,16 @@ class App extends React.Component {
 
 
     render() {
-
         return (
             <div className="d-flex flex-1">
 
                 <Router history={history}>
                     <div className="flex-1">
 
+                        <Route path="/login" component={LoginPage} />
                         <PrivateRoute exact
                                       path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
                                       component={HomePage}  />
-                        <Route path="/login" component={LoginPage} />
                     </div>
                 </Router>
                 

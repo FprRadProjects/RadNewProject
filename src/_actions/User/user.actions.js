@@ -18,7 +18,7 @@ function login(username, password) {
                 user => {
                     if(user.status) {
                         dispatch(success(JSON.stringify(user.data)));
-                        history.push('/');
+                        window.open('/',"_self");
                     }
                     else {
                         dispatch(alertActions.error(user.error));

@@ -8,24 +8,21 @@ export const WorkBasic_action = {
 };
 
 
-function GetWorkInfo(peygir_id) {
+function GetWorkInfo(row) {
+    const peygir_id=row.peygir_id;
     return dispatch => {
-        dispatch(loadingActions.ShowLoading());
         WorkBasic_service.GetWorkInfo(peygir_id)
             .then(
                 data => {
                     if (data.status) {
                         dispatch(UserGetWorkInfo_Reducer(data.data));
-                        dispatch(loadingActions.HideLoading());
                     }
                     else {
                         dispatch(alertActions.error(data.error));
-                        dispatch(loadingActions.HideLoading());
                     }
                 },
                 error => {
                     dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
                 }
             );
     }
