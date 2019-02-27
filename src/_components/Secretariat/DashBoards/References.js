@@ -62,6 +62,9 @@ class References extends Component {
     }
 
     render() {
+
+        const {FetchData, alert, loading,peygir_id} = this.props;
+
         columns = [
             {name: 'peygir_id', title: this.context.t("WorkID")},
             {name: 'worker', title: this.context.t("worker")},
@@ -114,8 +117,6 @@ class References extends Component {
             {name: 'proje_code', title: this.context.t("ProjectCode")},
             {name: 'natije', title: this.context.t("Result")},
         ];
-        const {FetchData, alert, loading,peygir_id,lang} = this.props;
-
         return (
             <div>
                 {loading &&

@@ -107,6 +107,7 @@ class GridComponent extends React.PureComponent {
             columnWidths: [],
             booleanFilterOperations: ['boolean'],
             currencyFilterOperations: ['equals'],
+            columnOrder: [],
 
         };
         this.changeSorting = this.changeSorting.bind(this);
@@ -117,10 +118,14 @@ class GridComponent extends React.PureComponent {
             this.setState({hiddenColumnNames});
         };
         this.changeFilters = this.changeFilters.bind(this);
+        this.changeColumnOrder = this.changeColumnOrder.bind(this);
 
         this.changeColumnWidths = (columnWidths) => {
             this.setState({columnWidths});
         };
+    }
+    changeColumnOrder(newOrder) {
+        this.setState({ columnOrder: newOrder });
     }
 
     componentDidMount() {
@@ -233,6 +238,7 @@ class GridComponent extends React.PureComponent {
             hiddenColumnNames,
             columnWidths,
             booleanColumns,
+            columnOrder,
             booleanFilterOperations,
             currencyFilterOperations
         } = this.state;
@@ -247,6 +253,7 @@ class GridComponent extends React.PureComponent {
         const tableMessages = {
             noData: this.context.t("NoData"),
         };
+
         return (
             <div>
                 <Grid
@@ -286,7 +293,8 @@ class GridComponent extends React.PureComponent {
                                   messages={tableMessages}
                     />
                     <TableColumnReordering
-                        defaultOrder={["peygir_id", "done", 'worker', 'wt_id', 'tarikhaction', 'id_tel']}
+                        order={columnOrder}
+                        onOrderChange={this.changeColumnOrder}
                     /> <TableColumnResizing
                     columnWidths={columnWidths}
                     onColumnWidthsChange={this.changeColumnWidths}
