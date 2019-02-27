@@ -7,6 +7,7 @@ import { ReferenceViewer } from "../RecordsPage/ReferenceViewer";
 import PropTypes from "prop-types"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { setLanguage } from "redux-i18n";
+import {FormInfo} from "../../../locales";
 
 var currencyColumns = [];
 var hiddenColumnNames = ['done', 'tarikhaction', 'id_tel', 'olaviyat', 'cuser',
@@ -45,6 +46,9 @@ class References extends Component {
 
     }
     componentDidMount() {
+        const {GetTemplateForm,GetFormInfo} = this.props;
+        GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
+        GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id);
     }
 
     toggleFilter() {
