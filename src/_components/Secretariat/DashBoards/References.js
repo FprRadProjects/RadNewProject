@@ -60,7 +60,6 @@ class References extends Component {
 
     render() {
 
-        const { FetchData, alert, loading, peygir_id } = this.props;
         const columns = [
             { name: 'peygir_id', title: this.context.t("WorkID") },
             { name: 'worker', title: this.context.t("worker") },
@@ -113,6 +112,7 @@ class References extends Component {
             { name: 'proje_code', title: this.context.t("ProjectCode") },
             { name: 'natije', title: this.context.t("Result") },
         ];
+        const { FetchData,  WorkInfo ,GetWorkInfo} = this.props;
         return (
             <div className="row">
                 <div className="col-sm-12">
@@ -402,9 +402,9 @@ class References extends Component {
                             </div>
                         </div>
                         <Button color="primary" onClick={this.toggleReferenceViewer}>نتیجه ارجاع</Button>
-                        {this.state.ReferenceViewermodal && <ReferenceViewer modal={peygir_id !== undefined && peygir_id !== 0 && this.state.ReferenceViewermodal} toggle={this.toggleReferenceViewer.bind(this)}
-                            peygir_id={peygir_id}
-                        />}
+                        {this.state.ReferenceViewermodal && <ReferenceViewer modal={ this.state.ReferenceViewermodal}
+                                                                             toggle={this.toggleReferenceViewer.bind(this)}
+                                                                             WorkInfo={WorkInfo}/>}
                         <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter}
                             className={this.state.modalClass} backdrop={this.state.backdrop}>
                             <ModalHeader toggle={this.toggleFilter}></ModalHeader>
@@ -416,7 +416,7 @@ class References extends Component {
                             </ModalFooter>
                         </Modal>
                         <GridComponent columns={columns} booleanColumns={booleanColumns}
-                            UrlParams={Params} fetchData={FetchData.bind(this)}
+                            UrlParams={Params} fetchData={FetchData.bind(this)} GetWorkInfo={GetWorkInfo}
                             currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>
@@ -425,6 +425,7 @@ class References extends Component {
         );
     }
 }
+
 
 
 const mapDispatchToProps = dispatch => ({
@@ -440,6 +441,9 @@ const mapDispatchToProps = dispatch => ({
     setLanguage: (param) => {
         dispatch(setLanguage(param))
     },
+    GetWorkInfo: (Params) => {
+        dispatch(WorkBasic_action.GetWorkInfo(Params))
+    },
 
 });
 References.contextTypes = {
@@ -448,17 +452,18 @@ References.contextTypes = {
 
 function mapStateToProps(state) {
 
-    const { alert } = state;
-    const { loading } = state.loading;
-    const { peygir_id } = state.BasicInfo.GridRowData !== undefined ? state.BasicInfo.GridRowData : 0
-    const { lang } = state.i18nState.lang
+    const {alert} = state;
+    const {loading} = state.loading;
+    const {lang} =state.i18nState.lang
+    const {WorkInfo} = state.Auto_BasicInfo;
     return {
         alert,
         loading,
-        peygir_id,
-        lang
+        lang,
+        WorkInfo
     };
 }
+
 
 
 
