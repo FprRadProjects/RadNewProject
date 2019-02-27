@@ -35,7 +35,13 @@ import {CurrencyTypeProvider} from '../../theme-sources/bootstrap4/components/cu
 import connect from "react-redux/es/connect/connect";
 
 var Params = {};
-
+const   BooleanTypeProvider = props => (
+    <DataTypeProvider
+        formatterComponent={BooleanFormatter}
+        editorComponent={BooleanEditor}
+        {...props}
+    />
+);
 
 const BooleanFormatter = ({value}) => (
     <input type="checkbox" checked={value ? true : false} disabled={"disabled"}/>
@@ -63,16 +69,11 @@ const BooleanEditor = ({value, onValueChange}) => (
     </select>
 );
 
-const BooleanTypeProvider = props => (
-    <DataTypeProvider
-        formatterComponent={BooleanFormatter}
-        editorComponent={BooleanEditor}
-        {...props}
-    />
-);
-
 class GridComponent extends React.PureComponent {
-     TableRow = ({row, ...restProps}) => (
+
+
+
+    TableRow = ({row, ...restProps}) => (
         <VirtualTable.Row
             {...restProps}
             onClick={(e) => {
@@ -87,12 +88,11 @@ class GridComponent extends React.PureComponent {
     );
     constructor(props) {
         super(props);
-        const {columns, booleanColumns, UrlParams, currencyColumns, hiddenColumnNames} = this.props;
+        const { booleanColumns, UrlParams, currencyColumns, hiddenColumnNames} = this.props;
         Params = UrlParams;
         this.state = {
             rows: [],
             totalCount: 0,
-            columns: columns,
             tableColumnExtensions: [],
             filters: [],
             sorting: [],
@@ -226,8 +226,8 @@ class GridComponent extends React.PureComponent {
     render() {
         var rows = [];
         var totalCount = 0;
+        var columns = [];
         const {
-            columns,
             currencyColumns,
             sorting,
             pageSize,
@@ -246,6 +246,9 @@ class GridComponent extends React.PureComponent {
             rows = this.props.rows;
         if (this.props.totalCount !== undefined)
             totalCount = this.props.totalCount;
+
+        if (this.props.columns !== undefined)
+            columns = this.props.columns;
 
         const groupingPanelMessages = {
             groupByColumn: this.context.t("grouping"),

@@ -7,6 +7,7 @@ import {ReferenceViewer} from "../RecordsPage/ReferenceViewer";
 import PropTypes from "prop-types"
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import {FormInfo} from "../../../locales";
+import {setLanguage} from "redux-i18n";
 
 var currencyColumns = [];
 var hiddenColumnNames = ['done', 'tarikhaction', 'id_tel', 'olaviyat', 'cuser',
@@ -28,9 +29,9 @@ var Params = {
     "filter": []
 
 };
-var columns = []
 class References extends Component {
     constructor(props) {
+
         super(props);
         this.state = {
             ...this.state,
@@ -42,8 +43,10 @@ class References extends Component {
         };
         this.toggleFilter = this.toggleFilter.bind(this);
         this.toggleReferenceViewer = this.toggleReferenceViewer.bind(this);
-    }
 
+    }
+componentDidMount() {
+}
 
     toggleFilter() {
         this.setState(prevState => ({
@@ -55,17 +58,11 @@ class References extends Component {
             ReferenceViewermodal: !prevState.ReferenceViewermodal
         }));
     }
-    componentDidMount() {
-
-        const { GetTemplateForm,GetFormInfo} = this.props;
-        GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
-    }
 
     render() {
 
         const {FetchData, alert, loading,peygir_id} = this.props;
-
-        columns = [
+       const columns = [
             {name: 'peygir_id', title: this.context.t("WorkID")},
             {name: 'worker', title: this.context.t("worker")},
             {name: 'modir', title: this.context.t("manager")},
@@ -163,6 +160,9 @@ const mapDispatchToProps = dispatch => ({
     GetFormInfo: (Param) => {
         dispatch(BasicInfo_action.GetFormInfo(Param))
     },
+    setLanguage: (param) => {
+        dispatch(setLanguage(param))
+    },
 
 });
 References.contextTypes = {
@@ -174,10 +174,12 @@ function mapStateToProps(state) {
     const {alert} = state;
     const {loading} = state.loading;
     const {peygir_id} =state.BasicInfo.GridRowData!==undefined? state.BasicInfo.GridRowData:0
+    const {lang} =state.i18nState.lang
     return {
         alert,
         loading,
-        peygir_id
+        peygir_id,
+        lang
     };
 }
 

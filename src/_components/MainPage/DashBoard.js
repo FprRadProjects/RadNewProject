@@ -35,7 +35,6 @@ class DashBoard extends Component {
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
         this.toggle = this.toggle.bind(this);
-
     }
 
     toggle() {
@@ -118,8 +117,8 @@ class DashBoard extends Component {
                                         <div className="card-header">
                                             <h4 className="card-title text-light text-center">2 بهمن 1397</h4>
                                             <div className="task-view-mode">
-                                                <a href="#!" id="manager" onClick={this.ChangeUserMode.bind(this)} className={AdminclassName}>{this.context.t("manager")}</a>
-                                                <a href="#worker" id="worker" onClick={this.ChangeUserMode.bind(this)}  className={WorkrclassName}>{this.context.t("worker")}</a>
+                                                <a  id="manager" onClick={this.ChangeUserMode.bind(this)} className={AdminclassName}>{this.context.t("manager")}</a>
+                                                <a  id="worker" onClick={this.ChangeUserMode.bind(this)}  className={WorkrclassName}>{this.context.t("worker")}</a>
                                             </div>
                                         </div>
                                         <div className="card-body">

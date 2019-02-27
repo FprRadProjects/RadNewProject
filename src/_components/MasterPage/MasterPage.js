@@ -19,11 +19,14 @@ import {mainpageActions} from "../../_actions/MainPage";
 import {design_Actions} from "../../_actions/Design";
 
 class MasterPage extends React.Component {
+    constructor(props)
+    {
+        super(props);
+
+
+    }
     componentDidMount() {
         this.props.GetUserInfo();
-    }
-
-    componentWillMount() {
         const lang = localStorage.getItem("lang");
         this.props.setLanguage(lang);
     }

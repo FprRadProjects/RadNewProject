@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import NavItem from "./NavItem";
-import { userActions } from '../../_actions/User';
-import { history } from "../../_helpers";
 import PropTypes from "prop-types"
 import { connect } from 'react-redux';
 
@@ -11,9 +8,15 @@ import notifyIcon from '../../content/images/master/header/notify-icon.svg';
 import editIcon from '../../content/images/master/header/edit-icon.svg';
 import messageIcon from '../../content/images/master/header/message-icon.svg';
 import userAvatar from '../../content/images/master/header/user-avatar.svg';
+import {BasicInfo_action} from "../../_actions/BaseInfo";
 
 
 class Header extends Component {
+    componentDidMount() {
+        this.props.GetCompanyInfo();
+
+    }
+
     render() {
         const { CompanyName ,FormInfo,lang} = this.props;
         return (
@@ -96,6 +99,14 @@ Header.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
+
+const mapDispatchToProps = dispatch => ({
+    GetCompanyInfo: () => {
+        dispatch(BasicInfo_action.GetCompanyInfo())
+    },
+
+
+});
 function mapStateToProps(state) {
     const { lang } = state.i18nState
     const {CompanyName} = state.BasicInfo;
@@ -108,5 +119,5 @@ function mapStateToProps(state) {
 }
 
 
-const connectedHeader = connect(mapStateToProps, null)(Header);
+const connectedHeader = connect(mapStateToProps, mapDispatchToProps)(Header);
 export { connectedHeader as Header };
