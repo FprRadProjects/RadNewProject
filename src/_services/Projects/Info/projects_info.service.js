@@ -7,13 +7,11 @@ export const ProjectsInfo_service = {
 };
 
 //Get "peygir_id" //Returns true-false
-function GetSelectProject(id_tel) {
+function GetSelectProject(params) {
     if (UserConfig.GetToken() !== null) {
 
-        var formData = new FormData();
-        formData.append('id_tel', id_tel);
 
-        return axios.post(BaseUrl + "GetSelectProject", formData)
+        return axios.post(BaseUrl + "GetSelectProject", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

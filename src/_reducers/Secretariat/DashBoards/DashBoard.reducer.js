@@ -4,9 +4,8 @@ export function dashboards(state = {}, action) {
     switch (action.type) {
         case CommonContants.SET_GRID_TOTALCOUNT: {
             return {
-
                 ...state,
-                totalCount:  action.data
+                Dashboards_totalCount:  action.data
             }
         }
 
@@ -14,7 +13,7 @@ export function dashboards(state = {}, action) {
             return {
 
                 ...state,
-                rows:  action.data
+                Dashboards_rows:  action.data
             }
         }
 

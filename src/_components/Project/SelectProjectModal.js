@@ -4,6 +4,7 @@ import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {ProjectsInfo_action} from "../../_actions";
 import PropTypes from "prop-types"
 import {GridComponent} from "../Config/GridComponent";
+import {ApiGridComponent} from "../Config/ApiGridComponent";
 
 var currencyColumns = [];
 var hiddenColumnNames = [];
@@ -35,7 +36,8 @@ class SelectProjectModal extends Component {
         {name: 'ptype', title: this.context.t("Project")},
 
     ];
-        const {modal, toggle, id_tel,GetSelectProject,GetSelectProjectRowData} = this.props;
+        const {modal, toggle, id_tel,GetSelectProject,GetSelectProjectRowData
+            ,SelectProject_rows,SelectProject_totalCount} = this.props;
         Params.Id_Taraf=id_tel;
         const modalBackDrop = `
         .modal-backdrop {
@@ -55,6 +57,7 @@ class SelectProjectModal extends Component {
                         <ModalHeader>{this.context.t("frm_Select_Project")}</ModalHeader>
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
+                                           rows={SelectProject_rows} totalCount={SelectProject_totalCount}
                                            UrlParams={Params} fetchData={GetSelectProject.bind(this)}
                                            GetRowInfo={GetSelectProjectRowData}
                                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
@@ -90,11 +93,14 @@ function mapStateToProps(state) {
     const {alert} = state;
     const {loading} = state.loading;
     const {lang} = state.i18nState
-    const {GridRowData} = state.BasicInfo
+    const {SelectProject_rows} = state.projects;
+    const {SelectProject_totalCount} = state.projects
     return {
         alert,
         loading,
         lang,
+        SelectProject_rows,
+        SelectProject_totalCount,
     };
 }
 

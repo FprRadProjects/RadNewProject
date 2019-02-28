@@ -260,7 +260,7 @@ class ApiGridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
-console.log(totalCount)
+        console.log(this.props.rows )
         return (
             <div>
                 <Grid
@@ -337,12 +337,10 @@ ApiGridComponent.contextTypes = {
 }
 
 function mapStateToProps(state) {
-    const {rows} = state.dashboards;
     const {lang} = state.i18nState
-    const {totalCount} = state.dashboards
+
     return {
-        rows,
-        totalCount,
+
         lang,
     }
 }

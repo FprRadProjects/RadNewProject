@@ -103,7 +103,6 @@ ReferenceViewer.contextTypes = {
 }
 
 function mapStateToProps(state) {
-
     const {alert} = state;
     const {loading} = state.loading;
     const {lang} = state.i18nState

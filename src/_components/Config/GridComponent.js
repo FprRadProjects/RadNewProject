@@ -213,10 +213,15 @@ class GridComponent extends React.PureComponent {
     }
 
     loadData() {
-
+        const queryString = this.queryString();
+        if (queryString === this.lastQuery) {
+            this.setState({loading: false});
+            return;
+        }
         const {fetchData} = this.props;
         Params.filter = this.state.filters;
         fetchData(Params);
+        this.lastQuery = queryString;
     }
 
     render() {
@@ -255,6 +260,7 @@ class GridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
+        console.log(rows)
         console.log(totalCount)
         return (
             <div>
@@ -332,8 +338,6 @@ GridComponent.contextTypes = {
 }
 
 const mapStateToProps = state => ({
-    rows: state.dashboards.rows,
-    totalCount: state.dashboards.totalCount,
     lang: state.i18nState.lang
 });
 

@@ -11,10 +11,9 @@ export const ProjectsInfo_action = {
 function GetSelectProjectRowData(data) {
     return dispatch => {dispatch(getSelectProjectRowData_reducer(data));}
 }
-function GetSelectProject(Row) {
-    alert(Row.Id_Taraf)
+function GetSelectProject(params) {
     return dispatch => {
-        ProjectsInfo_service.GetSelectProject(Row.Id_Taraf)
+        ProjectsInfo_service.GetSelectProject(params)
             .then(
                 data => {
                     if (data.status) {

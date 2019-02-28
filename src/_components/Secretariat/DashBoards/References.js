@@ -118,7 +118,7 @@ class References extends Component {
             {name: 'proje_code', title: this.context.t("ProjectCode")},
             {name: 'natije', title: this.context.t("Result")},
         ];
-        const {FetchData, WorkInfo, GetWorkInfo} = this.props;
+        const {FetchData, WorkInfo, GetWorkInfo,Dashboards_totalCount,Dashboards_rows} = this.props;
         return (
             <div className="row">
                 <div className="col-sm-12">
@@ -429,6 +429,7 @@ class References extends Component {
                             </ModalFooter>
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
+                                          rows={Dashboards_rows} totalCount={Dashboards_totalCount}
                                        UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
                                        currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
@@ -463,7 +464,8 @@ References.contextTypes = {
 }
 
 function mapStateToProps(state) {
-
+    const {Dashboards_rows} = state.dashboards;
+    const {Dashboards_totalCount} = state.dashboards
     const {alert} = state;
     const {loading} = state.loading;
     const {lang} = state.i18nState.lang
@@ -472,6 +474,8 @@ function mapStateToProps(state) {
         alert,
         loading,
         lang,
+        Dashboards_rows,
+        Dashboards_totalCount,
         WorkInfo
     };
 }
