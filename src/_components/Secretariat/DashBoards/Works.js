@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
 import {Act_Reference, design_Actions} from "../../../_actions";
-import {GridComponent} from "../../Config/GridComponent";
+import {ApiGridComponent} from "../../Config/ApiGridComponent";
 import {RadioFilter} from "./RadioFilter";
 import PropTypes from "prop-types"
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
@@ -122,7 +122,7 @@ class Works extends Component {
                 </Modal>
 
 
-                <GridComponent columns={columns} booleanColumns={booleanColumns}
+                <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
                                UrlParams={Params} fetchData={FetchData.bind(this)}
                                currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                 />

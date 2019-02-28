@@ -68,7 +68,7 @@ const BooleanEditor = ({value, onValueChange}) => (
     </select>
 );
 
-class GridComponent extends React.PureComponent {
+class ApiGridComponent extends React.PureComponent {
 
     ChangeStyle=(restProps)=>{
 
@@ -213,10 +213,15 @@ class GridComponent extends React.PureComponent {
     }
 
     loadData() {
-
+        const queryString = this.queryString();
+        if (queryString === this.lastQuery) {
+            this.setState({loading: false});
+            return;
+        }
         const {fetchData} = this.props;
         Params.filter = this.state.filters;
         fetchData(Params);
+        this.lastQuery = queryString;
     }
 
     render() {
@@ -255,7 +260,7 @@ class GridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
-        console.log(totalCount)
+console.log(totalCount)
         return (
             <div>
                 <Grid
@@ -291,8 +296,8 @@ class GridComponent extends React.PureComponent {
                         onFiltersChange={this.changeFilters}
                     />
                     <Table rowComponent={this.TableRow}
-                           columnExtensions={tableColumnExtensions}
-                           messages={tableMessages}
+                                  columnExtensions={tableColumnExtensions}
+                                  messages={tableMessages}
                     />
                     <TableColumnReordering
                         order={columnOrder}
@@ -327,24 +332,30 @@ class GridComponent extends React.PureComponent {
     }
 }
 
-GridComponent.contextTypes = {
+ApiGridComponent.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-    rows: state.dashboards.rows,
-    totalCount: state.dashboards.totalCount,
-    lang: state.i18nState.lang
-});
+function mapStateToProps(state) {
+    const {rows} = state.dashboards;
+    const {lang} = state.i18nState
+    const {totalCount} = state.dashboards
+    return {
+        rows,
+        totalCount,
+        lang,
+    }
+}
+
 
 
 const mapDispatchToProps = dispatch => ({
-    /* GetRowsData: (data) => {
-         dispatch(BasicInfo_action.GetRowData(data))
-     },
-     GetRowData: (data) => {
-         dispatch(BasicInfo_action.GetRowData(data))
-     },*/
+   /* GetRowsData: (data) => {
+        dispatch(BasicInfo_action.GetRowData(data))
+    },
+    GetRowData: (data) => {
+        dispatch(BasicInfo_action.GetRowData(data))
+    },*/
 });
-const connectedGridComponent = connect(mapStateToProps, mapDispatchToProps)(GridComponent);
-export {connectedGridComponent as GridComponent};
+const connectedApiGridComponent = connect(mapStateToProps, mapDispatchToProps)(ApiGridComponent);
+export {connectedApiGridComponent as ApiGridComponent};

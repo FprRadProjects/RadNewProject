@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
 import {Act_Reference, BasicInfo_action, design_Actions, mainpageActions, WorkBasic_action} from "../../../_actions";
-import {GridComponent} from "../../Config/GridComponent";
+import {ApiGridComponent} from "../../Config/ApiGridComponent";
 import {RadioFilter} from "./RadioFilter";
 import {ReferenceViewer} from "../RecordsPage/ReferenceViewer";
 import PropTypes from "prop-types"
@@ -39,7 +39,6 @@ class References extends Component {
             toggleFilter: false,
             ReferenceViewermodal: false,
             backdrop: "static",
-            backdropClassName: "test",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
         this.toggleFilter = this.toggleFilter.bind(this);
@@ -107,8 +106,6 @@ class References extends Component {
             {name: 'c_time', title: this.context.t("CreatedTime")},
             {name: 'wt_id', title: this.context.t("WorkTypeID")},
             {name: 'suggest_time', title: this.context.t("SuggestTime")},
-            {name: 'suggest_time', title: this.context.t("SuggestTime")},
-            {name: 'suggest_time', title: this.context.t("Duration_Of_Work")},
             {name: 'deadtime', title: this.context.t("DeadTime")},
             {name: 'see_time', title: this.context.t("SeenTime")},
             {name: 'saat', title: this.context.t("DoneTime")},
@@ -431,8 +428,8 @@ class References extends Component {
                                 <Button color="primary" onClick={this.toggleFilter}></Button>
                             </ModalFooter>
                         </Modal>
-                        <GridComponent columns={columns} booleanColumns={booleanColumns}
-                                       UrlParams={Params} fetchData={FetchData.bind(this)} GetWorkInfo={GetWorkInfo}
+                        <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
+                                       UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
                                        currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>

@@ -35,6 +35,7 @@ export const translations = {
         Works:"کار ها",
         Secretariat:"نامه ها",
         IsPublic:"برای عموم",
+        RowId:"شاخص",
         PartyAccountName:"نام طرف حساب",
         CompanyName:"نام شرکت",
         Serial_Lead:"سریال سرشاخه",
@@ -80,6 +81,7 @@ export const translations = {
         LeadWorker:"کاربر سرشاخه",
         ProjectCode:"کد پروژه",
         Result:"نتیجه",
+        SelectPopup:"...",
         Description:"شرح",
         //---------------اقدام------------------شروع
         logout: 'خروج',
@@ -88,6 +90,7 @@ export const translations = {
         EditLabel: 'ویرایش برچسب',
         DeleteControl: 'حذف کنترل',
         AddToShortKey: 'افزودن به دسترسی سریع',
+        Select:"انتخاب",
         //--------------اقدام------------------پایان
         //---------------پیام ها----------------شروع
         required_username: 'نام کاربری لازم به ورود است',
@@ -108,6 +111,8 @@ export const translations = {
         frm_Home: 'صفحه اصلی',
         frm_Dashboard_Work: 'کارتابل کار',
         frm_Dashboard_References: 'کار تابل ارجاعات',
+        frm_Select_Project: 'انتخاب پروژه',
+        frm_References_Result: 'نتیجه ارجاع',
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -146,6 +151,7 @@ export const translations = {
         Works:"Works",
         Secretariat:"Letters",
         IsPublic:"Is Public",
+        RowId:"ID",
         PartyAccountName:"Party Account Name",
         CompanyName:"Company Name",
         Serial_Lead:"Serial Lead",
@@ -191,6 +197,8 @@ export const translations = {
         LeadWorker:"Lead Worker",
         ProjectCode:"Project Code",
         Result:"Result",
+        SelectPopup:"...",
+        Description:"Description",
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
@@ -198,6 +206,7 @@ export const translations = {
         EditLabel: 'Edit Label',
         DeleteControl: 'Delete Control',
         AddToShortKey: 'Add To Short Key',
+        Select:"Select",
         //End-----------------Actions----------------
 
         //Start---------------Messages----------------
@@ -219,6 +228,8 @@ export const translations = {
         frm_Home: 'Home',
         frm_Dashboard_Work: 'Work Dashboard',
         frm_Dashboard_References: 'References Dashboard',
+        frm_Select_Project: 'Select Project',
+        frm_References_Result: 'References Result',
         //End-------------- FORM NAME --------------
 
     },

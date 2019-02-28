@@ -1,15 +1,20 @@
 import {ProjectsInfo_service} from "../../../_services";
 import {alertActions} from "../../index";
-import {CommonContants, ProjectInfoConstant as constant} from "../../../_constants";
+import {BasicInfoConstant, CommonContants, ProjectInfoConstant as constant} from "../../../_constants";
 
 export const ProjectsInfo_action = {
-    GetSelectProject
+    GetSelectProject,
+    GetSelectProjectRowData
 };
 
 
-function GetSelectProject(id_tel) {
+function GetSelectProjectRowData(data) {
+    return dispatch => {dispatch(getSelectProjectRowData_reducer(data));}
+}
+function GetSelectProject(Row) {
+    alert(Row.Id_Taraf)
     return dispatch => {
-        ProjectsInfo_service.GetSelectProject(id_tel)
+        ProjectsInfo_service.GetSelectProject(Row.Id_Taraf)
             .then(
                 data => {
                     if (data.status) {
@@ -31,11 +36,15 @@ function GetSelectProject(id_tel) {
 
 
 function AddTotalCount(data) {
-    return {type: CommonContants.SET_GRID_TOTALCOUNT, data}
+    return {type: constant.PROJECT_ET_GRID_TOTAL_COUNT, data}
 }
 
 function AddRows(data) {
-    return {type: CommonContants.SETGRID_ROWS, data}
+    return {type: constant.PROJECT_SET_GRID_ROWS, data}
+}
+
+function getSelectProjectRowData_reducer(data) {
+    return {type: constant.GET_PROJECT_GRID_ROW_DATA_SUCCESS, data}
 }
 
 
