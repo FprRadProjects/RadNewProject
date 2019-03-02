@@ -1,11 +1,12 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
+
 import 'bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css';
 import {
     PagingState,
     SortingState,
-    CustomPaging,
+    IntegratedFiltering,
     GroupingState,
     IntegratedGrouping,
     IntegratedPaging,
@@ -79,7 +80,6 @@ class GridComponent extends React.PureComponent {
             {...restProps}
             onClick={(e) => {
                 this.props.GetRowInfo(row);
-
                 this.ChangeStyle(restProps);
             }
             }
@@ -112,6 +112,7 @@ class GridComponent extends React.PureComponent {
             columnOrder: [],
 
         };
+        this.loadData();
         this.changeSorting = this.changeSorting.bind(this);
         this.changeCurrentPage = this.changeCurrentPage.bind(this);
         this.changePageSize = this.changePageSize.bind(this);
@@ -119,7 +120,6 @@ class GridComponent extends React.PureComponent {
         this.hiddenColumnNamesChange = (hiddenColumnNames) => {
             this.setState({hiddenColumnNames});
         };
-        this.changeFilters = this.changeFilters.bind(this);
         this.changeColumnOrder = this.changeColumnOrder.bind(this);
 
         this.changeColumnWidths = (columnWidths) => {
@@ -140,7 +140,7 @@ class GridComponent extends React.PureComponent {
     }
 
     componentDidUpdate() {
-        this.loadData();
+      //  this.loadData();
     }
 
     changeSorting(sorting) {
@@ -260,8 +260,6 @@ class GridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
-        console.log(rows)
-        console.log(totalCount)
         return (
             <div>
                 <Grid
@@ -286,16 +284,13 @@ class GridComponent extends React.PureComponent {
                     />
                     <IntegratedGrouping/>
                     <PagingState
-                        currentPage={currentPage}
-                        onCurrentPageChange={this.changeCurrentPage}
                         defaultCurrentPage={0}
-                        pageSize={pageSize === 0 ? 10 : pageSize}
-                        onPageSizeChange={this.changePageSize}
+                        defaultPageSize={8}
                     />
-                    {pageSize === 0 && <IntegratedPaging/>}
+                    <IntegratedPaging />
                     <FilteringState
-                        onFiltersChange={this.changeFilters}
                     />
+                    <IntegratedFiltering />
                     <Table rowComponent={this.TableRow}
                            columnExtensions={tableColumnExtensions}
                            messages={tableMessages}
@@ -309,9 +304,7 @@ class GridComponent extends React.PureComponent {
                 />
                     <TableHeaderRow showSortingControls/>
 
-                    <CustomPaging
-                        totalCount={totalCount}
-                    /> <PagingPanel
+                   <PagingPanel
                     pageSizes={pageSizes}
                 />
                     <TableGroupRow/>

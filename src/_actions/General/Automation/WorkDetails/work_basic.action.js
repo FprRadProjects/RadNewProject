@@ -2,6 +2,7 @@ import {WorkBasic_service}  from "../../../../_services";
 import {alertActions} from "../../../Alert";
 import {loadingActions} from "../../../Loading";
 import {AutoBasicInfoConstant} from "../../../../_constants";
+import {ProjectsInfo_action} from "../../../Projects/Info";
 
 export const WorkBasic_action = {
     GetWorkInfo
@@ -16,6 +17,7 @@ function GetWorkInfo(row) {
                 data => {
                     if (data.status) {
                         dispatch(UserGetWorkInfo_Reducer(data.data));
+                     //   dispatch(ProjectsInfo_action.SetEmptySelectProjectRowData());
                     }
                     else {
                         dispatch(alertActions.error(data.error));
@@ -28,5 +30,5 @@ function GetWorkInfo(row) {
     }
 }
 function UserGetWorkInfo_Reducer(data) {
-    return {type: AutoBasicInfoConstant.GET_WORK_INFO_SUCCESS, data}
+    return {type: AutoBasicInfoConstant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS, data}
 }

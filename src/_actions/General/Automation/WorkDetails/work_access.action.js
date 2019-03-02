@@ -1,6 +1,7 @@
 import {WorkAccess_service} from "../../../../_services";
 import {CommonContants as Contant} from "../../../../_constants";
 import {alertActions} from "../../../index";
+
 export const WorkAccess_action = {
     CheckAccess,
     CanSetInfoOnWork,
@@ -18,8 +19,7 @@ function CheckAccess(peygir_id) {
                 data => {
                     if (data.status) {
                         dispatch(SUCCESS(data.status));
-                    }
-                    else {
+                    } else {
                         dispatch(alertActions.error(data.error));
                     }
                 },
@@ -32,41 +32,21 @@ function CheckAccess(peygir_id) {
 
 
 function CanSetInfoOnWork(peygir_id) {
-    return dispatch => {
-        WorkAccess_service.CanSetInfoOnWork(peygir_id)
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(SUCCESS(data.status));
-                    }
-                    else {
-                        dispatch(alertActions.error(data.error));
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                }
-            );
-    }
+    return  WorkAccess_service.CanSetInfoOnWork(peygir_id).then(Response => {
+            return Promise.resolve(Response)
+        })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            });
 }
 
 function CanSetProjectOnWork(peygir_id) {
-    return dispatch => {
-        WorkAccess_service.CanSetProjectOnWork(peygir_id)
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(SUCCESS(data.status));
-                    }
-                    else {
-                        dispatch(alertActions.error(data.error));
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                }
-            );
-    }
+    return WorkAccess_service.CanSetProjectOnWork(peygir_id).then(Response => {
+        return Promise.resolve(Response)
+    })
+        .catch((error) => {
+            return Promise.reject(error.message)
+        });
 }
 
 
@@ -77,8 +57,7 @@ function CanEditOnWork(peygir_id) {
                 data => {
                     if (data.status) {
                         dispatch(SUCCESS(data.status));
-                    }
-                    else {
+                    } else {
                         dispatch(alertActions.error(data.error));
                     }
                 },
@@ -88,7 +67,6 @@ function CanEditOnWork(peygir_id) {
             );
     }
 }
-
 
 
 function CanAddWork(id_tel) {
@@ -98,8 +76,7 @@ function CanAddWork(id_tel) {
                 data => {
                     if (data.status) {
                         dispatch(SUCCESS(data.status));
-                    }
-                    else {
+                    } else {
                         dispatch(alertActions.error(data.error));
                     }
                 },
@@ -109,8 +86,6 @@ function CanAddWork(id_tel) {
             );
     }
 }
-
-
 
 
 function CanSubOnWork(peygir_id, id_tel) {
@@ -121,8 +96,7 @@ function CanSubOnWork(peygir_id, id_tel) {
                 data => {
                     if (data.status) {
                         dispatch(SUCCESS(data.status));
-                    }
-                    else {
+                    } else {
                         dispatch(alertActions.error(data.error));
                     }
                 },

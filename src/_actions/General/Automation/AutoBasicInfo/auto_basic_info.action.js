@@ -1,9 +1,11 @@
-import {AutoBasicInfo_service} from "../../../../_services";
+import {AutoBasicInfo_service, ProjectsInfo_service} from "../../../../_services";
 import {alertActions} from "../../../index";
-import {AutoBasicInfoConstant as constant, CommonContants} from "../../../../_constants";
+import {AutoBasicInfoConstant as constant} from "../../../../_constants";
 
 export const AutoBasicInfo_action = {
+    SetSelectDefaultTextRowData,
     GetDefaultText
+
 };
 
 
@@ -14,8 +16,8 @@ function GetDefaultText() {
                 data => {
                     if (data.status) {
 
-                        dispatch(AddTotalCount(data.data.totalcount));
-                        dispatch(AddRows(data.data.rows));
+                        dispatch(DefaultTextAddTotalCount(data.data.totalcount));
+                        dispatch(DefaultTextAddRows(data.data.rows));
                     }
                     else {
                         dispatch(alertActions.error(data.error));
@@ -29,12 +31,20 @@ function GetDefaultText() {
 }
 
 
-
-function AddTotalCount(data) {
-    return {type: CommonContants.SET_GRID_TOTALCOUNT, data}
+function SetSelectDefaultTextRowData(data) {
+    return dispatch => {dispatch(setSelectDefaultTextRowData_reducer(data));}
 }
 
-function AddRows(data) {
-    return {type: CommonContants.SETGRID_ROWS, data}
+
+function DefaultTextAddTotalCount(data) {
+    return {type: constant.DEFAULT_TEXT_GET_GRID_TOTAL_COUNT, data}
+}
+
+function DefaultTextAddRows(data) {
+    return {type: constant.DEFAULT_TEXT_SET_GRID_ROWS, data}
+}
+
+function setSelectDefaultTextRowData_reducer(data) {
+    return {type: constant.GET_DEFAULT_TEXT_GRID_ROW_DATA_SUCCESS, data}
 }
 

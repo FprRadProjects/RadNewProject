@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import {ProjectsInfo_action} from "../../_actions";
+import {AutoBasicInfo_action} from "../../_actions";
 import PropTypes from "prop-types"
 import {GridComponent} from "../Config/GridComponent";
-import {ApiGridComponent} from "../Config/ApiGridComponent";
 
 var currencyColumns = [];
 var hiddenColumnNames = [];
@@ -17,7 +16,7 @@ var Params = {
     "direction": "desc",
     "filter": []
 };
-class SelectProjectModal extends Component {
+class SelectDefaultTextModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,12 +31,11 @@ class SelectProjectModal extends Component {
 
     render() {  const columns = [
         {name: 'id', title: this.context.t("RowId")},
-        {name: 'code', title: this.context.t("Code")},
-        {name: 'ptype', title: this.context.t("Project")},
+        {name: 'sharh', title: this.context.t("Description")},
 
     ];
-        const {modal, toggle, id_tel,GetSelectProject,SetSelectProjectRowData
-            ,SelectProject_rows,SelectProject_totalCount,Successtoggle} = this.props;
+        const {modal, toggle, id_tel,GetDefaultText,SetSelectDefaultTextRowData
+            ,SelectDefaultText_rows,SelectDefaultText_totalCount,Successtoggle} = this.props;
         Params.Id_Taraf=id_tel;
         const modalBackDrop = `
         .modal-backdrop {
@@ -57,9 +55,9 @@ class SelectProjectModal extends Component {
                         <ModalHeader>{this.context.t("frm_Select_Project")}</ModalHeader>
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
-                                           rows={SelectProject_rows} totalCount={SelectProject_totalCount}
-                                           UrlParams={Params} fetchData={GetSelectProject.bind(this)}
-                                           GetRowInfo={SetSelectProjectRowData}
+                                           rows={SelectDefaultText_rows} totalCount={SelectDefaultText_totalCount}
+                                           UrlParams={Params} fetchData={GetDefaultText.bind(this)}
+                                           GetRowInfo={SetSelectDefaultTextRowData}
                                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
                         </ModalBody>
@@ -77,14 +75,14 @@ class SelectProjectModal extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    GetSelectProject: (Params) => {
-        dispatch(ProjectsInfo_action.GetSelectProject(Params))
+    GetDefaultText: (Params) => {
+        dispatch(AutoBasicInfo_action.GetDefaultText(Params))
     },
-    SetSelectProjectRowData: (Params) => {
-        dispatch(ProjectsInfo_action.SetSelectProjectRowData(Params))
+    SetSelectDefaultTextRowData: (Data) => {
+        dispatch(AutoBasicInfo_action.SetSelectDefaultTextRowData(Data))
     }
 });
-SelectProjectModal.contextTypes = {
+SelectDefaultTextModal.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
@@ -93,17 +91,17 @@ function mapStateToProps(state) {
     const {alert} = state;
     const {loading} = state.loading;
     const {lang} = state.i18nState
-    const {SelectProject_rows} = state.projects;
-    const {SelectProject_totalCount} = state.projects
+    const {SelectDefaultText_totalCount} = state.Auto_BasicInfo;
+    const {SelectDefaultText_rows} = state.Auto_BasicInfo
     return {
         alert,
         loading,
         lang,
-        SelectProject_rows,
-        SelectProject_totalCount,
+        SelectDefaultText_totalCount,
+        SelectDefaultText_rows,
     };
 }
 
 
-const connectedSelectProjectModal = connect(mapStateToProps, mapDispatchToProps)(SelectProjectModal);
-export {connectedSelectProjectModal as SelectProjectModal};
+const connectedSelectDefaultTextModal = connect(mapStateToProps, mapDispatchToProps)(SelectDefaultTextModal);
+export {connectedSelectDefaultTextModal as SelectDefaultTextModal};

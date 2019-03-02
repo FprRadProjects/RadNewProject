@@ -4,13 +4,14 @@ import {BasicInfoConstant, CommonContants, ProjectInfoConstant as constant} from
 
 export const ProjectsInfo_action = {
     GetSelectProject,
-    GetSelectProjectRowData
+    SetSelectProjectRowData,
 };
 
 
-function GetSelectProjectRowData(data) {
-    return dispatch => {dispatch(getSelectProjectRowData_reducer(data));}
+function SetSelectProjectRowData(data) {
+    return dispatch => {dispatch(setSelectProjectRowData_reducer(data));}
 }
+
 function GetSelectProject(params) {
     return dispatch => {
         ProjectsInfo_service.GetSelectProject(params)
@@ -42,8 +43,10 @@ function AddRows(data) {
     return {type: constant.PROJECT_SET_GRID_ROWS, data}
 }
 
-function getSelectProjectRowData_reducer(data) {
+function setSelectProjectRowData_reducer(data) {
     return {type: constant.GET_PROJECT_GRID_ROW_DATA_SUCCESS, data}
 }
+
+
 
 

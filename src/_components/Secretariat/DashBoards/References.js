@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
-import {Act_Reference, BasicInfo_action, design_Actions, mainpageActions, WorkBasic_action} from "../../../_actions";
+import {Act_Reference, WorkAccess_action, design_Actions, mainpageActions, WorkBasic_action} from "../../../_actions";
 import {ApiGridComponent} from "../../Config/ApiGridComponent";
 import {RadioFilter} from "./RadioFilter";
 import {ReferenceViewer} from "../RecordsPage/ReferenceViewer";
@@ -58,9 +58,14 @@ class References extends Component {
         }));
     }
 
-    toggleReferenceViewer() {
+    OpenReferenceViewer() {
         const {WorkInfo} = this.props;
         if (WorkInfo !== undefined)
+            this.setState(prevState => ({
+                ReferenceViewermodal: !prevState.ReferenceViewermodal
+            }));
+    }
+    toggleReferenceViewer() {
             this.setState(prevState => ({
                 ReferenceViewermodal: !prevState.ReferenceViewermodal
             }));
@@ -152,12 +157,10 @@ class References extends Component {
                                                         <i className="icon"></i>
                                                         <span>بازخوانی اطلاعات</span>
                                                     </a>
-                                                    <a href="#!">
+                                                    <a  onClick={this.OpenReferenceViewer.bind(this)}>
                                                         <i className="icon"></i>
-                                                        <span>نمایش کار</span>
+                                                        <span>نتیجه ارجاع</span>
                                                     </a>
-                                                    <Button color="primary" onClick={this.toggleReferenceViewer}>نتیجه
-                                                        ارجاع</Button>
 
                                                 </div>
                                             </div>
@@ -417,7 +420,7 @@ class References extends Component {
                         </div>
                         {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                                                                              toggle={this.toggleReferenceViewer.bind(this)}
-                                                                             WorkInfo={WorkInfo}/>}
+                                                                             WorkInfo={WorkInfo} ParentForm={FormInfo.fm_dabir_kartabl_erjaat}/>}
                         <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter}
                                className={this.state.modalClass} backdrop={this.state.backdrop}>
                             <ModalHeader toggle={this.toggleFilter}></ModalHeader>
@@ -449,7 +452,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(design_Actions.GetTemplateForm(Params))
     },
     GetFormInfo: (Param) => {
-        dispatch(BasicInfo_action.GetFormInfo(Param))
+        dispatch(Act_Reference.GetFormInfo(Param))
     },
     setLanguage: (param) => {
         dispatch(setLanguage(param))
@@ -457,6 +460,7 @@ const mapDispatchToProps = dispatch => ({
     GetWorkInfo: (Params) => {
         dispatch(WorkBasic_action.GetWorkInfo(Params))
     },
+
 
 });
 References.contextTypes = {

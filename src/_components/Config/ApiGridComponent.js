@@ -260,7 +260,6 @@ class ApiGridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
-        console.log(this.props.rows )
         return (
             <div>
                 <Grid

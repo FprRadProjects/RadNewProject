@@ -1,5 +1,5 @@
 import {WorkActions_service} from "../../../../_services";
-import {CommonContants as Contant} from "../../../../_constants";
+import {AutoWorkActionConstant as Contant} from "../../../../_constants";
 import {alertActions} from "../../../index";
 
 
@@ -53,22 +53,16 @@ function SeenWork(peygir_id) {
     }
 }
 
-function SaveWorkInfo(form, dataform) {
-
-    /*
-        this.props.dispatch(Work_actionsActions.SaveWorkInfo("نتيجه ارجاع",
-
-            [{"peygir_id": 30508}, {"natije": "natije1"}]
-        ));
-
-        */
+function SaveWorkInfo(data) {
+    console.log(data);
     return dispatch => {
 
-        WorkActions_service.SaveWorkInfo(form, dataform)
+        WorkActions_service.SaveWorkInfo(data)
             .then(
                 data => {
                     if (data.status) {
-                        dispatch(SUCCESS(data.status));
+                        dispatch(SaveWorkInfo_SUCCESS(data.status));
+                        console.log(data.status);
                     }
                     else {
                         dispatch(alertActions.error(data.error));
@@ -103,6 +97,10 @@ function DeleteWork(peygir_id) {
     }
 }
 
+
+function SaveWorkInfo_SUCCESS(data) {
+    return {type: Contant.AUTO_WORK_ACTION_SAVE_WORK_INFO, data}
+}
 
 function SUCCESS(data) {
     return {type: Contant.SUCCESS, data}

@@ -45,23 +45,9 @@ function SeenWork(peygir_id) {
     return Promise.reject('No')
 }
 
-//Get "peygir_id" //Returns true-false
-function SaveWorkInfo(form, data) {
-
-
-    // ***** Format of passing data ***** //
-    /*this.props.dispatch(Work_actionsActions.SaveWorkInfo("نتيجه ارجاع",
-
-        [{"peygir_id": 30508}, {"natije": "natije1"}]
-    ));*/
-
-
+function SaveWorkInfo(data) {
     if (UserConfig.GetToken() !== null) {
-
-        var formData = new FormData();
-        formData.append('form', form);
-        formData.append('data', data);
-        return axios.post(BaseUrl + "SaveWorkInfo", {form, data})
+        return axios.post(BaseUrl + "SaveWorkInfo", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

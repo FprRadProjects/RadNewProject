@@ -1,15 +1,15 @@
-import {CommonContants} from "../../../_constants";
+import {BasicInfoConstant as BaseConstant, DashBoardConstant} from "../../../_constants";
 
 export function dashboards(state = {}, action) {
     switch (action.type) {
-        case CommonContants.SET_GRID_TOTALCOUNT: {
+        case DashBoardConstant.DASHBOARD_GET_GRID_TOTAL_COUNT: {
             return {
                 ...state,
                 Dashboards_totalCount:  action.data
             }
         }
 
-        case CommonContants.SETGRID_ROWS: {
+        case DashBoardConstant.DASHBOARD_SET_GRID_ROWS: {
             return {
 
                 ...state,
@@ -17,6 +17,12 @@ export function dashboards(state = {}, action) {
             }
         }
 
+        case DashBoardConstant.DASHBOARD_GET_FORM_INFO_SUCCESS: {
+            return {
+                ...state,
+                FormInfo:{ ...action.data}
+            }
+        }
         default:
             return state;
     }
