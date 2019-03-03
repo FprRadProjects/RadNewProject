@@ -5,7 +5,8 @@ import PropTypes from "prop-types"
 import {SelectProjectModal} from "../../Project/";
 import {SelectDefaultTextModal} from "../../Basic/";
 
-import {WorkAccess_action, design_Actions, alertActions, WorkActions_action} from "../../../_actions";
+import {WorkAccess_action, design_Actions, BasicInfo_action, WorkActions_action} from "../../../_actions";
+import {FormInfo} from "../../../locales";
 
 var SaveParams = {form: "", data: []};
 
@@ -28,11 +29,11 @@ class ReferenceViewer extends Component {
         const {WorkInfo, showError} = this.props;
         WorkAccess_action.CanSetProjectOnWork(WorkInfo.peygir_id).then(
             data => {
-                if (data.status)
+                if (data.status) {
                     this.setState({
                         ProjectSelectmodal: !this.state.ProjectSelectmodal,
                     });
-                else {
+                } else {
                     showError(data.error);
                     alert(data.error);
                 }
@@ -91,7 +92,7 @@ class ReferenceViewer extends Component {
     }
 
     saveHandle = () => {
-        const {ParentForm, WorkInfo, SaveWorkInfo, lang} = this.props;
+        const {ParentForm, WorkInfo, SaveWorkInfo, lang, RefreshForm, Params} = this.props;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         SaveParams.data["peygir_id"] = {"peygir_id": WorkInfo.peygir_id};
         SaveParams.form = formname;
@@ -100,16 +101,27 @@ class ReferenceViewer extends Component {
             return obj[index++] = SaveParams.data[item];
         })
         SaveParams.data = obj;
-        SaveWorkInfo(SaveParams)
+        SaveWorkInfo(SaveParams);
+        RefreshForm(Params);
         SaveParams = {form: "", data: []};
     }
 
     changeHandle = (e) => {
         const {WorkInfo} = this.props;
         const {name, value} = e.target;
-        if (!WorkInfo.done) 
+        if (!WorkInfo.done)
             SaveParams.data[[name]] = {[name]: value};
+        console.log(SaveParams)
     }
+
+    async rebuildHandle() {
+        const {RebuildWork, WorkInfo, Params} = this.props;
+         RebuildWork(WorkInfo.peygir_id)
+        const {RefreshForm} = this.props;
+        RefreshForm(Params);
+
+    }
+
 
     render() {
         const {modal, toggle, WorkInfo} = this.props;
@@ -130,6 +142,10 @@ class ReferenceViewer extends Component {
                     <ModalBody>
                         <Button color="success"
                                 onClick={this.saveHandle.bind(this)}>{this.context.t("Save")}</Button>
+                        <Button color="success"
+                                onClick={this.rebuildHandle.bind(this)}>{this.context.t("Rebuild")}</Button>
+                        {/*<Button color="success"
+                                onClick={this.deleteHandle.bind(this)}>{this.context.t("Delete")}</Button>*/}
 
                         {WorkInfo !== undefined && <div>
                             <label>{this.context.t("WorkID")}: </label>
@@ -209,10 +225,14 @@ const mapDispatchToProps = dispatch => ({
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
-
-
     SaveWorkInfo: (SaveParams) => {
         dispatch(WorkActions_action.SaveWorkInfo(SaveParams))
+    },
+    RebuildWork: (Peygir_id) => {
+        dispatch(WorkActions_action.RebuildWork(Peygir_id))
+    },
+    DeleteWork: (Peygir_id) => {
+        dispatch(WorkActions_action.DeleteWork(Peygir_id))
     },
 
 });
@@ -226,12 +246,14 @@ function mapStateToProps(state) {
     const {lang} = state.i18nState
     const {SelectDefaultText_GridRowData} = state.Auto_BasicInfo;
     const {SelectProject_GridRowData} = state.projects;
+    const {Auto_WorkAction_Rebuild} = state.Auto_WorkAction;
     return {
         alert,
         loading,
         lang,
         SelectDefaultText_GridRowData,
-        SelectProject_GridRowData
+        SelectProject_GridRowData,
+        Auto_WorkAction_Rebuild
     };
 }
 

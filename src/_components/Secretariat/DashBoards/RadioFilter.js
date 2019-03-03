@@ -28,7 +28,7 @@ class RadioFilter extends Component {
         fields[targetName]=Value;
         const {fetchData, Params} = this.props;
         if(targetName==="date")
-            Params["calendar"] = "";
+            Params.calendar = "";
 
         this.setState({fields});
         Params[targetName] = Value;
@@ -44,6 +44,8 @@ class RadioFilter extends Component {
         fetchData(Params);
     }
     render() {
+        const {Params} = this.props;
+
         return (
             <div className="r-filter-modal__content">
                 <div className="row">
@@ -55,7 +57,7 @@ class RadioFilter extends Component {
                             </div>
                             <div className="card-body">
                                 <RadioGroup onChange={this.handleChange.bind(this)}
-                                            selectedValue={this.state.filterFields.done}
+                                            selectedValue={Params.done}
                                             name="done">
                                     <div className="radio">
                                         <Radio value="0" id="done0" />
@@ -78,7 +80,7 @@ class RadioFilter extends Component {
                             </div>
                             <div className="card-body">
                                 <RadioGroup onChange={this.handleChange.bind(this)}
-                                            selectedValue={this.state.filterFields.seen}
+                                            selectedValue={Params.seen}
                                             name="seen">
                                     <div className="radio">
                                         <Radio value="0" id="seen0" />
@@ -104,7 +106,7 @@ class RadioFilter extends Component {
                             </div>
                             <div className="card-body">
                                 <RadioGroup onChange={this.handleChange.bind(this)}
-                                            selectedValue={this.state.filterFields.worker}
+                                            selectedValue={Params.worker}
                                             name="worker">
                                     <div className="radio">
                                         <Radio value="0" id="worker0" />
@@ -134,7 +136,7 @@ class RadioFilter extends Component {
                             </div>
                             <div className="card-body">
                                 <RadioGroup onChange={this.handleChange.bind(this)}
-                                            selectedValue={this.state.filterFields.date}
+                                            selectedValue={Params.date}
                                             name="date">
                                     <div className="radio">
                                         <Radio value="0" id="date0" />

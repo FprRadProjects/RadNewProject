@@ -770,7 +770,12 @@ export const FormInfo =
         fm_par_selectproj: {
             "id": 179,
             "form_name": "انتخاب پروژه",
-            "sys_name": "fm_par_selectproj"
+            "sys_name": "fm_par_selectproj",
+            "fa_module_name1": "فرم های پروژه",
+            "fa_module_name2": "",
+            "en_form_name": "Project Forms",
+            "en_module_name1": "Project",
+            "en_module_name2": "",
         },
         fm_par_barge_anbar: {
             "id": 183,
@@ -1475,7 +1480,12 @@ export const FormInfo =
         fm_dabir_natije_erja: {
             "id": 340,
             "form_name": "نتيجه ارجاع",
-            "sys_name": "fm_dabir_natije_erja"
+            "sys_name": "fm_dabir_natije_erja",
+            "fa_module_name1": "دبیرخانه",
+            "fa_module_name2": "",
+            "en_form_name": "References Result",
+            "en_module_name1": "Secretariat",
+            "en_module_name2": "",
         },
         fm_dabir_erja_info: {
             "id": 341,

@@ -1,6 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
-import {Act_Reference, WorkAccess_action, design_Actions, mainpageActions, WorkBasic_action} from "../../../_actions";
+import {
+    Act_Reference,
+    design_Actions,
+    WorkBasic_action,
+    BasicInfo_action, WorkActions_action
+} from "../../../_actions";
 import {ApiGridComponent} from "../../Config/ApiGridComponent";
 import {RadioFilter} from "./RadioFilter";
 import {ReferenceViewer} from "../RecordsPage/ReferenceViewer";
@@ -26,6 +31,7 @@ var Params = {
     "worker": "0",
     "orderby": "tarikhaction",
     "direction": "desc",
+    "Form": "",
     "filter": []
 
 };
@@ -41,8 +47,6 @@ class References extends Component {
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
-        this.toggleFilter = this.toggleFilter.bind(this);
-        this.toggleReferenceViewer = this.toggleReferenceViewer.bind(this);
 
     }
 
@@ -59,16 +63,22 @@ class References extends Component {
     }
 
     OpenReferenceViewer() {
-        const {WorkInfo} = this.props;
-        if (WorkInfo !== undefined)
+        const {WorkInfo, SetLog,lang,SeenWork} = this.props;
+        if (WorkInfo !== undefined) {
+            let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
+            SetLog(formName);
+            SeenWork(WorkInfo.peygir_id);
             this.setState(prevState => ({
                 ReferenceViewermodal: !prevState.ReferenceViewermodal
             }));
+        }
     }
+
     toggleReferenceViewer() {
-            this.setState(prevState => ({
-                ReferenceViewermodal: !prevState.ReferenceViewermodal
-            }));
+        this.setState(prevState => ({
+            ReferenceViewermodal: !prevState.ReferenceViewermodal
+        }));
+
     }
 
     render() {
@@ -123,7 +133,12 @@ class References extends Component {
             {name: 'proje_code', title: this.context.t("ProjectCode")},
             {name: 'natije', title: this.context.t("Result")},
         ];
-        const {FetchData, WorkInfo, GetWorkInfo,Dashboards_totalCount,Dashboards_rows} = this.props;
+        const {
+            FetchData, WorkInfo, GetWorkInfo, Dashboards_totalCount, Dashboards_rows
+            , lang
+        } = this.props;
+        let formName = lang == "fa" ? FormInfo.fm_dabir_kartabl_erjaat.form_name : FormInfo.fm_dabir_kartabl_erjaat.en_form_name;
+        Params.Form = formName;
         return (
             <div className="row">
                 <div className="col-sm-12">
@@ -157,7 +172,7 @@ class References extends Component {
                                                         <i className="icon"></i>
                                                         <span>بازخوانی اطلاعات</span>
                                                     </a>
-                                                    <a  onClick={this.OpenReferenceViewer.bind(this)}>
+                                                    <a onClick={this.OpenReferenceViewer.bind(this)}>
                                                         <i className="icon"></i>
                                                         <span>نتیجه ارجاع</span>
                                                     </a>
@@ -415,26 +430,28 @@ class References extends Component {
                             </nav>
                             <div className="r-main-box__filter">
                                 <Button color="" className="r-main-box__filter--btn"
-                                        onClick={this.toggleFilter}></Button>
+                                        onClick={this.toggleFilter.bind(this)}></Button>
                             </div>
                         </div>
                         {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                                                                              toggle={this.toggleReferenceViewer.bind(this)}
-                                                                             WorkInfo={WorkInfo} ParentForm={FormInfo.fm_dabir_kartabl_erjaat}/>}
-                        <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter}
+                                                                             WorkInfo={WorkInfo}
+                                                                             Params={Params} RefreshForm={FetchData.bind(this)}
+                                                                             ParentForm={FormInfo.fm_dabir_kartabl_erjaat}/>}
+                        <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}
                                className={this.state.modalClass} backdrop={this.state.backdrop}>
-                            <ModalHeader toggle={this.toggleFilter}></ModalHeader>
+                            <ModalHeader toggle={this.toggleFilter.bind(this)}></ModalHeader>
                             <ModalBody>
                                 <RadioFilter Params={Params} fetchData={FetchData.bind(this)}/>
                             </ModalBody>
                             <ModalFooter>
-                                <Button color="primary" onClick={this.toggleFilter}></Button>
+                                <Button color="primary" onClick={this.toggleFilter.bind(this)}></Button>
                             </ModalFooter>
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
                                           rows={Dashboards_rows} totalCount={Dashboards_totalCount}
-                                       UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
-                                       currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                                          UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
+                                          currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>
                 </div>
@@ -460,8 +477,12 @@ const mapDispatchToProps = dispatch => ({
     GetWorkInfo: (Params) => {
         dispatch(WorkBasic_action.GetWorkInfo(Params))
     },
-
-
+    SetLog: (Form) => {
+        dispatch(BasicInfo_action.SetLog(Form))
+    },
+    SeenWork: (peygir_id) => {
+        dispatch(WorkActions_action.SeenWork(peygir_id))
+    },
 });
 References.contextTypes = {
     t: PropTypes.func.isRequired
@@ -472,7 +493,7 @@ function mapStateToProps(state) {
     const {Dashboards_totalCount} = state.dashboards
     const {alert} = state;
     const {loading} = state.loading;
-    const {lang} = state.i18nState.lang
+    const {lang} = state.i18nState
     const {WorkInfo} = state.Auto_BasicInfo;
     return {
         alert,

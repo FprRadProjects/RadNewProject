@@ -86,6 +86,8 @@ export const translations = {
         //---------------اقدام------------------شروع
         logout: 'خروج',
         Save: 'ذخیره',
+        Rebuild: 'بازسازی',
+        Delete: 'حذف',
         Cancel: 'انصراف',
         EditLabel: 'ویرایش برچسب',
         DeleteControl: 'حذف کنترل',
@@ -202,6 +204,8 @@ export const translations = {
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
+        Rebuild: 'Rebuild',
+        Delete: 'Delete',
         Cancel: 'Cancel',
         EditLabel: 'Edit Label',
         DeleteControl: 'Delete Control',

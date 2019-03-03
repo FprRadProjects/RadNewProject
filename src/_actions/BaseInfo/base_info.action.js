@@ -7,6 +7,7 @@ export const BasicInfo_action = {
     GetCompanyInfo,
     UserAccessForm,
     GetFormInfo,
+    SetLog,
     GetRowData
 
 };
@@ -17,6 +18,27 @@ function GetFormInfo(param) {
 function GetRowData(data) {
     return dispatch => {dispatch(getGridRowData_Reducer(data));}
 }
+function SetLog(Form) {
+    return dispatch => {
+        BasicInfo_service.SetLog(Form)
+            .then(
+                data => {
+                    if (!data.status && data.code !== 0) {
+                        dispatch(alertActions.error(data.error));
+                    }
+                    else if (!data.status && data.code === 0)
+                    {
+                        userActions.logout();
+                        history.push("/login")
+                    }
+                },
+                error => {
+                    dispatch(alertActions.error(error));
+                }
+            );
+    }
+}
+
 function UserAccessForm(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
