@@ -2,10 +2,11 @@ import {WorkBasic_service}  from "../../../../_services";
 import {alertActions} from "../../../Alert";
 import {loadingActions} from "../../../Loading";
 import {AutoBasicInfoConstant} from "../../../../_constants";
-import {ProjectsInfo_action} from "../../../Projects/Info";
+import {common_Actions} from "../../../../_actions";
 
 export const WorkBasic_action = {
-    GetWorkInfo
+    GetWorkInfo,
+    FetchWorkInfo
 };
 
 
@@ -17,7 +18,24 @@ function GetWorkInfo(row) {
                 data => {
                     if (data.status) {
                         dispatch(UserGetWorkInfo_Reducer(data.data));
-                     //   dispatch(ProjectsInfo_action.SetEmptySelectProjectRowData());
+                    }
+                    else {
+                        dispatch(alertActions.error(data.error));
+                    }
+                },
+                error => {
+                    dispatch(alertActions.error(error));
+                }
+            );
+    }
+}
+function FetchWorkInfo(peygir_id) {
+    return dispatch => {
+        WorkBasic_service.GetWorkInfo(peygir_id)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(UserGetWorkInfo_Reducer(data.data));
                     }
                     else {
                         dispatch(alertActions.error(data.error));

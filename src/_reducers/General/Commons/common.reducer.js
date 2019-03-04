@@ -1,23 +1,13 @@
-import {CommonContants as common} from "../../../_constants";
+import { CommonConstant as common} from "../../../_constants";
 
 export function Common(state = {}, action) {
     switch (action.type) {
-        case common.SUCCESS: {
+        case common.REFRESH_FORM: {
             return {
                 ...state,
-                Value:  action.data,
-                Error : ''
-            }
-
-        }
-        case common.FAIL: {
-            return {
-                ...state,
-                Value:  false,
-                Error : action.data
+                Refresh_Form:  action.data
             }
         }
-
         default:
             return state;
     }

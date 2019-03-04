@@ -101,8 +101,7 @@ class ReferenceViewer extends Component {
             return obj[index++] = SaveParams.data[item];
         })
         SaveParams.data = obj;
-        SaveWorkInfo(SaveParams);
-        RefreshForm(Params);
+        SaveWorkInfo(SaveParams,WorkInfo.peygir_id);
         SaveParams = {form: "", data: []};
     }
 
@@ -111,17 +110,23 @@ class ReferenceViewer extends Component {
         const {name, value} = e.target;
         if (!WorkInfo.done)
             SaveParams.data[[name]] = {[name]: value};
-        console.log(SaveParams)
     }
 
-    async rebuildHandle() {
-        const {RebuildWork, WorkInfo, Params} = this.props;
-         RebuildWork(WorkInfo.peygir_id)
-        const {RefreshForm} = this.props;
-        RefreshForm(Params);
+     rebuildHandle() {
+        const {RebuildWork, WorkInfo} = this.props;
+        RebuildWork(WorkInfo.peygir_id);
+
+     //   RefreshForm(Params);
 
     }
-
+    componentWillReceiveProps(nextProps) {
+        const {RefreshForm, Refresh_Form,Params} =nextProps;
+        if(Refresh_Form!==undefined)
+        if ((this.props.Refresh_Form!== Refresh_Form) ) {
+            console.log(this.props.Refresh_Form ,Refresh_Form)
+            RefreshForm(Params);
+        }
+    }
 
     render() {
         const {modal, toggle, WorkInfo} = this.props;
@@ -225,8 +230,8 @@ const mapDispatchToProps = dispatch => ({
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
-    SaveWorkInfo: (SaveParams) => {
-        dispatch(WorkActions_action.SaveWorkInfo(SaveParams))
+    SaveWorkInfo: (SaveParams,peygir_id) => {
+        dispatch(WorkActions_action.SaveWorkInfo(SaveParams,peygir_id))
     },
     RebuildWork: (Peygir_id) => {
         dispatch(WorkActions_action.RebuildWork(Peygir_id))
@@ -246,14 +251,14 @@ function mapStateToProps(state) {
     const {lang} = state.i18nState
     const {SelectDefaultText_GridRowData} = state.Auto_BasicInfo;
     const {SelectProject_GridRowData} = state.projects;
-    const {Auto_WorkAction_Rebuild} = state.Auto_WorkAction;
+    const {Refresh_Form} = state.Common;
     return {
         alert,
         loading,
         lang,
         SelectDefaultText_GridRowData,
         SelectProject_GridRowData,
-        Auto_WorkAction_Rebuild
+        Refresh_Form
     };
 }
 

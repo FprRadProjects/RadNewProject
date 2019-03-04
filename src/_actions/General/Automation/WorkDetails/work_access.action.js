@@ -1,5 +1,5 @@
 import {WorkAccess_service} from "../../../../_services";
-import {CommonContants as Contant} from "../../../../_constants";
+import {CommonConstant as Constant} from "../../../../_constants/";
 import {alertActions} from "../../../index";
 
 export const WorkAccess_action = {
@@ -108,11 +108,11 @@ function CanSubOnWork(peygir_id, id_tel) {
 }
 
 function SUCCESS(data) {
-    return {type: Contant.SUCCESS, data}
+    return {type: Constant.SUCCESS, data}
 }
 
 function FAIL(data) {
-    return {type: Contant.FAIL, data}
+    return {type: Constant.FAIL, data}
 }
 
 

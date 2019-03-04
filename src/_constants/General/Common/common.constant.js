@@ -1,9 +1,6 @@
 
-export const CommonContants = {
-    SUCCESS: 'SUCCESS_RETURN',
-    FAIL: 'FAIL_RETURN',
-    SET_GRID_TOTALCOUNT: 'SET_GRID_TOTALCOUNT',
-    SETGRID_ROWS: 'SETGRID_ROWS',
+export const CommonConstant = {
+    REFRESH_FORM: 'REFRESH_FORM',
 };
 
 

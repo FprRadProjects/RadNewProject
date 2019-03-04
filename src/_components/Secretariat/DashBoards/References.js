@@ -52,7 +52,7 @@ class References extends Component {
 
     componentDidMount() {
         const {GetTemplateForm, GetFormInfo} = this.props;
-        GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
+       // GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
         GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id);
     }
 
@@ -435,7 +435,7 @@ class References extends Component {
                         </div>
                         {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                                                                              toggle={this.toggleReferenceViewer.bind(this)}
-                                                                             WorkInfo={WorkInfo}
+                                                                             WorkInfo={WorkInfo} GetRowInfo={GetWorkInfo}
                                                                              Params={Params} RefreshForm={FetchData.bind(this)}
                                                                              ParentForm={FormInfo.fm_dabir_kartabl_erjaat}/>}
                         <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}

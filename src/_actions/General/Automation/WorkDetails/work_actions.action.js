@@ -1,6 +1,6 @@
 import {BasicInfo_service, WorkActions_service} from "../../../../_services";
-import {AutoWorkActionConstant as Contant} from "../../../../_constants";
-import {alertActions, loadingActions, userActions} from "../../../index";
+import {alertActions, loadingActions, userActions,common_Actions
+,WorkBasic_action} from "../../../index";
 import {history} from "../../../../_helpers";
 
 
@@ -20,11 +20,13 @@ function RebuildWork(peygir_id) {
             .then(
                 data => {
                     if(data.status) {
-                        dispatch(rebuildWork_SUCCESS(data.status));
+                        var date = new Date();
+                        var timestamp = date.getTime();
+                        dispatch(common_Actions.RefreshForm({"Time":timestamp,status:data.status}));
                         dispatch(loadingActions.HideLoading());
                     }
                     else if(data.code!==0){
-                        alert(data.error)
+                        alert(data.error);
                         dispatch(alertActions.error(data.error));
                         dispatch(loadingActions.HideLoading());
                     }
@@ -61,14 +63,17 @@ function SeenWork(peygir_id) {
     }
 }
 
-function SaveWorkInfo(data) {
+function SaveWorkInfo(params,peygir_id) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        WorkActions_service.SaveWorkInfo(data)
+        WorkActions_service.SaveWorkInfo(params)
             .then(
                 data => {
                     if(data.status) {
-                        dispatch(SaveWorkInfo_SUCCESS(data.status));
+                        var date = new Date();
+                        var timestamp = date.getTime();
+                        dispatch(common_Actions.RefreshForm({"Time":timestamp,status:data.status}));
+                        dispatch(WorkBasic_action.FetchWorkInfo(peygir_id));
                         dispatch(loadingActions.HideLoading());
                     }
                     else if(data.code!==0){
@@ -97,7 +102,9 @@ function DeleteWork(peygir_id) {
             .then(
                 data => {
                     if(data.status) {
-                        dispatch(deleteWork_SUCCESS(data.status));
+                        var date = new Date();
+                        var timestamp = date.getTime();
+                        dispatch(common_Actions.RefreshForm({"Time":timestamp,status:data.status}));
                         dispatch(loadingActions.HideLoading());
                     }
                     else if(data.code!==0){
@@ -118,16 +125,5 @@ function DeleteWork(peygir_id) {
     }
 
 }
-
-
-function SaveWorkInfo_SUCCESS(data) {
-    return {type: Contant.AUTO_WORK_ACTION_SAVE_WORK_INFO, data}
-}function rebuildWork_SUCCESS(data) {
-    return {type: Contant.AUTO_WORK_ACTION_REBUILD_WORK_INFO, data}
-}function deleteWork_SUCCESS(data) {
-    return {type: Contant.AUTO_WORK_ACTION_DELETE_WORK_INFO, data}
-}
-
-
 
 
