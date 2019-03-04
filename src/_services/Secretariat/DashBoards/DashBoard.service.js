@@ -1,29 +1,21 @@
 import axios from 'axios'
+import {BaseUrl} from '../../../_helpers';
+import {UserConfig} from '../../Config.js'
 
 export const Service_Dashboard = {
     FetchData
 };
 
 function FetchData(params) {
-
-    let apiToken = localStorage.getItem("user");
-    if (apiToken != null) {
-        const newuser = JSON.parse(apiToken);
-
-        var headers = {
-            "token": newuser.Token
-        }
-
-        return axios.post('http://localhost:2535/WorkDashboard', params, {headers: headers})
-
-
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(BaseUrl+"WorkDashboard", params)
             .then(response => {
-                //console.log(response.data.data)
                 return Promise.resolve(response.data)
             })
             .catch(error => {
                 return Promise.reject(error.message)
             })
-    }
+    } else
+        return Promise.reject("No");
 }
 

@@ -1,3 +1,3 @@
-export * from './DashBoard.Contants';
+export * from './DashBoard.constant';
 
 
