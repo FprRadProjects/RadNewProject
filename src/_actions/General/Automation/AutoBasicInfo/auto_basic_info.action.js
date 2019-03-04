@@ -3,7 +3,6 @@ import {alertActions} from "../../../index";
 import {AutoBasicInfoConstant as constant} from "../../../../_constants";
 
 export const AutoBasicInfo_action = {
-    SetSelectDefaultTextRowData,
     GetDefaultText
 
 };
@@ -31,10 +30,6 @@ function GetDefaultText() {
 }
 
 
-function SetSelectDefaultTextRowData(data) {
-    return dispatch => {dispatch(setSelectDefaultTextRowData_reducer(data));}
-}
-
 
 function DefaultTextAddTotalCount(data) {
     return {type: constant.DEFAULT_TEXT_GET_GRID_TOTAL_COUNT, data}
@@ -44,7 +39,4 @@ function DefaultTextAddRows(data) {
     return {type: constant.DEFAULT_TEXT_SET_GRID_ROWS, data}
 }
 
-function setSelectDefaultTextRowData_reducer(data) {
-    return {type: constant.GET_DEFAULT_TEXT_GRID_ROW_DATA_SUCCESS, data}
-}
 

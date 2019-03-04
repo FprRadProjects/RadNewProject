@@ -17,18 +17,7 @@ export function projects(state = {}, action) {
                 SelectProject_GridRowData:{}
             }
         }
-        case Constant.GET_PROJECT_GRID_ROW_DATA_SUCCESS: {
-            return {
-                ...state,
-                SelectProject_GridRowData:{ ...action.data}
-            }
-        }
-        case Constant.SET_PROJECT_EMPTY_SELECTED: {
-            return {
-                ...state,
-                SelectProject_GridRowData:{}
-            }
-        }
+       
         default:
             return state;
     }

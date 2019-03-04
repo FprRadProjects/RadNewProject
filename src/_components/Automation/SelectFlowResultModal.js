@@ -1,23 +1,23 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
-import {ProjectsInfo_action} from "../../_actions";
+import {WorkBasic_action} from "../../_actions";
 import PropTypes from "prop-types"
 import {GridComponent} from "../Config/GridComponent";
 import {ApiGridComponent} from "../Config/ApiGridComponent";
 
 var currencyColumns = [];
-var hiddenColumnNames = [];
+var hiddenColumnNames = ["p_count"];
 var booleanColumns = [];
 var Params = {
     "page": 0,
     "pagesize": 10,
-    "Id_Taraf": "0",
+    "peygir_id": "0",
     "orderby": "id",
     "direction": "desc",
     "filter": []
 };
-class SelectProjectModal extends Component {
+class SelectFlowResultModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,21 +29,20 @@ class SelectProjectModal extends Component {
         };
 
     }
-    SetSelectProjectRowData=(row)=>{
+    SetSelectResultRowData=(row)=>{
         this.setState({
             row:row
         })
     }
-    render() {  
-        const columns = [
+    render() {  const columns = [
         {name: 'id', title: this.context.t("RowId")},
-        {name: 'code', title: this.context.t("Code")},
-        {name: 'ptype', title: this.context.t("Project")},
+        {name: 'natije', title: this.context.t("Result")},
+        {name: 'p_count', title: this.context.t("p_count")},
 
     ];
-        const {modal, toggle, id_tel,GetSelectProject
-            ,SelectProject_rows,SelectProject_totalCount,Successtoggle} = this.props;
-        Params.Id_Taraf=id_tel;
+        const {modal, toggle, peygir_id,FlowResultListOnWork
+            ,SelectFlowList_rows,SelectFlowList_totalCount,Successtoggle} = this.props;
+        Params.peygir_id=peygir_id;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -62,8 +61,9 @@ class SelectProjectModal extends Component {
                         <ModalHeader>{this.context.t("frm_Select_Project")}</ModalHeader>
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
-                                           rows={SelectProject_rows} totalCount={SelectProject_totalCount}
-                                           UrlParams={Params} fetchData={GetSelectProject.bind(this)}
+                                           rows={SelectFlowList_rows} totalCount={SelectFlowList_totalCount}
+                                           UrlParams={Params} fetchData={FlowResultListOnWork.bind(this)}
+                                           GetRowInfo={this.SetSelectResultRowData}
                                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
                         </ModalBody>
@@ -81,12 +81,14 @@ class SelectProjectModal extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    GetSelectProject: (Params) => {
-        dispatch(ProjectsInfo_action.GetSelectProject(Params))
+    FlowResultListOnWork: (Params) => {
+        dispatch(WorkBasic_action.FlowResultListOnWork(Params))
     },
-    
+    SetSelectProjectRowData: (Params) => {
+     //   dispatch(ProjectsInfo_action.SetSelectProjectRowData(Params))
+    }
 });
-SelectProjectModal.contextTypes = {
+SelectFlowResultModal.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
@@ -95,17 +97,20 @@ function mapStateToProps(state) {
     const {alert} = state;
     const {loading} = state.loading;
     const {lang} = state.i18nState
-    const {SelectProject_rows} = state.projects;
-    const {SelectProject_totalCount} = state.projects
+    const {SelectFlowList_rows} = 
+    state.Auto_WorkBasic!==null && state.Auto_WorkBasic!==undefined?
+    state.Auto_WorkBasic.SelectFlowList_rows!=null && state.Auto_WorkBasic.SelectFlowList_rows!=undefined
+    ?state.Auto_WorkBasic:[]:[];
+    const {SelectFlowList_totalCount} = state.Auto_WorkBasic
     return {
         alert,
         loading,
         lang,
-        SelectProject_rows,
-        SelectProject_totalCount,
+        SelectFlowList_rows,
+        SelectFlowList_totalCount,
     };
 }
 
 
-const connectedSelectProjectModal = connect(mapStateToProps, mapDispatchToProps)(SelectProjectModal);
-export {connectedSelectProjectModal as SelectProjectModal};
+const connectedSelectFlowResultModal = connect(mapStateToProps, mapDispatchToProps)(SelectFlowResultModal);
+export {connectedSelectFlowResultModal as SelectFlowResultModal};

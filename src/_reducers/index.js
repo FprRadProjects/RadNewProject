@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 
 import { alert } from './Alert';
 import { Design } from './Design';
-import { Common,Auto_WorkAction } from './General';
+import { Common,Auto_WorkAction,Auto_WorkBasic } from './General';
 import { Auto_BasicInfo } from './General';
 import { dashboards } from './Secretariat';
 import { authentication , users } from './Users';
@@ -24,7 +24,8 @@ const rootReducer = combineReducers({
     MainPage,
     BasicInfo,
     Auto_BasicInfo,
-    Auto_WorkAction
+    Auto_WorkAction,
+    Auto_WorkBasic
 });
 
 export default rootReducer;

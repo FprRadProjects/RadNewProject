@@ -1,0 +1,11 @@
+
+export const AutoWorkBasicConstant = {
+    FLOW_RESULT_SET_GRID_TOTAL_COUNT: 'FLOW_RESULT_SET_GRID_TOTAL_COUNT',
+    FLOW_RESULT_SET_GRID_ROWS: 'FLOW_RESULT_SET_GRID_ROWS',
+};
+
+
+
+
+
+

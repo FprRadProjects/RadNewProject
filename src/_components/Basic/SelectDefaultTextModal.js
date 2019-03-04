@@ -29,12 +29,17 @@ class SelectDefaultTextModal extends Component {
 
     }
 
+    SetSelectDefaultTextRowData=(row)=>{
+        this.setState({
+            row:row
+        })
+    }
     render() {  const columns = [
         {name: 'id', title: this.context.t("RowId")},
         {name: 'sharh', title: this.context.t("Description")},
 
     ];
-        const {modal, toggle, id_tel,GetDefaultText,SetSelectDefaultTextRowData
+        const {modal, toggle, id_tel,GetDefaultText
             ,SelectDefaultText_rows,SelectDefaultText_totalCount,Successtoggle} = this.props;
         Params.Id_Taraf=id_tel;
         const modalBackDrop = `
@@ -57,12 +62,12 @@ class SelectDefaultTextModal extends Component {
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                            rows={SelectDefaultText_rows} totalCount={SelectDefaultText_totalCount}
                                            UrlParams={Params} fetchData={GetDefaultText.bind(this)}
-                                           GetRowInfo={SetSelectDefaultTextRowData}
+                                           GetRowInfo={this.SetSelectDefaultTextRowData}
                                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={Successtoggle}>{this.context.t("Select")}</Button>{' '}
+                            <Button color="primary" onClick={Successtoggle.bind(this,this.state.row)}>{this.context.t("Select")}</Button>{' '}
                             <Button color="secondary" onClick={toggle}>{this.context.t("Cancel")}</Button>
                         </ModalFooter>
                     </Modal>
@@ -77,9 +82,6 @@ class SelectDefaultTextModal extends Component {
 const mapDispatchToProps = dispatch => ({
     GetDefaultText: (Params) => {
         dispatch(AutoBasicInfo_action.GetDefaultText(Params))
-    },
-    SetSelectDefaultTextRowData: (Data) => {
-        dispatch(AutoBasicInfo_action.SetSelectDefaultTextRowData(Data))
     }
 });
 SelectDefaultTextModal.contextTypes = {

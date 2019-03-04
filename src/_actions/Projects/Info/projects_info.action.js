@@ -4,13 +4,9 @@ import {BasicInfoConstant, CommonContants, ProjectInfoConstant as constant} from
 
 export const ProjectsInfo_action = {
     GetSelectProject,
-    SetSelectProjectRowData,
 };
 
 
-function SetSelectProjectRowData(data) {
-    return dispatch => {dispatch(setSelectProjectRowData_reducer(data));}
-}
 
 function GetSelectProject(params) {
     return dispatch => {
@@ -42,11 +38,6 @@ function AddTotalCount(data) {
 function AddRows(data) {
     return {type: constant.PROJECT_SET_GRID_ROWS, data}
 }
-
-function setSelectProjectRowData_reducer(data) {
-    return {type: constant.GET_PROJECT_GRID_ROW_DATA_SUCCESS, data}
-}
-
 
 
 
