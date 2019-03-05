@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<StiSerializer version="1.02" type="Net" application="StiReport">
+  <Dictionary Ref="1" type="Dictionary" isKey="true">
+    <BusinessObjects isList="true" count="0" />
+    <Databases isList="true" count="1">
+      <RadConnection Ref="2" type="Stimulsoft.Report.Dictionary.StiXmlDatabase" isKey="true">
+        <Alias>RadConnection</Alias>
+        <Name>RadConnection</Name>
+        <PathData>http://localhost:8080/reports/a/RadReport.xml</PathData>
+        <PathSchema>http://localhost:8080/reports/a/RadReport.xsd</PathSchema>
+      </RadConnection>
+    </Databases>
+    <DataSources isList="true" count="1">
+      <DataSource1 Ref="3" type="DataTableSource" isKey="true">
+        <Alias>DataSource1</Alias>
+        <Columns isList="true" count="73">
+          <value>شاخص_x0020_کار_x0020_مرجع,System.String</value>
+          <value>سريال_x0020_مرجع,System.String</value>
+          <value>کار_x0020_مرجع,System.String</value>
+          <value>کاربر_x0020_مرجع,System.String</value>
+          <value>کد_x0020_مرجع,System.String</value>
+          <value>کد_x0020_فرآيند,System.String</value>
+          <value>نام_x0020_مدرک,System.String</value>
+          <value>نتيجه_x002F_نتايج_x0020_فرآيند,System.String</value>
+          <value>سريال,System.String</value>
+          <value>گروه_x0020_کار,System.String</value>
+          <value>نوع_x0020_کار,System.String</value>
+          <value>تاريخ_x0020_کار,System.String</value>
+          <value>نام_x0020_کاربر,System.String</value>
+          <value>مدير,System.String</value>
+          <value>موضوع,System.String</value>
+          <value>کد,System.String</value>
+          <value>شماره,System.String</value>
+          <value>شرح_x0020_کار,System.String</value>
+          <value>نتيجه_x0020_کار,System.String</value>
+          <value>مخاطب,System.String</value>
+          <value>زمان_x0020_کار,System.String</value>
+          <value>پايان_x0020_فرآيند,System.String</value>
+          <value>رسانه,System.String</value>
+          <value>نوع_x0020_پروژه,System.String</value>
+          <value>سريال_x0020_پروژه,System.String</value>
+          <value>کد_x0020_پروژه,System.String</value>
+          <value>پروژه,System.String</value>
+          <value>گروه_x0020_پروژه,System.String</value>
+          <value>سال,System.String</value>
+          <value>ماه,System.String</value>
+          <value>وضعيت_x0020_سند,System.String</value>
+          <value>کد_x0020_طرف_x0020_حساب,System.String</value>
+          <value>ايجاد_x0020_کننده,System.String</value>
+          <value>تاريخ_x0020_ايجاد,System.String</value>
+          <value>ساعت_x0020_ايجاد,System.String</value>
+          <value>انجام_x0020_شدن,System.String</value>
+          <value>تاريخ_x0020_انجام,System.String</value>
+          <value>ساعت_x0020_انجام,System.String</value>
+          <value>تاريخ_x0020_نمايش,System.String</value>
+          <value>ساعت_x0020_نمايش,System.String</value>
+          <value>تاريخ_x0020_شروع,System.String</value>
+          <value>ساعت_x0020_شروع,System.String</value>
+          <value>اهميت_x0020_کار,System.String</value>
+          <value>اولويت,System.String</value>
+          <value>نوع_x0020_شرکت,System.String</value>
+          <value>شاخص_x0020_طرف_x0020_حساب,System.String</value>
+          <value>نام_x0020_طرف_x0020_حساب,System.String</value>
+          <value>شرکت,System.String</value>
+          <value>فرآيند,System.String</value>
+          <value>گروه_x0020_طرف_x0020_حساب,System.String</value>
+          <value>منطقه,System.String</value>
+          <value>تلفن1,System.String</value>
+          <value>تلفن2,System.String</value>
+          <value>فکس,System.String</value>
+          <value>موبايل,System.String</value>
+          <value>آدرس1,System.String</value>
+          <value>آدرس2,System.String</value>
+          <value>آدرس3,System.String</value>
+          <value>مهم,System.String</value>
+          <value>مبلغ_x0020_کل_x0020_فرم_x0020_تکميلي,System.String</value>
+          <value>مدت_x0020_زمان_x0020_انجام_x0020_کار_x0020_تاييد_x0020_شده,System.String</value>
+          <value>مدت_x0020_زمان_x0020_انجام_x0020_کار,System.String</value>
+          <value>هزينه_x0020_کار,System.String</value>
+          <value>مدت_x0020_زمان_x0020_پيشنهادي,System.String</value>
+          <value>ايجاد_x0020_شده_x0020_از_x0020_نتيجه_x0020_فرآيند,System.String</value>
+          <value>سطح_x0020_تحصيلات,System.String</value>
+          <value>کد_x0020_ملي,System.String</value>
+          <value>رشته_x0020_تحصيلي,System.String</value>
+          <value>شناسه_x0020_ثبت,System.String</value>
+          <value>شناسه_x0020_ملي,System.String</value>
+          <value>مسئول,System.String</value>
+          <value>شاخص_x0020_فرآيند,System.String</value>
+          <value>شاخص_x0020_کار,System.String</value>
+        </Columns>
+        <Dictionary isRef="1" />
+        <IsCloud>False</IsCloud>
+        <Name>DataSource1</Name>
+        <NameInSource>RadConnection.اطلاعات فرم</NameInSource>
+      </DataSource1>
+    </DataSources>
+    <Relations isList="true" count="0" />
+    <Report isRef="0" />
+    <Variables isList="true" count="0" />
+  </Dictionary>
+  <EngineVersion>EngineV2</EngineVersion>
+  <GlobalizationStrings isList="true" count="0" />
+  <MetaTags isList="true" count="0" />
+  <Pages isList="true" count="1">
+    <Page1 Ref="4" type="Page" isKey="true">
+      <Border>None;Black;2;Solid;False;4;Black</Border>
+      <Brush>Transparent</Brush>
+      <Components isList="true" count="1">
+        <DataBand1 Ref="5" type="DataBand" isKey="true">
+          <Brush>Transparent</Brush>
+          <BusinessObjectGuid isNull="true" />
+          <ClientRectangle>0,0.2,7.72,0.3</ClientRectangle>
+          <Components isList="true" count="4">
+            <Text1 Ref="6" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5.9,0,1.5,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text1</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>{DataSource1.تاريخ_کار}</Text>
+              <TextBrush>Black</TextBrush>
+            </Text1>
+            <Text2 Ref="7" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>5,0,0.8,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text2</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>تاريخ کار</Text>
+              <TextBrush>Black</TextBrush>
+            </Text2>
+            <Text3 Ref="8" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>2.4,0,1.1,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text3</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>{DataSource1.شاخص_کار}</Text>
+              <TextBrush>Black</TextBrush>
+            </Text3>
+            <Text4 Ref="9" type="Text" isKey="true">
+              <Brush>Transparent</Brush>
+              <ClientRectangle>1.3,0,1.1,0.2</ClientRectangle>
+              <Conditions isList="true" count="0" />
+              <Font>Arial,10</Font>
+              <Margins>0,0,0,0</Margins>
+              <Name>Text4</Name>
+              <Page isRef="4" />
+              <Parent isRef="5" />
+              <Text>شاخص کار</Text>
+              <TextBrush>Black</TextBrush>
+            </Text4>
+          </Components>
+          <Conditions isList="true" count="0" />
+          <DataSourceName>DataSource1</DataSourceName>
+          <Filters isList="true" count="0" />
+          <Name>DataBand1</Name>
+          <Page isRef="4" />
+          <Parent isRef="4" />
+          <Sort isList="true" count="0" />
+        </DataBand1>
+      </Components>
+      <Conditions isList="true" count="0" />
+      <Guid>9a95046420794b609a6e941b8433e906</Guid>
+      <Margins>0.39,0.39,0.39,0.39</Margins>
+      <Name>Page1</Name>
+      <PageHeight>11</PageHeight>
+      <PageWidth>8.5</PageWidth>
+      <PaperSize>Letter</PaperSize>
+      <Report isRef="0" />
+      <Watermark Ref="10" type="Stimulsoft.Report.Components.StiWatermark" isKey="true">
+        <Font>Arial,100</Font>
+        <TextBrush>[50:0:0:0]</TextBrush>
+      </Watermark>
+    </Page1>
+  </Pages>
+  <PrinterSettings Ref="11" type="Stimulsoft.Report.Print.StiPrinterSettings" isKey="true" />
+  <ReferencedAssemblies isList="true" count="9">
+    <value>System.Dll</value>
+    <value>System.Drawing.Dll</value>
+    <value>System.Windows.Forms.Dll</value>
+    <value>System.Data.Dll</value>
+    <value>System.Xml.Dll</value>
+    <value>Stimulsoft.Controls.Dll</value>
+    <value>Stimulsoft.Base.Dll</value>
+    <value>Stimulsoft.Report.Dll</value>
+    <value>stimulsoft_shamsi_date.dll</value>
+  </ReferencedAssemblies>
+  <ReportAlias>Report</ReportAlias>
+  <ReportChanged>2/23/2019 4:20:07 PM</ReportChanged>
+  <ReportCreated>2/23/2019 4:17:55 PM</ReportCreated>
+  <ReportFile>reports/a/RadReport.mrt</ReportFile>
+  <ReportGuid>629e7ec3b11a1dfbf83d1a66acf2935f</ReportGuid>
+  <ReportName>Report</ReportName>
+  <ReportUnit>Inches</ReportUnit>
+  <ReportVersion>2014.3.0</ReportVersion>
+  <Script>using System;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Data;
+using Stimulsoft.Controls;
+using Stimulsoft.Base.Drawing;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Dialogs;
+using Stimulsoft.Report.Components;
+
+namespace Reports
+{
+    public class Report : Stimulsoft.Report.StiReport
+    {
+        public Report()        {
+            this.InitializeComponent();
+        }
+
+        #region StiReport Designer generated code - do not modify
+		#endregion StiReport Designer generated code - do not modify
+    }
+}</Script>
+  <ScriptLanguage>CSharp</ScriptLanguage>
+  <Styles isList="true" count="0" />
+</StiSerializer>

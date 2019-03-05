@@ -140,7 +140,7 @@ class GridComponent extends React.PureComponent {
     }
 
     componentDidUpdate() {
-      //  this.loadData();
+        //  this.loadData();
     }
 
     changeSorting(sorting) {
@@ -304,9 +304,9 @@ class GridComponent extends React.PureComponent {
                 />
                     <TableHeaderRow showSortingControls/>
 
-                   <PagingPanel
-                    pageSizes={pageSizes}
-                />
+                    <PagingPanel
+                        pageSizes={pageSizes}
+                    />
                     <TableGroupRow/>
                     <TableColumnVisibility
                         hiddenColumnNames={hiddenColumnNames}

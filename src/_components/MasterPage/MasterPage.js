@@ -17,6 +17,7 @@ import  '../../content/js/script.js';
 import {MyAwesomeMenu} from "../Config/MyAwesomeMenu";
 import {mainpageActions} from "../../_actions/MainPage";
 import {design_Actions} from "../../_actions/Design";
+import {workManagement} from "../Secretariat/DashBoards/workManagement";
 
 class MasterPage extends React.Component {
     constructor(props)
@@ -39,9 +40,9 @@ class MasterPage extends React.Component {
             Delete_ShortKeyElements_Template} = this.props;
         return (
             <div>
-            <BrowserRouter>
-                <div>
-                    {loading &&
+                <BrowserRouter>
+                    <div>
+                        {loading &&
                         <div className="loader-wrapper">
                             <div className="loader">
                                 <div className="line"></div>
@@ -51,30 +52,31 @@ class MasterPage extends React.Component {
                                 <h4>{this.context.t("SoftWare_Name")}</h4>
                             </div>
                         </div>
-                    }
+                        }
 
-                    <div className="page-wrapper">
-                        <Header auth={true} users={users} />
-                        <div className="page-body-wrapper sidebar-close">
-                            <Sidebar auth={true} users={users} />
-                            <div className="page-body">
-                                <div className="container-fluid">
-                                    <Switch>
-                                        <Route path="/" exact={true} component={DashBoard} />
-                                        <Route path="/works" component={Works} />
-                                        <Route path="/references" component={References} />
-                                        <Route component={NoMatch} />
-                                    </Switch>
+                        <div className="page-wrapper">
+                            <Header auth={true} users={users} />
+                            <div className="page-body-wrapper sidebar-close">
+                                <Sidebar auth={true} users={users} />
+                                <div className="page-body">
+                                    <div className="container-fluid">
+                                        <Switch>
+                                            <Route path="/" exact={true} component={DashBoard} />
+                                            <Route path="/works" component={Works} />
+                                            <Route path="/references" component={References} />
+                                            <Route path="/workManagement" component={workManagement} />
+                                            <Route component={NoMatch} />
+                                        </Switch>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+                        {alert.message &&
+                        <div className={`alert ${alert.type}`}>{alert.message}</div>
+                        } </div>
 
-                    </div>
-                    {alert.message &&
-                    <div className={`alert ${alert.type}`}>{alert.message}</div>
-                    } </div>
-
-            </BrowserRouter>
+                </BrowserRouter>
                 <MyAwesomeMenu Set_Hide_TemplateForm={Set_Hide_TemplateForm}
                                Set_EditText_TemplateForm={Set_EditText_TemplateForm}
                                Set_ShortKey_TemplateForm={Set_ShortKey_TemplateForm}
@@ -122,11 +124,11 @@ const mapDispatchToProps = dispatch => ({
         dispatch(design_Actions.Set_Hide_TemplateForm(Params))
     },
     Set_ShortKey_TemplateForm: (Params) => {
-            dispatch(design_Actions.Set_ShortKey_TemplateForm(Params))
-        },
+        dispatch(design_Actions.Set_ShortKey_TemplateForm(Params))
+    },
     Delete_ShortKeyElements_Template: (FormId,RowId) => {
-            dispatch(design_Actions.Delete_ShortKeyElements_Template(FormId,RowId))
-        },
+        dispatch(design_Actions.Delete_ShortKeyElements_Template(FormId,RowId))
+    },
 
     GetUserInfo: () => {
         dispatch(userActions.GetUserInfo())

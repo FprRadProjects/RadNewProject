@@ -19,6 +19,7 @@
     "jquery": "^3.3.1",
     "moment": "^2.24.0",
     "moment-jalaali": "^0.8.3",
+    "open-iconic": "^1.1.1",
     "react": "^16.7.0",
     "react-contexify": "^4.0.1",
     "react-datepicker-persian": "^1.0.2",

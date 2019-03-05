@@ -4,32 +4,37 @@ import {alertActions, loadingActions, ProjectsInfo_action} from "../../../_actio
 import {history} from "../../../_helpers";
 import {userActions} from '../../../_actions';
 
+
+
 export const Act_Reference= {
     GetFormInfo,
-    FetchData
+    FetchData,
+    FetchDataTree
 };
 function GetFormInfo(param) {
     return dispatch => {
         dispatch(getFormInfo_Reducer(param));
     }
 }
-function FetchData (params){
+
+
+function FetchData(params) {
+
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
         Service_Dashboard.FetchData(params)
             .then(
                 data => {
-                    if(data.status) {
+                    if (data.status) {
                         dispatch(AddTotalCount(data.data.totalcount));
                         dispatch(AddRows(data.data.rows));
                         dispatch(loadingActions.HideLoading());
                     }
-                    else if(data.code!==0){
+                    else if (data.code !== 0) {
                         dispatch(alertActions.error(data.error));
                         dispatch(loadingActions.HideLoading());
                     }
-                    else
-                    {
+                    else {
 
                         userActions.logout();
                         history.push("/login")
@@ -40,9 +45,35 @@ function FetchData (params){
                     dispatch(loadingActions.HideLoading());
                 }
             );
+
+
     }
 
 }
+
+function FetchDataTree(params,reload,Tree) {
+
+    return dispatch => {
+
+         Service_Dashboard.FetchDataTree(params).then(
+            data => {
+                if(reload){
+                dispatch(AddRowsReload())
+                }else if(params==="") {
+                    dispatch(AddRowsTree(data))
+                }else if(Tree){
+                    dispatch(AddRowsToTree(data))
+                }
+                else{
+                    dispatch(alertActions.error(data.error));
+                    dispatch(loadingActions.HideLoading());
+                }
+            })
+
+    }
+}
+
+
 
 function AddTotalCount(data) {
     return {type: DashBoardConstant.DASHBOARD_GET_GRID_TOTAL_COUNT, data}
@@ -51,6 +82,22 @@ function AddTotalCount(data) {
 function AddRows(data) {
     return {type: DashBoardConstant.DASHBOARD_SET_GRID_ROWS, data}
 }
+
 function getFormInfo_Reducer(data) {
     return {type: DashBoardConstant.DASHBOARD_GET_FORM_INFO_SUCCESS, data}
 }
+
+function AddRowsTree(data) {
+    return {type: DashBoardConstant.DASHBOARD_SET_GRID_TREE_ROWS, data}
+}
+
+function AddRowsToTree(data) {
+    return {type: DashBoardConstant.SETGRID_ROWS_TO_TREE, data}
+}
+
+function AddRowsReload() {
+    return {type: DashBoardConstant.SETGRID_TREE_RELOAD}
+}
+
+
+

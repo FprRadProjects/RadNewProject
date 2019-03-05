@@ -16,6 +16,7 @@ axios.interceptors.request.use(
             }
             config.headers.common['Content-Type'] = `application/json`;
             config.headers.common['Accept'] = `application/json`;
+
         }
         return config
     },

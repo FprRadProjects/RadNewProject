@@ -1,0 +1,104 @@
+<?xml version="1.0" standalone="yes"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="اطلاعات_x0020_شرکت">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="نام_x0020_شرکت" type="xs:string" minOccurs="0" />
+              <xs:element name="تلفن_x0020_1" type="xs:string" minOccurs="0" />
+              <xs:element name="تلفن_x0020_2" type="xs:string" minOccurs="0" />
+              <xs:element name="فکس" type="xs:string" minOccurs="0" />
+              <xs:element name="آدرس" type="xs:string" minOccurs="0" />
+              <xs:element name="کد_x0020_پستی" type="xs:string" minOccurs="0" />
+              <xs:element name="کد_x0020_اقتصادی" type="xs:string" minOccurs="0" />
+              <xs:element name="ایمیل_x0020_شرکت" type="xs:string" minOccurs="0" />
+              <xs:element name="شماره_x0020_پیامک" type="xs:string" minOccurs="0" />
+              <xs:element name="آدرس_x0020_وب_x0020_راد" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="اطلاعات_x0020_فرم">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="شاخص_x0020_کار_x0020_مرجع" type="xs:string" minOccurs="0" />
+              <xs:element name="سريال_x0020_مرجع" type="xs:string" minOccurs="0" />
+              <xs:element name="کار_x0020_مرجع" type="xs:string" minOccurs="0" />
+              <xs:element name="کاربر_x0020_مرجع" type="xs:string" minOccurs="0" />
+              <xs:element name="کد_x0020_مرجع" type="xs:string" minOccurs="0" />
+              <xs:element name="کد_x0020_فرآيند" type="xs:string" minOccurs="0" />
+              <xs:element name="نام_x0020_مدرک" type="xs:string" minOccurs="0" />
+              <xs:element name="نتيجه_x002F_نتايج_x0020_فرآيند" type="xs:string" minOccurs="0" />
+              <xs:element name="سريال" type="xs:string" minOccurs="0" />
+              <xs:element name="گروه_x0020_کار" type="xs:string" minOccurs="0" />
+              <xs:element name="نوع_x0020_کار" type="xs:string" minOccurs="0" />
+              <xs:element name="تاريخ_x0020_کار" type="xs:string" minOccurs="0" />
+              <xs:element name="نام_x0020_کاربر" type="xs:string" minOccurs="0" />
+              <xs:element name="مدير" type="xs:string" minOccurs="0" />
+              <xs:element name="موضوع" type="xs:string" minOccurs="0" />
+              <xs:element name="کد" type="xs:string" minOccurs="0" />
+              <xs:element name="شماره" type="xs:string" minOccurs="0" />
+              <xs:element name="شرح_x0020_کار" type="xs:string" minOccurs="0" />
+              <xs:element name="نتيجه_x0020_کار" type="xs:string" minOccurs="0" />
+              <xs:element name="مخاطب" type="xs:string" minOccurs="0" />
+              <xs:element name="زمان_x0020_کار" type="xs:string" minOccurs="0" />
+              <xs:element name="پايان_x0020_فرآيند" type="xs:string" minOccurs="0" />
+              <xs:element name="رسانه" type="xs:string" minOccurs="0" />
+              <xs:element name="نوع_x0020_پروژه" type="xs:string" minOccurs="0" />
+              <xs:element name="سريال_x0020_پروژه" type="xs:string" minOccurs="0" />
+              <xs:element name="کد_x0020_پروژه" type="xs:string" minOccurs="0" />
+              <xs:element name="پروژه" type="xs:string" minOccurs="0" />
+              <xs:element name="گروه_x0020_پروژه" type="xs:string" minOccurs="0" />
+              <xs:element name="سال" type="xs:string" minOccurs="0" />
+              <xs:element name="ماه" type="xs:string" minOccurs="0" />
+              <xs:element name="وضعيت_x0020_سند" type="xs:string" minOccurs="0" />
+              <xs:element name="کد_x0020_طرف_x0020_حساب" type="xs:string" minOccurs="0" />
+              <xs:element name="ايجاد_x0020_کننده" type="xs:string" minOccurs="0" />
+              <xs:element name="تاريخ_x0020_ايجاد" type="xs:string" minOccurs="0" />
+              <xs:element name="ساعت_x0020_ايجاد" type="xs:string" minOccurs="0" />
+              <xs:element name="انجام_x0020_شدن" type="xs:string" minOccurs="0" />
+              <xs:element name="تاريخ_x0020_انجام" type="xs:string" minOccurs="0" />
+              <xs:element name="ساعت_x0020_انجام" type="xs:string" minOccurs="0" />
+              <xs:element name="تاريخ_x0020_نمايش" type="xs:string" minOccurs="0" />
+              <xs:element name="ساعت_x0020_نمايش" type="xs:string" minOccurs="0" />
+              <xs:element name="تاريخ_x0020_شروع" type="xs:string" minOccurs="0" />
+              <xs:element name="ساعت_x0020_شروع" type="xs:string" minOccurs="0" />
+              <xs:element name="اهميت_x0020_کار" type="xs:string" minOccurs="0" />
+              <xs:element name="اولويت" type="xs:string" minOccurs="0" />
+              <xs:element name="نوع_x0020_شرکت" type="xs:string" minOccurs="0" />
+              <xs:element name="شاخص_x0020_طرف_x0020_حساب" type="xs:string" minOccurs="0" />
+              <xs:element name="نام_x0020_طرف_x0020_حساب" type="xs:string" minOccurs="0" />
+              <xs:element name="شرکت" type="xs:string" minOccurs="0" />
+              <xs:element name="فرآيند" type="xs:string" minOccurs="0" />
+              <xs:element name="گروه_x0020_طرف_x0020_حساب" type="xs:string" minOccurs="0" />
+              <xs:element name="منطقه" type="xs:string" minOccurs="0" />
+              <xs:element name="تلفن1" type="xs:string" minOccurs="0" />
+              <xs:element name="تلفن2" type="xs:string" minOccurs="0" />
+              <xs:element name="فکس" type="xs:string" minOccurs="0" />
+              <xs:element name="موبايل" type="xs:string" minOccurs="0" />
+              <xs:element name="آدرس1" type="xs:string" minOccurs="0" />
+              <xs:element name="آدرس2" type="xs:string" minOccurs="0" />
+              <xs:element name="آدرس3" type="xs:string" minOccurs="0" />
+              <xs:element name="مهم" type="xs:string" minOccurs="0" />
+              <xs:element name="مبلغ_x0020_کل_x0020_فرم_x0020_تکميلي" type="xs:string" minOccurs="0" />
+              <xs:element name="مدت_x0020_زمان_x0020_انجام_x0020_کار_x0020_تاييد_x0020_شده" type="xs:string" minOccurs="0" />
+              <xs:element name="مدت_x0020_زمان_x0020_انجام_x0020_کار" type="xs:string" minOccurs="0" />
+              <xs:element name="هزينه_x0020_کار" type="xs:string" minOccurs="0" />
+              <xs:element name="مدت_x0020_زمان_x0020_پيشنهادي" type="xs:string" minOccurs="0" />
+              <xs:element name="ايجاد_x0020_شده_x0020_از_x0020_نتيجه_x0020_فرآيند" type="xs:string" minOccurs="0" />
+              <xs:element name="سطح_x0020_تحصيلات" type="xs:string" minOccurs="0" />
+              <xs:element name="کد_x0020_ملي" type="xs:string" minOccurs="0" />
+              <xs:element name="رشته_x0020_تحصيلي" type="xs:string" minOccurs="0" />
+              <xs:element name="شناسه_x0020_ثبت" type="xs:string" minOccurs="0" />
+              <xs:element name="شناسه_x0020_ملي" type="xs:string" minOccurs="0" />
+              <xs:element name="مسئول" type="xs:string" minOccurs="0" />
+              <xs:element name="شاخص_x0020_فرآيند" type="xs:string" minOccurs="0" />
+              <xs:element name="شاخص_x0020_کار" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
