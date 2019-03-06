@@ -2,6 +2,7 @@ import {BasicInfoConstant} from "../../_constants";
 import {alertActions, loadingActions, userActions} from "../index";
 import {BasicInfo_service} from "../../_services"
 import {history} from "../../_helpers";
+import { toast } from 'react-toastify';
 
 export const BasicInfo_action = {
     GetCompanyInfo,
@@ -24,7 +25,7 @@ function SetLog(Form) {
             .then(
                 data => {
                     if (!data.status && data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                     else if (!data.status && data.code === 0)
                     {
@@ -33,7 +34,7 @@ function SetLog(Form) {
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }
@@ -49,7 +50,7 @@ function UserAccessForm(param) {
                         dispatch(UserAccessForm_Reducer(data.data));
                         dispatch(loadingActions.HideLoading());
                     } else if (data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
                     } else
                     {
@@ -58,7 +59,7 @@ function UserAccessForm(param) {
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                     dispatch(loadingActions.HideLoading());
                 }
             );
@@ -78,12 +79,12 @@ function GetCompanyInfo() {
 
                         }
                         else {
-                            dispatch(alertActions.error(data.error));
+                            toast.error(data.error);
                             dispatch(loadingActions.HideLoading());
                         }
                     },
                     error => {
-                        dispatch(alertActions.error(error));
+                        toast.error(error);
                         dispatch(loadingActions.HideLoading());
                     }
                 );

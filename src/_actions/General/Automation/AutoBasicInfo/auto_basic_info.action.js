@@ -1,6 +1,7 @@
 import {AutoBasicInfo_service, ProjectsInfo_service} from "../../../../_services";
 import {alertActions} from "../../../index";
 import {AutoBasicInfoConstant as constant} from "../../../../_constants";
+import { toast } from 'react-toastify';
 
 export const AutoBasicInfo_action = {
     GetDefaultText
@@ -19,11 +20,11 @@ function GetDefaultText() {
                         dispatch(DefaultTextAddRows(data.data.rows));
                     }
                     else {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }

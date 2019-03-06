@@ -4,6 +4,7 @@ import {alertActions} from "../Alert";
 import {loadingActions} from "../Loading";
 import {history} from "../../_helpers";
 import {userActions} from '../../_actions';
+import { toast } from 'react-toastify';
 
 export const mainpageActions = {
     GetCounts,
@@ -21,7 +22,7 @@ function GetCounts(param) {
                         dispatch(successCount(data.data));
                         dispatch(loadingActions.HideLoading());
                     } else if (data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
                     } else
                       {
@@ -30,7 +31,7 @@ function GetCounts(param) {
                       }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                     dispatch(loadingActions.HideLoading());
                 }
             );
@@ -48,7 +49,7 @@ function GetEvents(param) {
                         dispatch(successEvent(data.data));
                         dispatch(loadingActions.HideLoading());
                     } else if (data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
                     } else
                     {
@@ -57,7 +58,7 @@ function GetEvents(param) {
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                     dispatch(loadingActions.HideLoading());
                 }
             );

@@ -1,5 +1,6 @@
 import {ProjectsInfo_service} from "../../../_services";
 import {alertActions} from "../../index";
+import { toast } from 'react-toastify';
 import {BasicInfoConstant, CommonContants, ProjectInfoConstant as constant} from "../../../_constants";
 
 export const ProjectsInfo_action = {
@@ -19,11 +20,11 @@ function GetSelectProject(params) {
                         dispatch(AddRows(data.data.rows));
                     }
                     else {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }

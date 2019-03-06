@@ -4,6 +4,7 @@ import {alertActions} from "../Alert";
 import {loadingActions} from "../Loading";
 import {history} from "../../_helpers";
 import {userActions} from '../../_actions';
+import { toast } from 'react-toastify';
 
 export const design_Actions = {
     GetTemplateForm,
@@ -25,7 +26,7 @@ function GetTemplateForm(param) {
                         dispatch(successGetTemplate(data.data));
                         dispatch(loadingActions.HideLoading());
                     } else if (data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
                     } else
                     {
@@ -50,7 +51,7 @@ function Set_EditText_TemplateForm(param) {
                     if (data.status) {
                         dispatch(design_Actions.GetTemplateForm(param.FormId))
                     } else if (data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
                     } else
                     {
@@ -73,7 +74,7 @@ function Set_Hide_TemplateForm(param) {
                     if (data.status) {
                         dispatch(design_Actions.GetTemplateForm(param.FormId))
                     } else if (data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     } else
                     {
                         userActions.logout();
@@ -95,7 +96,7 @@ function Set_ShortKey_TemplateForm(param) {
                     if (data.status) {
                         dispatch(design_Actions.GetTemplateForm(param.FormId))
                     } else if (data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
                     } else
                     {
@@ -120,7 +121,7 @@ function Delete_ShortKeyElements_Template(FormId,RowId) {
                     if (data.status) {
                         dispatch(design_Actions.GetTemplateForm(FormId))
                     } else if (data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
                     } else
                     {

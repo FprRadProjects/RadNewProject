@@ -2,6 +2,7 @@ import { userConstants } from '../../_constants';
 import { userService } from '../../_services';
 import { alertActions } from '..';
 import { history } from '../../_helpers';
+import { toast } from 'react-toastify';
 
 export const userActions = {
     login,
@@ -25,7 +26,7 @@ function login(username, password) {
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     };
@@ -48,7 +49,7 @@ function CheckToken() {
                     }
                     else {
                         /*dispatch(failure(error));
-                        dispatch(alertActions.error(error));*/
+                        toast.error(error);*/
                     }
                 },
                 error => {
@@ -76,7 +77,7 @@ function GetUserInfo() {
                     }
                     else {
                         /*dispatch(failure(error));
-                                              dispatch(alertActions.error(error));*/
+                                              toast.error(error);*/
                     }
                 },
                 error => {
@@ -107,7 +108,7 @@ function UserIsAdmin() {
                 },
                 error => {
                     //dispatch(failure(error));
-                    //dispatch(alertActions.error(error));
+                    //toast.error(error);
                 }
             );
     };

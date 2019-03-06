@@ -3,6 +3,7 @@ import { alertActions } from "../../../Alert";
 import { loadingActions } from "../../../Loading";
 import { AutoBasicInfoConstant,AutoWorkBasicConstant } from "../../../../_constants";
 import { common_Actions } from "../../../../_actions";
+import { toast } from 'react-toastify';
 
 export const WorkBasic_action = {
     GetWorkInfo,
@@ -22,11 +23,11 @@ function GetWorkInfo(row) {
                         dispatch(UserGetWorkInfo_Reducer(data.data));
                     }
                     else {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }
@@ -40,11 +41,11 @@ function FetchWorkInfo(peygir_id) {
                         dispatch(UserGetWorkInfo_Reducer(data.data));
                     }
                     else {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }
@@ -59,11 +60,11 @@ function FlowResultListOnWork(params) {
                         dispatch(AddRows(data.data.rows));
                     }
                     else {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }

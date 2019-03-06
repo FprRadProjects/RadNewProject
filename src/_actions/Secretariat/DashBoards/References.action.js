@@ -4,6 +4,7 @@ import {alertActions, loadingActions, ProjectsInfo_action} from "../../../_actio
 import {history} from "../../../_helpers";
 import {userActions} from '../../../_actions';
 
+import { toast } from 'react-toastify';
 
 
 export const Act_Reference= {
@@ -33,7 +34,7 @@ function FetchData(params) {
                         dispatch(loadingActions.HideGridLoading());
                     }
                     else if (data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                         // dispatch(loadingActions.HideLoading());
                         dispatch(loadingActions.HideGridLoading());
                     }
@@ -44,7 +45,7 @@ function FetchData(params) {
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                     // dispatch(loadingActions.HideLoading());
                     dispatch(loadingActions.HideGridLoading());
                 }
@@ -69,7 +70,7 @@ function FetchDataTree(params,reload,Tree) {
                     dispatch(AddRowsToTree(data))
                 }
                 else{
-                    dispatch(alertActions.error(data.error));
+                    toast.error(data.error);
                     dispatch(loadingActions.HideLoading());
                 }
             })

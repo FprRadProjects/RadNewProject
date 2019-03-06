@@ -1,6 +1,7 @@
 import {WorkAccess_service} from "../../../../_services";
 import {CommonConstant as Constant} from "../../../../_constants/";
 import {alertActions} from "../../../index";
+import { toast } from 'react-toastify';
 
 export const WorkAccess_action = {
     CheckAccess,
@@ -20,11 +21,11 @@ function CheckAccess(peygir_id) {
                     if (data.status) {
                         dispatch(SUCCESS(data.status));
                     } else {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }
@@ -58,11 +59,11 @@ function CanEditOnWork(peygir_id) {
                     if (data.status) {
                         dispatch(SUCCESS(data.status));
                     } else {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }
@@ -77,11 +78,11 @@ function CanAddWork(id_tel) {
                     if (data.status) {
                         dispatch(SUCCESS(data.status));
                     } else {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }
@@ -97,11 +98,11 @@ function CanSubOnWork(peygir_id, id_tel) {
                     if (data.status) {
                         dispatch(SUCCESS(data.status));
                     } else {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error);
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }

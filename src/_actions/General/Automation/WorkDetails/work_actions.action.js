@@ -27,8 +27,7 @@ function RebuildWork(peygir_id) {
                         dispatch(loadingActions.HideLoading());
                     }
                     else if(data.code!==0){
-                    toast.error(data.error)
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error)
                         dispatch(loadingActions.HideLoading());
                     }
                     else
@@ -38,7 +37,7 @@ function RebuildWork(peygir_id) {
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error)
                 }
             );
     }
@@ -50,7 +49,7 @@ function SeenWork(peygir_id) {
             .then(
                 data => {
                     if (!data.status && data.code !== 0) {
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error)
                     } else if (!data.status && data.code === 0)
                     {
                         userActions.logout();
@@ -58,7 +57,7 @@ function SeenWork(peygir_id) {
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }
@@ -79,7 +78,7 @@ function SaveWorkInfo(params,peygir_id) {
                         toast.success("این یک پیغام موفقیت است !");
                     }
                     else if(data.code!==0){
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error)
                         dispatch(loadingActions.HideLoading());
                     }
                     else
@@ -90,7 +89,7 @@ function SaveWorkInfo(params,peygir_id) {
                 },
                 error => {
                     dispatch(loadingActions.HideLoading());
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }
@@ -111,7 +110,7 @@ function DeleteWork(peygir_id) {
                     }
                     else if(data.code!==0){
                         alert(data.error)
-                        dispatch(alertActions.error(data.error));
+                        toast.error(data.error)
                         dispatch(loadingActions.HideLoading());
                     }
                     else
@@ -121,7 +120,7 @@ function DeleteWork(peygir_id) {
                     }
                 },
                 error => {
-                    dispatch(alertActions.error(error));
+                    toast.error(error);
                 }
             );
     }
