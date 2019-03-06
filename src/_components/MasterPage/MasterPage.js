@@ -17,11 +17,10 @@ import '../../content/js/script.js';
 import { MyAwesomeMenu } from "../Config/MyAwesomeMenu";
 import { mainpageActions } from "../../_actions/MainPage";
 import { design_Actions } from "../../_actions/Design";
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from 'react-loader-advanced';
-
+import { workManagement } from "../Secretariat/DashBoards/workManagement";
 
 class MasterPage extends React.Component {
     constructor(props) {
@@ -44,9 +43,8 @@ class MasterPage extends React.Component {
         return (
             <Loader show={loading} message={'در حال بارگذاری'} >
                 <BrowserRouter>
-                    <div>
 
-                        {/* {loading &&
+                    {/* {loading &&
                             <div className="loader-wrapper">
                                 <div className="loader">
                                     <div className="line"></div>
@@ -58,26 +56,25 @@ class MasterPage extends React.Component {
                             </div>
                         } */}
 
-                        <div className="page-wrapper">
-                            <Header auth={true} users={users} />
-                            <div className="page-body-wrapper sidebar-close">
-                                <Sidebar auth={true} users={users} />
-                                <div className="page-body">
-                                    <div className="container-fluid">
-                                        
-                                            <Switch>
-                                                <Route path="/" exact={true} component={DashBoard} />
-                                                <Route path="/works" component={Works} />
-                                                <Route path="/references" component={References} />
-                                                <Route component={NoMatch} />
-                                            </Switch>
-                                       
-                                    </div>
+                    <div className="page-wrapper">
+                        <Header auth={true} users={users} />
+                        <div className="page-body-wrapper sidebar-close">
+                            <Sidebar auth={true} users={users} />
+                            <div className="page-body">
+                                <div className="container-fluid">
+                                    <Switch>
+                                        <Route path="/" exact={true} component={DashBoard} />
+                                        <Route path="/works" component={Works} />
+                                        <Route path="/references" component={References} />
+                                        <Route path="/workManagement" component={workManagement} />
+                                        <Route component={NoMatch} />
+                                    </Switch>
                                 </div>
                             </div>
                         </div>
 
                     </div>
+
                 </BrowserRouter>
                 <MyAwesomeMenu Set_Hide_TemplateForm={Set_Hide_TemplateForm}
                     Set_EditText_TemplateForm={Set_EditText_TemplateForm}
@@ -91,7 +88,7 @@ class MasterPage extends React.Component {
                     position="bottom-left"
                     autoClose={5000}
                 />
-             </Loader>
+            </Loader>
         );
     }
 }
@@ -133,8 +130,8 @@ const mapDispatchToProps = dispatch => ({
     Set_ShortKey_TemplateForm: (Params) => {
         dispatch(design_Actions.Set_ShortKey_TemplateForm(Params))
     },
-    Delete_ShortKeyElements_Template: (FormId, RowId) => {
-        dispatch(design_Actions.Delete_ShortKeyElements_Template(FormId, RowId))
+    Delete_ShortKeyElements_Template: (FormId,RowId) => {
+        dispatch(design_Actions.Delete_ShortKeyElements_Template(FormId,RowId))
     },
 
     GetUserInfo: () => {
@@ -145,5 +142,5 @@ const mapDispatchToProps = dispatch => ({
     },
 
 });
-const connectedHomePage = connect(mapStateToProps, mapDispatchToProps)(MasterPage);
+const connectedHomePage = connect(mapStateToProps,mapDispatchToProps)(MasterPage);
 export { connectedHomePage as HomePage };

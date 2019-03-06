@@ -28,6 +28,7 @@ import {
     TableColumnResizing,
     TableFilterRow
 } from '@devexpress/dx-react-grid-bootstrap4';
+import 'open-iconic/font/css/open-iconic-bootstrap.min.css'
 
 
 import {Loading} from '../../theme-sources/bootstrap4/components/loading';
@@ -140,7 +141,7 @@ class GridComponent extends React.PureComponent {
     }
 
     componentDidUpdate() {
-      //  this.loadData();
+        //  this.loadData();
     }
 
     changeSorting(sorting) {
@@ -304,9 +305,9 @@ class GridComponent extends React.PureComponent {
                 />
                     <TableHeaderRow showSortingControls/>
 
-                   <PagingPanel
-                    pageSizes={pageSizes}
-                />
+                    <PagingPanel
+                        pageSizes={pageSizes}
+                    />
                     <TableGroupRow/>
                     <TableColumnVisibility
                         hiddenColumnNames={hiddenColumnNames}

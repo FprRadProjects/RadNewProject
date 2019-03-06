@@ -261,6 +261,9 @@ class ApiGridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
+
+
+
         return (
             <div>
                 <Grid
@@ -356,4 +359,4 @@ const mapDispatchToProps = dispatch => ({
      },*/
 });
 const connectedApiGridComponent = connect(mapStateToProps, mapDispatchToProps)(ApiGridComponent);
-export { connectedApiGridComponent as ApiGridComponent };
+export {connectedApiGridComponent as ApiGridComponent};
