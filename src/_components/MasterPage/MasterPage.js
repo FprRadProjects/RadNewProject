@@ -40,8 +40,17 @@ class MasterPage extends React.Component {
             users, alert, loading, GetTemplateForm, FormInfo,
             Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm,
             Delete_ShortKeyElements_Template } = this.props;
+        const loaddddd = <div className="loader-wrapper">
+            <div className="loader">
+                <div className="line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+                <div className="line"></div>
+                <h4>لطفا صبر کنید</h4>
+            </div>
+        </div>;
         return (
-            <Loader show={loading === undefined? false:loading} message={'در حال بارگذاری'} >
+            <Loader show={loading === undefined ? false : loading} message={loaddddd} >
                 <BrowserRouter>
 
                     {/* {loading &&
@@ -130,8 +139,8 @@ const mapDispatchToProps = dispatch => ({
     Set_ShortKey_TemplateForm: (Params) => {
         dispatch(design_Actions.Set_ShortKey_TemplateForm(Params))
     },
-    Delete_ShortKeyElements_Template: (FormId,RowId) => {
-        dispatch(design_Actions.Delete_ShortKeyElements_Template(FormId,RowId))
+    Delete_ShortKeyElements_Template: (FormId, RowId) => {
+        dispatch(design_Actions.Delete_ShortKeyElements_Template(FormId, RowId))
     },
 
     GetUserInfo: () => {
@@ -142,5 +151,5 @@ const mapDispatchToProps = dispatch => ({
     },
 
 });
-const connectedHomePage = connect(mapStateToProps,mapDispatchToProps)(MasterPage);
+const connectedHomePage = connect(mapStateToProps, mapDispatchToProps)(MasterPage);
 export { connectedHomePage as HomePage };

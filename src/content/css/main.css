@@ -2723,7 +2723,7 @@ table tbody .border-bottom-warning td {
     -ms-flex-pack: center;
     justify-content: center;
     position: fixed;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 10000000;
     top: 0;
 }
@@ -2741,8 +2741,8 @@ table tbody .border-bottom-warning td {
         .loader-wrapper .loader h4 {
             margin-top: 30px;
             margin-bottom: 0;
-            color: #717171 !important;
-            font-size: 24px;
+            color: #fff !important;
+            font-size: 16px;
         }
 
             .loader-wrapper .loader h4 span {
@@ -2757,7 +2757,7 @@ table tbody .border-bottom-warning td {
     -webkit-transform-origin: center center;
     transform-origin: center center;
     margin: 0 5px;
-    width: 2px;
+    width: 5px;
     height: 35px;
 }
 
@@ -29288,6 +29288,7 @@ body .page-sidebar[navigation-layout="right-side-menu"] .sidebar-menu > li > a i
 
 .rtl .page-main-header .main-header-right .nav-right .notification {
     right: -8px;
+    padding: 4px 6px;
 }
 
 .rtl .page-wrapper .page-body-wrapper.sidebar-hover .page-sidebar {
@@ -29848,7 +29849,7 @@ body .page-sidebar[navigation-layout="right-side-menu"] .sidebar-menu > li > a i
         text-align: right;
     }
     .rtl .page-main-header .main-header-right .nav-right ul li img {
-        max-width: 30px;
+        max-height: 30px;
     }
 
         .rtl .page-main-header .main-header-right .nav-right ul li.onhover-dropdown {
@@ -29872,7 +29873,7 @@ body .page-sidebar[navigation-layout="right-side-menu"] .sidebar-menu > li > a i
 
         .rtl .page-main-header .main-header-right .nav-right ul li .pull-right {
             margin-right: unset !important;
-            margin-left: 0.5rem !important;
+            margin-left: 0.7rem !important;
         }
 
     .rtl .page-main-header .main-header-right .nav-right .language-dropdown {
@@ -34849,19 +34850,51 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
   } */
   .dx-g-bs4-toolbar .popover{
       left:20px!important;
+      font-family: IRANSans_Fa;
+      
   }
   .dx-g-bs4-toolbar .popover .arrow{
-    left:28px!important;
+    left:25px!important;
   }
   .dx-g-bs4-toolbar .popover .popover-inner{
-      max-height: 200px;
+      max-height: 300px;
       overflow-y:auto; 
   }
-  
+  .dx-g-bs4-toolbar .popover .popover-inner .dx-g-bs4-column-chooser-item{
+    font-size: 12px;
+    font-weight: 400;
+    padding: 5px;
+  }
+  .dx-g-bs4-toolbar .popover .popover-inner .dx-g-bs4-column-chooser-checkbox{
+    margin-right:0;
+    margin-left:5px;
+
+  }
+  .dx-g-bs4-toolbar .btn{
+      padding-right: .75rem;
+      padding-left: .75rem;
+  }
+  .dx-g-bs4-toolbar .btn .oi-eye{
+      font-size: 18px;
+  }
   .toastify{
       font-family: IRANSans_Fa;
   }
 
   .table-active, .table-active>td, .table-active>th{
     background-color: #cde5f7;
+  }
+  .dx-g-bs4-group-panel-item-icon{
+      top:0!important;
+      right: -3px;
+  }
+  .Loader__background{
+      background: none!important;
+    z-index: 10000000!important;
+
+  }
+  
+  .dx-g-bs4-resizing-control-wrapper{
+      left: -9px!important;
+      right:auto!important;
   }
