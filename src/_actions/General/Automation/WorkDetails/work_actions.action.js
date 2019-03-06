@@ -2,6 +2,7 @@ import {BasicInfo_service, WorkActions_service} from "../../../../_services";
 import {alertActions, loadingActions, userActions,common_Actions
 ,WorkBasic_action} from "../../../index";
 import {history} from "../../../../_helpers";
+import { toast } from 'react-toastify';
 
 
 export const WorkActions_action = {
@@ -26,7 +27,7 @@ function RebuildWork(peygir_id) {
                         dispatch(loadingActions.HideLoading());
                     }
                     else if(data.code!==0){
-                        alert(data.error);
+                    toast.error(data.error)
                         dispatch(alertActions.error(data.error));
                         dispatch(loadingActions.HideLoading());
                     }
@@ -75,6 +76,7 @@ function SaveWorkInfo(params,peygir_id) {
                         dispatch(common_Actions.RefreshForm({"Time":timestamp,status:data.status}));
                         dispatch(WorkBasic_action.FetchWorkInfo(peygir_id));
                         dispatch(loadingActions.HideLoading());
+                        toast.success("این یک پیغام موفقیت است !");
                     }
                     else if(data.code!==0){
                         dispatch(alertActions.error(data.error));

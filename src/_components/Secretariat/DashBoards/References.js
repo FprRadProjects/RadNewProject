@@ -1,18 +1,18 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux"
+import React, { Component } from 'react';
+import { connect } from "react-redux"
 import {
     Act_Reference,
     design_Actions,
     WorkBasic_action,
     BasicInfo_action, WorkActions_action
 } from "../../../_actions";
-import {ApiGridComponent} from "../../Config/ApiGridComponent";
-import {RadioFilter} from "./RadioFilter";
-import {ReferenceViewer} from "../RecordsPage/ReferenceViewer";
+import { ApiGridComponent } from "../../Config/ApiGridComponent";
+import { RadioFilter } from "./RadioFilter";
+import { ReferenceViewer } from "../RecordsPage/ReferenceViewer";
 import PropTypes from "prop-types"
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
-import {setLanguage} from "redux-i18n";
-import {FormInfo} from "../../../locales";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { setLanguage } from "redux-i18n";
+import { FormInfo } from "../../../locales";
 
 var currencyColumns = [];
 var hiddenColumnNames = ['done', 'tarikhaction', 'id_tel', 'olaviyat', 'cuser',
@@ -51,8 +51,8 @@ class References extends Component {
     }
 
     componentDidMount() {
-        const {GetTemplateForm, GetFormInfo} = this.props;
-       // GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
+        const { GetTemplateForm, GetFormInfo } = this.props;
+        // GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
         GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id);
     }
 
@@ -63,7 +63,7 @@ class References extends Component {
     }
 
     OpenReferenceViewer() {
-        const {WorkInfo, SetLog,lang,SeenWork} = this.props;
+        const { WorkInfo, SetLog, lang, SeenWork } = this.props;
         if (WorkInfo !== undefined) {
             let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
             SetLog(formName);
@@ -84,54 +84,54 @@ class References extends Component {
     render() {
 
         const columns = [
-            {name: 'peygir_id', title: this.context.t("WorkID")},
-            {name: 'worker', title: this.context.t("worker")},
-            {name: 'modir', title: this.context.t("manager")},
-            {name: 'name', title: this.context.t("PartyAccountName")},
-            {name: 'coname', title: this.context.t("CompanyName")},
-            {name: 'mnos', title: this.context.t("Serial_Lead")},
-            {name: 'mwt', title: this.context.t("Work_Lead")},
-            {name: 'wtype', title: this.context.t("WorkType")},
-            {name: 'nos_id', title: this.context.t("Serial")},
-            {name: 'custom_serial', title: this.context.t("CustomSerial")},
-            {name: 'tarikhaction', title: this.context.t("ActionDate")},
-            {name: 'mozo', title: this.context.t("Subject")},
-            {name: 'zam', title: this.context.t("Attachments")},
-            {name: 'vaziyat', title: this.context.t("Status")},
-            {name: 'code', title: this.context.t("Code")},
-            {name: 'shomare', title: this.context.t("FileNumber")},
-            {name: 'ashkhasname', title: this.context.t("Audience")},
-            {name: 'ptype', title: this.context.t("Project")},
-            {name: 'has_peyvast', title: this.context.t("HasAttachment")},
-            {name: 'flow_code', title: this.context.t("FlowCode")},
-            {name: 'madrak_name', title: this.context.t("CertificateName")},
-            {name: 'f_s_status', title: this.context.t("Flow_Delivery_Status")},
-            {name: 'f_r_status', title: this.context.t("Flow_Received_Status")},
+            { name: 'peygir_id', title: this.context.t("WorkID") },
+            { name: 'worker', title: this.context.t("worker") },
+            { name: 'modir', title: this.context.t("manager") },
+            { name: 'name', title: this.context.t("PartyAccountName") },
+            { name: 'coname', title: this.context.t("CompanyName") },
+            { name: 'mnos', title: this.context.t("Serial_Lead") },
+            { name: 'mwt', title: this.context.t("Work_Lead") },
+            { name: 'wtype', title: this.context.t("WorkType") },
+            { name: 'nos_id', title: this.context.t("Serial") },
+            { name: 'custom_serial', title: this.context.t("CustomSerial") },
+            { name: 'tarikhaction', title: this.context.t("ActionDate") },
+            { name: 'mozo', title: this.context.t("Subject") },
+            { name: 'zam', title: this.context.t("Attachments") },
+            { name: 'vaziyat', title: this.context.t("Status") },
+            { name: 'code', title: this.context.t("Code") },
+            { name: 'shomare', title: this.context.t("FileNumber") },
+            { name: 'ashkhasname', title: this.context.t("Audience") },
+            { name: 'ptype', title: this.context.t("Project") },
+            { name: 'has_peyvast', title: this.context.t("HasAttachment") },
+            { name: 'flow_code', title: this.context.t("FlowCode") },
+            { name: 'madrak_name', title: this.context.t("CertificateName") },
+            { name: 'f_s_status', title: this.context.t("Flow_Delivery_Status") },
+            { name: 'f_r_status', title: this.context.t("Flow_Received_Status") },
             /*HIDDEN*/
-            {name: 'done', title: this.context.t("done")},
-            {name: 'id_tel', title: this.context.t("PartyAccountID")},
-            {name: 'olaviyat', title: this.context.t("Priority")},
-            {name: 'cuser', title: this.context.t("creator")},
-            {name: 'c_date', title: this.context.t("CreatedDate")},
-            {name: 'tarikh', title: this.context.t("DoneDate")},
-            {name: 'ftarikh', title: this.context.t("ManagerDoneDate")},
-            {name: 'mtarikh', title: this.context.t("LeadDate")},
-            {name: 'see_date', title: this.context.t("SeenDate")},
-            {name: 'fok', title: this.context.t("ManagerDone")},
-            {name: 'c_time', title: this.context.t("CreatedTime")},
-            {name: 'wt_id', title: this.context.t("WorkTypeID")},
-            {name: 'suggest_time', title: this.context.t("SuggestTime")},
-            {name: 'deadtime', title: this.context.t("DeadTime")},
-            {name: 'see_time', title: this.context.t("SeenTime")},
-            {name: 'saat', title: this.context.t("DoneTime")},
-            {name: 'fsaat', title: this.context.t("ManagerDoneTime")},
-            {name: 'proje_nos_id', title: this.context.t("ProjectSerial")},
-            {name: 'p_proje_nose_id', title: this.context.t("LeadProjectSerial")},
-            {name: 'showtree_id', title: this.context.t("LeadID")},
-            {name: 'flow', title: this.context.t("Flow")},
-            {name: 'muser', title: this.context.t("LeadWorker")},
-            {name: 'proje_code', title: this.context.t("ProjectCode")},
-            {name: 'natije', title: this.context.t("Result")},
+            { name: 'done', title: this.context.t("done") },
+            { name: 'id_tel', title: this.context.t("PartyAccountID") },
+            { name: 'olaviyat', title: this.context.t("Priority") },
+            { name: 'cuser', title: this.context.t("creator") },
+            { name: 'c_date', title: this.context.t("CreatedDate") },
+            { name: 'tarikh', title: this.context.t("DoneDate") },
+            { name: 'ftarikh', title: this.context.t("ManagerDoneDate") },
+            { name: 'mtarikh', title: this.context.t("LeadDate") },
+            { name: 'see_date', title: this.context.t("SeenDate") },
+            { name: 'fok', title: this.context.t("ManagerDone") },
+            { name: 'c_time', title: this.context.t("CreatedTime") },
+            { name: 'wt_id', title: this.context.t("WorkTypeID") },
+            { name: 'suggest_time', title: this.context.t("SuggestTime") },
+            { name: 'deadtime', title: this.context.t("DeadTime") },
+            { name: 'see_time', title: this.context.t("SeenTime") },
+            { name: 'saat', title: this.context.t("DoneTime") },
+            { name: 'fsaat', title: this.context.t("ManagerDoneTime") },
+            { name: 'proje_nos_id', title: this.context.t("ProjectSerial") },
+            { name: 'p_proje_nose_id', title: this.context.t("LeadProjectSerial") },
+            { name: 'showtree_id', title: this.context.t("LeadID") },
+            { name: 'flow', title: this.context.t("Flow") },
+            { name: 'muser', title: this.context.t("LeadWorker") },
+            { name: 'proje_code', title: this.context.t("ProjectCode") },
+            { name: 'natije', title: this.context.t("Result") },
         ];
         const {
             FetchData, WorkInfo, GetWorkInfo, Dashboards_totalCount, Dashboards_rows
@@ -139,6 +139,18 @@ class References extends Component {
         } = this.props;
         let formName = lang == "fa" ? FormInfo.fm_dabir_kartabl_erjaat.form_name : FormInfo.fm_dabir_kartabl_erjaat.en_form_name;
         Params.Form = formName;
+
+
+        const modalBackDrop = `
+        .modal-backdrop {
+            opacity:.98!important;
+            background: rgb(210,210,210);
+            background: -moz-linear-gradient(-45deg, rgba(210,210,210,1) 0%, rgba(229,235,238,1) 50%, rgba(216,216,216,1) 50.1%, rgba(216,216,216,1) 100%);
+            background: -webkit-linear-gradient(-45deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
+            background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
+        }`;
+
         return (
             <div className="row">
                 <div className="col-sm-12">
@@ -146,7 +158,7 @@ class References extends Component {
                         <div className="r-main-box__ribbon sticky-top">
                             <div className="r-main-box__toggle">
                                 <label className="switch">
-                                    <input type="checkbox" id="sidebar-toggle"/>
+                                    <input type="checkbox" id="sidebar-toggle" />
                                     <span className="switch-state"></span>
                                 </label>
                             </div>
@@ -430,28 +442,29 @@ class References extends Component {
                             </nav>
                             <div className="r-main-box__filter">
                                 <Button color="" className="r-main-box__filter--btn"
-                                        onClick={this.toggleFilter.bind(this)}></Button>
+                                    onClick={this.toggleFilter.bind(this)}></Button>
                             </div>
                         </div>
                         {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
-                                                                             toggle={this.toggleReferenceViewer.bind(this)}
-                                                                             WorkInfo={WorkInfo} GetRowInfo={GetWorkInfo}
-                                                                             Params={Params} RefreshForm={FetchData.bind(this)}
-                                                                             ParentForm={FormInfo.fm_dabir_kartabl_erjaat}/>}
+                            toggle={this.toggleReferenceViewer.bind(this)}
+                            WorkInfo={WorkInfo} GetRowInfo={GetWorkInfo}
+                            Params={Params} RefreshForm={FetchData.bind(this)}
+                            ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
                         <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}
-                               className={this.state.modalClass} backdrop={this.state.backdrop}>
+                            className={this.state.modalClass} backdrop={this.state.backdrop}>
                             <ModalHeader toggle={this.toggleFilter.bind(this)}></ModalHeader>
                             <ModalBody>
-                                <RadioFilter Params={Params} fetchData={FetchData.bind(this)}/>
+                                <RadioFilter Params={Params} fetchData={FetchData.bind(this)} />
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="primary" onClick={this.toggleFilter.bind(this)}></Button>
+                                <style>{modalBackDrop}</style>
                             </ModalFooter>
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
-                                          rows={Dashboards_rows} totalCount={Dashboards_totalCount}
-                                          UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
-                                          currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                            rows={Dashboards_rows} totalCount={Dashboards_totalCount}
+                            UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
+                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>
                 </div>
@@ -489,12 +502,12 @@ References.contextTypes = {
 }
 
 function mapStateToProps(state) {
-    const {Dashboards_rows} = state.dashboards;
-    const {Dashboards_totalCount} = state.dashboards
-    const {alert} = state;
-    const {loading} = state.loading;
-    const {lang} = state.i18nState
-    const {WorkInfo} = state.Auto_BasicInfo;
+    const { Dashboards_rows } = state.dashboards;
+    const { Dashboards_totalCount } = state.dashboards
+    const { alert } = state;
+    const { loading } = state.loading;
+    const { lang } = state.i18nState
+    const { WorkInfo } = state.Auto_BasicInfo;
     return {
         alert,
         loading,
@@ -507,7 +520,7 @@ function mapStateToProps(state) {
 
 
 const connectedReferences = connect(mapStateToProps, mapDispatchToProps)(References);
-export {connectedReferences as References};
+export { connectedReferences as References };
 
 
 

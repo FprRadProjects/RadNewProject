@@ -40,7 +40,10 @@ $(document).on('change', '#sidebar-toggle', function (e) {
     else
         $(".tab-content").show();
 });
-
+$(document).on('click', '.dx-g-bs4-table-cell', function (e) {
+    $(this).parent().parent().find(".table-active").removeClass("table-active");
+    $(this).parent().addClass("table-active");
+});
 $(document).on('click', '.sidebar-menu li a', function (e) {
     var $this = $(this);
     var checkElement = $this.next();

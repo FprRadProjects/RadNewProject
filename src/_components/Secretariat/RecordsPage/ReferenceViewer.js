@@ -8,6 +8,7 @@ import { SelectDefaultTextModal } from "../../Basic/";
 import { WorkAccess_action, design_Actions, BasicInfo_action, WorkActions_action } from "../../../_actions";
 import { FormInfo } from "../../../locales";
 import { SelectFlowResultModal } from '../../Automation/SelectFlowResultModal';
+import { toast } from 'react-toastify';
 
 var SaveParams = { form: "", data: [] };
 
@@ -36,12 +37,11 @@ class ReferenceViewer extends Component {
                         ProjectSelectmodal: !this.state.ProjectSelectmodal,
                     });
                 } else {
-                    showError(data.error);
-                    alert(data.error);
+                    toast.error(data.error)
                 }
             },
             error => {
-                showError(error);
+                toast.error(error)
             }
         );
 
@@ -72,12 +72,11 @@ class ReferenceViewer extends Component {
                     type: name,
                 });
             else {
-                showError(data.error);
-                alert(data.error);
+                toast.error(data.error)
             }
         },
             error => {
-                showError(error);
+                toast.error(error)
             }
         );
     }
@@ -112,12 +111,11 @@ class ReferenceViewer extends Component {
                     type: name,
                 });
             else {
-                showError(data.error);
-                alert(data.error);
+                    toast.error(data.error)
             }
         },
             error => {
-                showError(error);
+                    toast.error(error)
             }
         );
     }
