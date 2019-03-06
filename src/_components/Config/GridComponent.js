@@ -28,6 +28,7 @@ import {
     TableColumnResizing,
     TableFilterRow
 } from '@devexpress/dx-react-grid-bootstrap4';
+import 'open-iconic/font/css/open-iconic-bootstrap.min.css'
 
 
 import {Loading} from '../../theme-sources/bootstrap4/components/loading';
