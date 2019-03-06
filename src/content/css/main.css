@@ -34857,12 +34857,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
       max-height: 200px;
       overflow-y:auto; 
   }
-  .dx-g-bs4-toolbar .oi{
-      font-family:FontAwesome;
-      content:"\f104"
-      
-
-  }
+  
   .toastify{
       font-family: IRANSans_Fa;
   }
