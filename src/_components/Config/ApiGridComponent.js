@@ -90,8 +90,12 @@ class ApiGridComponent extends React.PureComponent {
     );
     constructor(props) {
         super(props);
-        const { booleanColumns, UrlParams, currencyColumns, hiddenColumnNames} = this.props;
+        const { booleanColumns, UrlParams, currencyColumns, hiddenColumnNames,columns,columnwidth} = this.props;
         Params = UrlParams;
+        let defaultColumnWidths = [];
+        Object.keys(columns).map((item, index) => {
+        return defaultColumnWidths[index++] = { columnName: columns[item].name, width: columnwidth };
+        })
         this.state = {
             rows: [],
             totalCount: 0,
@@ -104,12 +108,12 @@ class ApiGridComponent extends React.PureComponent {
             currencyColumns: currencyColumns,
             booleanColumns: booleanColumns,
             currentPage: 0,
-            loading: true,
             hiddenColumnNames: hiddenColumnNames,
             columnWidths: [],
             booleanFilterOperations: ['boolean'],
             currencyFilterOperations: ['equals'],
             columnOrder: [],
+            defaultColumnWidths: defaultColumnWidths,
 
         };
         this.changeSorting = this.changeSorting.bind(this);
@@ -145,28 +149,24 @@ class ApiGridComponent extends React.PureComponent {
 
     changeSorting(sorting) {
         this.setState({
-            loading: true,
             sorting,
         });
     }
 
     changeFilters(filters) {
         this.setState({
-            loading: true,
             filters,
         });
     }
 
     changeGroup(grouping) {
         this.setState({
-            loading: true,
             grouping
         });
     }
 
     changeCurrentPage(currentPage) {
         this.setState({
-            loading: true,
             currentPage,
         });
     }
@@ -178,7 +178,6 @@ class ApiGridComponent extends React.PureComponent {
         const currentPage = Math.min(stateCurrentPage, totalPages - 1);
 
         this.setState({
-            loading: true,
             pageSize,
             currentPage,
         });
@@ -215,7 +214,6 @@ class ApiGridComponent extends React.PureComponent {
     loadData() {
         const queryString = this.queryString();
         if (queryString === this.lastQuery) {
-            this.setState({loading: false});
             return;
         }
         const {fetchData} = this.props;
@@ -234,10 +232,9 @@ class ApiGridComponent extends React.PureComponent {
             pageSize,
             pageSizes,
             currentPage,
-            loading,
             tableColumnExtensions,
             hiddenColumnNames,
-            columnWidths,
+            defaultColumnWidths,
             booleanColumns,
             columnOrder,
             booleanFilterOperations,
@@ -305,8 +302,7 @@ class ApiGridComponent extends React.PureComponent {
                         order={columnOrder}
                         onOrderChange={this.changeColumnOrder}
                     /> <TableColumnResizing
-                    columnWidths={columnWidths}
-                    onColumnWidthsChange={this.changeColumnWidths}
+                    defaultColumnWidths={defaultColumnWidths}
                 />
                     <TableHeaderRow showSortingControls/>
 
@@ -328,7 +324,7 @@ class ApiGridComponent extends React.PureComponent {
                     <GroupingPanel showGroupingControls={true} showSortingControls LocalizationMessages
                                    messages={groupingPanelMessages}/>
                 </Grid>
-                {loading && <Loading/>}
+                {this.props.gridloading && <Loading/>}
             </div>
         );
     }
@@ -340,9 +336,11 @@ ApiGridComponent.contextTypes = {
 
 function mapStateToProps(state) {
     const {lang} = state.i18nState
+    const { gridloading } = state.loading;
 
     return {
 
+        gridloading,
         lang,
     }
 }

@@ -64,7 +64,7 @@ class SelectProjectModal extends Component {
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                            rows={SelectProject_rows} totalCount={SelectProject_totalCount}
                                            UrlParams={Params} fetchData={GetSelectProject.bind(this)}
-                                           GetRowInfo={this.SetSelectProjectRowData}
+                                           GetRowInfo={this.SetSelectProjectRowData} columnwidth={158}
                                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
                         </ModalBody>

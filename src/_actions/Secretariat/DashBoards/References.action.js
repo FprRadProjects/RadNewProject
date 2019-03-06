@@ -21,18 +21,21 @@ function GetFormInfo(param) {
 function FetchData(params) {
 
     return dispatch => {
-        dispatch(loadingActions.ShowLoading());
+        // dispatch(loadingActions.ShowLoading());
+        dispatch(loadingActions.ShowGridLoading());
         Service_Dashboard.FetchData(params)
             .then(
                 data => {
                     if (data.status) {
                         dispatch(AddTotalCount(data.data.totalcount));
                         dispatch(AddRows(data.data.rows));
-                        dispatch(loadingActions.HideLoading());
+                        // dispatch(loadingActions.HideLoading());
+                        dispatch(loadingActions.HideGridLoading());
                     }
                     else if (data.code !== 0) {
                         dispatch(alertActions.error(data.error));
-                        dispatch(loadingActions.HideLoading());
+                        // dispatch(loadingActions.HideLoading());
+                        dispatch(loadingActions.HideGridLoading());
                     }
                     else {
 
@@ -42,7 +45,8 @@ function FetchData(params) {
                 },
                 error => {
                     dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
+                    // dispatch(loadingActions.HideLoading());
+                    dispatch(loadingActions.HideGridLoading());
                 }
             );
 

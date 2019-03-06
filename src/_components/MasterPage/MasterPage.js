@@ -41,7 +41,7 @@ class MasterPage extends React.Component {
             Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm,
             Delete_ShortKeyElements_Template } = this.props;
         return (
-            <Loader show={loading} message={'در حال بارگذاری'} >
+            <Loader show={loading === undefined? false:loading} message={'در حال بارگذاری'} >
                 <BrowserRouter>
 
                     {/* {loading &&

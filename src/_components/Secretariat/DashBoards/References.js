@@ -462,7 +462,7 @@ class References extends Component {
                             </ModalFooter>
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
-                            rows={Dashboards_rows} totalCount={Dashboards_totalCount}
+                            rows={Dashboards_rows} totalCount={Dashboards_totalCount}  columnwidth={150}
                             UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
                             currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />

@@ -10,6 +10,7 @@ import {
     GroupingState,
     IntegratedGrouping,
     IntegratedPaging,
+    IntegratedSorting,
     FilteringState,
     DataTypeProvider
 } from '@devexpress/dx-react-grid';
@@ -91,8 +92,12 @@ class GridComponent extends React.PureComponent {
     );
     constructor(props) {
         super(props);
-        const { booleanColumns, UrlParams, currencyColumns, hiddenColumnNames} = this.props;
+        const { booleanColumns, UrlParams, currencyColumns, hiddenColumnNames,columns,columnwidth} = this.props;
         Params = UrlParams;
+        let defaultColumnWidths = [];
+        Object.keys(columns).map((item, index) => {
+        return defaultColumnWidths[index++] = { columnName: columns[item].name, width: columnwidth };
+        })
         this.state = {
             rows: [],
             totalCount: 0,
@@ -105,12 +110,13 @@ class GridComponent extends React.PureComponent {
             currencyColumns: currencyColumns,
             booleanColumns: booleanColumns,
             currentPage: 0,
-            loading: true,
+            loading: false,
             hiddenColumnNames: hiddenColumnNames,
             columnWidths: [],
             booleanFilterOperations: ['boolean'],
             currencyFilterOperations: ['equals'],
             columnOrder: [],
+            defaultColumnWidths: defaultColumnWidths,
 
         };
         this.loadData();
@@ -118,14 +124,13 @@ class GridComponent extends React.PureComponent {
         this.changeCurrentPage = this.changeCurrentPage.bind(this);
         this.changePageSize = this.changePageSize.bind(this);
         this.changeGroup = this.changeGroup.bind(this);
+        this.changeFilters = this.changeFilters.bind(this);
         this.hiddenColumnNamesChange = (hiddenColumnNames) => {
             this.setState({hiddenColumnNames});
         };
         this.changeColumnOrder = this.changeColumnOrder.bind(this);
 
-        this.changeColumnWidths = (columnWidths) => {
-            this.setState({columnWidths});
-        };
+      
     }
     changeColumnOrder(newOrder) {
         this.setState({ columnOrder: newOrder });
@@ -146,15 +151,21 @@ class GridComponent extends React.PureComponent {
 
     changeSorting(sorting) {
         this.setState({
-            loading: true,
+           // loading: true,
             sorting,
         });
     }
-
+ 
     changeFilters(filters) {
         this.setState({
-            loading: true,
+           // loading: true,
             filters,
+        });
+    } 
+    changeColumnWidths(columnWidths) {
+        this.setState({
+           // loading: true,
+           columnWidths,
         });
     }
 
@@ -215,6 +226,7 @@ class GridComponent extends React.PureComponent {
 
     loadData() {
         const queryString = this.queryString();
+        console.log(queryString, this.lastQuery)
         if (queryString === this.lastQuery) {
             this.setState({loading: false});
             return;
@@ -232,13 +244,12 @@ class GridComponent extends React.PureComponent {
         const {
             currencyColumns,
             sorting,
-            pageSize,
             pageSizes,
-            currentPage,
+            filters,
             loading,
             tableColumnExtensions,
             hiddenColumnNames,
-            columnWidths,
+            defaultColumnWidths,
             booleanColumns,
             columnOrder,
             booleanFilterOperations,
@@ -280,18 +291,22 @@ class GridComponent extends React.PureComponent {
                         sorting={sorting}
                         onSortingChange={this.changeSorting}
                     />
-                    <GroupingState defaultGrouping={[]}
+                   <IntegratedSorting />
+                  <GroupingState defaultGrouping={[]}
                                    columnGroupingEnabled={true}
                     />
                     <IntegratedGrouping/>
+              
+                    <FilteringState
+                    filters={filters}
+                    onFiltersChange={this.changeFilters}
+                    />
+                    <IntegratedFiltering /> 
                     <PagingState
                         defaultCurrentPage={0}
                         defaultPageSize={8}
                     />
                     <IntegratedPaging />
-                    <FilteringState
-                    />
-                    <IntegratedFiltering />
                     <Table rowComponent={this.TableRow}
                            columnExtensions={tableColumnExtensions}
                            messages={tableMessages}
@@ -299,10 +314,11 @@ class GridComponent extends React.PureComponent {
                     <TableColumnReordering
                         order={columnOrder}
                         onOrderChange={this.changeColumnOrder}
-                    /> <TableColumnResizing
-                    columnWidths={columnWidths}
-                    onColumnWidthsChange={this.changeColumnWidths}
+                    /> 
+                    <TableColumnResizing
+                    defaultColumnWidths={defaultColumnWidths}
                 />
+                     
                     <TableHeaderRow showSortingControls/>
 
                     <PagingPanel
