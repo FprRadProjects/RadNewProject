@@ -56,8 +56,8 @@ function FlowResultListOnWork(params) {
             .then(
                 data => {
                     if (data.status) {
-                        dispatch(AddTotalCount(data.data.totalcount));
-                        dispatch(AddRows(data.data.rows));
+                        dispatch(flowResultAddTotalCount(data.data.totalcount));
+                        dispatch(flowResultAddRows(data.data.rows));
                     }
                     else {
                         toast.error(data.error);
@@ -73,10 +73,10 @@ function UserGetWorkInfo_Reducer(data) {
     return { type: AutoBasicInfoConstant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS, data }
 }
 
-function AddTotalCount(data) {
-    return { type: AutoWorkBasicConstant.FLOW_RESULT_SET_GRID_TOTAL_COUNT, data }
+function flowResultAddTotalCount(data) {
+    return {type: AutoWorkBasicConstant.SELECT_FLOW_RESULT_GET_GRID_TOTAL_COUNT, data}
 }
 
-function AddRows(data) {
-    return { type: AutoWorkBasicConstant.FLOW_RESULT_SET_GRID_ROWS, data }
+function flowResultAddRows(data) {
+    return {type: AutoWorkBasicConstant.SELECT_FLOW_RESULT_SET_GRID_ROWS, data}
 }

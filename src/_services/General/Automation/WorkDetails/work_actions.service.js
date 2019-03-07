@@ -6,10 +6,35 @@ export const WorkActions_service = {
     RebuildWork,
     SeenWork,
     SaveWorkInfo,
-    DeleteWork
-};
+    DeleteWork,
+    InitConfirmWork,
+    FinalFlowConfirmWork,
 
-//Get "peygir_id" //Returns true-false
+};
+function FinalFlowConfirmWork(params) {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(BaseUrl + "FinalFlowConfirmWork", params)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+function InitConfirmWork(params) {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(BaseUrl + "InitConfirmWork", params)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
 function RebuildWork(peygir_id) {
     if (UserConfig.GetToken() !== null) {
 

@@ -87,6 +87,7 @@ export const translations = {
         //---------------اقدام------------------شروع
         logout: 'خروج',
         Save: 'ذخیره',
+        ConfirmAndClose: 'تایید و بستن',
         Rebuild: 'بازسازی',
         Delete: 'حذف',
         Cancel: 'انصراف',
@@ -116,6 +117,8 @@ export const translations = {
         frm_Dashboard_References: 'کار تابل ارجاعات',
         frm_Select_Project: 'انتخاب پروژه',
         frm_References_Result: 'نتیجه ارجاع',
+        frm_Text_Defaults: 'پیش فرض های متنی',
+        frm_Flow_Results: 'نتایج فرآیند',
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -206,6 +209,7 @@ export const translations = {
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
+        ConfirmAndClose: 'Confirm And Close',
         Rebuild: 'Rebuild',
         Delete: 'Delete',
         Cancel: 'Cancel',
@@ -236,6 +240,8 @@ export const translations = {
         frm_Dashboard_References: 'References Dashboard',
         frm_Select_Project: 'Select Project',
         frm_References_Result: 'References Result',
+        frm_Text_Defaults: 'Text Defaults',
+        frm_Flow_Results: 'Flow Results',
         //End-------------- FORM NAME --------------
 
     },

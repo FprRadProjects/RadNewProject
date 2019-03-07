@@ -1,1 +1,2 @@
-import * from './ReferenceViewer'
+export * from './ReferenceViewer';
+

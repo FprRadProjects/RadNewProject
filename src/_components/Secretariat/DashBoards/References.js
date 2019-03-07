@@ -18,7 +18,7 @@ var currencyColumns = [];
 var hiddenColumnNames = ['done', 'tarikhaction', 'id_tel', 'olaviyat', 'cuser',
     'c_date', 'tarikh', 'fok', 'mtarikh', 'see_date', 'fok', 'c_time', 'wt_id',
     'suggest_time', 'sm_zaman_anjam_kar', 'see_time', 'saat', 'fsaat', 'proje_nos_id',
-    'p_proje_nose_id', 'showtree_id', 'flow', 'muser', 'proje_code', 'natije'];
+    'p_proje_nose_id', 'showtree_id', 'muser', 'proje_code', 'natije'];
 var booleanColumns = ['done', 'has_peyvast', 'done', 'fok'];
 
 var Params = {
@@ -84,6 +84,7 @@ class References extends Component {
     render() {
 
         const columns = [
+            { name: 'flow', title: this.context.t("Flow") },
             { name: 'peygir_id', title: this.context.t("WorkID") },
             { name: 'worker', title: this.context.t("worker") },
             { name: 'modir', title: this.context.t("manager") },
@@ -128,7 +129,6 @@ class References extends Component {
             { name: 'proje_nos_id', title: this.context.t("ProjectSerial") },
             { name: 'p_proje_nose_id', title: this.context.t("LeadProjectSerial") },
             { name: 'showtree_id', title: this.context.t("LeadID") },
-            { name: 'flow', title: this.context.t("Flow") },
             { name: 'muser', title: this.context.t("LeadWorker") },
             { name: 'proje_code', title: this.context.t("ProjectCode") },
             { name: 'natije', title: this.context.t("Result") },
@@ -448,7 +448,7 @@ class References extends Component {
                         {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                             toggle={this.toggleReferenceViewer.bind(this)}
                             WorkInfo={WorkInfo} GetRowInfo={GetWorkInfo}
-                            Params={Params} RefreshForm={FetchData.bind(this)}
+                            Params={Params} RefreshFormAction={FetchData.bind(this)}
                             ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
                         <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}
                             className={this.state.modalClass} backdrop={this.state.backdrop}>

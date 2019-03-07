@@ -57,7 +57,7 @@ class SelectDefaultTextModal extends Component {
                <div>
                     <Modal isOpen={modal} toggle={toggle}
                          >
-                        <ModalHeader>{this.context.t("frm_Select_Project")}</ModalHeader>
+                        <ModalHeader>{this.context.t("frm_Text_Defaults")}</ModalHeader>
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                            rows={SelectDefaultText_rows} totalCount={SelectDefaultText_totalCount}

@@ -143,7 +143,12 @@ export const FormInfo =
         fm_text_pishfarz: {
             "id": 29,
             "form_name": "پيش فرض هاي متني",
-            "sys_name": "fm_text_pishfarz"
+            "sys_name": "fm_text_pishfarz",
+            "fa_module_name1": "تعاریف اتوماسیون",
+            "fa_module_name2": "",
+            "en_form_name": "Automation definitions",
+            "en_module_name1": "Automation",
+            "en_module_name2": "",
         },
         fm_rep_khaz_elamye: {
             "id": 30,
@@ -820,7 +825,12 @@ export const FormInfo =
         fm_par_natije: {
             "id": 193,
             "form_name": "نتيجه کار",
-            "sys_name": "fm_par_natije"
+            "sys_name": "fm_par_natije",
+            "fa_module_name1": "فرم های روند کار",
+            "fa_module_name2": "",
+            "en_form_name": "Flows Forms",
+            "en_module_name1": "Flow",
+            "en_module_name2": "",
         },
         fm_par_baznegari: {
             "id": 194,
