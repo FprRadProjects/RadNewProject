@@ -7,7 +7,7 @@ import { WorkActions_action, WorkBasic_action } from "../../../_actions";
 import { EditeReviewWorkModal } from '../../Flow/ConfirmFlow/EditeReviewWorkModal';
 
 var currencyColumns = [];
-var hiddenColumnNames = [];
+var hiddenColumnNames = ["ashkhas_id"];
 var booleanColumns = [];
 var Params = {
     "page": 0,
@@ -24,7 +24,7 @@ class ReviewWorkModal extends Component {
         super(props);
         this.state = {
             ...this.state,
-            EditReviewModal:false,
+            EditReviewModal: false,
             backdrop: "static",
             backdropClassName: "test",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
@@ -41,17 +41,20 @@ class ReviewWorkModal extends Component {
     }
     SuccesReviewWorkConfirm = (row, e) => {
         // if (undefined !== row) {
-             const { peygir_id, ConfirmReviewWork } = this.props;
-             ConfirmReviewWork(peygir_id);
-         //}
-     }
-     EditReviewWorkConfirm = () => {
-        this.setState({
-            EditReviewModal: !this.state.EditReviewModal
-        })
-     }
-    
-   
+        const { peygir_id, ConfirmReviewWork } = this.props;
+        alert(peygir_id)
+        ConfirmReviewWork(peygir_id);
+        //}
+    }
+    EditReviewWorkConfirm = () => {
+        if (this.state.row !== null && this.state.row !== undefined) {
+            this.setState({
+                EditReviewModal: !this.state.EditReviewModal
+            })
+        }
+    }
+
+
     render() {
         const columns = [
             { name: 'peygir_id', title: this.context.t("RowId") },
@@ -66,9 +69,10 @@ class ReviewWorkModal extends Component {
             { name: 'madrak_name', title: this.context.t("CertificateName") },
             { name: 'ashkhasname', title: this.context.t("Audience") },
             { name: 'mozo', title: this.context.t("Subject") },
+            { name: 'ashkhas_id', title: this.context.t("AudienceID") },
 
         ];
-        const { modal,  peygir_id, ReviewWorkList_rows, ReviewWorkList_totalCount } = this.props;
+        const { modal, peygir_id, ReviewWorkList_rows, ReviewWorkList_totalCount, ParentForm } = this.props;
         Params.peygir_id = peygir_id;
         const modalBackDrop = `
         .modal-backdrop {
@@ -83,34 +87,34 @@ class ReviewWorkModal extends Component {
             <div>
 
                 <div>
-                    <Modal isOpen={modal}  size="lg" >
+                    <Modal isOpen={modal} size="lg" >
                         <ModalHeader>{this.context.t("frm_Review_Confirm_Work")}</ModalHeader>
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                 rows={ReviewWorkList_rows} totalCount={ReviewWorkList_totalCount}
-                                UrlParams={Params} 
+                                UrlParams={Params}
                                 GetRowInfo={this.SetReviewWorkRowData} columnwidth={150}
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={this.SuccesReviewWorkConfirm.bind(this, this.state.row)}>{this.context.t("ConfirmAndClose")}</Button>{' '}
-                            <Button color="primary" onClick={this.EditReviewWorkConfirm.bind(this, this.state.row)}>{this.context.t("Edit")}</Button>{' '}
+                            <Button color="primary" onClick={this.SuccesReviewWorkConfirm.bind(this)}>{this.context.t("ConfirmAndClose")}</Button>{' '}
+                            <Button color="primary" onClick={this.EditReviewWorkConfirm.bind(this)}>{this.context.t("Edit")}</Button>{' '}
                         </ModalFooter>
                     </Modal>
                 </div>
                 <style>{modalBackDrop}</style>
                 {this.state.EditReviewModal &&
-                    <EditeReviewWorkModal modal={this.state.EditReviewModal}
+                    <EditeReviewWorkModal modal={this.state.EditReviewModal} ParentForm={ParentForm}
                         toggle={this.EditReviewWorkConfirm.bind(this)} Params={Params}
-                        rowData={this.state.row}  />}
+                        rowData={this.state.row} />}
             </div>
         );
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-    
+
     ConfirmReviewWork: (peygir_id) => {
         dispatch(WorkActions_action.ConfirmReviewWork(peygir_id))
     },

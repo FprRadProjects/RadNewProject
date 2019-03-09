@@ -2,21 +2,10 @@ import React, { Component } from 'react';
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
-import { GridComponent } from "../../Config/GridComponent";
-import { WorkActions_action, WorkBasic_action } from "../../../_actions";
+import { WorkActions_action, AutoBasicInfo_action } from "../../../_actions";
+import { ComboSelectList } from "../../Basic/";
 
-var currencyColumns = [];
-var hiddenColumnNames = [];
-var booleanColumns = [];
-var Params = {
-    "page": 0,
-    "pagesize": 10,
-    "peygir_id": "0",
-    "orderby": "id",
-    "direction": "desc",
-    "filter": []
-};
-var FinalConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Results: [] };
+var SaveParams = { form: "", data: [] };
 
 class EditeReviewWorkModal extends Component {
     constructor(props) {
@@ -24,29 +13,67 @@ class EditeReviewWorkModal extends Component {
         this.state = {
             ...this.state,
             EditReviewModal: false,
+            ashkhasList: [],
+            workerList: [],
+            managerList: [],
             backdrop: "static",
             backdropClassName: "test",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
 
-        this.SetReviewWorkRowData = this.SetReviewWorkRowData.bind(this);
         this.SuccesEditReviewWork = this.SuccesEditReviewWork.bind(this);
     }
-    SetReviewWorkRowData = (row) => {
-        this.setState({
-            row: row
+
+    async  SuccesEditReviewWork ( e)  {
+        const { ParentForm,  SaveWorkInfo, lang,rowData } = this.props;
+        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
+        SaveParams.data["peygir_id"] = { "peygir_id": rowData.peygir_id };
+        SaveParams.form = formname;
+        let obj = [];
+        Object.keys(SaveParams.data).map((item, index) => {
+            return obj[index++] = SaveParams.data[item];
         })
+        SaveParams.data = obj;
+        console.log("11");
+        //this.setState({ text: 'Before' });
+          SaveWorkInfo(SaveParams,0).then(data=>{
+        console.log("4444");
+
+        });
+         this.sfsd();
+        
+       // this.setState({ text: 'After' });
+        //SaveWorkInfo(SaveParams,0);
+        
+        SaveParams = { form: "", data: [] };
     }
-    SuccesEditReviewWork = (row, e) => {
-        // if (undefined !== row) {
-        const { peygir_id, ConfirmReviewWork } = this.props;
-        ConfirmReviewWork(peygir_id);
-        //}
+   async sfsd(){
+        console.log("3333");
+
+    }
+    componentDidMount() {
+        const { rowData, SelectWorkerList, SelectManagerList, SelectAshkhasList } = this.props;
+        SelectWorkerList(0, rowData.wt_id)
+        SelectManagerList(0, rowData.wt_id);
+        SelectAshkhasList(rowData.id_tel);
+    }
+    changeHandle = (e, val) => {
+        if (val !== undefined) {
+            const { name } = e;
+            SaveParams.data[[name]] = { [name]: val.value }
+        }
+        else {
+            const { name, value } = e.target;
+            SaveParams.data[[name]] = { [name]: value };
+        }
     }
 
     render() {
 
-        const { modal, rowData, toggle } = this.props;
+        const { modal, rowData, toggle, SelectManagerList_rows, SelectWorkerList_rows, SelectAshkhasList_rows } = this.props;
+        let ashkhasSelectedOption = { value: rowData.ashkhas_id, label: rowData.ashkhasname }
+        let workerSelectedOption = { value: rowData.worker_id, label: rowData.worker }
+        let managerSelectedOption = { value: rowData.defmodir_id, label: rowData.modir }
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -68,30 +95,54 @@ class EditeReviewWorkModal extends Component {
                                     <label>{this.context.t("WorkID")}: </label>
                                     <label>{rowData.peygir_id} </label>
                                     <br />
+                                    <label>{this.context.t("FlowCode")}: </label>
+                                    <label>{rowData.flow_code} </label>
+                                    <br />
+
+                                    <label>{this.context.t("CertificateName")}: </label>
+                                    <label>{rowData.madrak_name} </label>
+                                    <br />
+                                    <label>{this.context.t("WorkID")}: </label>
+                                    <label>{rowData.peygir_id} </label>
+                                    <br />
                                     <label>{this.context.t("WorkType")}: </label>
                                     <label>{rowData.wtype} </label>
                                     <br />
                                     <label>{this.context.t("ActionDate")}: </label>
-                                    <input type="text" defaultValue={rowData.tarikhaction}/>
+                                    <input type="text" name="tarikhaction" onChange={this.changeHandle.bind(this)} defaultValue={rowData.tarikhaction} />
                                     <br />
                                     <label>{this.context.t("DeadTime")}: </label>
-                                    <input type="text" defaultValue={rowData.deadtime}/>
+                                    <input type="text" name="deadtime" onChange={this.changeHandle.bind(this)} defaultValue={rowData.deadtime} />
                                     <br />
                                     <label>{this.context.t("SuggestTime")}: </label>
-                                    <input type="text" defaultValue={rowData.suggest_time}/>
+                                    <input type="text" name="suggest_time" onChange={this.changeHandle.bind(this)} defaultValue={rowData.suggest_time} />
                                     <br />
                                     <label>{this.context.t("Description")}: </label>
-                                    <input type="text" defaultValue={rowData.tozihat}/>
+                                    <textarea type="text" name="tozihat" onChange={this.changeHandle.bind(this)} defaultValue={rowData.tozihat}></textarea><br />
+
                                     <br />
                                     <label>{this.context.t("Subject")}: </label>
-                                    <input type="text" defaultValue={rowData.mozo}/>
-                                    
+                                    <input type="text" name="mozo" onChange={this.changeHandle.bind(this)} defaultValue={rowData.mozo} />
+                                    <br />
+                                    <label>{this.context.t("worker")}: </label>
+                                    {SelectWorkerList_rows !== undefined &&
+                                        <ComboSelectList options={SelectWorkerList_rows} name="worker_id" onChange={this.changeHandle.bind(this)} selectedOption={workerSelectedOption} />
+                                    }
+                                    <label>{this.context.t("manager")}: </label>
+                                    {SelectManagerList_rows !== undefined &&
+                                        <ComboSelectList options={SelectManagerList_rows} name="defmodir_id" onChange={this.changeHandle.bind(this)} selectedOption={managerSelectedOption} />
+                                    }
+                                    <label>{this.context.t("Audience")}: </label>
+                                    {SelectAshkhasList_rows !== undefined &&
+                                        <ComboSelectList options={SelectAshkhasList_rows} name="ashkhas_id" onChange={this.changeHandle.bind(this)} selectedOption={ashkhasSelectedOption} />
+                                    }
+
                                 </div>
                             }
                         </ModalBody>
                         <ModalFooter>
 
-                            <Button color="primary" onClick={this.SuccesEditReviewWork.bind(this, this.state.row)}>{this.context.t("Edit")}</Button>{' '}
+                            <Button color="primary" onClick={this.SuccesEditReviewWork.bind(this)}>{this.context.t("Edit")}</Button>{' '}
                             <Button color="primary" onClick={toggle}>{this.context.t("Cancel")}</Button>{' '}
                         </ModalFooter>
                     </Modal>
@@ -107,7 +158,16 @@ const mapDispatchToProps = dispatch => ({
 
     ConfirmReviewWork: (peygir_id) => {
         dispatch(WorkActions_action.ConfirmReviewWork(peygir_id))
+    }, SelectManagerList: (id_role, wt_id) => {
+        dispatch(AutoBasicInfo_action.SelectManagerList(id_role, wt_id))
+    }, SelectWorkerList: (id_role, wt_id) => {
+        dispatch(AutoBasicInfo_action.SelectWorkerList(id_role, wt_id))
+    }, SelectAshkhasList: (id_taraf) => {
+        dispatch(AutoBasicInfo_action.SelectAshkhasList(id_taraf))
     },
+    SaveWorkInfo: (SaveParams, peygir_id) => {
+        dispatch(WorkActions_action.SaveWorkInfo(SaveParams, peygir_id))
+    }
 
 });
 EditeReviewWorkModal.contextTypes = {
@@ -119,17 +179,15 @@ function mapStateToProps(state) {
     const { alert } = state;
     const { loading } = state.loading;
     const { lang } = state.i18nState
-    const { ReviewWorkList_rows } =
-        state.Auto_WorkBasic !== null && state.Auto_WorkBasic !== undefined ?
-            state.Auto_WorkBasic.ReviewWorkList_rows != null && state.Auto_WorkBasic.ReviewWorkList_rows != undefined
-                ? state.Auto_WorkBasic : [] : [];
-    const { ReviewWorkList_totalCount } = state.Auto_WorkBasic
+
+    const { SelectManagerList_rows, SelectWorkerList_rows, SelectAshkhasList_rows } = state.Auto_BasicInfo
     return {
         alert,
         loading,
         lang,
-        ReviewWorkList_rows,
-        ReviewWorkList_totalCount,
+        SelectManagerList_rows,
+        SelectWorkerList_rows,
+        SelectAshkhasList_rows,
     };
 }
 

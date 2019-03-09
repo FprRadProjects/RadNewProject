@@ -52,6 +52,7 @@ export const translations = {
         Code:"کد",
         FileNumber:"شماره",
         Audience:"مخاطب",
+        AudienceID:"شاخص مخاطب",
         Project:"پروژه",
         HasAttachment:"پیوست دارد?",
         FlowCode:"کد فرآیند",
@@ -87,6 +88,7 @@ export const translations = {
         //---------------اقدام------------------شروع
         logout: 'خروج',
         Save: 'ذخیره',
+        Edit: 'ویرایش',
         ConfirmAndClose: 'تایید و بستن',
         Rebuild: 'بازسازی',
         Delete: 'حذف',
@@ -175,6 +177,7 @@ export const translations = {
         Code:"Code",
         FileNumber:"File Number",
         Audience:"Audience",
+        AudienceID:"AudienceID",
         Project:"Project",
         HasAttachment:"Has Attachment?",
         FlowCode:"Flow Code",
@@ -210,6 +213,7 @@ export const translations = {
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
+        Edit: 'Edit',
         ConfirmAndClose: 'Confirm And Close',
         Rebuild: 'Rebuild',
         Delete: 'Delete',

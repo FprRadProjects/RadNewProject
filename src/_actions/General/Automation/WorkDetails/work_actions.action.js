@@ -176,18 +176,25 @@ function SeenWork(peygir_id) {
 }
 
 function SaveWorkInfo(params, peygir_id) {
-    return dispatch => {
+    
+    return  dispatch => {
         dispatch(loadingActions.ShowLoading());
-        WorkActions_service.SaveWorkInfo(params)
+       WorkActions_service.SaveWorkInfo(params)
             .then(
                 data => {
                     if (data.status) {
                         var date = new Date();
                         var timestamp = date.getTime();
                         dispatch(common_Actions.RefreshForm({ "Time": timestamp, status: data.status }));
-                        dispatch(WorkBasic_action.FetchWorkInfo(peygir_id));
+                        if (peygir_id !== 0)
+                            dispatch(WorkBasic_action.FetchWorkInfo(peygir_id));
                         dispatch(loadingActions.HideLoading());
                         toast.success("این یک پیغام موفقیت است !");
+                        console.log("222.222");
+                        return Promise.resolve("Response.data")
+
+
+
                     }
                     else if (data.code !== 0) {
                         toast.error(data.error)
@@ -197,6 +204,7 @@ function SaveWorkInfo(params, peygir_id) {
                         userActions.logout();
                         history.push("/login")
                     }
+
                 },
                 error => {
                     dispatch(loadingActions.HideLoading());

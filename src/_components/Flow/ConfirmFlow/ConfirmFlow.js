@@ -58,8 +58,7 @@ class ConfirmFlow extends Component {
     }
 
     render() {
-        const {  peygir_id, Params, RefreshFormAction } = this.props;
-      
+        const {  peygir_id, Params, RefreshFormAction,ParentForm } = this.props;
         return (
             <div>
 
@@ -68,7 +67,7 @@ class ConfirmFlow extends Component {
                         toggle={this.CloseSelectFlowResult.bind(this)} Params={Params}
                         peygir_id={peygir_id} RefreshFormAction={RefreshFormAction} />}
                 {this.state.ReviewWorkModal &&
-                    <ReviewWorkModal modal={this.state.ReviewWorkModal}
+                    <ReviewWorkModal modal={this.state.ReviewWorkModal} ParentForm={ParentForm}
                         toggle={this.CloseSelectReviewWork.bind(this)} Params={Params}
                         peygir_id={peygir_id} RefreshFormAction={RefreshFormAction} />}
 

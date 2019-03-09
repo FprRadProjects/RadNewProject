@@ -30,12 +30,10 @@ function FetchData(params) {
                     if (data.status) {
                         dispatch(AddTotalCount(data.data.totalcount));
                         dispatch(AddRows(data.data.rows));
-                        // dispatch(loadingActions.HideLoading());
                         dispatch(loadingActions.HideGridLoading());
                     }
                     else if (data.code !== 0) {
                         toast.error(data.error);
-                        // dispatch(loadingActions.HideLoading());
                         dispatch(loadingActions.HideGridLoading());
                     }
                     else {

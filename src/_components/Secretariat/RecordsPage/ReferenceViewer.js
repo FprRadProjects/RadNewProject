@@ -166,8 +166,8 @@ class ReferenceViewer extends Component {
     }
 
     render() {
-        const { modal, toggle, WorkInfo, Params, RefreshFormAction } = this.props;
-        const modalBackDrop = `
+        const { modal, toggle, WorkInfo, Params, RefreshFormAction,ParentForm } = this.props;
+      const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
             background: rgb(210,210,210);
@@ -253,7 +253,7 @@ class ReferenceViewer extends Component {
                                     Successtoggle={this.SuccessSelectSubject.bind(this)}
                                     id_tel={WorkInfo.id_tel} />}
                             {(this.state.ReviewWorkModal || this.state.FlowResultSelectmodal) &&
-                                <ConfirmFlow 
+                                <ConfirmFlow  ParentForm={ParentForm}
                                 reviewWorkModal={this.state.ReviewWorkModal}
                                 flowResultSelectModal={this.state.FlowResultSelectmodal}
                                      Params={Params}
