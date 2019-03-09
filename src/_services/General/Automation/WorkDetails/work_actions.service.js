@@ -9,8 +9,25 @@ export const WorkActions_service = {
     DeleteWork,
     InitConfirmWork,
     FinalFlowConfirmWork,
+    ConfirmReviewWork
 
 };
+
+function ConfirmReviewWork(peygir_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('peygir_id', peygir_id);
+        return axios.post(BaseUrl + "ConfirmReviewWork", formData)
+            .then(Response => {
+return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
 function FinalFlowConfirmWork(params) {
     if (UserConfig.GetToken() !== null) {
         return axios.post(BaseUrl + "FinalFlowConfirmWork", params)

@@ -119,6 +119,7 @@ export const translations = {
         frm_References_Result: 'نتیجه ارجاع',
         frm_Text_Defaults: 'پیش فرض های متنی',
         frm_Flow_Results: 'نتایج فرآیند',
+        frm_Review_Confirm_Work: 'بازنگری تایید کار',
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -242,6 +243,8 @@ export const translations = {
         frm_References_Result: 'References Result',
         frm_Text_Defaults: 'Text Defaults',
         frm_Flow_Results: 'Flow Results',
+        frm_Review_Confirm_Work: 'Review Confirm Work',
+        
         //End-------------- FORM NAME --------------
 
     },

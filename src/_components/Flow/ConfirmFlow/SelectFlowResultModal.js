@@ -23,12 +23,13 @@ class SelectFlowResultModal extends Component {
         super(props);
         this.state = {
             ...this.state,
-            modal: false,
             backdrop: "static",
             backdropClassName: "test",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
 
+        this.SetSelectResultRowData = this.SetSelectResultRowData.bind(this);
+        this.SetSelectResultRowData = this.SetSelectResultRowData.bind(this);
     }
     SetSelectResultRowData = (row) => {
         this.setState({

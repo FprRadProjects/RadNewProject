@@ -16,10 +16,41 @@ export const WorkActions_action = {
     InitConfirmWork,
     FinalFlowConfirmWork,
     reviewWorkToggleModal,
-    flowResultToggleModal
+    flowResultToggleModal,
+    ConfirmReviewWork
 
 };
 
+function ConfirmReviewWork(peygir_id) {
+
+    return dispatch => {
+        dispatch(loadingActions.ShowLoading());
+        WorkActions_service.ConfirmReviewWork(peygir_id)
+            .then(
+                data => {
+                    if (data.status) {
+                        var date = new Date();
+                        var timestamp = date.getTime();
+                        dispatch(common_Actions.RefreshForm({ "Time": timestamp, status: data.status }));
+                        dispatch(loadingActions.HideLoading());
+                        dispatch(reviewWorkToggleModal(false));
+
+                    }
+                    else if (data.code !== 0) {
+                        toast.error(data.error)
+                        dispatch(loadingActions.HideLoading());
+                    }
+                    else {
+                        userActions.logout();
+                        history.push("/login")
+                    }
+                },
+                error => {
+                    toast.error(error)
+                }
+            );
+    }
+}
 
 function FinalFlowConfirmWork(Params) {
     return dispatch => {
@@ -28,8 +59,8 @@ function FinalFlowConfirmWork(Params) {
         WorkActions_service.FinalFlowConfirmWork(Params)
             .then(
                 data => {
+                    dispatch(flowResultToggleModal(false));
                     if (data.status) {
-                        dispatch(flowResultToggleModal(false));
                         if (data.code === 1 && data.data === null) {
                             var date = new Date();
                             var timestamp = date.getTime();

@@ -19,100 +19,24 @@ class ConfirmFlow extends Component {
         super(props);
         this.state = {
             ...this.state,
-            modal: false,
-            ProjectSelectmodal: false,
-            SubjectSelectmodal: false,
             FlowResultSelectmodal: false,
             ReviewWorkModal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
-        this.SuccessSelectProject = this.SuccessSelectProject.bind(this);
+        this.CloseSelectReviewWork = this.CloseSelectReviewWork.bind(this);
+        this.CloseSelectFlowResult = this.CloseSelectFlowResult.bind(this);
 
     }
 
-    OpenSelectProject = () => {
-        const { WorkInfo, showError } = this.props;
-        WorkAccess_action.CanSetProjectOnWork(WorkInfo.peygir_id).then(
-            data => {
-                if (data.status) {
-                    this.setState({
-                        ProjectSelectmodal: !this.state.ProjectSelectmodal,
-                    });
-                } else {
-                    toast.error(data.error)
-                }
-            },
-            error => {
-                toast.error(error)
-            }
-        );
 
-    }
-
-    CloseSelectProject = (e) => {
+    CloseSelectReviewWork = (e) => {
         this.setState({
-            ProjectSelectmodal: !this.state.ProjectSelectmodal,
-        });
-    }
-    SuccessSelectProject(row, e) {
-        const { WorkInfo } = this.props;
-        if (this.state.ProjectSelectmodal)
-            this.refs.ProjectInput.value = row !== undefined ? row.ptype !== undefined ? row.ptype : WorkInfo.ptype : WorkInfo.ptype;
-        SaveParams.data["p_type_id"] = { "p_type_id": row.id };
-        this.setState({
-            ProjectSelectmodal: !this.state.ProjectSelectmodal,
+            ReviewWorkModal: !this.state.ReviewWorkModal,
         });
     }
 
-    OpenSelectDefaultText = (e) => {
-        const { name } = e.target;
-        const { WorkInfo, showError } = this.props;
-        WorkAccess_action.CanSetInfoOnWork(WorkInfo.peygir_id).then(data => {
-            if (data.status)
-                this.setState({
-                    SubjectSelectmodal: !this.state.SubjectSelectmodal,
-                    type: name,
-                });
-            else {
-                toast.error(data.error)
-            }
-        },
-            error => {
-                toast.error(error)
-            }
-        );
-    }
-    CloseSelectDefaultText = (e) => {
-        this.setState({
-            SubjectSelectmodal: !this.state.SubjectSelectmodal,
-        });
-    }
-
-
-    SuccessSelectSubject = (row, e) => {
-        if (this.state.SubjectSelectmodal)
-            if (this.state.type === "subject") {
-                this.refs.SubjectInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                SaveParams.data["mozo"] = { "mozo": this.refs.SubjectInput.value };
-            } else {
-                this.refs.ResultTextArea.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                SaveParams.data["natije"] = { "natije": this.refs.ResultTextArea.value };
-            }
-        this.setState({
-            SubjectSelectmodal: !this.state.SubjectSelectmodal,
-            type: "",
-        });
-    }
-    ConfirmationHandle = (e) => {
-        const { WorkInfo, InitConfirmWork, ParentForm, lang } = this.props;
-        ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
-        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
-        ConfirmParams["Form"] = formname;
-        InitConfirmWork(ConfirmParams);
-    }
-
-    CloseleSelectFlowResult = (e) => {
+    CloseSelectFlowResult = (e) => {
         this.setState({
             FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
         });
@@ -141,11 +65,11 @@ class ConfirmFlow extends Component {
 
                 {this.state.FlowResultSelectmodal &&
                     <SelectFlowResultModal modal={this.state.FlowResultSelectmodal}
-                        toggle={this.CloseleSelectFlowResult.bind(this)} Params={Params}
+                        toggle={this.CloseSelectFlowResult.bind(this)} Params={Params}
                         peygir_id={peygir_id} RefreshFormAction={RefreshFormAction} />}
                 {this.state.ReviewWorkModal &&
                     <ReviewWorkModal modal={this.state.ReviewWorkModal}
-                        toggle={this.CloseleSelectFlowResult.bind(this)} Params={Params}
+                        toggle={this.CloseSelectReviewWork.bind(this)} Params={Params}
                         peygir_id={peygir_id} RefreshFormAction={RefreshFormAction} />}
 
             </div>
@@ -154,18 +78,6 @@ class ConfirmFlow extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    GetTemplateForm: (Params) => {
-        dispatch(design_Actions.GetTemplateForm(Params))
-    },
-    SaveWorkInfo: (SaveParams, peygir_id) => {
-        dispatch(WorkActions_action.SaveWorkInfo(SaveParams, peygir_id))
-    },
-    RebuildWork: (Peygir_id) => {
-        dispatch(WorkActions_action.RebuildWork(Peygir_id))
-    },
-    DeleteWork: (Peygir_id) => {
-        dispatch(WorkActions_action.DeleteWork(Peygir_id))
-    },
     InitConfirmWork: (Params) => {
         dispatch(WorkActions_action.InitConfirmWork(Params))
     },

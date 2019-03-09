@@ -4,7 +4,6 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { GridComponent } from "../../Config/GridComponent";
 import { WorkActions_action, WorkBasic_action } from "../../../_actions";
-import { EditeReviewWorkModal } from '../../Flow/ConfirmFlow/EditeReviewWorkModal';
 
 var currencyColumns = [];
 var hiddenColumnNames = [];
@@ -19,57 +18,35 @@ var Params = {
 };
 var FinalConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Results: [] };
 
-class ReviewWorkModal extends Component {
+class EditeReviewWorkModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
             ...this.state,
-            EditReviewModal:false,
+            EditReviewModal: false,
             backdrop: "static",
             backdropClassName: "test",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
 
         this.SetReviewWorkRowData = this.SetReviewWorkRowData.bind(this);
-        this.SuccesReviewWorkConfirm = this.SuccesReviewWorkConfirm.bind(this);
-        this.EditReviewWorkConfirm = this.EditReviewWorkConfirm.bind(this);
+        this.SuccesEditReviewWork = this.SuccesEditReviewWork.bind(this);
     }
     SetReviewWorkRowData = (row) => {
         this.setState({
             row: row
         })
     }
-    SuccesReviewWorkConfirm = (row, e) => {
+    SuccesEditReviewWork = (row, e) => {
         // if (undefined !== row) {
-             const { peygir_id, ConfirmReviewWork } = this.props;
-             ConfirmReviewWork(peygir_id);
-         //}
-     }
-     EditReviewWorkConfirm = () => {
-        this.setState({
-            EditReviewModal: !this.state.EditReviewModal
-        })
-     }
-    
-   
-    render() {
-        const columns = [
-            { name: 'peygir_id', title: this.context.t("RowId") },
-            { name: 'wtype', title: this.context.t("WorkType") },
-            { name: 'tarikhaction', title: this.context.t("ActionDate") },
-            { name: 'worker', title: this.context.t("worker") },
-            { name: 'modir', title: this.context.t("manager") },
-            { name: 'deadtime', title: this.context.t("DeadTime") },
-            { name: 'suggest_time', title: this.context.t("SuggestTime") },
-            { name: 'tozihat', title: this.context.t("Description") },
-            { name: 'flow_code', title: this.context.t("FlowCode") },
-            { name: 'madrak_name', title: this.context.t("CertificateName") },
-            { name: 'ashkhasname', title: this.context.t("Audience") },
-            { name: 'mozo', title: this.context.t("Subject") },
+        const { peygir_id, ConfirmReviewWork } = this.props;
+        ConfirmReviewWork(peygir_id);
+        //}
+    }
 
-        ];
-        const { modal,  peygir_id, ReviewWorkList_rows, ReviewWorkList_totalCount } = this.props;
-        Params.peygir_id = peygir_id;
+    render() {
+
+        const { modal, rowData, toggle } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -83,40 +60,57 @@ class ReviewWorkModal extends Component {
             <div>
 
                 <div>
-                    <Modal isOpen={modal}  size="lg" >
+                    <Modal isOpen={modal} size="lg" >
                         <ModalHeader>{this.context.t("frm_Review_Confirm_Work")}</ModalHeader>
                         <ModalBody>
-                            <GridComponent columns={columns} booleanColumns={booleanColumns}
-                                rows={ReviewWorkList_rows} totalCount={ReviewWorkList_totalCount}
-                                UrlParams={Params} 
-                                GetRowInfo={this.SetReviewWorkRowData} columnwidth={150}
-                                currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
-                            />
+                            {rowData !== undefined && rowData != null &&
+                                <div>
+                                    <label>{this.context.t("WorkID")}: </label>
+                                    <label>{rowData.peygir_id} </label>
+                                    <br />
+                                    <label>{this.context.t("WorkType")}: </label>
+                                    <label>{rowData.wtype} </label>
+                                    <br />
+                                    <label>{this.context.t("ActionDate")}: </label>
+                                    <input type="text" defaultValue={rowData.tarikhaction}/>
+                                    <br />
+                                    <label>{this.context.t("DeadTime")}: </label>
+                                    <input type="text" defaultValue={rowData.deadtime}/>
+                                    <br />
+                                    <label>{this.context.t("SuggestTime")}: </label>
+                                    <input type="text" defaultValue={rowData.suggest_time}/>
+                                    <br />
+                                    <label>{this.context.t("Description")}: </label>
+                                    <input type="text" defaultValue={rowData.tozihat}/>
+                                    <br />
+                                    <label>{this.context.t("Subject")}: </label>
+                                    <input type="text" defaultValue={rowData.mozo}/>
+                                    
+                                </div>
+                            }
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={this.SuccesReviewWorkConfirm.bind(this, this.state.row)}>{this.context.t("ConfirmAndClose")}</Button>{' '}
-                            <Button color="primary" onClick={this.EditReviewWorkConfirm.bind(this, this.state.row)}>{this.context.t("Edit")}</Button>{' '}
+
+                            <Button color="primary" onClick={this.SuccesEditReviewWork.bind(this, this.state.row)}>{this.context.t("Edit")}</Button>{' '}
+                            <Button color="primary" onClick={toggle}>{this.context.t("Cancel")}</Button>{' '}
                         </ModalFooter>
                     </Modal>
                 </div>
                 <style>{modalBackDrop}</style>
-                {this.state.EditReviewModal &&
-                    <EditeReviewWorkModal modal={this.state.EditReviewModal}
-                        toggle={this.EditReviewWorkConfirm.bind(this)} Params={Params}
-                        rowData={this.state.row}  />}
+
             </div>
         );
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-    
+
     ConfirmReviewWork: (peygir_id) => {
         dispatch(WorkActions_action.ConfirmReviewWork(peygir_id))
     },
 
 });
-ReviewWorkModal.contextTypes = {
+EditeReviewWorkModal.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
@@ -140,5 +134,5 @@ function mapStateToProps(state) {
 }
 
 
-const connectedReviewWorkModal = connect(mapStateToProps, mapDispatchToProps)(ReviewWorkModal);
-export { connectedReviewWorkModal as ReviewWorkModal };
+const connectedEditeReviewWorkModal = connect(mapStateToProps, mapDispatchToProps)(EditeReviewWorkModal);
+export { connectedEditeReviewWorkModal as EditeReviewWorkModal };
