@@ -441,7 +441,7 @@ class workManagement extends Component {
                         {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                                                                              toggle={this.toggleReferenceViewer.bind(this)}
                                                                              WorkInfo={WorkInfo} GetRowInfo={GetWorkInfo}
-                                                                             Params={Params} RefreshForm={FetchData.bind(this)}
+                                                                             Params={Params} RefreshParentForm={FetchData.bind(this)}
                                                                              ParentForm={FormInfo.fm_dabir_kartabl_erjaat}/>}
                         <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}
                                className={this.state.modalClass} backdrop={this.state.backdrop}>

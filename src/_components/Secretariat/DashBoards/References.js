@@ -68,9 +68,9 @@ class References extends Component {
             let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
             SetLog(formName);
             SeenWork(WorkInfo.peygir_id);
-            this.setState(prevState => ({
-                ReferenceViewermodal: !prevState.ReferenceViewermodal
-            }));
+            this.setState({
+                ReferenceViewermodal: !this.state.ReferenceViewermodal
+            });
         }
     }
 
@@ -447,8 +447,8 @@ class References extends Component {
                         </div>
                         {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                             toggle={this.toggleReferenceViewer.bind(this)}
-                            WorkInfo={WorkInfo} GetRowInfo={GetWorkInfo}
-                            Params={Params} RefreshFormAction={FetchData.bind(this)}
+                            WorkInfo={WorkInfo} 
+                            Params={Params} RefreshParentForm={FetchData.bind(this)}
                             ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
                         <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}
                             className={this.state.modalClass} backdrop={this.state.backdrop}>

@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { SelectProjectModal } from "../../Project/";
 import { SelectDefaultTextModal } from "../../Basic/";
 
-import { WorkAccess_action, design_Actions, BasicInfo_action, WorkActions_action } from "../../../_actions";
+import { WorkAccess_action, design_Actions, common_Actions, WorkBasic_action, WorkActions_action } from "../../../_actions";
 import { FormInfo } from "../../../locales";
 import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 import { toast } from 'react-toastify';
@@ -22,7 +22,7 @@ class ReferenceViewer extends Component {
             ProjectSelectmodal: false,
             SubjectSelectmodal: false,
             FlowResultSelectmodal: false,
-            ReviewWorkModal:false,
+            ReviewWorkModal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
@@ -108,7 +108,15 @@ class ReferenceViewer extends Component {
         ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         ConfirmParams["Form"] = formname;
-        InitConfirmWork(ConfirmParams);
+        InitConfirmWork(ConfirmParams).then(data => {
+            if (data.status) {
+                if (data.code === 2 && data.data !== null) {
+                    this.setState({
+                        FlowResultSelectmodal: true,
+                    });
+                }
+            }
+        });
     }
 
     CloseleSelectFlowResult = (e) => {
@@ -117,7 +125,9 @@ class ReferenceViewer extends Component {
         });
     }
     saveHandle = () => {
-        const { ParentForm, WorkInfo, SaveWorkInfo, lang, RefreshFormAction, Params } = this.props;
+        const { ParentForm, WorkInfo, SaveWorkInfo, lang, FetchWorkInfo,
+            RefreshParentForm, Params
+        } = this.props;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
         SaveParams.form = formname;
@@ -126,7 +136,12 @@ class ReferenceViewer extends Component {
             return obj[index++] = SaveParams.data[item];
         })
         SaveParams.data = obj;
-        SaveWorkInfo(SaveParams, WorkInfo.peygir_id);
+        SaveWorkInfo(SaveParams, WorkInfo.peygir_id).then(data => {
+            if (data.status) {
+                RefreshParentForm(Params);
+                FetchWorkInfo(WorkInfo.peygir_id);
+            }
+        });
         SaveParams = { form: "", data: [] };
     }
 
@@ -141,33 +156,12 @@ class ReferenceViewer extends Component {
         const { RebuildWork, WorkInfo } = this.props;
         RebuildWork(WorkInfo.peygir_id);
 
-        //   RefreshFormAction(Params);
+    }
 
-    }
-    componentWillReceiveProps(nextProps) {
-        const { RefreshFormAction, Refresh_Form, Params, SelectFlowResultTogleModal,
-            ReviewWorkTogleModal } = nextProps;
-        if (Refresh_Form !== undefined)
-            if ((this.props.Refresh_Form !== Refresh_Form)) {
-                RefreshFormAction(Params);
-            }
-        if (SelectFlowResultTogleModal !== undefined) {
-            let flowResultSelectModal = SelectFlowResultTogleModal === undefined ? false : SelectFlowResultTogleModal;
-            this.setState({
-                FlowResultSelectmodal: flowResultSelectModal,
-            });
-        }
-        if (ReviewWorkTogleModal !== undefined) {
-            let ReviewWorkModal = ReviewWorkTogleModal === undefined ? false : ReviewWorkTogleModal;
-            this.setState({
-                ReviewWorkModal: ReviewWorkModal,
-            });
-        }
-    }
 
     render() {
-        const { modal, toggle, WorkInfo, Params, RefreshFormAction,ParentForm } = this.props;
-      const modalBackDrop = `
+        const { modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm } = this.props;
+        const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
             background: rgb(210,210,210);
@@ -252,13 +246,12 @@ class ReferenceViewer extends Component {
                                     toggle={this.CloseSelectDefaultText.bind(this)}
                                     Successtoggle={this.SuccessSelectSubject.bind(this)}
                                     id_tel={WorkInfo.id_tel} />}
-                            {(this.state.ReviewWorkModal || this.state.FlowResultSelectmodal) &&
-                                <ConfirmFlow  ParentForm={ParentForm}
-                                reviewWorkModal={this.state.ReviewWorkModal}
-                                flowResultSelectModal={this.state.FlowResultSelectmodal}
-                                     Params={Params}
-                                    peygir_id={WorkInfo.peygir_id} RefreshFormAction={RefreshFormAction} />}
-                            
+                            {this.state.FlowResultSelectmodal &&
+                                <ConfirmFlow ParentForm={ParentForm}
+                                    flowResultSelectModal={this.state.FlowResultSelectmodal}
+                                    Params={Params}
+                                    peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
+
                         </div>}
                         <style>{modalBackDrop}</style>
 
@@ -278,7 +271,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(design_Actions.GetTemplateForm(Params))
     },
     SaveWorkInfo: (SaveParams, peygir_id) => {
-        dispatch(WorkActions_action.SaveWorkInfo(SaveParams, peygir_id))
+        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, peygir_id));
     },
     RebuildWork: (Peygir_id) => {
         dispatch(WorkActions_action.RebuildWork(Peygir_id))
@@ -287,7 +280,11 @@ const mapDispatchToProps = dispatch => ({
         dispatch(WorkActions_action.DeleteWork(Peygir_id))
     },
     InitConfirmWork: (Params) => {
-        dispatch(WorkActions_action.InitConfirmWork(Params))
+        return dispatch(WorkActions_action.InitConfirmWork(Params))
+    },
+
+    FetchWorkInfo: (peygir_id) => {
+        dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
     },
 
 

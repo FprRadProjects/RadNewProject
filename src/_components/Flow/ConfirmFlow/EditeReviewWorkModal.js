@@ -21,36 +21,9 @@ class EditeReviewWorkModal extends Component {
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
 
-        this.SuccesEditReviewWork = this.SuccesEditReviewWork.bind(this);
     }
 
-    async  SuccesEditReviewWork ( e)  {
-        const { ParentForm,  SaveWorkInfo, lang,rowData } = this.props;
-        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
-        SaveParams.data["peygir_id"] = { "peygir_id": rowData.peygir_id };
-        SaveParams.form = formname;
-        let obj = [];
-        Object.keys(SaveParams.data).map((item, index) => {
-            return obj[index++] = SaveParams.data[item];
-        })
-        SaveParams.data = obj;
-        console.log("11");
-        //this.setState({ text: 'Before' });
-          SaveWorkInfo(SaveParams,0).then(data=>{
-        console.log("4444");
-
-        });
-         this.sfsd();
-        
-       // this.setState({ text: 'After' });
-        //SaveWorkInfo(SaveParams,0);
-        
-        SaveParams = { form: "", data: [] };
-    }
-   async sfsd(){
-        console.log("3333");
-
-    }
+    
     componentDidMount() {
         const { rowData, SelectWorkerList, SelectManagerList, SelectAshkhasList } = this.props;
         SelectWorkerList(0, rowData.wt_id)
@@ -70,7 +43,8 @@ class EditeReviewWorkModal extends Component {
 
     render() {
 
-        const { modal, rowData, toggle, SelectManagerList_rows, SelectWorkerList_rows, SelectAshkhasList_rows } = this.props;
+        const { modal, rowData, toggle, SelectManagerList_rows, SelectWorkerList_rows, SelectAshkhasList_rows
+        ,SuccesEditReviewWork } = this.props;
         let ashkhasSelectedOption = { value: rowData.ashkhas_id, label: rowData.ashkhasname }
         let workerSelectedOption = { value: rowData.worker_id, label: rowData.worker }
         let managerSelectedOption = { value: rowData.defmodir_id, label: rowData.modir }
@@ -142,7 +116,7 @@ class EditeReviewWorkModal extends Component {
                         </ModalBody>
                         <ModalFooter>
 
-                            <Button color="primary" onClick={this.SuccesEditReviewWork.bind(this)}>{this.context.t("Edit")}</Button>{' '}
+                            <Button color="primary" onClick={SuccesEditReviewWork.bind(this,SaveParams)}>{this.context.t("Edit")}</Button>{' '}
                             <Button color="primary" onClick={toggle}>{this.context.t("Cancel")}</Button>{' '}
                         </ModalFooter>
                     </Modal>
@@ -165,10 +139,6 @@ const mapDispatchToProps = dispatch => ({
     }, SelectAshkhasList: (id_taraf) => {
         dispatch(AutoBasicInfo_action.SelectAshkhasList(id_taraf))
     },
-    SaveWorkInfo: (SaveParams, peygir_id) => {
-        dispatch(WorkActions_action.SaveWorkInfo(SaveParams, peygir_id))
-    }
-
 });
 EditeReviewWorkModal.contextTypes = {
     t: PropTypes.func.isRequired

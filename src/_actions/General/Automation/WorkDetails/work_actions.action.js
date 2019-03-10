@@ -15,8 +15,6 @@ export const WorkActions_action = {
     DeleteWork,
     InitConfirmWork,
     FinalFlowConfirmWork,
-    reviewWorkToggleModal,
-    flowResultToggleModal,
     ConfirmReviewWork
 
 };
@@ -25,25 +23,21 @@ function ConfirmReviewWork(peygir_id) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        WorkActions_service.ConfirmReviewWork(peygir_id)
+       return WorkActions_service.ConfirmReviewWork(peygir_id)
             .then(
                 data => {
-                    if (data.status) {
-                        var date = new Date();
-                        var timestamp = date.getTime();
-                        dispatch(common_Actions.RefreshForm({ "Time": timestamp, status: data.status }));
-                        dispatch(loadingActions.HideLoading());
-                        dispatch(reviewWorkToggleModal(false));
-
+                    if (!data.status) {
+                        if (data.code !== 0) {
+                            toast.error(data.error)
+                        }
+                        else {
+                            userActions.logout();
+                            history.push("/login")
+                        }
                     }
-                    else if (data.code !== 0) {
-                        toast.error(data.error)
-                        dispatch(loadingActions.HideLoading());
-                    }
-                    else {
-                        userActions.logout();
-                        history.push("/login")
-                    }
+                   
+                    dispatch(loadingActions.HideLoading());
+                    return Promise.resolve(data)
                 },
                 error => {
                     toast.error(error)
@@ -54,23 +48,17 @@ function ConfirmReviewWork(peygir_id) {
 
 function FinalFlowConfirmWork(Params) {
     return dispatch => {
-        dispatch(reviewWorkToggleModal(false));
         dispatch(loadingActions.ShowLoading());
-        WorkActions_service.FinalFlowConfirmWork(Params)
+       return WorkActions_service.FinalFlowConfirmWork(Params)
             .then(
                 data => {
-                    dispatch(flowResultToggleModal(false));
                     if (data.status) {
                         if (data.code === 1 && data.data === null) {
-                            var date = new Date();
-                            var timestamp = date.getTime();
-                            dispatch(common_Actions.RefreshForm({ "Time": timestamp, status: data.status }));
                             toast.success("این یک پیغام موفقیت است !");
                         }
                         else if (data.code === 2 && data.data !== null) {
                             dispatch(reviewWorkAddTotalCount(data.data.totalcount));
                             dispatch(reviewWorkAddRows(data.data.rows));
-                            dispatch(reviewWorkToggleModal(true));
                         }
                         dispatch(loadingActions.HideLoading());
 
@@ -83,6 +71,7 @@ function FinalFlowConfirmWork(Params) {
                         userActions.logout();
                         history.push("/login")
                     }
+                    return Promise.resolve(data)
                 },
                 error => {
                     toast.error(error)
@@ -92,22 +81,17 @@ function FinalFlowConfirmWork(Params) {
 }
 function InitConfirmWork(Params) {
     return dispatch => {
-        dispatch(flowResultToggleModal(false));
         dispatch(loadingActions.ShowLoading());
-        WorkActions_service.InitConfirmWork(Params)
+       return WorkActions_service.InitConfirmWork(Params)
             .then(
                 data => {
                     if (data.status) {
                         if (data.code === 1 && data.data === null) {
-                            var date = new Date();
-                            var timestamp = date.getTime();
-                            dispatch(common_Actions.RefreshForm({ "Time": timestamp, status: data.status }));
                             toast.success("این یک پیغام موفقیت است !");
                         }
                         else if (data.code === 2 && data.data !== null) {
                             dispatch(flowResultAddTotalCount(data.data.totalcount));
                             dispatch(flowResultAddRows(data.data.rows));
-                            dispatch(flowResultToggleModal(true));
                         }
                         dispatch(loadingActions.HideLoading());
 
@@ -120,6 +104,7 @@ function InitConfirmWork(Params) {
                         userActions.logout();
                         history.push("/login")
                     }
+                    return Promise.resolve(data)
                 },
                 error => {
                     toast.error(error)
@@ -135,9 +120,6 @@ function RebuildWork(peygir_id) {
             .then(
                 data => {
                     if (data.status) {
-                        var date = new Date();
-                        var timestamp = date.getTime();
-                        dispatch(common_Actions.RefreshForm({ "Time": timestamp, status: data.status }));
                         dispatch(loadingActions.HideLoading());
                     }
                     else if (data.code !== 0) {
@@ -176,25 +158,15 @@ function SeenWork(peygir_id) {
 }
 
 function SaveWorkInfo(params, peygir_id) {
-    
-    return  dispatch => {
+
+    return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       WorkActions_service.SaveWorkInfo(params)
+        return WorkActions_service.SaveWorkInfo(params)
             .then(
                 data => {
                     if (data.status) {
-                        var date = new Date();
-                        var timestamp = date.getTime();
-                        dispatch(common_Actions.RefreshForm({ "Time": timestamp, status: data.status }));
-                        if (peygir_id !== 0)
-                            dispatch(WorkBasic_action.FetchWorkInfo(peygir_id));
                         dispatch(loadingActions.HideLoading());
                         toast.success("این یک پیغام موفقیت است !");
-                        console.log("222.222");
-                        return Promise.resolve("Response.data")
-
-
-
                     }
                     else if (data.code !== 0) {
                         toast.error(data.error)
@@ -204,7 +176,7 @@ function SaveWorkInfo(params, peygir_id) {
                         userActions.logout();
                         history.push("/login")
                     }
-
+                    return Promise.resolve(data)
                 },
                 error => {
                     dispatch(loadingActions.HideLoading());
@@ -222,13 +194,9 @@ function DeleteWork(peygir_id) {
             .then(
                 data => {
                     if (data.status) {
-                        var date = new Date();
-                        var timestamp = date.getTime();
-                        dispatch(common_Actions.RefreshForm({ "Time": timestamp, status: data.status }));
                         dispatch(loadingActions.HideLoading());
                     }
                     else if (data.code !== 0) {
-                        alert(data.error)
                         toast.error(data.error)
                         dispatch(loadingActions.HideLoading());
                     }
@@ -255,12 +223,7 @@ function flowResultAddTotalCount(data) {
 function flowResultAddRows(data) {
     return { type: AutoWorkBasicConstant.SELECT_FLOW_RESULT_SET_GRID_ROWS, data }
 }
-function flowResultToggleModal(data) {
-    return { type: AutoWorkBasicConstant.SELECT_FLOW_RESULT_TOGGLE_MODAL, data }
-}
-function reviewWorkToggleModal(data) {
-    return { type: AutoWorkBasicConstant.REVIEW_WORK_TOGGLE_MODAL, data }
-}
+
 function reviewWorkAddRows(data) {
     return { type: AutoWorkBasicConstant.REVIEW_WORK_SET_GRID_ROWS, data }
 }

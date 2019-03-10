@@ -16,7 +16,6 @@ var Params = {
     "direction": "desc",
     "filter": []
 };
-var FinalConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Results: [] };
 
 class SelectFlowResultModal extends Component {
     constructor(props) {
@@ -36,14 +35,7 @@ class SelectFlowResultModal extends Component {
             row: row
         })
     }
-    SuccesSelectFlowResult = (row, e) => {
-        if (undefined !== row) {
-            const { peygir_id, FinalFlowConfirmWork } = this.props;
-            FinalConfirmParams["peygir_id"] = peygir_id;
-            FinalConfirmParams["Results"] = [row.id];
-            FinalFlowConfirmWork(FinalConfirmParams);
-        }
-    }
+   
     render() {
         const columns = [
             { name: 'id', title: this.context.t("RowId") },
@@ -52,7 +44,8 @@ class SelectFlowResultModal extends Component {
 
         ];
         const { modal, toggle, peygir_id
-            , SelectFlowResultList_rows, SelectFlowResultList_totalCount } = this.props;
+            , SelectFlowResultList_rows, SelectFlowResultList_totalCount,
+            SuccesSelectFlowResult } = this.props;
         Params.peygir_id = peygir_id;
         const modalBackDrop = `
         .modal-backdrop {
@@ -79,7 +72,7 @@ class SelectFlowResultModal extends Component {
                             />
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={this.SuccesSelectFlowResult.bind(this, this.state.row)}>{this.context.t("Select")}</Button>{' '}
+                            <Button color="primary" onClick={SuccesSelectFlowResult.bind(this, this.state.row)}>{this.context.t("Select")}</Button>{' '}
                             <Button color="secondary" onClick={toggle}>{this.context.t("Cancel")}</Button>
                         </ModalFooter>
                     </Modal>
@@ -93,10 +86,7 @@ class SelectFlowResultModal extends Component {
 
 const mapDispatchToProps = dispatch => ({
 
-    FinalFlowConfirmWork: (Params) => {
-        dispatch(WorkActions_action.FinalFlowConfirmWork(Params))
-    },
-
+ 
 });
 SelectFlowResultModal.contextTypes = {
     t: PropTypes.func.isRequired

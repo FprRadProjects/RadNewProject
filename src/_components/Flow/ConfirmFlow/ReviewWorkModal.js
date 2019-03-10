@@ -3,9 +3,8 @@ import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { GridComponent } from "../../Config/GridComponent";
-import { WorkActions_action, WorkBasic_action } from "../../../_actions";
+import { WorkActions_action } from "../../../_actions";
 import { EditeReviewWorkModal } from '../../Flow/ConfirmFlow/EditeReviewWorkModal';
-
 var currencyColumns = [];
 var hiddenColumnNames = ["ashkhas_id"];
 var booleanColumns = [];
@@ -17,7 +16,6 @@ var Params = {
     "direction": "desc",
     "filter": []
 };
-var FinalConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Results: [] };
 
 class ReviewWorkModal extends Component {
     constructor(props) {
@@ -31,21 +29,35 @@ class ReviewWorkModal extends Component {
         };
 
         this.SetReviewWorkRowData = this.SetReviewWorkRowData.bind(this);
-        this.SuccesReviewWorkConfirm = this.SuccesReviewWorkConfirm.bind(this);
         this.EditReviewWorkConfirm = this.EditReviewWorkConfirm.bind(this);
+        this.SuccesEditReviewWork = this.SuccesEditReviewWork.bind(this);
     }
     SetReviewWorkRowData = (row) => {
         this.setState({
             row: row
         })
     }
-    SuccesReviewWorkConfirm = (row, e) => {
-        // if (undefined !== row) {
-        const { peygir_id, ConfirmReviewWork } = this.props;
-        alert(peygir_id)
-        ConfirmReviewWork(peygir_id);
-        //}
+   
+    SuccesEditReviewWork(SaveParams,e) {
+        const { ParentForm, SaveWorkInfo, lang } = this.props;
+        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
+        SaveParams.data["peygir_id"] = { "peygir_id": this.state.row.peygir_id };
+        SaveParams.form = formname;
+        let obj = [];
+        Object.keys(SaveParams.data).map((item, index) => {
+            return obj[index++] = SaveParams.data[item];
+        })
+        SaveParams.data = obj;
+        SaveWorkInfo(SaveParams, 0).then(data=>{
+            if (data.status) {
+                this.setState({
+                    EditReviewModal: false,
+                });
+            }
+        });
+        SaveParams = { form: "", data: [] };
     }
+
     EditReviewWorkConfirm = () => {
         if (this.state.row !== null && this.state.row !== undefined) {
             this.setState({
@@ -72,7 +84,8 @@ class ReviewWorkModal extends Component {
             { name: 'ashkhas_id', title: this.context.t("AudienceID") },
 
         ];
-        const { modal, peygir_id, ReviewWorkList_rows, ReviewWorkList_totalCount, ParentForm } = this.props;
+        const { modal, peygir_id, ReviewWorkList_rows, ReviewWorkList_totalCount, ParentForm,
+            SuccesReviewWorkConfirm } = this.props;
         Params.peygir_id = peygir_id;
         const modalBackDrop = `
         .modal-backdrop {
@@ -98,7 +111,7 @@ class ReviewWorkModal extends Component {
                             />
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={this.SuccesReviewWorkConfirm.bind(this)}>{this.context.t("ConfirmAndClose")}</Button>{' '}
+                            <Button color="primary" onClick={SuccesReviewWorkConfirm.bind(this)}>{this.context.t("ConfirmAndClose")}</Button>{' '}
                             <Button color="primary" onClick={this.EditReviewWorkConfirm.bind(this)}>{this.context.t("Edit")}</Button>{' '}
                         </ModalFooter>
                     </Modal>
@@ -107,23 +120,25 @@ class ReviewWorkModal extends Component {
                 {this.state.EditReviewModal &&
                     <EditeReviewWorkModal modal={this.state.EditReviewModal} ParentForm={ParentForm}
                         toggle={this.EditReviewWorkConfirm.bind(this)} Params={Params}
-                        rowData={this.state.row} />}
+                        rowData={this.state.row} SuccesEditReviewWork={this.SuccesEditReviewWork.bind(this)} />}
             </div>
         );
     }
 }
 
-const mapDispatchToProps = dispatch => ({
 
-    ConfirmReviewWork: (peygir_id) => {
-        dispatch(WorkActions_action.ConfirmReviewWork(peygir_id))
-    },
-
-});
 ReviewWorkModal.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
+const mapDispatchToProps = dispatch => ({
+
+   
+    SaveWorkInfo: (SaveParams, peygir_id) => {
+      return  dispatch(WorkActions_action.SaveWorkInfo(SaveParams, peygir_id));
+    }
+
+});
 function mapStateToProps(state) {
 
     const { alert } = state;

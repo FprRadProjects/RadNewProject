@@ -17,12 +17,7 @@ export  function Auto_WorkBasic(state = {}, action) {
                 SelectFlowResultList_GridRowData:{}
             }
         }    
-        case Constant.SELECT_FLOW_RESULT_TOGGLE_MODAL: {
-            return {
-                ...state,
-                SelectFlowResultTogleModal:  action.data,
-            }
-        }case Constant.REVIEW_WORK_GET_GRID_TOTAL_COUNT: {
+       case Constant.REVIEW_WORK_GET_GRID_TOTAL_COUNT: {
             return {
                 ...state,
                 ReviewWorkList_totalCount:  action.data,
@@ -37,12 +32,7 @@ export  function Auto_WorkBasic(state = {}, action) {
                 ReviewWorkList_GridRowData:{}
             }
         }    
-        case Constant.REVIEW_WORK_TOGGLE_MODAL: {
-            return {
-                ...state,
-                ReviewWorkTogleModal:  action.data,
-            }
-        }
+       
         
         default:
             return state;
