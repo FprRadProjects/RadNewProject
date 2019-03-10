@@ -136,7 +136,7 @@ class ReferenceViewer extends Component {
             return obj[index++] = SaveParams.data[item];
         })
         SaveParams.data = obj;
-        SaveWorkInfo(SaveParams, WorkInfo.peygir_id).then(data => {
+        SaveWorkInfo(SaveParams).then(data => {
             if (data.status) {
                 RefreshParentForm(Params);
                 FetchWorkInfo(WorkInfo.peygir_id);
@@ -270,8 +270,8 @@ const mapDispatchToProps = dispatch => ({
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
-    SaveWorkInfo: (SaveParams, peygir_id) => {
-        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, peygir_id));
+    SaveWorkInfo: (SaveParams) => {
+        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams));
     },
     RebuildWork: (Peygir_id) => {
         dispatch(WorkActions_action.RebuildWork(Peygir_id))

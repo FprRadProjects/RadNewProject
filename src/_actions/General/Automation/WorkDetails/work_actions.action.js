@@ -15,7 +15,9 @@ export const WorkActions_action = {
     DeleteWork,
     InitConfirmWork,
     FinalFlowConfirmWork,
-    ConfirmReviewWork
+    ConfirmReviewWork,
+    reviewWorkAddRows,
+    reviewWorkAddTotalCount
 
 };
 
@@ -157,7 +159,7 @@ function SeenWork(peygir_id) {
     }
 }
 
-function SaveWorkInfo(params, peygir_id) {
+function SaveWorkInfo(params) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());

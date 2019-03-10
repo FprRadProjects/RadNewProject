@@ -2,13 +2,14 @@ import { WorkBasic_service } from "../../../../_services";
 import { alertActions } from "../../../Alert";
 import { loadingActions } from "../../../Loading";
 import { AutoBasicInfoConstant,AutoWorkBasicConstant } from "../../../../_constants";
-import { common_Actions } from "../../../../_actions";
+import { WorkActions_action } from "../../../../_actions";
 import { toast } from 'react-toastify';
 
 export const WorkBasic_action = {
     GetWorkInfo,
     FetchWorkInfo,
     FlowResultListOnWork,
+    ReviewWorkConfirmList,
 
 };
 
@@ -58,6 +59,25 @@ function FlowResultListOnWork(params) {
                     if (data.status) {
                         dispatch(flowResultAddTotalCount(data.data.totalcount));
                         dispatch(flowResultAddRows(data.data.rows));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
+function ReviewWorkConfirmList(params) {
+    return dispatch => {
+        WorkBasic_service.ReviewWorkConfirmList(params)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(WorkActions_action.reviewWorkAddTotalCount(data.data.totalcount));
+                        dispatch(WorkActions_action.reviewWorkAddRows(data.data.rows));
                     }
                     else {
                         toast.error(data.error);

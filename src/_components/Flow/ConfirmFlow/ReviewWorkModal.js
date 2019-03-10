@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { GridComponent } from "../../Config/GridComponent";
-import { WorkActions_action } from "../../../_actions";
+import { WorkActions_action,WorkBasic_action } from "../../../_actions";
 import { EditeReviewWorkModal } from '../../Flow/ConfirmFlow/EditeReviewWorkModal';
 var currencyColumns = [];
 var hiddenColumnNames = ["ashkhas_id"];
@@ -16,6 +16,7 @@ var Params = {
     "direction": "desc",
     "filter": []
 };
+var ReviewParams = { peygir_id: 0, page: 0, pagesize: 10, filter: [] };
 
 class ReviewWorkModal extends Component {
     constructor(props) {
@@ -39,7 +40,7 @@ class ReviewWorkModal extends Component {
     }
    
     SuccesEditReviewWork(SaveParams,e) {
-        const { ParentForm, SaveWorkInfo, lang } = this.props;
+        const { ParentForm, SaveWorkInfo, lang ,ReviewWorkConfirmList} = this.props;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         SaveParams.data["peygir_id"] = { "peygir_id": this.state.row.peygir_id };
         SaveParams.form = formname;
@@ -48,11 +49,13 @@ class ReviewWorkModal extends Component {
             return obj[index++] = SaveParams.data[item];
         })
         SaveParams.data = obj;
-        SaveWorkInfo(SaveParams, 0).then(data=>{
+        SaveWorkInfo(SaveParams).then(data=>{
             if (data.status) {
                 this.setState({
                     EditReviewModal: false,
                 });
+                ReviewParams.peygir_id = this.state.row.p_id;
+                ReviewWorkConfirmList(ReviewParams);
             }
         });
         SaveParams = { form: "", data: [] };
@@ -134,9 +137,13 @@ ReviewWorkModal.contextTypes = {
 const mapDispatchToProps = dispatch => ({
 
    
-    SaveWorkInfo: (SaveParams, peygir_id) => {
-      return  dispatch(WorkActions_action.SaveWorkInfo(SaveParams, peygir_id));
-    }
+    SaveWorkInfo: (SaveParams) => {
+        return  dispatch(WorkActions_action.SaveWorkInfo(SaveParams));
+      },
+      ReviewWorkConfirmList: (Params) => {
+          dispatch(WorkBasic_action.ReviewWorkConfirmList(Params));
+      },
+    
 
 });
 function mapStateToProps(state) {

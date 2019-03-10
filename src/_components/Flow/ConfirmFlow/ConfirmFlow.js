@@ -7,7 +7,7 @@ import { FormInfo } from "../../../locales";
 import { SelectFlowResultModal } from '../../Flow/ConfirmFlow/SelectFlowResultModal';
 import { ReviewWorkModal } from '../../Flow/ConfirmFlow/ReviewWorkModal';
 
-var FinalConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Results: [] };
+var FinalConfirmParams = { form: "", page: 0, pagesize: 10, filter: [], Results: [] };
 
 class ConfirmFlow extends Component {
     constructor(props) {

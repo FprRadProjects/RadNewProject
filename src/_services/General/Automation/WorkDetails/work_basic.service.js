@@ -4,7 +4,8 @@ import {UserConfig} from '../../../Config.js'
 
 export const WorkBasic_service = {
     GetWorkInfo,
-    FlowResultListOnWork
+    FlowResultListOnWork,
+    ReviewWorkConfirmList
 };
 
 //Get "peygir_id" //Returns true-false
@@ -25,6 +26,18 @@ function GetWorkInfo(peygir_id) {
 function FlowResultListOnWork(params) {
     if (UserConfig.GetToken() !== null) {
         return axios.post(BaseUrl + "FlowResultListOnWork", params)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+function ReviewWorkConfirmList(params) {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(BaseUrl + "ReviewWorkConfirmList", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
