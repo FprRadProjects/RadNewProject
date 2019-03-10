@@ -34905,9 +34905,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
   i.icon.refresh-information{
       background-image: url(../images/Ribbon/refresh-information.svg);
   }
-  /* i.icon.referral-result{
+  i.icon.referral-result{
     background-image: url(../images/Ribbon/referral-result.svg);
-} */
+}
 i.icon.marks{
     background-image: url(../images/Ribbon/marks.svg);
 }
