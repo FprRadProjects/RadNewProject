@@ -10,6 +10,7 @@ import {
     WorkBasic_action,
     BasicInfo_action, WorkActions_action
 } from "../../../../_actions";
+import { toast } from 'react-toastify';
 
 class RibbonReferences extends Component {
     constructor(props) {
@@ -40,6 +41,9 @@ class RibbonReferences extends Component {
                 ReferenceViewermodal: !this.state.ReferenceViewermodal
             });
         }
+        else
+        toast.warn(this.context.t("msg_No_Select_Row"));
+
     }
 
     toggleReferenceViewer() {

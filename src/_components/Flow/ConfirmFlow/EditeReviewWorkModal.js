@@ -4,8 +4,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { WorkActions_action, AutoBasicInfo_action } from "../../../_actions";
 import { ComboSelectList } from "../../Basic/";
-
-var SaveParams = { form: "", data: [] };
+var thisSaveParams = { form: "", data: [] };
 
 class EditeReviewWorkModal extends Component {
     constructor(props) {
@@ -20,10 +19,11 @@ class EditeReviewWorkModal extends Component {
             backdropClassName: "test",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
-
+        const { SaveParams } = this.props;
+        thisSaveParams = SaveParams;
     }
 
-    
+
     componentDidMount() {
         const { rowData, SelectWorkerList, SelectManagerList, SelectAshkhasList } = this.props;
         SelectWorkerList(0, rowData.wt_id)
@@ -33,18 +33,23 @@ class EditeReviewWorkModal extends Component {
     changeHandle = (e, val) => {
         if (val !== undefined) {
             const { name } = e;
-            SaveParams.data[[name]] = { [name]: val.value }
+            if (val.value !== 0)
+                thisSaveParams.data[[name]] = { [name]: val.value }
+            else
+                thisSaveParams.data[[name]] = { [name]: null }
         }
         else {
             const { name, value } = e.target;
-            SaveParams.data[[name]] = { [name]: value };
+            thisSaveParams.data[[name]] = { [name]: value };
         }
     }
 
     render() {
 
         const { modal, rowData, toggle, SelectManagerList_rows, SelectWorkerList_rows, SelectAshkhasList_rows
-        ,SuccesEditReviewWork } = this.props;
+            , SuccesEditReviewWork } = this.props;
+        var None = [{ value: 0, label: this.context.t("NoSelection") }]
+        var AshkhasList = None.concat(SelectAshkhasList_rows)
         let ashkhasSelectedOption = { value: rowData.ashkhas_id, label: rowData.ashkhasname }
         let workerSelectedOption = { value: rowData.worker_id, label: rowData.worker }
         let managerSelectedOption = { value: rowData.defmodir_id, label: rowData.modir }
@@ -108,7 +113,7 @@ class EditeReviewWorkModal extends Component {
                                     }
                                     <label>{this.context.t("Audience")}: </label>
                                     {SelectAshkhasList_rows !== undefined &&
-                                        <ComboSelectList options={SelectAshkhasList_rows} name="ashkhas_id" onChange={this.changeHandle.bind(this)} selectedOption={ashkhasSelectedOption} />
+                                        <ComboSelectList options={AshkhasList} name="ashkhas_id" onChange={this.changeHandle.bind(this)} selectedOption={ashkhasSelectedOption} />
                                     }
 
                                 </div>
@@ -116,7 +121,7 @@ class EditeReviewWorkModal extends Component {
                         </ModalBody>
                         <ModalFooter>
 
-                            <Button color="primary" onClick={SuccesEditReviewWork.bind(this,SaveParams)}>{this.context.t("Edit")}</Button>{' '}
+                            <Button color="primary" onClick={SuccesEditReviewWork.bind(this)}>{this.context.t("Edit")}</Button>{' '}
                             <Button color="primary" onClick={toggle}>{this.context.t("Cancel")}</Button>{' '}
                         </ModalFooter>
                     </Modal>

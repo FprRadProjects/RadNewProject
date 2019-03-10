@@ -85,6 +85,7 @@ export const translations = {
         Result:"نتیجه",
         SelectPopup:"...",
         Description:"شرح",
+        NoSelection:"بدون انتخاب",
         //---------------اقدام------------------شروع
         logout: 'خروج',
         Save: 'ذخیره',
@@ -111,6 +112,7 @@ export const translations = {
         required_username: 'نام کاربری لازم به ورود است',
         required_password: 'گذرواژه لازم به ورود است',
         user_info_not_available: 'اطلاعات کاربر در دسترس نیست',
+        msg_No_Select_Row: 'سطری انتخاب نشده است...',
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
         frm_System: 'سیستم',
@@ -219,6 +221,7 @@ export const translations = {
         Result:"Result",
         SelectPopup:"...",
         Description:"Description",
+        NoSelection:"No selection",
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
@@ -246,6 +249,7 @@ export const translations = {
         required_username: "Username is required to login",
         required_password: 'Password required to login',
         user_info_not_available: 'User information is not available',
+        msg_No_Select_Row: 'Row Not Selected...',
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',

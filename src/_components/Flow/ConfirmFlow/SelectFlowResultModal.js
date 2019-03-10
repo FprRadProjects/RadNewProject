@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { GridComponent } from "../../Config/GridComponent";
-import { WorkActions_action, WorkBasic_action } from "../../../_actions";
+import { toast } from 'react-toastify';
 
 var currencyColumns = [];
 var hiddenColumnNames = ["p_count"];

@@ -34,12 +34,11 @@ export function Auto_BasicInfo(state = {}, action) {
             }
         }
         case Constant.SELECT_ASHKHAS_LIST_SET_GRID_ROWS: {
-        
             return {
                 ...state,
-                SelectAshkhasList_rows:   Object.keys(action.data).map((item, index) => {
-                    return  { value: action.data[item].id, label: action.data[item].name };
-                }),
+                SelectAshkhasList_rows:  Object.keys(action.data).map((item, index) => {
+                return  { value: action.data[item].id, label: action.data[item].name };
+            }),
             }
         }
         case Constant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS: {

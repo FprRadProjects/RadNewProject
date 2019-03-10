@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 import { GridComponent } from "../../Config/GridComponent";
 import { WorkActions_action,WorkBasic_action } from "../../../_actions";
 import { EditeReviewWorkModal } from '../../Flow/ConfirmFlow/EditeReviewWorkModal';
+import { toast } from 'react-toastify';
 var currencyColumns = [];
 var hiddenColumnNames = ["ashkhas_id"];
 var booleanColumns = [];
@@ -17,6 +18,7 @@ var Params = {
     "filter": []
 };
 var ReviewParams = { peygir_id: 0, page: 0, pagesize: 10, filter: [] };
+var SaveParams = { form: "", data: [] };
 
 class ReviewWorkModal extends Component {
     constructor(props) {
@@ -39,9 +41,10 @@ class ReviewWorkModal extends Component {
         })
     }
    
-    SuccesEditReviewWork(SaveParams,e) {
+    SuccesEditReviewWork(e) {
         const { ParentForm, SaveWorkInfo, lang ,ReviewWorkConfirmList} = this.props;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
+        console.log(SaveParams)
         SaveParams.data["peygir_id"] = { "peygir_id": this.state.row.peygir_id };
         SaveParams.form = formname;
         let obj = [];
@@ -67,6 +70,8 @@ class ReviewWorkModal extends Component {
                 EditReviewModal: !this.state.EditReviewModal
             })
         }
+        else
+        toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
 
@@ -122,8 +127,10 @@ class ReviewWorkModal extends Component {
                 <style>{modalBackDrop}</style>
                 {this.state.EditReviewModal &&
                     <EditeReviewWorkModal modal={this.state.EditReviewModal} ParentForm={ParentForm}
-                        toggle={this.EditReviewWorkConfirm.bind(this)} Params={Params}
-                        rowData={this.state.row} SuccesEditReviewWork={this.SuccesEditReviewWork.bind(this)} />}
+                        toggle={this.EditReviewWorkConfirm.bind(this)} Params={Params} SaveParams={SaveParams}
+                        rowData={this.state.row} SuccesEditReviewWork={this.SuccesEditReviewWork.bind(this)}
+                        
+                        />}
             </div>
         );
     }

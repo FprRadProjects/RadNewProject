@@ -160,14 +160,12 @@ function mapStateToProps(state) {
     const {lang} = state.i18nState;
     const {ShortKeys} = state.Design;
 
-    const {Design} = state
 
     return {
         alert,
         loading,
         lang,
-        ShortKeys,
-        Design
+        ShortKeys
     };
 }
 
