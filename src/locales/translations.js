@@ -97,6 +97,15 @@ export const translations = {
         DeleteControl: 'حذف کنترل',
         AddToShortKey: 'افزودن به دسترسی سریع',
         Select:"انتخاب",
+        RefreshInformation: "بازخوانی اطلاعات",
+        ReferralResult: "نتیجه ارجاع",
+        Marks: "نشانه ها",
+        RemoveMark: "حذف نشانه",
+        Marking: "نشانه گذاری",
+        Diagram: "دیاگرام",
+        FollowUpDiagram: "دیاگرام عطف",
+        WorkFlowSummary: "خلاصه گردش کار",
+
         //--------------اقدام------------------پایان
         //---------------پیام ها----------------شروع
         required_username: 'نام کاربری لازم به ورود است',
@@ -222,6 +231,15 @@ export const translations = {
         DeleteControl: 'Delete Control',
         AddToShortKey: 'Add To Short Key',
         Select:"Select",
+        RefreshInformation: "Refresh Information",
+        ReferralResult: "Referral Result",
+        Marks: "Marks",
+        RemoveMark: "RemoveMark",
+        Marking: "Marking",
+        Diagram: "Diagram",
+        FollowUpDiagram: "Follow Up Diagram",
+        WorkFlowSummary: "Work Flow Summary",
+
         //End-----------------Actions----------------
 
         //Start---------------Messages----------------

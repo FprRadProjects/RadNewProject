@@ -7843,6 +7843,7 @@ ul .submenu {
                 text-align: center;
                 font-size: 14px;
                 font-weight: 400;
+                cursor: pointer;
             }
 
                 .dashboard-wrap .dashboard-left-aside .card-header .task-view-mode a.user-view {
