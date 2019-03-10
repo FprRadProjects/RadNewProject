@@ -34899,3 +34899,27 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
       left: -9px!important;
       right:auto!important;
   }
+
+
+
+  i.icon.refresh-information{
+      background-image: url(../images/Ribbon/refresh-information.svg);
+  }
+  /* i.icon.referral-result{
+    background-image: url(../images/Ribbon/referral-result.svg);
+} */
+i.icon.marks{
+    background-image: url(../images/Ribbon/marks.svg);
+}
+i.icon.remove-mark{
+    background-image: url(../images/Ribbon/remove-mark.svg);
+}
+i.icon.marking{
+    background-image: url(../images/Ribbon/marking.svg);
+}
+i.icon.follow-up-diagram{
+    background-image: url(../images/Ribbon/follow-up-diagram.svg);
+}
+i.icon.diagram{
+    background-image: url(../images/Ribbon/diagram.svg);
+}

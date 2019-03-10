@@ -77,13 +77,15 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-caption">امکانات</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
+                                        {/* بازخوانی اطلاعات */}
                                         <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>{this.context.t("Flow")}</span>
+                                            <i className="icon refresh-information"></i>
+                                            <span>{this.context.t("RefreshInformation")}</span>
                                         </a>
+                                        {/* نتیجه ارجاع */}
                                         <a onClick={this.OpenReferenceViewer.bind(this)}>
-                                            <i className="icon"></i>
-                                            <span>نتیجه ارجاع</span>
+                                            <i className="icon referral-result"></i>
+                                            <span>{this.context.t("ReferralResult")}</span>
                                         </a>
 
                                     </div>
@@ -93,28 +95,20 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-caption">نشانه گذاری</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
+                                        {/* نشانه ها */}
                                         <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه ها</span>
+                                            <i className="icon marks"></i>
+                                            <span>{this.context.t("Marks")}</span>
                                         </a>
+                                        {/* حذف نشانه  */}
                                         <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>حذف نشانه ها</span>
+                                            <i className="icon remove-mark"></i>
+                                            <span>{this.context.t("RemoveMark")}</span>
                                         </a>
+                                        {/* حذف نشانه  */}
                                         <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه گذاری</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">پیگیری وضعیت</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>پیش نیازها</span>
+                                            <i className="icon marking"></i>
+                                            <span>{this.context.t("Marking")}</span>
                                         </a>
                                     </div>
                                 </div>
@@ -123,48 +117,15 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-caption">دیاگرام</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
+                                        {/* دیاگرام عطف  */}
                                         <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام عطف</span>
+                                            <i className="icon follow-up-diagram"></i>
+                                            <span>{this.context.t("FollowUpDiagram")}</span>
                                         </a>
+                                        {/* دیاگرام  */}
                                         <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">سایر</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>خلاصه گردش کار</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>گروه آرشیو کاربر</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نمایش دبیرخانه</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>ایجاد رونوشت</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>ارجاع</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>ویرایش ارجاع</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>فراخوانی از ایمیل کاربر</span>
+                                            <i className="icon diagram"></i>
+                                            <span>{this.context.t("Diagram")}</span>
                                         </a>
                                     </div>
                                 </div>
