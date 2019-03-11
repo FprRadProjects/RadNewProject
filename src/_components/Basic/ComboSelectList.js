@@ -12,7 +12,11 @@ class ComboSelectList extends Component {
     componentDidMount(){
         const {selectedOption } = this.props;
         this.setState({ selectedOption:selectedOption });
-
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.selectedOption!==this.props.selectedOption){
+            this.setState({selectedOption:nextProps.selectedOption });
+          }
     }
     handleChange = (selectedOption,e) => {
         const {onChange } = this.props;

@@ -90,6 +90,7 @@ export const translations = {
         logout: 'خروج',
         Save: 'ذخیره',
         Edit: 'ویرایش',
+        SaveAndClose: 'ذخیره و بستن',
         ConfirmAndClose: 'تایید و بستن',
         Rebuild: 'بازسازی',
         Delete: 'حذف',
@@ -133,6 +134,7 @@ export const translations = {
         frm_Text_Defaults: 'پیش فرض های متنی',
         frm_Flow_Results: 'نتایج فرآیند',
         frm_Review_Confirm_Work: 'بازنگری تایید کار',
+        frm_Edit_Review_Confirm_Work: 'ویرایش بازنگری تایید کار',
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -226,6 +228,7 @@ export const translations = {
         logout: 'Logout',
         Save: 'Save',
         Edit: 'Edit',
+        SaveAndClose: 'Save And Close',
         ConfirmAndClose: 'Confirm And Close',
         Rebuild: 'Rebuild',
         Delete: 'Delete',
@@ -270,6 +273,7 @@ export const translations = {
         frm_Text_Defaults: 'Text Defaults',
         frm_Flow_Results: 'Flow Results',
         frm_Review_Confirm_Work: 'Review Confirm Work',
+        frm_Edit_Review_Confirm_Work: 'Edit Review Confirm Work',
         
         //End-------------- FORM NAME --------------
 

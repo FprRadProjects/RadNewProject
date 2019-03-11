@@ -1,17 +1,44 @@
 import { AutoBasicInfo_service, ProjectsInfo_service } from "../../../../_services";
-import { alertActions } from "../../../index";
 import { AutoBasicInfoConstant as constant } from "../../../../_constants";
 import { toast } from 'react-toastify';
+import {
+    loadingActions, userActions, common_Actions
+    , WorkBasic_action
+} from "../../../index";
+import { history } from "../../../../_helpers";
 
 export const AutoBasicInfo_action = {
     GetDefaultText,
     SelectAshkhasList,
     SelectWorkerList,
-    SelectManagerList
+    SelectManagerList,
+    SayManagerOnWorkerWtype
 
 
 
 };
+
+
+function SayManagerOnWorkerWtype(worker_id, wt_id) {
+    return dispatch => {
+        return AutoBasicInfo_service.SayManagerOnWorkerWtype(worker_id, wt_id)
+            .then(
+                data => {
+                    if (!data.status && data.code !== 0) {
+                        toast.error(data.error)
+                    } else if (!data.status && data.code === 0) {
+                        userActions.logout();
+                        history.push("/login")
+                    }
+                    return Promise.resolve(data)
+                },
+                error => {
+                    toast.error(error);
+                    dispatch(loadingActions.HideLoading());
+                }
+            );
+    }
+}
 
 
 function SelectManagerList(id_role, wt_id) {
@@ -34,8 +61,6 @@ function SelectManagerList(id_role, wt_id) {
             );
     }
 }
-
-
 function SelectWorkerList(id_role, wt_id) {
     return dispatch => {
         AutoBasicInfo_service.SelectWorkerList(id_role, wt_id)
@@ -62,7 +87,7 @@ function SelectAshkhasList(id_taraf) {
         AutoBasicInfo_service.SelectAshkhasList(id_taraf)
             .then(
                 data => {
-                    if (data.status) 
+                    if (data.status)
                         dispatch(SelectAshkhasListAddRows(data.data.rows));
                     else {
                         toast.error(data.error);

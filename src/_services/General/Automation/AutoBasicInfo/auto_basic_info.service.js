@@ -6,9 +6,26 @@ export const AutoBasicInfo_service = {
     GetDefaultText,
     SelectAshkhasList,
     SelectWorkerList,
-    SelectManagerList
+    SelectManagerList,
+    SayManagerOnWorkerWtype
 };
 
+function SayManagerOnWorkerWtype(worker_id,wt_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('worker_id', worker_id);
+        formData.append('wt_id', wt_id);
+        return axios.post(BaseUrl + "SayManagerOnWorkerWtype",formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
 function SelectManagerList(id_role,wt_id) {
     if (UserConfig.GetToken() !== null) {
 
