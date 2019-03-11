@@ -20,8 +20,11 @@ var Params = {
 class SelectFlowResultModal extends Component {
     constructor(props) {
         super(props);
+        const { modal} = this.props;
+    
         this.state = {
             ...this.state,
+            FlowResultSelectmodal: modal,
             backdrop: "static",
             backdropClassName: "test",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
@@ -35,7 +38,9 @@ class SelectFlowResultModal extends Component {
             row: row
         })
     }
-   
+    componentWillReceiveProps(nextProps){
+        this.setState({FlowResultSelectmodal:nextProps.modal });
+    }
     render() {
         const columns = [
             { name: 'id', title: this.context.t("RowId") },
@@ -43,7 +48,7 @@ class SelectFlowResultModal extends Component {
             { name: 'p_count', title: this.context.t("p_count") },
 
         ];
-        const { modal, toggle, peygir_id
+        const {  toggle, peygir_id
             , SelectFlowResultList_rows, SelectFlowResultList_totalCount,
             SuccesSelectFlowResult } = this.props;
         Params.peygir_id = peygir_id;
@@ -60,7 +65,7 @@ class SelectFlowResultModal extends Component {
             <div>
 
                 <div>
-                    <Modal isOpen={modal} toggle={toggle}
+                    <Modal isOpen={this.state.FlowResultSelectmodal} toggle={toggle}
                     >
                         <ModalHeader>{this.context.t("frm_Flow_Results")}</ModalHeader>
                         <ModalBody>

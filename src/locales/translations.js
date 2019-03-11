@@ -114,6 +114,7 @@ export const translations = {
         required_password: 'گذرواژه لازم به ورود است',
         user_info_not_available: 'اطلاعات کاربر در دسترس نیست',
         msg_No_Select_Row: 'سطری انتخاب نشده است...',
+        msg_ActionDate_Not_Valid: 'تاریخ کار معتبر نمی باشد...',
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
         frm_System: 'سیستم',
@@ -253,6 +254,7 @@ export const translations = {
         required_password: 'Password required to login',
         user_info_not_available: 'User information is not available',
         msg_No_Select_Row: 'Row Not Selected...',
+        msg_ActionDate_Not_Valid: 'Action Date Not Valid...',
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',

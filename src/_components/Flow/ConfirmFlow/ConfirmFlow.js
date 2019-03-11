@@ -22,19 +22,12 @@ class ConfirmFlow extends Component {
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
         this.CloseSelectReviewWork = this.CloseSelectReviewWork.bind(this);
-        this.CloseSelectFlowResult = this.CloseSelectFlowResult.bind(this);
     }
 
-
+  
     CloseSelectReviewWork = (e) => {
         this.setState({
             ReviewWorkModal: !this.state.ReviewWorkModal,
-        });
-    }
-
-    CloseSelectFlowResult = (e) => {
-        this.setState({
-            FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
         });
     }
 
@@ -45,8 +38,8 @@ class ConfirmFlow extends Component {
             FinalConfirmParams["peygir_id"] = peygir_id;
             FinalConfirmParams["Results"] = [row.id];
             FinalFlowConfirmWork(FinalConfirmParams).then(data => {
-                if (data.status) {
-                    this.setState({
+        if (data.status) {
+        this.setState({
                         FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
                     });
                     if (data.code === 2 && data.data !== null) {
@@ -72,14 +65,20 @@ class ConfirmFlow extends Component {
             }
         });
     }
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps.flowResultSelectModal)
+        console.log(this.props.flowResultSelectModal)
+        if(nextProps.flowResultSelectModal!==this.props.flowResultSelectModal)
+            this.setState({FlowResultSelectmodal:nextProps.flowResultSelectModal === undefined || !nextProps.flowResultSelectModal ? false : true, });
+    }
     render() {
-        const { peygir_id, ParentForm } = this.props;
+        const { peygir_id, ParentForm,CloseleSelectFlowResult } = this.props;
         return (
             <div>
 
                 {this.state.FlowResultSelectmodal &&
                     <SelectFlowResultModal modal={this.state.FlowResultSelectmodal}
-                        toggle={this.CloseSelectFlowResult.bind(this)}
+                        toggle={CloseleSelectFlowResult.bind(this)}
                         peygir_id={peygir_id}
                         SuccesSelectFlowResult={this.SuccesSelectFlowResult.bind(this)}
                     />}

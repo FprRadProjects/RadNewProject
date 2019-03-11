@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { WorkActions_action, AutoBasicInfo_action } from "../../../_actions";
-import { ComboSelectList } from "../../Basic/";
+import { ComboSelectList,CalendarDatePicker } from "../../Config";
 var thisSaveParams = { form: "", data: [] };
 
 class EditeReviewWorkModal extends Component {
@@ -58,9 +58,10 @@ class EditeReviewWorkModal extends Component {
             const { name, value } = e.target;
             thisSaveParams.data[[name]] = { [name]: value };
         }
-        console.log(thisSaveParams)
+}
+    CalendarChange=(value,name)=>{
+        thisSaveParams.data[[name]] = { [name]: value }
     }
-
     render() {
 
         const { modal, rowData, toggle, SelectManagerList_rows, SelectWorkerList_rows, SelectAshkhasList_rows
@@ -82,7 +83,7 @@ class EditeReviewWorkModal extends Component {
 
                 <div>
                     <Modal isOpen={modal} size="lg" >
-                        <ModalHeader>{this.context.t("frm_Review_Confirm_Work")}</ModalHeader>
+                        <ModalHeader>{this.context.t("frm_Edit_Review_Confirm_Work")}</ModalHeader>
                         <ModalBody>
                             {rowData !== undefined && rowData != null &&
                                 <div>
@@ -103,7 +104,7 @@ class EditeReviewWorkModal extends Component {
                                     <label>{rowData.wtype} </label>
                                     <br />
                                     <label>{this.context.t("ActionDate")}: </label>
-                                    <input type="text" name="tarikhaction" onChange={this.changeHandle.bind(this)} defaultValue={rowData.tarikhaction} />
+                                    <CalendarDatePicker fieldname="tarikhaction" CalendarChange={this.CalendarChange.bind(this)} setDate={rowData.tarikhaction}></CalendarDatePicker>
                                     <br />
                                     <label>{this.context.t("DeadTime")}: </label>
                                     <input type="text" name="deadtime" onChange={this.changeHandle.bind(this)} defaultValue={rowData.deadtime} />

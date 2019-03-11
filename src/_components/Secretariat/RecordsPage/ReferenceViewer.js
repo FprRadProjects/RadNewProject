@@ -109,8 +109,8 @@ class ReferenceViewer extends Component {
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         ConfirmParams["Form"] = formname;
         InitConfirmWork(ConfirmParams).then(data => {
-            if (data.status) {
-                if (data.code === 2 && data.data !== null) {
+        if (data.status) {
+        if (data.code === 2 && data.data !== null) {
                     this.setState({
                         FlowResultSelectmodal: true,
                     });
@@ -249,7 +249,7 @@ class ReferenceViewer extends Component {
                             {this.state.FlowResultSelectmodal &&
                                 <ConfirmFlow ParentForm={ParentForm}
                                     flowResultSelectModal={this.state.FlowResultSelectmodal}
-                                    Params={Params}
+                                    Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
                                     peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
 
                         </div>}

@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { GridComponent } from "../../Config/GridComponent";
-import { WorkActions_action,WorkBasic_action } from "../../../_actions";
+import { WorkActions_action, WorkBasic_action } from "../../../_actions";
 import { EditeReviewWorkModal } from '../../Flow/ConfirmFlow/EditeReviewWorkModal';
 import { toast } from 'react-toastify';
 var currencyColumns = [];
@@ -40,11 +40,16 @@ class ReviewWorkModal extends Component {
             row: row
         })
     }
-   
+
     SuccesEditReviewWork(e) {
-        const { ParentForm, SaveWorkInfo, lang ,ReviewWorkConfirmList} = this.props;
+        const { ParentForm, SaveWorkInfo, lang, ReviewWorkConfirmList } = this.props;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
-        console.log(SaveParams)
+        if (SaveParams.data["tarikhaction"] !== undefined) {
+            if (SaveParams.data["tarikhaction"].tarikhaction.length < 10) {
+                toast.error(this.context.t("msg_ActionDate_Not_Valid"));
+                return false;
+            }
+        }
         SaveParams.data["peygir_id"] = { "peygir_id": this.state.row.peygir_id };
         SaveParams.form = formname;
         let obj = [];
@@ -52,7 +57,7 @@ class ReviewWorkModal extends Component {
             return obj[index++] = SaveParams.data[item];
         })
         SaveParams.data = obj;
-        SaveWorkInfo(SaveParams).then(data=>{
+        SaveWorkInfo(SaveParams).then(data => {
             if (data.status) {
                 this.setState({
                     EditReviewModal: false,
@@ -71,7 +76,7 @@ class ReviewWorkModal extends Component {
             })
         }
         else
-        toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
 
@@ -129,8 +134,8 @@ class ReviewWorkModal extends Component {
                     <EditeReviewWorkModal modal={this.state.EditReviewModal} ParentForm={ParentForm}
                         toggle={this.EditReviewWorkConfirm.bind(this)} Params={Params} SaveParams={SaveParams}
                         rowData={this.state.row} SuccesEditReviewWork={this.SuccesEditReviewWork.bind(this)}
-                        
-                        />}
+
+                    />}
             </div>
         );
     }
@@ -143,14 +148,14 @@ ReviewWorkModal.contextTypes = {
 
 const mapDispatchToProps = dispatch => ({
 
-   
+
     SaveWorkInfo: (SaveParams) => {
-        return  dispatch(WorkActions_action.SaveWorkInfo(SaveParams));
-      },
-      ReviewWorkConfirmList: (Params) => {
-          dispatch(WorkBasic_action.ReviewWorkConfirmList(Params));
-      },
-    
+        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams));
+    },
+    ReviewWorkConfirmList: (Params) => {
+        dispatch(WorkBasic_action.ReviewWorkConfirmList(Params));
+    },
+
 
 });
 function mapStateToProps(state) {
