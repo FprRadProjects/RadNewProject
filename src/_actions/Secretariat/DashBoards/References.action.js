@@ -8,15 +8,10 @@ import { toast } from 'react-toastify';
 
 
 export const Act_Reference= {
-    GetFormInfo,
     FetchData,
     FetchDataTree
 };
-function GetFormInfo(param) {
-    return dispatch => {
-        dispatch(getFormInfo_Reducer(param));
-    }
-}
+
 
 
 function FetchData(params) {

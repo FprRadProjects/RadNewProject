@@ -50,7 +50,7 @@ class References extends Component {
     }
     componentDidMount() {
         const { GetTemplateForm, GetFormInfo } = this.props;
-        // GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
+        GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
         GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id);
     }
     toggleFilter() {
@@ -173,7 +173,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(design_Actions.GetTemplateForm(Params))
     },
     GetFormInfo: (Param) => {
-        dispatch(Act_Reference.GetFormInfo(Param))
+        dispatch(BasicInfo_action.GetFormInfo(Param))
     },
     GetWorkInfo: (Params) => {
         dispatch(WorkBasic_action.GetWorkInfo(Params))
