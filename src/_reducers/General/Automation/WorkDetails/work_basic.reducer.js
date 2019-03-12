@@ -32,7 +32,18 @@ export  function Auto_WorkBasic(state = {}, action) {
                 ReviewWorkList_GridRowData:{}
             }
         }    
-       
+        case Constant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS: {
+            return {
+                ...state,
+                ...action.data
+            }
+        }  
+        case Constant.GET_WORK_INFO_REVIEW_CONFIRM_GRID_ROW_DATA_SUCCESS: {
+            return {
+                ...state,
+                ...action.data
+            }
+        }
         
         default:
             return state;

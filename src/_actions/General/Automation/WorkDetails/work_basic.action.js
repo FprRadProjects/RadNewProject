@@ -10,10 +10,30 @@ export const WorkBasic_action = {
     FetchWorkInfo,
     FlowResultListOnWork,
     ReviewWorkConfirmList,
+    GetReviewWorkInfo,
 
 };
 
 
+function GetReviewWorkInfo(row) {
+    const peygir_id = row.peygir_id;
+    return dispatch => {
+        WorkBasic_service.GetWorkInfo(peygir_id)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(GetReviewWorkInfo_Reducer(data.data));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
 function GetWorkInfo(row) {
     const peygir_id = row.peygir_id;
     return dispatch => {
@@ -90,7 +110,10 @@ function ReviewWorkConfirmList(params) {
     }
 }
 function UserGetWorkInfo_Reducer(data) {
-    return { type: AutoBasicInfoConstant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS, data }
+    return { type: AutoWorkBasicConstant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS, data }
+}
+function GetReviewWorkInfo_Reducer(data) {
+    return { type: AutoWorkBasicConstant.GET_WORK_INFO_REVIEW_CONFIRM_GRID_ROW_DATA_SUCCESS, data }
 }
 
 function flowResultAddTotalCount(data) {

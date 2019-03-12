@@ -41,12 +41,7 @@ export function Auto_BasicInfo(state = {}, action) {
             }),
             }
         }
-        case Constant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS: {
-            return {
-                ...state,
-                ...action.data
-            }
-        }
+      
         
         default:
             return state;
