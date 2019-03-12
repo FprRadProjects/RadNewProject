@@ -330,43 +330,43 @@ class RibbonReferences extends Component {
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
                                 if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
                                     return (
-                                        <ShortKeyButton Key={index} handleClick={this.OpenReferenceViewer.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.OpenReferenceViewer.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="referral-result" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-refresh-information") {
                                     return (
-                                        <ShortKeyButton Key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="refresh-information" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-marks") {
                                     return (
-                                        <ShortKeyButton Key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="marks" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-remove-mark") {
                                     return (
-                                        <ShortKeyButton Key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="remove-mark" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-marking") {
                                     return (
-                                        <ShortKeyButton Key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="marking" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-follow-up-diagram") {
                                     return (
-                                        <ShortKeyButton Key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="follow-up-diagram" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-diagram") {
                                     return (
-                                        <ShortKeyButton Key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="diagram" />
                                     )
                                 }

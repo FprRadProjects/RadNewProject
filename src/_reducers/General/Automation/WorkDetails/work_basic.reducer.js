@@ -41,7 +41,7 @@ export  function Auto_WorkBasic(state = {}, action) {
         case Constant.GET_WORK_INFO_REVIEW_CONFIRM_GRID_ROW_DATA_SUCCESS: {
             return {
                 ...state,
-                ...action.data
+                ReviewWork_Info:  action.data.WorkInfo,
             }
         }
         

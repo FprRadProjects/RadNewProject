@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
-import { WorkActions_action, AutoBasicInfo_action } from "../../../_actions";
+import { WorkActions_action, AutoBasicInfo_action,WorkBasic_action } from "../../../_actions";
 import { ComboSelectList,CalendarDatePicker } from "../../Config";
 var thisSaveParams = { form: "", data: [] };
 
@@ -29,7 +29,8 @@ class EditeReviewWorkModal extends Component {
 
     componentDidMount() {
         const { rowData, SelectWorkerList, SelectManagerList, SelectAshkhasList } = this.props;
-        SelectWorkerList(0, rowData.wt_id)
+console.log(rowData);
+SelectWorkerList(0, rowData.wt_id)
         SelectManagerList(0, rowData.wt_id);
         SelectAshkhasList(rowData.id_tel);
         this.setState({ ashkhasSelectedOption: { value: rowData.ashkhas_id, label: rowData.ashkhasname } });
@@ -68,7 +69,6 @@ class EditeReviewWorkModal extends Component {
             , SuccesEditReviewWork } = this.props;
         var None = [{ value: 0, label: this.context.t("NoSelection") }]
         var AshkhasList = None.concat(SelectAshkhasList_rows)
-
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -161,7 +161,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(AutoBasicInfo_action.SelectAshkhasList(id_taraf))
     }, SayManagerOnWorkerWtype: (worker_id, wt_id) => {
         return dispatch(AutoBasicInfo_action.SayManagerOnWorkerWtype(worker_id, wt_id))
-    },
+    }, 
 });
 EditeReviewWorkModal.contextTypes = {
     t: PropTypes.func.isRequired

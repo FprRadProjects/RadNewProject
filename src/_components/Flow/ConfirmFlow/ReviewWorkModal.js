@@ -42,7 +42,8 @@ class ReviewWorkModal extends Component {
     }
 
     SuccesEditReviewWork(e) {
-        const { ParentForm, SaveWorkInfo, lang, ReviewWorkConfirmList } = this.props;
+        const { ParentForm, SaveWorkInfo, lang, ReviewWorkConfirmList,ReviewWork_Info
+        ,FetchGetReviewWorkInfo } = this.props;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         if (SaveParams.data["tarikhaction"] !== undefined) {
             if (SaveParams.data["tarikhaction"].tarikhaction.length < 10) {
@@ -50,7 +51,7 @@ class ReviewWorkModal extends Component {
                 return false;
             }
         }
-        SaveParams.data["peygir_id"] = { "peygir_id": this.state.row.peygir_id };
+        SaveParams.data["peygir_id"] = { "peygir_id": ReviewWork_Info.peygir_id };
         SaveParams.form = formname;
         let obj = [];
         Object.keys(SaveParams.data).map((item, index) => {
@@ -62,15 +63,17 @@ class ReviewWorkModal extends Component {
                 this.setState({
                     EditReviewModal: false,
                 });
-                ReviewParams.peygir_id = this.state.row.p_id;
+                ReviewParams.peygir_id = ReviewWork_Info.p_id;
                 ReviewWorkConfirmList(ReviewParams);
+                FetchGetReviewWorkInfo(ReviewWork_Info.peygir_id);
             }
         });
         SaveParams = { form: "", data: [] };
     }
 
     EditReviewWorkConfirm = () => {
-        if (this.state.row !== null && this.state.row !== undefined) {
+        const { ReviewWork_Info } = this.props;
+        if (ReviewWork_Info !== null && ReviewWork_Info !== undefined) {
             this.setState({
                 EditReviewModal: !this.state.EditReviewModal
             })
@@ -98,7 +101,7 @@ class ReviewWorkModal extends Component {
 
         ];
         const { modal, peygir_id, ReviewWorkList_rows, ReviewWorkList_totalCount, ParentForm,
-            SuccesReviewWorkConfirm } = this.props;
+            SuccesReviewWorkConfirm,GetReviewWorkInfo,ReviewWork_Info } = this.props;
         Params.peygir_id = peygir_id;
         const modalBackDrop = `
         .modal-backdrop {
@@ -119,7 +122,7 @@ class ReviewWorkModal extends Component {
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                 rows={ReviewWorkList_rows} totalCount={ReviewWorkList_totalCount}
                                 UrlParams={Params}
-                                GetRowInfo={this.SetReviewWorkRowData} columnwidth={150}
+                                GetRowInfo={GetReviewWorkInfo} columnwidth={150}
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
                         </ModalBody>
@@ -133,7 +136,7 @@ class ReviewWorkModal extends Component {
                 {this.state.EditReviewModal &&
                     <EditeReviewWorkModal modal={this.state.EditReviewModal} ParentForm={ParentForm}
                         toggle={this.EditReviewWorkConfirm.bind(this)} Params={Params} SaveParams={SaveParams}
-                        rowData={this.state.row} SuccesEditReviewWork={this.SuccesEditReviewWork.bind(this)}
+                        rowData={ReviewWork_Info!==undefined?ReviewWork_Info:{}} SuccesEditReviewWork={this.SuccesEditReviewWork.bind(this)}
 
                     />}
             </div>
@@ -155,7 +158,12 @@ const mapDispatchToProps = dispatch => ({
     ReviewWorkConfirmList: (Params) => {
         dispatch(WorkBasic_action.ReviewWorkConfirmList(Params));
     },
-
+    GetReviewWorkInfo: (row) => {
+        dispatch(WorkBasic_action.GetReviewWorkInfo(row));
+    },
+    FetchGetReviewWorkInfo: (peygir_id) => {
+        return dispatch(WorkBasic_action.FetchGetReviewWorkInfo(peygir_id))
+    },
 
 });
 function mapStateToProps(state) {
@@ -168,12 +176,14 @@ function mapStateToProps(state) {
             state.Auto_WorkBasic.ReviewWorkList_rows != null && state.Auto_WorkBasic.ReviewWorkList_rows != undefined
                 ? state.Auto_WorkBasic : [] : [];
     const { ReviewWorkList_totalCount } = state.Auto_WorkBasic
+    const { ReviewWork_Info } = state.Auto_WorkBasic;
     return {
         alert,
         loading,
         lang,
         ReviewWorkList_rows,
         ReviewWorkList_totalCount,
+        ReviewWork_Info
     };
 }
 

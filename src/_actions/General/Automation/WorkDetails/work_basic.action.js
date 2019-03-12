@@ -11,12 +11,31 @@ export const WorkBasic_action = {
     FlowResultListOnWork,
     ReviewWorkConfirmList,
     GetReviewWorkInfo,
+    FetchGetReviewWorkInfo,
 
 };
 
 
 function GetReviewWorkInfo(row) {
     const peygir_id = row.peygir_id;
+    return dispatch => {
+        WorkBasic_service.GetWorkInfo(peygir_id)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(GetReviewWorkInfo_Reducer(data.data));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
+function FetchGetReviewWorkInfo(peygir_id) {
     return dispatch => {
         WorkBasic_service.GetWorkInfo(peygir_id)
             .then(
