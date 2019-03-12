@@ -163,7 +163,6 @@ class RibbonReferences extends Component {
                                                 EditedElements={EditedElements}
                                                 Text="Diagram"
                                             />
-
                                         </div>
                                     </div>
                                 </div>
