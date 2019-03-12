@@ -31,15 +31,15 @@ class ReviewWorkModal extends Component {
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
 
-        this.SetReviewWorkRowData = this.SetReviewWorkRowData.bind(this);
+        //this.SetReviewWorkRowData = this.SetReviewWorkRowData.bind(this);
         this.EditReviewWorkConfirm = this.EditReviewWorkConfirm.bind(this);
         this.SuccesEditReviewWork = this.SuccesEditReviewWork.bind(this);
     }
-    SetReviewWorkRowData = (row) => {
-        this.setState({
-            row: row
-        })
-    }
+    // SetReviewWorkRowData = (row) => {
+    //     this.setState({
+    //         row: row
+    //     })
+    // }
 
     SuccesEditReviewWork(e) {
         const { ParentForm, SaveWorkInfo, lang, ReviewWorkConfirmList,ReviewWork_Info
@@ -58,7 +58,9 @@ class ReviewWorkModal extends Component {
             return obj[index++] = SaveParams.data[item];
         })
         SaveParams.data = obj;
-        SaveWorkInfo(SaveParams).then(data => {
+        
+        
+        SaveWorkInfo(SaveParams,this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
                 this.setState({
                     EditReviewModal: false,
@@ -102,6 +104,7 @@ class ReviewWorkModal extends Component {
         ];
         const { modal, peygir_id, ReviewWorkList_rows, ReviewWorkList_totalCount, ParentForm,
             SuccesReviewWorkConfirm,GetReviewWorkInfo,ReviewWork_Info } = this.props;
+            console.log(ReviewWork_Info);
         Params.peygir_id = peygir_id;
         const modalBackDrop = `
         .modal-backdrop {
@@ -152,8 +155,8 @@ ReviewWorkModal.contextTypes = {
 const mapDispatchToProps = dispatch => ({
 
 
-    SaveWorkInfo: (SaveParams) => {
-        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams));
+    SaveWorkInfo: (SaveParams,msg) => {
+        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams,msg));
     },
     ReviewWorkConfirmList: (Params) => {
         dispatch(WorkBasic_action.ReviewWorkConfirmList(Params));

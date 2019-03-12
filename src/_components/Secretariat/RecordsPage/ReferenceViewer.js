@@ -11,7 +11,7 @@ import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 import { toast } from 'react-toastify';
 
 var SaveParams = { form: "", data: [] };
-var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "" };
+var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "" ,SaveParams:{}};
 
 class ReferenceViewer extends Component {
     constructor(props) {
@@ -104,19 +104,36 @@ class ReferenceViewer extends Component {
         });
     }
     ConfirmationHandle = (e) => {
-        const { WorkInfo, InitConfirmWork, ParentForm, lang } = this.props;
+        const { WorkInfo, InitConfirmWork, ParentForm, lang ,FetchWorkInfo,Params,RefreshParentForm} = this.props;
         ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         ConfirmParams["Form"] = formname;
-        InitConfirmWork(ConfirmParams).then(data => {
-        if (data.status) {
-        if (data.code === 2 && data.data !== null) {
+        SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
+        SaveParams.form = formname;
+        let obj = [];
+        Object.keys(SaveParams.data).map((item, index) => {
+            return obj[index++] = SaveParams.data[item];
+        })
+        SaveParams.data = obj;
+        ConfirmParams.SaveParams=SaveParams;
+        console.log(ConfirmParams.SaveParams)
+        //this.saveHandle("");
+        InitConfirmWork(ConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
+            if (data.status) {
+                if (data.code === 2 && data.data !== null) {
                     this.setState({
                         FlowResultSelectmodal: true,
                     });
                 }
+                else
+                {    
+                    FetchWorkInfo(WorkInfo.peygir_id);
+                    RefreshParentForm(Params);
+            
+                }
             }
         });
+        SaveParams = { form: "", data: [] };
     }
 
     CloseleSelectFlowResult = (e) => {
@@ -124,7 +141,7 @@ class ReferenceViewer extends Component {
             FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
         });
     }
-    saveHandle = () => {
+    saveHandle = (msg) => {
         const { ParentForm, WorkInfo, SaveWorkInfo, lang, FetchWorkInfo,
             RefreshParentForm, Params
         } = this.props;
@@ -136,7 +153,7 @@ class ReferenceViewer extends Component {
             return obj[index++] = SaveParams.data[item];
         })
         SaveParams.data = obj;
-        SaveWorkInfo(SaveParams).then(data => {
+        SaveWorkInfo(SaveParams, msg).then(data => {
             if (data.status) {
                 RefreshParentForm(Params);
                 FetchWorkInfo(WorkInfo.peygir_id);
@@ -153,9 +170,13 @@ class ReferenceViewer extends Component {
     }
 
     rebuildHandle() {
-        const { RebuildWork, WorkInfo } = this.props;
-        RebuildWork(WorkInfo.peygir_id);
-
+        const { RebuildWork, WorkInfo,RefreshParentForm,FetchWorkInfo,Params } = this.props;
+        RebuildWork(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
+            if (data.status) {
+                RefreshParentForm(Params);
+                FetchWorkInfo(WorkInfo.peygir_id);
+            }
+        });
     }
 
 
@@ -177,7 +198,7 @@ class ReferenceViewer extends Component {
                     <ModalHeader toggle={toggle}></ModalHeader>
                     <ModalBody>
                         <Button color="success"
-                            onClick={this.saveHandle.bind(this)}>{this.context.t("Save")}</Button>
+                            onClick={this.saveHandle.bind(this,this.context.t("msg_Operation_Success"))}>{this.context.t("Save")}</Button>
                         <Button color="success"
                             onClick={this.rebuildHandle.bind(this)}>{this.context.t("Rebuild")}</Button>
                         <Button color="success"
@@ -201,7 +222,7 @@ class ReferenceViewer extends Component {
                             <input type="text" disabled={true} defaultValue={WorkInfo.c_date} />
                             <input type="text" disabled={true} defaultValue={WorkInfo.c_time} /><br />
                             <label>{this.context.t("Audience")}: </label>
-                            <input type="text" disabled={true} defaultValue={WorkInfo.ashkhas} /><br />
+                            <input type="text" disabled={true} defaultValue={WorkInfo.ashkhasname} /><br />
                             <label>{this.context.t("Description")}: </label>
                             <textarea type="text" disabled={true} defaultValue={WorkInfo.tozihat}></textarea><br />
                             <label>{this.context.t("FileNumber")}: </label>
@@ -270,17 +291,17 @@ const mapDispatchToProps = dispatch => ({
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
-    SaveWorkInfo: (SaveParams) => {
-        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams));
+    SaveWorkInfo: (SaveParams, msg) => {
+        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
     },
-    RebuildWork: (Peygir_id) => {
-        dispatch(WorkActions_action.RebuildWork(Peygir_id))
+    RebuildWork: (Peygir_id, msg) => {
+        return dispatch(WorkActions_action.RebuildWork(Peygir_id, msg))
     },
-    DeleteWork: (Peygir_id) => {
+    DeleteWork: (Peygir_id, msg) => {
         dispatch(WorkActions_action.DeleteWork(Peygir_id))
     },
-    InitConfirmWork: (Params) => {
-        return dispatch(WorkActions_action.InitConfirmWork(Params))
+    InitConfirmWork: (Params, msg) => {
+        return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
     },
 
     FetchWorkInfo: (peygir_id) => {

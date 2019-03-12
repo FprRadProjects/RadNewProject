@@ -37,7 +37,7 @@ class ConfirmFlow extends Component {
             const { peygir_id, FinalFlowConfirmWork, RefreshParentForm,  Params } = this.props;
             FinalConfirmParams["peygir_id"] = peygir_id;
             FinalConfirmParams["Results"] = [row.id];
-            FinalFlowConfirmWork(FinalConfirmParams).then(data => {
+            FinalFlowConfirmWork(FinalConfirmParams,this.context.t("msg_Operation_Success")).then(data => {
         if (data.status) {
         this.setState({
                         FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
@@ -56,7 +56,7 @@ class ConfirmFlow extends Component {
     }
     SuccesReviewWorkConfirm = () => {
         const { peygir_id, ConfirmReviewWork,Params ,RefreshParentForm} = this.props;
-        ConfirmReviewWork(peygir_id).then(data => {
+        ConfirmReviewWork(peygir_id,this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
                 this.setState({
                     ReviewWorkModal: false,
@@ -66,8 +66,6 @@ class ConfirmFlow extends Component {
         });
     }
     componentWillReceiveProps(nextProps){
-        console.log(nextProps.flowResultSelectModal)
-        console.log(this.props.flowResultSelectModal)
         if(nextProps.flowResultSelectModal!==this.props.flowResultSelectModal)
             this.setState({FlowResultSelectmodal:nextProps.flowResultSelectModal === undefined || !nextProps.flowResultSelectModal ? false : true, });
     }
@@ -96,11 +94,11 @@ class ConfirmFlow extends Component {
 
 const mapDispatchToProps = dispatch => ({
 
-    FinalFlowConfirmWork: (Params) => {
-        return dispatch(WorkActions_action.FinalFlowConfirmWork(Params))
+    FinalFlowConfirmWork: (Params,msg) => {
+        return dispatch(WorkActions_action.FinalFlowConfirmWork(Params,msg))
     },
-    ConfirmReviewWork: (peygir_id) => {
-        return dispatch(WorkActions_action.ConfirmReviewWork(peygir_id))
+    ConfirmReviewWork: (peygir_id,msg) => {
+        return dispatch(WorkActions_action.ConfirmReviewWork(peygir_id,msg))
     },
    
 

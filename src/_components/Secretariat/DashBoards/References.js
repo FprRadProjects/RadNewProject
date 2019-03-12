@@ -14,7 +14,7 @@ import { FormInfo } from "../../../locales";
 import { RibbonReferences } from './Ribbon/Ribbon.References';
 
 var currencyColumns = [];
-var hiddenColumnNames = ['done', 'tarikhaction', 'id_tel', 'olaviyat', 'cuser',
+var hiddenColumnNames = ['done', 'id_tel', 'olaviyat', 'cuser',
     'c_date', 'tarikh', 'fok', 'mtarikh', 'see_date', 'fok', 'c_time', 'wt_id',
     'suggest_time', 'sm_zaman_anjam_kar', 'see_time', 'saat', 'fsaat', 'proje_nos_id',
     'p_proje_nose_id', 'showtree_id', 'muser', 'proje_code', 'natije'];
@@ -65,16 +65,17 @@ class References extends Component {
         const columns = [
             { name: 'flow', title: this.context.t("Flow") },
             { name: 'peygir_id', title: this.context.t("WorkID") },
+            { name: 'wtype', title: this.context.t("WorkType") },
+            { name: 'tarikhaction', title: this.context.t("ActionDate") },
+            { name: 'deadtime', title: this.context.t("DeadTime") },
             { name: 'worker', title: this.context.t("worker") },
             { name: 'modir', title: this.context.t("manager") },
             { name: 'name', title: this.context.t("PartyAccountName") },
             { name: 'coname', title: this.context.t("CompanyName") },
             { name: 'mnos', title: this.context.t("Serial_Lead") },
             { name: 'mwt', title: this.context.t("Work_Lead") },
-            { name: 'wtype', title: this.context.t("WorkType") },
             { name: 'nos_id', title: this.context.t("Serial") },
             { name: 'custom_serial', title: this.context.t("CustomSerial") },
-            { name: 'tarikhaction', title: this.context.t("ActionDate") },
             { name: 'mozo', title: this.context.t("Subject") },
             { name: 'zam', title: this.context.t("Attachments") },
             { name: 'vaziyat', title: this.context.t("Status") },
@@ -101,7 +102,6 @@ class References extends Component {
             { name: 'c_time', title: this.context.t("CreatedTime") },
             { name: 'wt_id', title: this.context.t("WorkTypeID") },
             { name: 'suggest_time', title: this.context.t("SuggestTime") },
-            { name: 'deadtime', title: this.context.t("DeadTime") },
             { name: 'see_time', title: this.context.t("SeenTime") },
             { name: 'saat', title: this.context.t("DoneTime") },
             { name: 'fsaat', title: this.context.t("ManagerDoneTime") },

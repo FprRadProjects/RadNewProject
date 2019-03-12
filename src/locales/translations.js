@@ -115,6 +115,7 @@ export const translations = {
         user_info_not_available: 'اطلاعات کاربر در دسترس نیست',
         msg_No_Select_Row: 'سطری انتخاب نشده است...',
         msg_ActionDate_Not_Valid: 'تاریخ کار معتبر نمی باشد...',
+        msg_Operation_Success: 'عملیات با موفقیت انجام شد....',
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
         frm_System: 'سیستم',
@@ -255,6 +256,7 @@ export const translations = {
         user_info_not_available: 'User information is not available',
         msg_No_Select_Row: 'Row Not Selected...',
         msg_ActionDate_Not_Valid: 'Action Date Not Valid...',
+        msg_Operation_Success: 'The Operation Was Successful....',
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',

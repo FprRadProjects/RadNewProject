@@ -21,7 +21,7 @@ export const WorkActions_action = {
 
 };
 
-function ConfirmReviewWork(peygir_id) {
+function ConfirmReviewWork(peygir_id,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
@@ -37,7 +37,8 @@ function ConfirmReviewWork(peygir_id) {
                             history.push("/login")
                         }
                     }
-                   
+                    else
+                        toast.success(msg);
                     dispatch(loadingActions.HideLoading());
                     return Promise.resolve(data)
                 },
@@ -48,7 +49,7 @@ function ConfirmReviewWork(peygir_id) {
     }
 }
 
-function FinalFlowConfirmWork(Params) {
+function FinalFlowConfirmWork(Params,msg) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
        return WorkActions_service.FinalFlowConfirmWork(Params)
@@ -56,7 +57,7 @@ function FinalFlowConfirmWork(Params) {
                 data => {
                     if (data.status) {
                         if (data.code === 1 && data.data === null) {
-                            toast.success("این یک پیغام موفقیت است !");
+                            toast.success(msg);
                         }
                         else if (data.code === 2 && data.data !== null) {
                             dispatch(reviewWorkAddTotalCount(data.data.totalcount));
@@ -81,7 +82,7 @@ function FinalFlowConfirmWork(Params) {
             );
     }
 }
-function InitConfirmWork(Params) {
+function InitConfirmWork(Params,msg) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
        return WorkActions_service.InitConfirmWork(Params)
@@ -89,8 +90,8 @@ function InitConfirmWork(Params) {
                 data => {
                     if (data.status) {
                         if (data.code === 1 && data.data === null) {
-                            toast.success("این یک پیغام موفقیت است !");
-                        }
+                        toast.success(msg);
+                    }
                         else if (data.code === 2 && data.data !== null) {
                             dispatch(flowResultAddTotalCount(data.data.totalcount));
                             dispatch(flowResultAddRows(data.data.rows));
@@ -114,15 +115,16 @@ function InitConfirmWork(Params) {
             );
     }
 }
-function RebuildWork(peygir_id) {
+function RebuildWork(peygir_id,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        WorkActions_service.RebuildWork(peygir_id)
+        return WorkActions_service.RebuildWork(peygir_id)
             .then(
                 data => {
                     if (data.status) {
                         dispatch(loadingActions.HideLoading());
+                        toast.success(msg);
                     }
                     else if (data.code !== 0) {
                         toast.error(data.error)
@@ -132,6 +134,7 @@ function RebuildWork(peygir_id) {
                         userActions.logout();
                         history.push("/login")
                     }
+                    return Promise.resolve(data)
                 },
                 error => {
                     toast.error(error)
@@ -159,7 +162,7 @@ function SeenWork(peygir_id) {
     }
 }
 
-function SaveWorkInfo(params) {
+function SaveWorkInfo(params,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
@@ -168,7 +171,7 @@ function SaveWorkInfo(params) {
                 data => {
                     if (data.status) {
                         dispatch(loadingActions.HideLoading());
-                        toast.success("این یک پیغام موفقیت است !");
+                       if(msg!=="") toast.success(msg);
                     }
                     else if (data.code !== 0) {
                         toast.error(data.error)
@@ -189,7 +192,7 @@ function SaveWorkInfo(params) {
 }
 
 
-function DeleteWork(peygir_id) {
+function DeleteWork(peygir_id,msg) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
         WorkActions_service.DeleteWork(peygir_id)
@@ -197,6 +200,7 @@ function DeleteWork(peygir_id) {
                 data => {
                     if (data.status) {
                         dispatch(loadingActions.HideLoading());
+                        toast.success(msg);
                     }
                     else if (data.code !== 0) {
                         toast.error(data.error)
