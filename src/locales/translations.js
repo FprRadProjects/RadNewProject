@@ -86,6 +86,7 @@ export const translations = {
         SelectPopup:"...",
         Description:"شرح",
         NoSelection:"بدون انتخاب",
+        SelectedDate:"تاریخ انتخاب شده",
         //---------------اقدام------------------شروع
         logout: 'خروج',
         Save: 'ذخیره',
@@ -226,6 +227,7 @@ export const translations = {
         SelectPopup:"...",
         Description:"Description",
         NoSelection:"No selection",
+        SelectedDate:"Selected Date",
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',

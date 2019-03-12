@@ -37,7 +37,7 @@ class MasterPage extends React.Component {
     render() {
         document.title = this.context.t("SoftWare_Name")
         const {
-            users, alert, loading, GetTemplateForm, FormInfo,
+            users, lang, loading, GetTemplateForm, FormInfo,
             Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm,
             Delete_ShortKeyElements_Template } = this.props;
         const loaddddd = <div className="loader-wrapper">
@@ -93,7 +93,7 @@ class MasterPage extends React.Component {
 
                 <ToastContainer
                     bodyClassName="toastify"
-                    rtl
+                    rtl={lang ==="fa"?true:false }
                     position="bottom-left"
                     autoClose={5000}
                 />
@@ -108,10 +108,12 @@ function mapStateToProps(state) {
     const { users } = state;
     const { FormInfo } = state.BasicInfo;
     const { ShortKeys } = state.Design;
+    const { lang } = state.i18nState
     return {
         alert,
         loading,
         users,
+        lang,
         FormInfo,
         ShortKeys
     };
