@@ -11,7 +11,7 @@ import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 import { toast } from 'react-toastify';
 
 var SaveParams = { form: "", data: [] };
-var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "" ,SaveParams:{}};
+var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: {} };
 
 class ReferenceViewer extends Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class ReferenceViewer extends Component {
             FlowResultSelectmodal: false,
             ReviewWorkModal: false,
             backdrop: "static",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal"
+            modalClass: "modal-dialog-centered modal-lg r-modal"
         };
         this.SuccessSelectProject = this.SuccessSelectProject.bind(this);
 
@@ -104,7 +104,7 @@ class ReferenceViewer extends Component {
         });
     }
     ConfirmationHandle = (e) => {
-        const { WorkInfo, InitConfirmWork, ParentForm, lang ,FetchWorkInfo,Params,RefreshParentForm} = this.props;
+        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, RefreshParentForm } = this.props;
         ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         ConfirmParams["Form"] = formname;
@@ -115,7 +115,7 @@ class ReferenceViewer extends Component {
             return obj[index++] = SaveParams.data[item];
         })
         SaveParams.data = obj;
-        ConfirmParams.SaveParams=SaveParams;
+        ConfirmParams.SaveParams = SaveParams;
         console.log(ConfirmParams.SaveParams)
         //this.saveHandle("");
         InitConfirmWork(ConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
@@ -125,11 +125,10 @@ class ReferenceViewer extends Component {
                         FlowResultSelectmodal: true,
                     });
                 }
-                else
-                {    
+                else {
                     FetchWorkInfo(WorkInfo.peygir_id);
                     RefreshParentForm(Params);
-            
+
                 }
             }
         });
@@ -170,7 +169,7 @@ class ReferenceViewer extends Component {
     }
 
     rebuildHandle() {
-        const { RebuildWork, WorkInfo,RefreshParentForm,FetchWorkInfo,Params } = this.props;
+        const { RebuildWork, WorkInfo, RefreshParentForm, FetchWorkInfo, Params } = this.props;
         RebuildWork(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
                 RefreshParentForm(Params);
@@ -195,90 +194,172 @@ class ReferenceViewer extends Component {
             <div>
                 <Modal isOpen={modal} toggle={toggle}
                     className={this.state.modalClass} backdrop={this.state.backdrop}>
-                    <ModalHeader toggle={toggle}></ModalHeader>
+                    <ModalHeader toggle={toggle}>نتیجه ارجاع</ModalHeader>
                     <ModalBody>
-                        <Button color="success"
-                            onClick={this.saveHandle.bind(this,this.context.t("msg_Operation_Success"))}>{this.context.t("Save")}</Button>
-                        <Button color="success"
-                            onClick={this.rebuildHandle.bind(this)}>{this.context.t("Rebuild")}</Button>
-                        <Button color="success"
-                            onClick={this.ConfirmationHandle.bind(this)}>{this.context.t("Confirmation")}</Button>
+
                         {/*<Button color="success"
                                 onClick={this.deleteHandle.bind(this)}>{this.context.t("Delete")}</Button>*/}
 
-                        {WorkInfo !== undefined && <div>
-                            <label>{this.context.t("WorkID")}: </label>
-                            <input type="text" disabled={true} defaultValue={WorkInfo.peygir_id} /><br />
-                            <label>{this.context.t("PartyAccountName")}: </label>
-                            <input type="text" disabled={true} defaultValue={WorkInfo.name} /><br />
-                            <label>{this.context.t("CompanyName")}: </label>
-                            <input type="text" disabled={true} defaultValue={WorkInfo.coname} /><br />
-                            <label>{this.context.t("Flow")}: </label>
-                            <input type="text" disabled={true} defaultValue={WorkInfo.flow} /><br />
-                            <label>{this.context.t("WorkType")}: </label>
-                            <input type="text" disabled={true} defaultValue={WorkInfo.wtype} /><br />
-                            <label>{this.context.t("creator")}: </label>
-                            <input type="text" disabled={true} defaultValue={WorkInfo.cuser} />
-                            <input type="text" disabled={true} defaultValue={WorkInfo.c_date} />
-                            <input type="text" disabled={true} defaultValue={WorkInfo.c_time} /><br />
-                            <label>{this.context.t("Audience")}: </label>
-                            <input type="text" disabled={true} defaultValue={WorkInfo.ashkhasname} /><br />
-                            <label>{this.context.t("Description")}: </label>
-                            <textarea type="text" disabled={true} defaultValue={WorkInfo.tozihat}></textarea><br />
-                            <label>{this.context.t("FileNumber")}: </label>
-                            <input type="text" defaultValue={WorkInfo.shomare} name="shomare"
-                                readOnly={WorkInfo.done ? true : false}
-                                onChange={this.changeHandle.bind(this)} /><br />
-                            <label>{this.context.t("Code")}: </label>
-                            <input type="text" onChange={this.changeHandle.bind(this)}
-                                readOnly={WorkInfo.done ? true : false}
-                                defaultValue={WorkInfo.code} name="code" id="Code" /><br />
-                            <label>{this.context.t("Subject")}: </label>
-                            <Button color="success" name="subject"
-                                onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                            <input type="text" ref="SubjectInput" onChange={this.changeHandle.bind(this)}
-                                name="mozo"
-                                defaultValue={WorkInfo.mozo} readOnly={WorkInfo.done ? true : false} /><br />
-                            <label>{this.context.t("Project")}: </label>
-                            <Button color="success"
-                                onClick={this.OpenSelectProject.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                            <input type="text" onChange={this.changeHandle.bind(this)} name="p_type_id"
-                                ref="ProjectInput" readOnly={true}
-                                defaultValue={WorkInfo.ptype} /><br />
-                            <label>{this.context.t("Duration_Of_Work_Short")}: </label>
-                            <input type="text" name="modat_anjam_w" defaultValue={WorkInfo.modat_anjam_w}
-                                readOnly={WorkInfo.done ? true : false}
-                                onChange={this.changeHandle.bind(this)} /><br />
-                            <label>{this.context.t("Result")}: </label>
-                            <Button color="success" name="result"
-                                onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                        {WorkInfo !== undefined &&
+                            <div >
+                                <div className="row">
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("WorkID")}</label>
+                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.peygir_id} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("PartyAccountName")}</label>
+                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.name} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("CompanyName")}</label>
+                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.coname} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("Flow")}</label>
+                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.flow} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("WorkType")}</label>
+                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.wtype} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-9">
+                                        <div class="form-group">
+                                            <label>{this.context.t("creator")}</label>
+                                            <div className="row">
+                                                <div className="col-4">
+                                                    <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.c_date} />
+                                                </div>
+                                                <div className="col-4">
+                                                    <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.c_date} />
+                                                </div>
+                                                <div className="col-4">
+                                                    <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.c_time} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <textarea type="text" defaultValue={WorkInfo.natije} readOnly={WorkInfo.done ? true : false}
-                                name="natije" ref="ResultTextArea"
-                                onChange={this.changeHandle.bind(this)}></textarea><br />
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("Audience")}</label>
+                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.ashkhasname} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-9">
+                                        <div class="form-group">
+                                            <label>{this.context.t("Description")}</label>
+                                            <textarea type="text" className="form-control" disabled={true} defaultValue={WorkInfo.tozihat}></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="mt-4 mb-4" />
+                                <div className="row">
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("FileNumber")}</label>
+                                            <input type="text" className="form-control" defaultValue={WorkInfo.shomare} name="shomare"
+                                                readOnly={WorkInfo.done ? true : false}
+                                                onChange={this.changeHandle.bind(this)} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("Code")}</label>
+                                            <input type="text" className="form-control" onChange={this.changeHandle.bind(this)}
+                                                readOnly={WorkInfo.done ? true : false}
+                                                defaultValue={WorkInfo.code} name="code" id="Code" />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("Subject")}</label>
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <Button color="primary" name="subject"
+                                                        onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                </div>
+                                                <input type="text" className="form-control" ref="SubjectInput" onChange={this.changeHandle.bind(this)}
+                                                    name="mozo"
+                                                    defaultValue={WorkInfo.mozo} readOnly={WorkInfo.done ? true : false} />
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            {this.state.ProjectSelectmodal &&
-                                <SelectProjectModal modal={this.state.ProjectSelectmodal}
-                                    toggle={this.CloseSelectProject.bind(this)}
-                                    Successtoggle={this.SuccessSelectProject.bind(this)}
-                                    id_tel={WorkInfo.id_tel} />}
-                            {this.state.SubjectSelectmodal &&
-                                <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}
-                                    toggle={this.CloseSelectDefaultText.bind(this)}
-                                    Successtoggle={this.SuccessSelectSubject.bind(this)}
-                                    id_tel={WorkInfo.id_tel} />}
-                            {this.state.FlowResultSelectmodal &&
-                                <ConfirmFlow ParentForm={ParentForm}
-                                    flowResultSelectModal={this.state.FlowResultSelectmodal}
-                                    Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
-                                    peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("Project")}</label>
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend">
+                                                    <Button color="primary"
+                                                        onClick={this.OpenSelectProject.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                </div>
+                                                <input type="text" className="form-control" onChange={this.changeHandle.bind(this)} name="p_type_id"
+                                                    ref="ProjectInput" readOnly={true}
+                                                    defaultValue={WorkInfo.ptype} />
+                                            </div>
+                                        </div>
+                                    </div>
 
-                        </div>}
+                                    <div className="col-md-3">
+                                        <div class="form-group">
+                                            <label>{this.context.t("Duration_Of_Work_Short")}</label>
+                                            <input type="text" className="form-control" name="modat_anjam_w" defaultValue={WorkInfo.modat_anjam_w}
+                                                readOnly={WorkInfo.done ? true : false}
+                                                onChange={this.changeHandle.bind(this)} />
+                                        </div>
+                                    </div>
+                                    <div className="col-md-9">
+                                        <div class="form-group">
+                                            <label>{this.context.t("Result")}</label>
+                                            <div className="input-group mb-3">
+                                                <div className="input-group-prepend align-self-stretch">
+                                                    <Button color="primary" name="result"
+                                                        onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
+
+                                                </div>
+                                                <textarea type="text" className="form-control" defaultValue={WorkInfo.natije} readOnly={WorkInfo.done ? true : false}
+                                                    name="natije" ref="ResultTextArea"
+                                                    onChange={this.changeHandle.bind(this)}></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {this.state.ProjectSelectmodal &&
+                                    <SelectProjectModal modal={this.state.ProjectSelectmodal}
+                                        toggle={this.CloseSelectProject.bind(this)}
+                                        Successtoggle={this.SuccessSelectProject.bind(this)}
+                                        id_tel={WorkInfo.id_tel} />}
+                                {this.state.SubjectSelectmodal &&
+                                    <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}
+                                        toggle={this.CloseSelectDefaultText.bind(this)}
+                                        Successtoggle={this.SuccessSelectSubject.bind(this)}
+                                        id_tel={WorkInfo.id_tel} />}
+                                {this.state.FlowResultSelectmodal &&
+                                    <ConfirmFlow ParentForm={ParentForm}
+                                        flowResultSelectModal={this.state.FlowResultSelectmodal}
+                                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
+                                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
+                            </div>}
                         <style>{modalBackDrop}</style>
-
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="primary" onClick={toggle}></Button>
+                        <Button color="primary" className="ml-2"
+                            onClick={this.saveHandle.bind(this, this.context.t("msg_Operation_Success"))}>{this.context.t("Save")}</Button>
+                        <Button color="warning" className="ml-2"
+                            onClick={this.rebuildHandle.bind(this)}>{this.context.t("Rebuild")}</Button>
+                        <Button color="success" className="ml-2"
+                            onClick={this.ConfirmationHandle.bind(this)}>{this.context.t("Confirmation")}</Button>
                     </ModalFooter>
                 </Modal>
 
