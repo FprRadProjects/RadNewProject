@@ -153,5 +153,4 @@ const mapDispatchToProps = dispatch => ({
     },
 
 });
-const connectedHomePage = connect(mapStateToProps, mapDispatchToProps)(MasterPage);
-export { connectedHomePage as HomePage };
+export default  connect(mapStateToProps, mapDispatchToProps)(MasterPage)

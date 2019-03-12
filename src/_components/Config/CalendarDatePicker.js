@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types"
 import {connect} from "react-redux"
-import { JalaliField, JalaliTimeField } from 'material-ui-hichestan-datetimepicker';
-import TextField from '@material-ui/core/TextField';
-
+import { JalaliField } from 'material-ui-hichestan-datetimepicker';
 import { create } from 'jss';
 import rtl from 'jss-rtl';
 import JssProvider from 'react-jss/lib/JssProvider';
