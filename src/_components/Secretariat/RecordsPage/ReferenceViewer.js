@@ -55,13 +55,18 @@ class ReferenceViewer extends Component {
         });
     }
     SuccessSelectProject(row, e) {
-        const { WorkInfo } = this.props;
-        if (this.state.ProjectSelectmodal)
-            this.refs.ProjectInput.value = row !== undefined ? row.ptype !== undefined ? row.ptype : WorkInfo.ptype : WorkInfo.ptype;
-        SaveParams.data["p_type_id"] = { "p_type_id": row.id };
-        this.setState({
-            ProjectSelectmodal: !this.state.ProjectSelectmodal,
-        });
+        if (row !== undefined && row !== null) {
+            const { WorkInfo } = this.props;
+            if (this.state.ProjectSelectmodal)
+                this.refs.ProjectInput.value = row !== undefined ? row.ptype !== undefined ? row.ptype : WorkInfo.ptype : WorkInfo.ptype;
+            SaveParams.data["p_type_id"] = { "p_type_id": row.id };
+            this.setState({
+                ProjectSelectmodal: !this.state.ProjectSelectmodal,
+            });
+        }
+        else
+        toast.warn(this.context.t("msg_No_Select_Row"));
+        
     }
 
     OpenSelectDefaultText = (e) => {
@@ -90,18 +95,22 @@ class ReferenceViewer extends Component {
 
 
     SuccessSelectSubject = (row, e) => {
-        if (this.state.SubjectSelectmodal)
-            if (this.state.type === "subject") {
-                this.refs.SubjectInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                SaveParams.data["mozo"] = { "mozo": this.refs.SubjectInput.value };
-            } else {
-                this.refs.ResultTextArea.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                SaveParams.data["natije"] = { "natije": this.refs.ResultTextArea.value };
-            }
-        this.setState({
-            SubjectSelectmodal: !this.state.SubjectSelectmodal,
-            type: "",
-        });
+        if (row !== undefined && row !== null) {
+            if (this.state.SubjectSelectmodal)
+                if (this.state.type === "subject") {
+                    this.refs.SubjectInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    SaveParams.data["mozo"] = { "mozo": this.refs.SubjectInput.value };
+                } else {
+                    this.refs.ResultTextArea.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    SaveParams.data["natije"] = { "natije": this.refs.ResultTextArea.value };
+                }
+            this.setState({
+                SubjectSelectmodal: !this.state.SubjectSelectmodal,
+                type: "",
+            });
+        }
+        else
+        toast.warn(this.context.t("msg_No_Select_Row"));
     }
     ConfirmationHandle = (e) => {
         const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, RefreshParentForm } = this.props;
@@ -204,37 +213,37 @@ class ReferenceViewer extends Component {
                             <div >
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("WorkID")}</label>
                                             <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.peygir_id} />
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("PartyAccountName")}</label>
                                             <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.name} />
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("CompanyName")}</label>
                                             <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.coname} />
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("Flow")}</label>
                                             <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.flow} />
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("WorkType")}</label>
                                             <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.wtype} />
                                         </div>
                                     </div>
                                     <div className="col-md-9">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("creator")}</label>
                                             <div className="row">
                                                 <div className="col-4">
@@ -251,45 +260,45 @@ class ReferenceViewer extends Component {
                                     </div>
 
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("Audience")}</label>
-                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.ashkhasname} />
+                                            <input type="text" autoComplete="off" className="form-control" disabled={true} defaultValue={WorkInfo.ashkhasname} />
                                         </div>
                                     </div>
                                     <div className="col-md-9">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("Description")}</label>
                                             <textarea type="text" className="form-control" disabled={true} defaultValue={WorkInfo.tozihat}></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <hr class="mt-4 mb-4" />
+                                <hr className="mt-4 mb-4" />
                                 <div className="row">
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("FileNumber")}</label>
-                                            <input type="text" className="form-control" defaultValue={WorkInfo.shomare} name="shomare"
+                                            <input type="text" autoComplete="off" className="form-control" defaultValue={WorkInfo.shomare} name="shomare"
                                                 readOnly={WorkInfo.done ? true : false}
                                                 onChange={this.changeHandle.bind(this)} />
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("Code")}</label>
-                                            <input type="text" className="form-control" onChange={this.changeHandle.bind(this)}
+                                            <input type="text" autoComplete="off" className="form-control" onChange={this.changeHandle.bind(this)}
                                                 readOnly={WorkInfo.done ? true : false}
                                                 defaultValue={WorkInfo.code} name="code" id="Code" />
                                         </div>
                                     </div>
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("Subject")}</label>
                                             <div className="input-group mb-3">
                                                 <div className="input-group-prepend">
                                                     <Button color="primary" name="subject"
                                                         onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                 </div>
-                                                <input type="text" className="form-control" ref="SubjectInput" onChange={this.changeHandle.bind(this)}
+                                                <input type="text" autoComplete="off" className="form-control" ref="SubjectInput" onChange={this.changeHandle.bind(this)}
                                                     name="mozo"
                                                     defaultValue={WorkInfo.mozo} readOnly={WorkInfo.done ? true : false} />
                                             </div>
@@ -297,14 +306,14 @@ class ReferenceViewer extends Component {
                                     </div>
 
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("Project")}</label>
                                             <div className="input-group mb-3">
                                                 <div className="input-group-prepend">
                                                     <Button color="primary"
                                                         onClick={this.OpenSelectProject.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                 </div>
-                                                <input type="text" className="form-control" onChange={this.changeHandle.bind(this)} name="p_type_id"
+                                                <input type="text" autoComplete="off" className="form-control" onChange={this.changeHandle.bind(this)} name="p_type_id"
                                                     ref="ProjectInput" readOnly={true}
                                                     defaultValue={WorkInfo.ptype} />
                                             </div>
@@ -312,15 +321,15 @@ class ReferenceViewer extends Component {
                                     </div>
 
                                     <div className="col-md-3">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("Duration_Of_Work_Short")}</label>
-                                            <input type="text" className="form-control" name="modat_anjam_w" defaultValue={WorkInfo.modat_anjam_w}
+                                            <input type="text" autoComplete="off" className="form-control" name="modat_anjam_w" defaultValue={WorkInfo.modat_anjam_w}
                                                 readOnly={WorkInfo.done ? true : false}
                                                 onChange={this.changeHandle.bind(this)} />
                                         </div>
                                     </div>
                                     <div className="col-md-9">
-                                        <div class="form-group">
+                                        <div className="form-group">
                                             <label>{this.context.t("Result")}</label>
                                             <div className="input-group mb-3">
                                                 <div className="input-group-prepend align-self-stretch">

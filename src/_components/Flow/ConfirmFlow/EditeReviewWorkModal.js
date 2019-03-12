@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { SelectDefaultTextModal } from "../../Basic/";
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { WorkActions_action, AutoBasicInfo_action, WorkBasic_action } from "../../../_actions";
 import { ComboSelectList, CalendarDatePicker } from "../../Config";
+import { toast } from 'react-toastify';
 var thisSaveParams = { form: "", data: [] };
 
 class EditeReviewWorkModal extends Component {
@@ -15,6 +17,7 @@ class EditeReviewWorkModal extends Component {
             ashkhasList: [],
             workerList: [],
             managerList: [],
+            SubjectSelectmodal: false,
             workerSelectedOption: {},
             managerSelectedOption: {},
             ashkhasSelectedOption: {},
@@ -72,6 +75,38 @@ class EditeReviewWorkModal extends Component {
             this.setState({ managerSelectedOption: { value: rowData.defmodir_id, label: rowData.modir } });
         }
     }
+    
+    OpenSelectDefaultText = (e) => {
+        const { name } = e.target;
+                this.setState({
+                    SubjectSelectmodal: !this.state.SubjectSelectmodal,
+                    type: name,
+                });
+           
+    }
+    SuccessSelectSubject = (row, e) => {
+        if (row !== undefined && row !== null) {
+            if (this.state.SubjectSelectmodal)
+                if (this.state.type === "subject") {
+                    this.refs.SubjectInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    thisSaveParams.data["mozo"] = { "mozo": this.refs.SubjectInput.value };
+                } else {
+                    this.refs.DescriptionInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    thisSaveParams.data["tozihat"] = { "tozihat": this.refs.DescriptionInput.value };
+                }
+            this.setState({
+                SubjectSelectmodal: !this.state.SubjectSelectmodal,
+                type: "",
+            });
+        }
+        else
+        toast.warn(this.context.t("msg_No_Select_Row"));
+    }
+    CloseSelectDefaultText = (e) => {
+        this.setState({
+            SubjectSelectmodal: !this.state.SubjectSelectmodal,
+        });
+    }
     render() {
 
         const { modal, rowData, toggle, SelectManagerList_rows, SelectWorkerList_rows, SelectAshkhasList_rows
@@ -106,9 +141,6 @@ class EditeReviewWorkModal extends Component {
                                     <label>{this.context.t("CertificateName")}: </label>
                                     <label>{rowData.madrak_name} </label>
                                     <br />
-                                    <label>{this.context.t("WorkID")}: </label>
-                                    <label>{rowData.peygir_id} </label>
-                                    <br />
                                     <label>{this.context.t("WorkType")}: </label>
                                     <label>{rowData.wtype} </label>
                                     <br />
@@ -122,11 +154,15 @@ class EditeReviewWorkModal extends Component {
                                     <input type="text" name="suggest_time" onChange={this.changeHandle.bind(this)} defaultValue={rowData.suggest_time} />
                                     <br />
                                     <label>{this.context.t("Description")}: </label>
-                                    <textarea type="text" name="tozihat" onChange={this.changeHandle.bind(this)} defaultValue={rowData.tozihat}></textarea><br />
+                                    <Button color="primary" name="tozihat"
+                                                        onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                   <textarea type="text" ref="DescriptionInput" name="tozihat" onChange={this.changeHandle.bind(this)} defaultValue={rowData.tozihat}></textarea><br />
 
                                     <br />
                                     <label>{this.context.t("Subject")}: </label>
-                                    <input type="text" name="mozo" onChange={this.changeHandle.bind(this)} defaultValue={rowData.mozo} />
+                                    <Button color="primary" name="subject"
+                                                        onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                             <input type="text" ref="SubjectInput"  name="mozo" onChange={this.changeHandle.bind(this)} defaultValue={rowData.mozo} />
                                     <br />
                                     <label>{this.context.t("worker")}: </label>
                                     {SelectWorkerList_rows !== undefined &&
@@ -152,7 +188,11 @@ class EditeReviewWorkModal extends Component {
                     </Modal>
                 </div>
                 <style>{modalBackDrop}</style>
-
+{this.state.SubjectSelectmodal &&
+    <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}
+        toggle={this.CloseSelectDefaultText.bind(this)}
+        Successtoggle={this.SuccessSelectSubject.bind(this)}
+        id_tel={rowData.id_tel} />}
             </div>
         );
     }
