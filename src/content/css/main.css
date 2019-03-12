@@ -34058,14 +34058,15 @@ body .page-sidebar[navigation-layout="right-side-menu"] .sidebar-menu > li > a i
     }
 }
 
-.r-filter-modal .modal-content{
+.r-modal .modal-content,.r-filter-modal .modal-content{
 border-radius: 17px;
 box-shadow: none;
 border:none;
 }
 
 
-.r-filter-modal .modal-header{
+
+.r-modal .modal-header,.r-filter-modal .modal-header{
     border-radius: 15px 15px 0 0;
     padding: 10px 15px;
     background: rgb(60,117,244);
@@ -34074,14 +34075,20 @@ background: -webkit-linear-gradient(top, rgba(60,117,244,1) 0%,rgba(63,81,254,1)
 background: linear-gradient(to bottom, rgba(60,117,244,1) 0%,rgba(63,81,254,1) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3c75f4', endColorstr='#3f51fe',GradientType=0 );
 }
+.r-modal .modal-header .modal-title{
+    color:#fff;
+    border:none;
+    line-height: 2;
+}
 .r-filter-modal .modal-header .modal-title{
+    color:#fff;
     width: 30px;
     height: 30px;
     background: url(../images/filter-modal-title.svg) no-repeat center center;
     background-size: 30px;
     border:none;
 }
-.r-filter-modal .modal-header .close{
+.r-modal .modal-header .close,.r-filter-modal .modal-header .close{
     background-color: #fff;
     box-shadow: 0 0 0 3px #cfcfcf;
     border-radius: 50%;
@@ -34093,7 +34100,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3c75f4', end
     line-height: 1.2;
     opacity: 1;
 }
-.r-filter-modal .modal-header .close span{
+.r-modal .modal-header .close span,.r-filter-modal .modal-header .close span{
     display: inline-block;
 }
 
@@ -34909,6 +34916,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
   .dx-g-bs4-resizing-control-wrapper{
       left: -9px!important;
       right:auto!important;
+      z-index: 1!important;
   }
 
 
@@ -34933,4 +34941,14 @@ i.icon.follow-up-diagram{
 }
 i.icon.diagram{
     background-image: url(../images/Ribbon/diagram.svg);
+}
+
+.modal-form-action{
+    display: flex;
+    padding: 20px 0;
+    border-top:1px solid rgb(230, 230, 230);
+    margin: 10px 0 0;
+}
+.modal-form-action .btn{
+    margin-left:5px;
 }
