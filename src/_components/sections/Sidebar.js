@@ -10,7 +10,7 @@ class Sidebar extends Component {
 
     handleLogout = (event) => {
         userActions.logout();
-        window.open('/',"_self");
+        window.open('/login',"_self");
     }
 
     render() {

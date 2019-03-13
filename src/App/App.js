@@ -7,11 +7,10 @@ import { PrivateRoute } from '../_components/index';
 import { setLanguage } from "redux-i18n"
 
 class App extends React.Component {
-constructor(props) {
-    super(props);
-    this.props.setLanguage("fa");
-    
-}
+    constructor(props) {
+        super(props);
+        this.props.setLanguage("fa");
+    }
 
 
     render() {
@@ -26,8 +25,7 @@ constructor(props) {
             <React.Suspense fallback={<h1></h1>}>   
              <Router history={history}>
                 <Switch>
-                {LoginPage!==null &&   <Route path="/login" component={LoginPage} />}
- {LoginPage!==null && <Route path={history.location.pathname !== "/login" ? "/": "/"} component={LoginPage} />}
+                       <Route path="/login" component={LoginPage} />
                        {HomePage!==null && <PrivateRoute exact user={user} component={HomePage}
                             path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
                         />}
@@ -38,7 +36,13 @@ constructor(props) {
         );
     }
 }
+const mapDispatchToProps = dispatch => ({
+ 
+    setLanguage: (param) => {
+        dispatch(setLanguage(param))
+    },
 
+});
 
 function mapStateToProps(state) {
     const { user } = state.authentication;
@@ -46,14 +50,7 @@ function mapStateToProps(state) {
         user,
     };
 }
-const mapDispatchToProps = dispatch => ({
 
-    setLanguage: (param) => {
-        dispatch(setLanguage(param))
-    },
- 
-
-});
 
 const connectedApp = connect(mapStateToProps,mapDispatchToProps)(App);
 export { connectedApp as App };
