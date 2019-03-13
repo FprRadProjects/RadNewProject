@@ -58,6 +58,10 @@ class RibbonReferences extends Component {
         const { FetchData,Params } = this.props;
         Params.mark="0";
         FetchData(Params);
+    } deletemarkClick() {
+        const { FetchData,Params ,WorkInfo} = this.props;
+        Params.mark="0";
+        FetchData(Params);
     }
     markViewerClick() {
         const { FetchData,Params } = this.props;
