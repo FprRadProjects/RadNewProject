@@ -25,9 +25,7 @@ class SelectFlowResultModal extends Component {
         this.state = {
             ...this.state,
             FlowResultSelectmodal: modal,
-            backdrop: "static",
-            backdropClassName: "test",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal"
+            modalClass: "modal-dialog-centered r-modal"
         };
 
         this.SetSelectResultRowData = this.SetSelectResultRowData.bind(this);
@@ -52,20 +50,13 @@ class SelectFlowResultModal extends Component {
             , SelectFlowResultList_rows, SelectFlowResultList_totalCount,
             SuccesSelectFlowResult } = this.props;
         Params.peygir_id = peygir_id;
-        const modalBackDrop = `
-        .modal-backdrop {
-            opacity:.98!important;
-            background: rgb(210,210,210);
-            background: -moz-linear-gradient(-45deg, rgba(210,210,210,1) 0%, rgba(229,235,238,1) 50%, rgba(216,216,216,1) 50.1%, rgba(216,216,216,1) 100%);
-            background: -webkit-linear-gradient(-45deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
-            background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
-        }`;
+        
         return (
             <div>
 
                 <div>
                     <Modal isOpen={this.state.FlowResultSelectmodal} toggle={toggle}
+                    className={this.state.modalClass}
                     >
                         <ModalHeader>{this.context.t("frm_Flow_Results")}</ModalHeader>
                         <ModalBody>
@@ -82,7 +73,6 @@ class SelectFlowResultModal extends Component {
                         </ModalFooter>
                     </Modal>
                 </div>
-                <style>{modalBackDrop}</style>
 
             </div>
         );

@@ -22,9 +22,7 @@ class SelectDefaultTextModal extends Component {
         this.state = {
             ...this.state,
             modal: false,
-            backdrop: "static",
-            backdropClassName: "test",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal"
+            modalClass: "modal-dialog-centered r-modal"
         };
 
     }
@@ -42,20 +40,14 @@ class SelectDefaultTextModal extends Component {
         const {modal, toggle, id_tel,GetDefaultText
             ,SelectDefaultText_rows,SelectDefaultText_totalCount,Successtoggle} = this.props;
         Params.Id_Taraf=id_tel;
-        const modalBackDrop = `
-        .modal-backdrop {
-            opacity:.98!important;
-            background: rgb(210,210,210);
-            background: -moz-linear-gradient(-45deg, rgba(210,210,210,1) 0%, rgba(229,235,238,1) 50%, rgba(216,216,216,1) 50.1%, rgba(216,216,216,1) 100%);
-            background: -webkit-linear-gradient(-45deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
-            background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
-        }`;
+       
         return (
             <div>
 
                <div>
                     <Modal isOpen={modal} toggle={toggle}
+                 
+                 className={this.state.modalClass}
                          >
                         <ModalHeader>{this.context.t("frm_Text_Defaults")}</ModalHeader>
                         <ModalBody>
@@ -72,7 +64,6 @@ class SelectDefaultTextModal extends Component {
                         </ModalFooter>
                     </Modal>
                 </div>
-                <style>{modalBackDrop}</style>
 
             </div>
         );

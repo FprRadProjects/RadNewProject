@@ -1,5 +1,7 @@
 @import url(iransans.css);
-
+html{
+    font: 14px;
+}
 body {
     background-attachment: fixed;
     background-color: #fff;
@@ -12915,6 +12917,7 @@ table.dataTable.display tbody tr.odd > .sorting_1 {
 
     .table th, .table td {
         color: #333333;
+        padding: .25rem;
     }
 
     .table [class*='bg-'] {
@@ -34951,4 +34954,99 @@ i.icon.diagram{
 }
 .modal-form-action .btn{
     margin-left:5px;
+}
+
+[class*=MuiFormControl-]{
+    margin: 0!important;
+    border: 1px solid #ced4da!important;
+    border-radius: .25rem;
+}
+[class*=MuiFormControl-] *{
+    font-family: IRANSans_Fa!important;
+    font-size: 13px;
+}
+[class*=MuiInput-underline]:before,[class*=MuiInput-underline]:after{
+    display: none;
+    content:none;
+
+}
+.date-input-with-dialog-input-buttons{
+    border: 1px solid #ced4da!important;
+}
+.date-input-with-dialog-empty {
+    top: 0.5em;
+    left: 0.5em;
+    background-color: white;
+}
+.date-input-with-dialog-calendar {
+    top: 0.5em;
+    left: 2.5em;
+    background-color: white;
+}
+[class*=MuiInput-input]{
+    padding: .375rem .75rem!important;
+}
+.date-input-with-dialog-input-buttons{
+    width: 1.6em;
+    max-height: 1.6em;
+}
+.form-control{
+    font-size: 13px!important;
+}
+.table thead th{
+    vertical-align: middle;
+}
+.css-15k3avv{
+    z-index: 99999999;
+}
+
+.input-group-append .btn, .input-group-prepend .btn{
+    z-index: 0;
+}
+
+.JDatePicker{
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,.2)
+}
+.JDatePicker .JC-days{
+    background: #fff;
+}
+.JDatePicker .days-titles{
+background-color: #808080;
+padding: 5px 0 8px;
+color:#fff;
+border-radius: 5px;
+}
+.JDatePicker button{
+    margin:0;
+    display: block;
+    width:100%;
+    background-color: #3c72f5;
+    font-size: 13px;
+}
+.JDatePicker .day-items.today{
+    border: 1px solid #3c72f5;
+    border-radius: 5px;
+    color:unset;
+    text-decoration: none;
+}
+.JDatePicker .day-items.selected{
+    background-color: #3c72f5;
+    color:#fff;
+    border-radius: 5px;
+}
+.JDatePicker .day-items{
+    border: 1px solid transparent;
+}
+.JDatePicker button:hover{
+    background-color: #3260cc;
+    color:#fff;
+}
+.JDatePicker .JC-Section{
+    position: relative;
+}
+.JDatePicker .MonthPicker{
+    box-shadow: none;
+border:1px solid rgba(0,0,0,.2);
+margin: 0;
+top:100%;
 }
