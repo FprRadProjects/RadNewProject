@@ -50,21 +50,47 @@ class RibbonReferences extends Component {
             ReferenceViewermodal: !prevState.ReferenceViewermodal
         }));
 
-    } handleClick() {
-        alert("")
+    }
+    handleClick() {
 
     }
     refreshClick() {
-        const { FetchData,Params } = this.props;
-        Params.mark="0";
+        const { FetchData, Params } = this.props;
+        Params.mark = "0";
         FetchData(Params);
+    }
+    setToMarkClick() {
+        const { FetchData, Params, WorkInfo, InsertIntoWorkMark } = this.props;
+        if (WorkInfo !== undefined) {
+            InsertIntoWorkMark(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
+                if (data.status) {
+                    FetchData(Params);
+                }
+            });
+        }
+        else
+            toast.warn(this.context.t("msg_No_Select_Row"));
+    }
+
+    deleteFromMarkClick() {
+        const { FetchData, Params, WorkInfo, DeleteFromWorkMark } = this.props;
+        if (WorkInfo !== undefined) {
+            DeleteFromWorkMark(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
+                if (data.status) {
+                    FetchData(Params);
+                }
+            });
+        }
+        else
+            toast.warn(this.context.t("msg_No_Select_Row"));
+
     }
     markViewerClick() {
-        const { FetchData,Params } = this.props;
-        Params.mark="1";
+        const { FetchData, Params } = this.props;
+        Params.mark = "1";
         FetchData(Params);
     }
-    
+
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, Design } = this.props;
         const { DeletedElements } = Design !== undefined ? Design : {};
@@ -87,95 +113,95 @@ class RibbonReferences extends Component {
                     <li className="nav-item"><a href="#tab4" className="nav-link" data-toggle="tab">تب
                                     بسته</a></li> */}
                 </ul>
-                    <div className="tab-content">
-                        <div className="gradient"></div>
-                        <div className="tab-pane active" id="tab1">
-                            <div className="tab-panel">
-                                <div className="tab-panel-group">
-                                    <div className="tab-group-caption">امکانات</div>
-                                    <div className="tab-group-content">
-                                        <div className="tab-content-segment">
-                                            {/* بازخوانی اطلاعات */}
-                                            <RibbonButton
-                                                DeletedElements={DeletedElements}
-                                                Id="refresh-information"
-                                                handleClick={this.refreshClick.bind(this)}
-                                                EditedElements={EditedElements}
-                                                Text="RefreshInformation"
-                                            />
+                <div className="tab-content">
+                    <div className="gradient"></div>
+                    <div className="tab-pane active" id="tab1">
+                        <div className="tab-panel">
+                            <div className="tab-panel-group">
+                                <div className="tab-group-caption">امکانات</div>
+                                <div className="tab-group-content">
+                                    <div className="tab-content-segment">
+                                        {/* بازخوانی اطلاعات */}
+                                        <RibbonButton
+                                            DeletedElements={DeletedElements}
+                                            Id="refresh-information"
+                                            handleClick={this.refreshClick.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="RefreshInformation"
+                                        />
 
-                                            {/* نتیجه ارجاع */}
-                                            <RibbonButton
-                                                DeletedElements={DeletedElements}
-                                                Id="referral-result"
-                                                handleClick={this.OpenReferenceViewer.bind(this)}
-                                                EditedElements={EditedElements}
-                                                Text="ReferralResult"
-                                            />
-                                        </div>
+                                        {/* نتیجه ارجاع */}
+                                        <RibbonButton
+                                            DeletedElements={DeletedElements}
+                                            Id="referral-result"
+                                            handleClick={this.OpenReferenceViewer.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="ReferralResult"
+                                        />
                                     </div>
                                 </div>
-                                <div className="tab-panel-group">
-                                    <div className="tab-group-caption">نشانه گذاری</div>
-                                    <div className="tab-group-content">
-                                        <div className="tab-content-segment">
-                                            {/* نشانه ها */}
-                                            <RibbonButton
-                                                DeletedElements={DeletedElements}
-                                                Id="marks"
-                                                handleClick={this.markViewerClick.bind(this)}
-                                                EditedElements={EditedElements}
-                                                Text="Marks"
-                                            />
+                            </div>
+                            <div className="tab-panel-group">
+                                <div className="tab-group-caption">نشانه گذاری</div>
+                                <div className="tab-group-content">
+                                    <div className="tab-content-segment">
+                                        {/* نشانه ها */}
+                                        <RibbonButton
+                                            DeletedElements={DeletedElements}
+                                            Id="marks"
+                                            handleClick={this.markViewerClick.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="Marks"
+                                        />
 
-                                            {/* حذف نشانه  */}
-                                            <RibbonButton
-                                                DeletedElements={DeletedElements}
-                                                Id="remove-mark"
-                                                handleClick={this.OpenReferenceViewer.bind(this)}
-                                                EditedElements={EditedElements}
-                                                Text="RemoveMark"
-                                            />
+                                        {/* حذف نشانه  */}
+                                        <RibbonButton
+                                            DeletedElements={DeletedElements}
+                                            Id="remove-mark"
+                                            handleClick={this.deleteFromMarkClick.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="RemoveMark"
+                                        />
 
-                                            {/* نشانه گذاری  */}
-                                            <RibbonButton
-                                                DeletedElements={DeletedElements}
-                                                Id="marking"
-                                                handleClick={this.OpenReferenceViewer.bind(this)}
-                                                EditedElements={EditedElements}
-                                                Text="Marking"
-                                            />
+                                        {/* نشانه گذاری  */}
+                                        <RibbonButton
+                                            DeletedElements={DeletedElements}
+                                            Id="marking"
+                                            handleClick={this.setToMarkClick.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="Marking"
+                                        />
 
-                                        </div>
                                     </div>
                                 </div>
-                                <div className="tab-panel-group">
-                                    <div className="tab-group-caption">دیاگرام</div>
-                                    <div className="tab-group-content">
-                                        <div className="tab-content-segment">
-                                            {/* دیاگرام عطف  */}
-                                            <RibbonButton
-                                                DeletedElements={DeletedElements}
-                                                Id="follow-up-diagram"
-                                                handleClick={this.OpenReferenceViewer.bind(this)}
-                                                EditedElements={EditedElements}
-                                                Text="FollowUpDiagram"
-                                            />
+                            </div>
+                            <div className="tab-panel-group">
+                                <div className="tab-group-caption">دیاگرام</div>
+                                <div className="tab-group-content">
+                                    <div className="tab-content-segment">
+                                        {/* دیاگرام عطف  */}
+                                        <RibbonButton
+                                            DeletedElements={DeletedElements}
+                                            Id="follow-up-diagram"
+                                            handleClick={this.OpenReferenceViewer.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="FollowUpDiagram"
+                                        />
 
-                                            {/* دیاگرام  */}
-                                            <RibbonButton
-                                                DeletedElements={DeletedElements}
-                                                Id="diagram"
-                                                handleClick={this.OpenReferenceViewer.bind(this)}
-                                                EditedElements={EditedElements}
-                                                Text="Diagram"
-                                            />
-                                        </div>
+                                        {/* دیاگرام  */}
+                                        <RibbonButton
+                                            DeletedElements={DeletedElements}
+                                            Id="diagram"
+                                            handleClick={this.OpenReferenceViewer.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="Diagram"
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {/* <div role="tabpanel" className="tab-pane fade" id="tab2">
+                    </div>
+                    {/* <div role="tabpanel" className="tab-pane fade" id="tab2">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
                                 <div className="tab-group-caption">امکانات</div>
@@ -328,7 +354,7 @@ class RibbonReferences extends Component {
                             </div>
                         </div>
                     </div>*/}
-                    </div>
+                </div>
                 <nav className="radialnav">
                     <a href="#" className="ellipsis"></a>
                     <MenuProvider id="menu_id">
@@ -342,25 +368,25 @@ class RibbonReferences extends Component {
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-refresh-information") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.refreshClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="refresh-information" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-marks") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.markViewerClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="marks" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-remove-mark") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.deleteFromMarkClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="remove-mark" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-marking") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton key={index} handleClick={this.setToMarkClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="marking" />
                                     )
                                 }
@@ -404,6 +430,12 @@ const mapDispatchToProps = dispatch => ({
     },
     SeenWork: (peygir_id) => {
         dispatch(WorkActions_action.SeenWork(peygir_id))
+    },
+    DeleteFromWorkMark: (peygir_id, msg) => {
+        return dispatch(WorkActions_action.DeleteFromWorkMark(peygir_id, msg))
+    },
+    InsertIntoWorkMark: (peygir_id, msg) => {
+        return dispatch(WorkActions_action.InsertIntoWorkMark(peygir_id, msg))
     },
 });
 RibbonReferences.contextTypes = {

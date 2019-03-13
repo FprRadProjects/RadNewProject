@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {BaseUrl} from '../../../../_helpers/index';
-import {UserConfig} from '../../../Config.js'
+import { BaseUrl } from '../../../../_helpers/index';
+import { UserConfig } from '../../../Config.js'
 
 export const WorkActions_service = {
     RebuildWork,
@@ -9,10 +9,42 @@ export const WorkActions_service = {
     DeleteWork,
     InitConfirmWork,
     FinalFlowConfirmWork,
-    ConfirmReviewWork
+    ConfirmReviewWork,
+    DeleteFromWorkMark,
+    InsertIntoWorkMark
 
 };
 
+function InsertIntoWorkMark(peygir_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('peygir_id', peygir_id);
+        return axios.post(BaseUrl + "InsertIntoWorkMark", formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+function DeleteFromWorkMark(peygir_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('peygir_id', peygir_id);
+        return axios.post(BaseUrl + "DeleteFromWorkMark", formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
 function ConfirmReviewWork(peygir_id) {
     if (UserConfig.GetToken() !== null) {
 
@@ -20,7 +52,7 @@ function ConfirmReviewWork(peygir_id) {
         formData.append('peygir_id', peygir_id);
         return axios.post(BaseUrl + "ConfirmReviewWork", formData)
             .then(Response => {
-return Promise.resolve(Response.data)
+                return Promise.resolve(Response.data)
             })
             .catch((error) => {
                 return Promise.reject(error.message)
