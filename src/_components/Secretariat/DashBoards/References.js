@@ -23,6 +23,7 @@ var booleanColumns = ['done', 'has_peyvast', 'done', 'fok'];
 var Params = {
     "page": 0,
     "pagesize": 10,
+    "mark": "0",
     "seen": "2",
     "done": "0",
     "date": "0",

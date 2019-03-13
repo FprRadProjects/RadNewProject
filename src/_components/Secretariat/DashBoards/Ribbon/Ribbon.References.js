@@ -7,9 +7,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton } from "../../../Config";
 import {
-    Act_Reference,
     design_Actions,
-    WorkBasic_action,
     BasicInfo_action, WorkActions_action
 } from "../../../../_actions";
 import { toast } from 'react-toastify';
@@ -28,7 +26,6 @@ class RibbonReferences extends Component {
     }
     componentDidMount() {
         const { GetTemplateForm, GetFormInfo } = this.props;
-        // GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
         GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id);
     }
 
@@ -57,7 +54,17 @@ class RibbonReferences extends Component {
         alert("")
 
     }
-
+    refreshClick() {
+        const { FetchData,Params } = this.props;
+        Params.mark="0";
+        FetchData(Params);
+    }
+    markViewerClick() {
+        const { FetchData,Params } = this.props;
+        Params.mark="1";
+        FetchData(Params);
+    }
+    
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, Design } = this.props;
         const { DeletedElements } = Design !== undefined ? Design : {};
@@ -92,7 +99,7 @@ class RibbonReferences extends Component {
                                             <RibbonButton
                                                 DeletedElements={DeletedElements}
                                                 Id="refresh-information"
-                                                handleClick={this.handleClick.bind(this)}
+                                                handleClick={this.refreshClick.bind(this)}
                                                 EditedElements={EditedElements}
                                                 Text="RefreshInformation"
                                             />
@@ -116,7 +123,7 @@ class RibbonReferences extends Component {
                                             <RibbonButton
                                                 DeletedElements={DeletedElements}
                                                 Id="marks"
-                                                handleClick={this.handleClick.bind(this)}
+                                                handleClick={this.markViewerClick.bind(this)}
                                                 EditedElements={EditedElements}
                                                 Text="Marks"
                                             />
