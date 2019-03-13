@@ -1,7 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
-import 'bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css';
 import {
     PagingState,
     SortingState,
@@ -262,7 +261,7 @@ class ApiGridComponent extends React.PureComponent {
 
         return (
             <div>
-                <Grid
+  <Grid
                     rows={rows}
                     columns={columns}
                 >
@@ -325,7 +324,7 @@ class ApiGridComponent extends React.PureComponent {
                                    messages={groupingPanelMessages}/>
                 </Grid>
                 {this.props.gridloading && <Loading/>}
-            </div>
+   </div>
         );
     }
 }

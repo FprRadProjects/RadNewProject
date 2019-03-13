@@ -1,11 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch,Router } from "react-router-dom";
 import { connect } from 'react-redux';
 import { userActions } from '../../_actions/User';
 import { Header } from "../sections/Header";
 import NoMatch from "../NoMatch";
 import { DashBoard } from "../MainPage/DashBoard";
 import PropTypes from "prop-types"
+import { history } from '../../_helpers/index';
 
 import { Works, References } from "../Secretariat/DashBoards";
 import { setLanguage } from "redux-i18n";
@@ -35,6 +36,8 @@ class MasterPage extends React.Component {
     }
 
     render() {
+        const rootUrl = 'http://localhost:8080';
+
         document.title = this.context.t("SoftWare_Name")
         const {
             users, lang, loading, GetTemplateForm, FormInfo,
@@ -51,7 +54,7 @@ class MasterPage extends React.Component {
         </div>;
         return (
             <Loader show={loading === undefined ? false : loading} message={loaddddd} >
-                <BrowserRouter>
+                <BrowserRouter  history={ history }>
 
                     {/* {loading &&
                             <div className="loader-wrapper">
@@ -71,11 +74,11 @@ class MasterPage extends React.Component {
                             <Sidebar auth={true} users={users} />
                             <div className="page-body">
                                 <div className="container-fluid">
-                                    <Switch>
-                                        <Route path="/" exact={true} component={DashBoard} />
-                                        <Route path="/works" component={Works} />
-                                        <Route path="/references" component={References} />
-                                        <Route path="/workManagement" component={workManagement} />
+                                <Switch >
+                                        <Route path={"/"} exact={true} component={DashBoard} />
+                                        <Route path={"/works"} component={Works} />
+                                        <Route  path={"/references"} component={References} />
+                                        <Route path={"/workManagement"} component={workManagement} />
                                         <Route component={NoMatch} />
                                     </Switch>
                                 </div>
@@ -83,8 +86,7 @@ class MasterPage extends React.Component {
                         </div>
 
                     </div>
-
-                </BrowserRouter>
+                 </BrowserRouter>
                 <MyAwesomeMenu Set_Hide_TemplateForm={Set_Hide_TemplateForm}
                     Set_EditText_TemplateForm={Set_EditText_TemplateForm}
                     Set_ShortKey_TemplateForm={Set_ShortKey_TemplateForm}

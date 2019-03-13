@@ -188,4 +188,5 @@ const connectedDashBoard = connect(mapStateToProps, mapDispatchToProps)(DashBoar
 export {connectedDashBoard as DashBoard};
 
 
+export default connect(mapStateToProps, mapDispatchToProps)(DashBoard)
 
