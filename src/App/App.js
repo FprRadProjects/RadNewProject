@@ -3,13 +3,20 @@ import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import "bootstrap-v4-rtl/dist/css/bootstrap.min.css"
 import { history } from '../_helpers/index';
+import { alertActions } from '../_actions/index';
 import { PrivateRoute } from '../_components/index';
-import { setLanguage } from "redux-i18n"
 
 class App extends React.Component {
     constructor(props) {
         super(props);
+<<<<<<< HEAD
         this.props.setLanguage("fa");
+=======
+        const { dispatch } = this.props;
+        history.listen((location, action) => {
+            dispatch(alertActions.clear());
+        });
+>>>>>>> b2476caa45f827b2195ac6132d63b7d333fe3c5d
     }
 
 
@@ -52,5 +59,5 @@ function mapStateToProps(state) {
 }
 
 
-const connectedApp = connect(mapStateToProps,mapDispatchToProps)(App);
+const connectedApp = connect(mapStateToProps)(App);
 export { connectedApp as App };
