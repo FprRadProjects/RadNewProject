@@ -27,7 +27,7 @@ function GetCounts(param) {
                     } else
                       {
                           userActions.logout();
-                          window.open('/',"_self");
+                          history.push("/login")
                       }
                 },
                 error => {
@@ -54,7 +54,7 @@ function GetEvents(param) {
                     } else
                     {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                 },
                 error => {
