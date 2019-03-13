@@ -13,6 +13,7 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.languages = ["fa", "en"];
+        this.props.logout();
 
         this.state = {
             username: '',
@@ -24,6 +25,7 @@ class LoginPage extends React.Component {
     }
 
     componentDidMount() {
+        this.props.setLanguage("fa");
         this.props.GetCompanyInfo();
     }
 

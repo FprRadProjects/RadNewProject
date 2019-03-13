@@ -31,7 +31,7 @@ function GetTemplateForm(param) {
                     } else
                     {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                 },
                 error => {
@@ -56,7 +56,7 @@ function Set_EditText_TemplateForm(param) {
                     } else
                     {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                 },
                 error => {
@@ -78,7 +78,7 @@ function Set_Hide_TemplateForm(param) {
                     } else
                     {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                 },
                 error => {
@@ -101,7 +101,7 @@ function Set_ShortKey_TemplateForm(param) {
                     } else
                     {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                 },
                 error => {
@@ -126,7 +126,7 @@ function Delete_ShortKeyElements_Template(FormId,RowId) {
                     } else
                     {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                 },
                 error => {

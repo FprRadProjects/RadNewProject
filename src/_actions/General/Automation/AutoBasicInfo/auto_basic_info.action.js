@@ -28,7 +28,7 @@ function SayManagerOnWorkerWtype(worker_id, wt_id) {
                         toast.error(data.error)
                     } else if (!data.status && data.code === 0) {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                     return Promise.resolve(data)
                 },

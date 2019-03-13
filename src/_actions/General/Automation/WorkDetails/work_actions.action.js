@@ -39,7 +39,7 @@ function DeleteFromWorkMark(peygir_id,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                     return Promise.resolve(data)
                 },
@@ -66,7 +66,7 @@ function InsertIntoWorkMark(peygir_id,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                     return Promise.resolve(data)
                 },
@@ -89,7 +89,7 @@ function ConfirmReviewWork(peygir_id,msg) {
                         }
                         else {
                             userActions.logout();
-                            window.open('/',"_self");
+                            history.push("/login")
                         }
                     }
                     else
@@ -127,7 +127,7 @@ function FinalFlowConfirmWork(Params,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                     return Promise.resolve(data)
                 },
@@ -160,7 +160,7 @@ function InitConfirmWork(Params,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                     return Promise.resolve(data)
                 },
@@ -187,7 +187,7 @@ function RebuildWork(peygir_id,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                     return Promise.resolve(data)
                 },
@@ -207,7 +207,7 @@ function SeenWork(peygir_id) {
                         toast.error(data.error)
                     } else if (!data.status && data.code === 0) {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                 },
                 error => {
@@ -234,7 +234,7 @@ function SaveWorkInfo(params,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                     return Promise.resolve(data)
                 },
@@ -263,7 +263,7 @@ function DeleteWork(peygir_id,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        history.push("/login")
                     }
                 },
                 error => {

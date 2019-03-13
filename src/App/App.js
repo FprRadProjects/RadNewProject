@@ -3,15 +3,17 @@ import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import "bootstrap-v4-rtl/dist/css/bootstrap.min.css"
 import { history } from '../_helpers/index';
+import { alertActions } from '../_actions/index';
 import { PrivateRoute } from '../_components/index';
-import { setLanguage } from "redux-i18n"
 
 class App extends React.Component {
-constructor(props) {
-    super(props);
-    this.props.setLanguage("fa");
-    
-}
+    constructor(props) {
+        super(props);
+        const { dispatch } = this.props;
+        history.listen((location, action) => {
+            dispatch(alertActions.clear());
+        });
+    }
 
 
     render() {
@@ -26,8 +28,7 @@ constructor(props) {
             <React.Suspense fallback={<h1></h1>}>   
              <Router history={history}>
                 <Switch>
-                {LoginPage!==null &&   <Route path="/login" component={LoginPage} />}
- {LoginPage!==null && <Route path={history.location.pathname !== "/login" ? "/": "/"} component={LoginPage} />}
+                       <Route path="/login" component={LoginPage} />
                        {HomePage!==null && <PrivateRoute exact user={user} component={HomePage}
                             path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
                         />}
@@ -46,14 +47,7 @@ function mapStateToProps(state) {
         user,
     };
 }
-const mapDispatchToProps = dispatch => ({
 
-    setLanguage: (param) => {
-        dispatch(setLanguage(param))
-    },
- 
 
-});
-
-const connectedApp = connect(mapStateToProps,mapDispatchToProps)(App);
+const connectedApp = connect(mapStateToProps)(App);
 export { connectedApp as App };
