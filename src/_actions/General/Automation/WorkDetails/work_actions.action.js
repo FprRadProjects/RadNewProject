@@ -17,10 +17,65 @@ export const WorkActions_action = {
     FinalFlowConfirmWork,
     ConfirmReviewWork,
     reviewWorkAddRows,
-    reviewWorkAddTotalCount
+    reviewWorkAddTotalCount,
+    DeleteFromWorkMark,
+    InsertIntoWorkMark,
 
 };
+function DeleteFromWorkMark(peygir_id,msg) {
 
+    return dispatch => {
+        dispatch(loadingActions.ShowLoading());
+        return WorkActions_service.DeleteFromWorkMark(peygir_id)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(loadingActions.HideLoading());
+                        toast.success(msg);
+                    }
+                    else if (data.code !== 0) {
+                        toast.error(data.error)
+                        dispatch(loadingActions.HideLoading());
+                    }
+                    else {
+                        userActions.logout();
+                        history.push("/login")
+                    }
+                    return Promise.resolve(data)
+                },
+                error => {
+                    toast.error(error)
+                }
+            );
+    }
+}
+function InsertIntoWorkMark(peygir_id,msg) {
+
+    return dispatch => {
+        dispatch(loadingActions.ShowLoading());
+        return WorkActions_service.InsertIntoWorkMark(peygir_id)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(loadingActions.HideLoading());
+                        toast.success(msg);
+                    }
+                    else if (data.code !== 0) {
+                        toast.error(data.error)
+                        dispatch(loadingActions.HideLoading());
+                    }
+                    else {
+                        userActions.logout();
+                        history.push("/login")
+                    }
+                    return Promise.resolve(data)
+                },
+                error => {
+                    toast.error(error)
+                }
+            );
+    }
+}
 function ConfirmReviewWork(peygir_id,msg) {
 
     return dispatch => {
