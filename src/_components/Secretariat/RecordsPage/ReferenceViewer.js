@@ -201,8 +201,8 @@ class ReferenceViewer extends Component {
         }`;
         return (
             <div>
-                <Modal isOpen={modal} toggle={toggle}
-                    className={this.state.modalClass} backdrop={this.state.backdrop}>
+                <Modal isOpen={modal} toggle={toggle} keyboard={false}
+                    className={this.state.modalClass}  backdrop={this.state.backdrop}>
                     <ModalHeader toggle={toggle}>نتیجه ارجاع</ModalHeader>
                     <ModalBody>
 

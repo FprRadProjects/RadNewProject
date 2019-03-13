@@ -26,9 +26,7 @@ class ReviewWorkModal extends Component {
         this.state = {
             ...this.state,
             EditReviewModal: false,
-            backdrop: "static",
-            backdropClassName: "test",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal"
+            modalClass: "modal-dialog-centered modal-lg r-modal"
         };
 
         //this.SetReviewWorkRowData = this.SetReviewWorkRowData.bind(this);
@@ -106,20 +104,13 @@ class ReviewWorkModal extends Component {
             SuccesReviewWorkConfirm,GetReviewWorkInfo,ReviewWork_Info } = this.props;
             console.log(ReviewWork_Info);
         Params.peygir_id = peygir_id;
-        const modalBackDrop = `
-        .modal-backdrop {
-            opacity:.98!important;
-            background: rgb(210,210,210);
-            background: -moz-linear-gradient(-45deg, rgba(210,210,210,1) 0%, rgba(229,235,238,1) 50%, rgba(216,216,216,1) 50.1%, rgba(216,216,216,1) 100%);
-            background: -webkit-linear-gradient(-45deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
-            background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
-        }`;
+      
         return (
             <div>
 
                 <div>
-                    <Modal isOpen={modal} size="lg" >
+                    <Modal isOpen={modal} keyboard={false}
+                    className={this.state.modalClass}>
                         <ModalHeader>{this.context.t("frm_Review_Confirm_Work")}</ModalHeader>
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
@@ -135,7 +126,6 @@ class ReviewWorkModal extends Component {
                         </ModalFooter>
                     </Modal>
                 </div>
-                <style>{modalBackDrop}</style>
                 {this.state.EditReviewModal &&
                     <EditeReviewWorkModal modal={this.state.EditReviewModal} ParentForm={ParentForm}
                         toggle={this.EditReviewWorkConfirm.bind(this)} Params={Params} SaveParams={SaveParams}
