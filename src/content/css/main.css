@@ -34265,7 +34265,7 @@ background-image: url(../images/modal-filter/done-work-icon.svg);
         text-align: center;
         -webkit-transition: all 0.3s ease-in-out;
         transition: all 0.3s ease-in-out;
-        box-shadow: -1px 0 4px 0 rgba(0,0,0,.1) inset;
+        box-shadow: -5px 0px 5px 0 rgba(0,0,0,.1);
     }
 
 
@@ -34298,9 +34298,9 @@ background-image: url(../images/modal-filter/done-work-icon.svg);
     z-index: 0;
     width: 250px;
     height: 250px;
-    transform: scale(0.1);
+    transform: scale(0.1) translateY(-50%);
     pointer-events: none;
-    transition: all .3s ease;
+    transition: all .2s ease;
     box-sizing: content-box;
     margin: 0;
     padding: 0;
@@ -35049,4 +35049,18 @@ border-radius: 5px;
 border:1px solid rgba(0,0,0,.2);
 margin: 0;
 top:100%;
+}
+
+.table-bordered{
+    border: none;
+}
+
+.r-modal .row.bg-gray{
+background-color: #f2f2f2;
+}
+.r-modal .form-group.row{
+    margin-bottom: 0;
+}
+.mg-b-10{
+    margin-bottom: 10px;
 }
