@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
+import jmoment from 'moment-jalaali';
+import moment from 'moment';
 import {mainpageActions, design_Actions,BasicInfo_action} from '../../_actions';
 import {FullCalendar} from './FullCalendar';
 import {LeftCounts} from './LeftCounts';
@@ -11,7 +12,8 @@ import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, 
 /*import {MenuProvider} from "react-contexify";
 import renderHTML from "react-render-html";
 */
-
+var faMonths=["فروردین","اردیبهشت","خراد","تیر","مرداد","شهریور","مهر","آبان","آذر","دی","بهمن","اسفند"]
+var enMonths=[" January ", " February ", " March ", " April ", " May ", " June ", " July ", " August ", " September ", " October ", " November ", " December "]
 
 var CalParams = {
     "seen": "2",
@@ -27,16 +29,27 @@ var CalParams = {
 class DashBoard extends Component {
     constructor(props) {
         super(props);
+        let newDate = new Date()
+        let selectedDate=jmoment(moment(newDate).locale('fa').format('YYYY/MM/DD')).format('jYYYY/jMM/jDD');
+    const {lang} = this.props;
+    if(lang==='en')
+        selectedDate=moment(newDate).locale('fa').format('YYYY/MM/DD');
         this.state = {
             ...this.state,
             modal: false,
             backdrop: "static",
             backdropClassName: "test",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal"
+            modalClass: "modal-dialog-centered modal-lg r-filter-modal",
+            selectedDate: this.convertDate(selectedDate)
         };
         this.toggle = this.toggle.bind(this);
     }
-
+    convertDate=(selectedDate)=>{
+    const {lang} = this.props;
+    var splitted = selectedDate.split("/"); 
+    var month=lang==='fa'?faMonths[parseInt( splitted[1]-1)]:enMonths[parseInt( splitted[1]-1)];
+    return parseInt(splitted[2])+ " "+ month +" "+parseInt(splitted[0]);
+}
     toggle() {
         this.setState(prevState => ({
             modal: !prevState.modal
@@ -59,9 +72,11 @@ class DashBoard extends Component {
         GetTemplateForm(FormInfo.web_fm_mainpage.id);
 
     }
+    ChaneSelectedDate=(val)=>{
+        this.setState({selectedDate:      this.convertDate(val)});
+    }
 
     render() {
-
         const {GetEvents, GetCounts, alert, loading,ShortKeys} = this.props;
         const modalBackDrop = `
         .modal-backdrop {
@@ -95,7 +110,7 @@ class DashBoard extends Component {
                             <div className="col-xl-6 col-md-12">
                                 <div className="dashboard-calendar">
                                     <div className="card">
-                                        <FullCalendar GetCounts={GetCounts} GetEvent={GetEvents} Params={CalParams}/>
+                                        <FullCalendar ChaneSelectedDate={this.ChaneSelectedDate.bind(this)} GetCounts={GetCounts} GetEvent={GetEvents} Params={CalParams}/>
                                     </div>
                                 </div>
                             </div>
@@ -115,7 +130,7 @@ class DashBoard extends Component {
                                     <div className="card">
                                         <Button color="" className="task-filter" onClick={this.toggle}></Button>
                                         <div className="card-header">
-                                            <h4 className="card-title text-light text-center">2 بهمن 1397</h4>
+                                            <h4 className="card-title text-light text-center">{ this.state.selectedDate}</h4>
                                             <div className="task-view-mode">
                                                 <a  id="manager" onClick={this.ChangeUserMode.bind(this)} className={AdminclassName}>{this.context.t("manager")}</a>
                                                 <a  id="worker" onClick={this.ChangeUserMode.bind(this)}  className={WorkrclassName}>{this.context.t("worker")}</a>
