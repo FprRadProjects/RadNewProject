@@ -34774,9 +34774,11 @@ i.icon {
     left:30px;
     top:10px;
 }
+
 .r-main-box__toggle .switch  {
     width: 43px;
     height: 10px;
+    margin-bottom: 0;
 }
 .r-main-box__toggle .switch input:checked + .switch-state {
     background: rgb(27,37,92);
@@ -34810,7 +34812,20 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
   .r-main-box__toggle input:checked + .switch-state:before {
       content: "0";
   }
-
+  .r-main-box__controlpanel{
+    position:absolute;
+    z-index:1021;
+    left:85px;
+    top:6px;
+}
+.r-main-box__controlpanel--action{
+    height:20px;
+    width:20px;
+    background: url(../images/Ribbon/shortkey-setting.svg) no-repeat center center;
+    background-size:20px;
+    display: inline-block;
+    cursor: pointer;
+}
   .modal-lg{
       max-width: 1000px!important;
   }

@@ -90,7 +90,9 @@ class RibbonReferences extends Component {
         Params.mark = "1";
         FetchData(Params);
     }
+    controlpanelClick(){
 
+    }
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, Design } = this.props;
         const { DeletedElements } = Design !== undefined ? Design : {};
@@ -102,6 +104,10 @@ class RibbonReferences extends Component {
                         <input type="checkbox" id="sidebar-toggle" />
                         <span className="switch-state"></span>
                     </label>
+                </div>
+                <div className="r-main-box__controlpanel">
+                    <a className="r-main-box__controlpanel--action"
+                    title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
                 </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
                     <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">تب

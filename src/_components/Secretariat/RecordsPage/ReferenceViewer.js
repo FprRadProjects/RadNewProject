@@ -65,8 +65,8 @@ class ReferenceViewer extends Component {
             });
         }
         else
-        toast.warn(this.context.t("msg_No_Select_Row"));
-        
+            toast.warn(this.context.t("msg_No_Select_Row"));
+
     }
 
     OpenSelectDefaultText = (e) => {
@@ -110,7 +110,7 @@ class ReferenceViewer extends Component {
             });
         }
         else
-        toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(this.context.t("msg_No_Select_Row"));
     }
     ConfirmationHandle = (e) => {
         const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, RefreshParentForm } = this.props;
@@ -202,7 +202,7 @@ class ReferenceViewer extends Component {
         return (
             <div>
                 <Modal isOpen={modal} toggle={toggle} keyboard={false}
-                    className={this.state.modalClass}  backdrop={this.state.backdrop}>
+                    className={this.state.modalClass} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={toggle}>نتیجه ارجاع</ModalHeader>
                     <ModalBody>
 
@@ -210,38 +210,64 @@ class ReferenceViewer extends Component {
                                 onClick={this.deleteHandle.bind(this)}>{this.context.t("Delete")}</Button>*/}
 
                         {WorkInfo !== undefined &&
-                            <div >
-                                <div className="row">
-                                    <div className="col-md-3">
-                                        <div className="form-group">
-                                            <label>{this.context.t("WorkID")}</label>
-                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.peygir_id} />
+                            <div>
+                                <div className="row bg-gray mg-b-10">
+
+                                    <div className="col-md-4">
+                                        <div className="form-group row">
+                                            <label class="col-sm-4 col-form-label">{this.context.t("PartyAccountName")}</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.name} />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-3">
-                                        <div className="form-group">
-                                            <label>{this.context.t("PartyAccountName")}</label>
-                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.name} />
+                                    <div className="col-md-4">
+                                        <div className="form-group row">
+                                            <label class="col-sm-4 col-form-label">{this.context.t("CompanyName")}</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.coname} />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-3">
-                                        <div className="form-group">
-                                            <label>{this.context.t("CompanyName")}</label>
-                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.coname} />
+
+                                    <div className="col-md-4">
+                                        <div className="form-group row">
+                                            <label class="col-sm-4 col-form-label">{this.context.t("Audience")}</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.ashkhasname} />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-3">
-                                        <div className="form-group">
-                                            <label>{this.context.t("Flow")}</label>
-                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.flow} />
+
+                                </div>
+                                <div className="row bg-gray">
+                                    <div className="col-md-4">
+                                        <div class="form-group row">
+                                            <label class="col-sm-4 col-form-label">{this.context.t("WorkID")}</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.peygir_id} />
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-3">
-                                        <div className="form-group">
-                                            <label>{this.context.t("WorkType")}</label>
-                                            <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.wtype} />
+                                    <div className="col-md-4">
+                                        <div className="form-group row">
+                                            <label class="col-sm-4 col-form-label">{this.context.t("Flow")}</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.flow} />
+                                            </div>
                                         </div>
                                     </div>
+                                    <div className="col-md-4">
+                                        <div className="form-group row">
+                                            <label class="col-sm-4 col-form-label">{this.context.t("WorkType")}</label>
+                                            <div class="col-sm-8">
+                                                <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.wtype} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="row bg-gray">
+
                                     <div className="col-md-9">
                                         <div className="form-group">
                                             <label>{this.context.t("creator")}</label>
@@ -259,12 +285,7 @@ class ReferenceViewer extends Component {
                                         </div>
                                     </div>
 
-                                    <div className="col-md-3">
-                                        <div className="form-group">
-                                            <label>{this.context.t("Audience")}</label>
-                                            <input type="text" autoComplete="off" className="form-control" disabled={true} defaultValue={WorkInfo.ashkhasname} />
-                                        </div>
-                                    </div>
+
                                     <div className="col-md-9">
                                         <div className="form-group">
                                             <label>{this.context.t("Description")}</label>
