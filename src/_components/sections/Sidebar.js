@@ -13,7 +13,7 @@ class Sidebar extends Component {
     }
 
     render() {
-        const { auth: isAuthenticated, users } = this.props;
+        const { auth: isAuthenticated, users,lang } = this.props;
         return (
             // <div >
             <div className="page-sidebar custom-scrollbar">
@@ -239,11 +239,11 @@ class Sidebar extends Component {
                 <div className="sidebar-widget text-center">
                     <div className="sidebar-widget-bottom p-10">
                         <p>
-                            ورژن 9.8.13
+                        {this.context.t("version")} 0.1.1
                         </p>
                         <br />
                         <p>
-                            1397/11/08
+                          {lang=="fa" ? "1397/12/25":"2019/03/17"}  
                         </p>
                     </div>
                 </div>
