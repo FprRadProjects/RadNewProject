@@ -142,6 +142,9 @@ class workManagement extends Component {
                     <div className="r-main-box">
 
                         <OrgChart/>
+
+
+
                         <TreeGridComponent columns={columns} booleanColumns={booleanColumns}
                                             totalCount={Dashboards_totalCount}  columnwidth={150}
                                           UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
@@ -192,7 +195,7 @@ function mapStateToProps(state) {
     const {alert} = state;
     const {loading} = state.loading;
     const {lang} = state.i18nState
-    const {WorkInfo} = state.Auto_BasicInfo;
+    const {WorkInfo} = state.Auto_WorkBasic;
     return {
         alert,
         loading,

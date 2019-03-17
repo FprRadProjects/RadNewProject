@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {BaseUrl} from '../../../_helpers';
 import {UserConfig} from '../../Config.js'
+import Config from '../../../Config.json';
 
 export const Service_Dashboard = {
     FetchData,    FetchDataTree
@@ -9,7 +9,7 @@ export const Service_Dashboard = {
 
 function FetchData(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl+"WorkDashboard", params)
+        return axios.post(Config.BaseUrl+"WorkDashboard", params)
             .then(response => {
                 return Promise.resolve(response.data)
             })

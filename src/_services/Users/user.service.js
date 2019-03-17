@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {BaseUrl} from '../../_helpers';
 import {UserConfig} from '../Config.js'
+import Config from '../../Config.json';
 
 export const userService = {
     login,
@@ -15,7 +15,7 @@ function login(username, password) {
     let data = new FormData();
     data.append("username", username);
     data.append("password", password);
-    return axios.post(BaseUrl + "Login", data)
+    return axios.post(Config.BaseUrl + "Login", data)
         .then(user => {
             if (user.data.data != null)
                 localStorage.setItem("user", JSON.stringify(user.data.data));
@@ -30,12 +30,13 @@ function login(username, password) {
 // remove user from local storage to log user out
 function logout() {
     localStorage.removeItem('user');
+    window.open('/',"_self");
 }
 
 //Gets "token" // returns token is valid or not
 function CheckToken() {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "CheckToken", null)
+        return axios.post(Config.BaseUrl + "CheckToken", null)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -50,7 +51,7 @@ function CheckToken() {
 //Gets "token" // returns  "username","fullname","id_user","id_role"
 function GetUserInfo() {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "GetUserInfo", null)
+        return axios.post(Config.BaseUrl + "GetUserInfo", null)
             .then(Response => {
                 return Promise.resolve(Response.data);
             })
@@ -66,7 +67,7 @@ function GetUserInfo() {
 //Gets "token" // returns  "isadmin"
 function UserIsAdmin() {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "UserIsAdmin", null)
+        return axios.post(Config.BaseUrl + "UserIsAdmin", null)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

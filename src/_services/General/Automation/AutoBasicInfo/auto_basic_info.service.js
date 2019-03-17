@@ -1,15 +1,87 @@
 import axios from 'axios'
-import {BaseUrl} from '../../../../_helpers/index';
 import {UserConfig} from '../../../Config.js'
+import Config from '../../../../Config.json';
 
 export const AutoBasicInfo_service = {
-    GetDefaultText
+    GetDefaultText,
+    SelectAshkhasList,
+    SelectWorkerList,
+    SelectManagerList,
+    SayManagerOnWorkerWtype
 };
+
+function SayManagerOnWorkerWtype(worker_id,wt_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('worker_id', worker_id);
+        formData.append('wt_id', wt_id);
+        return axios.post(Config.BaseUrl + "SayManagerOnWorkerWtype",formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+function SelectManagerList(id_role,wt_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('wt_id', wt_id);
+        formData.append('id_role', id_role);
+        return axios.post(Config.BaseUrl + "SelectManagerList",formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+
+function SelectWorkerList(id_role,wt_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('wt_id', wt_id);
+        formData.append('id_role', id_role);
+        return axios.post(Config.BaseUrl + "SelectWorkerList",formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+
+function SelectAshkhasList(id_taraf) {
+    
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('id_taraf', id_taraf);
+        return axios.post(Config.BaseUrl + "SelectAshkhasList",formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+
 
 function GetDefaultText() {
     if (UserConfig.GetToken() !== null) {
 
-        return axios.post(BaseUrl + "GetDefaultText")
+        return axios.post(Config.BaseUrl + "GetDefaultText")
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

@@ -27,10 +27,10 @@ body {
     background-color: #fff;
 }
 
-/* div#root{
+ div#root{
     display: flex;
     flex: 1;
-} */
+} 
 
 .flex-1{
     flex: 1;

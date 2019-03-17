@@ -1,151 +1,85 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import connect from "react-redux/es/connect/connect";
 import PropTypes from "prop-types"
-import {MenuProvider} from "react-contexify";
 
 class LeftCounts extends Component {
-     clicked(event){
-        if(event.target!=undefined)
-            alert(event.target)
+    clicked(event) {
+        //if(event.target!=undefined)
+        //alert(event.target)
     }
     componentDidMount() {
-        const {GetCounts, Params} = this.props;
+        const { GetCounts, Params } = this.props;
         GetCounts(Params)
     }
 
     render() {
-        const {
-            Counts, Design
-        } = this.props;
-        const {DeletedElements} = Design !== undefined ? Design : {};
-        const {EditedElements} = Design !== undefined ? Design : {};
+        const {Counts} = this.props;
 
         return (
-            <MenuProvider id="menu_id">
-                <ul className="nav main-menu">
-                    {(DeletedElements === undefined || DeletedElements["Email_li"] === undefined ||
-                        DeletedElements["Email_li"].IsShow
-                    ) && <li className="task-email" id="Email_li">
-                        <a href="#" onClick={this.clicked.bind(this)}>
-                            <i className="icon" element="Email_li"  ></i>
-                            <label className="title" id="Emails" element="Email_li"
-                                   erowid={(EditedElements === undefined || EditedElements["Emails"] === undefined) ?
-                                       0 : EditedElements["Emails"].Id}
-                                   public={(EditedElements === undefined || EditedElements["Emails"] === undefined) ?
-                                       "false" : EditedElements["Emails"].IsPublic + ""}
-                            >
-                                {(EditedElements === undefined || EditedElements["Emails"] === undefined) ?
-                                    this.context.t("Emails") : EditedElements["Emails"].Title}</label>
-                            <span className="badge pull-right" element="Email_li"
-                                 >{Counts !== undefined ? Counts.Email : 0}</span></a>
+            <ul className="nav main-menu">
+                <li className="task-email" id="Email_li">
+                    <a href="#" onClick={this.clicked.bind(this)}>
+                        <i className="icon" element="Email_li"  ></i>
+                        <label className="title" id="Emails" element="Email_li" >
+                            {this.context.t("Emails")}</label>
+                        <span className="badge pull-right" element="Email_li"
+                        >{Counts !== undefined ? Counts.Email : 0}</span></a>
+                </li>
+                <li className="task-letter" id="Secretariat_li">
 
-                    </li>}
-                    {(DeletedElements === undefined || DeletedElements["Secretariat_li"] === undefined ||
-                        DeletedElements["Secretariat_li"].IsShow
-                    ) && <li className="task-letter" id="Secretariat_li">
+                    <a href="#" onClick={this.clicked.bind(this)} >
+                        <i className="icon" element="Secretariat_li" ></i>
+                        <label className="title" id="Secretariat" element="Secretariat_li">
+                            {this.context.t("Secretariat")}
+                        </label>
+                        <span className="badge pull-right" element="Secretariat_li">{Counts !== undefined ? Counts.Secretariat : 0}</span></a>
 
-                        <a href="#" onClick={this.clicked.bind(this)} >
-                            <i className="icon" element="Secretariat_li" ></i>
-                            <label className="title" id="Secretariat" element="Secretariat_li"
-                                   erowid={(EditedElements === undefined || EditedElements["Secretariat"] === undefined) ?
-                                       0 : EditedElements["Secretariat"].Id}
-                                   public={(EditedElements === undefined || EditedElements["Secretariat"] === undefined) ?
-                                       "false" : EditedElements["Secretariat"].IsPublic + ""}
-                            >
-                                {(EditedElements === undefined || EditedElements["Secretariat"] === undefined) ?
-                                    this.context.t("Secretariat") : EditedElements["Secretariat"].Title}
-                            </label>
-                            <span className="badge pull-right" element="Secretariat_li">{Counts !== undefined ? Counts.Secretariat : 0}</span></a>
+                </li>
+                    <li className="task-message" id="Messages_li">
+                    <a href="#" onClick={this.clicked.bind(this)}>
+                        <i className="icon" element="Messages_li" ></i>
+                        <label className="title" element="Messages_li" id="Messages">
+                            {this.context.t("Messages")}
+                        </label>
+                        <span className="badge pull-right" element="Messages_li">{Counts !== undefined ? Counts.Message : 0}</span></a>
+                </li>
+                   <li className="task-sms" id="SMS_li">
 
-                    </li>}
-                    {(DeletedElements === undefined || DeletedElements["Messages_li"] === undefined ||
-                        DeletedElements["Messages_li"].IsShow
-                    ) && <li className="task-message" id="Messages_li">
-                        <a href="#" onClick={this.clicked.bind(this)}>
-                            <i className="icon" element="Messages_li" ></i>
-                            <label className="title" element="Messages_li" id="Messages"
-                                   erowid={(EditedElements === undefined || EditedElements["Messages"] === undefined) ?
-                                       0 : EditedElements["Messages"].Id}
-                                   public={(EditedElements === undefined || EditedElements["Messages"] === undefined) ?
-                                       "false" : EditedElements["Messages"].IsPublic + ""}
-                            >
-                                {(EditedElements === undefined || EditedElements["Messages"] === undefined) ?
-                                    this.context.t("Messages") : EditedElements["Messages"].Title}
-                            </label>
-                            <span className="badge pull-right" element="Messages_li">{Counts !== undefined ? Counts.Message : 0}</span></a>
-                    </li>}
-                    {(DeletedElements === undefined || DeletedElements["SMS_li"] === undefined ||
-                        DeletedElements["SMS_li"].IsShow
-                    ) && <li className="task-sms" id="SMS_li">
+                    <a href="#">
+                        <i className="icon" element="SMS_li"></i>
+                        <label className="title" id="SMS" element="SMS_li">
+                            {this.context.t("SMS")}
+                        </label>
+                        <span className="badge pull-right" >{Counts !== undefined ? Counts.Sms : 0}</span></a>
+                </li>
+                <li className="task-check" id="Cheques_li">
+                    <a href="#">
+                        <i className="icon" element="Cheques_li" ></i>
+                        <label className="title" id="Cheques" element="Cheques_li">
+                            {this.context.t("Cheques")}
+                        </label>
+                        <span className="badge pull-right" element="Cheques_li">{Counts !== undefined ? Counts.Cheque : 0}</span></a>
+                </li>
 
-                        <a href="#">
-                            <i className="icon" element="SMS_li"></i>
-                            <label className="title" id="SMS"
-                                   erowid={(EditedElements === undefined || EditedElements["SMS"] === undefined) ?
-                                       0 : EditedElements["SMS"].Id}
-                                   public={(EditedElements === undefined || EditedElements["SMS"] === undefined) ?
-                                       "false" : EditedElements["SMS"].IsPublic + ""}
-                                   element="SMS_li">
-                                {(EditedElements === undefined || EditedElements["SMS"] === undefined) ?
-                                    this.context.t("SMS") : EditedElements["SMS"].Title}
+                <li className="task-note" id="Notes_li">
+                    <a href="#">
+                        <i className="icon" element="Notes_li" ></i>
+                        <label className="title" id="Notes" element="Notes_li">
+                            {this.context.t("Notes")}
+                        </label>
+                        <span className="badge pull-right" >{Counts !== undefined ? Counts.Note : 0}</span></a>
+                </li>
+                <li className="task-work" id="Works_li">
 
-                            </label>
-                            <span className="badge pull-right" >{Counts !== undefined ? Counts.Sms : 0}</span></a>
-                    </li>}
-                    {(DeletedElements === undefined || DeletedElements["Cheques_li"] === undefined ||
-                        DeletedElements["Cheques_li"].IsShow
-                    ) && <li className="task-check" id="Cheques_li">
+                    <a href="#">
+                        <i className="icon" element="Works_li" ></i>
+                        <label className="title" id="Works" element="Works_li">
+                            {this.context.t("Works")}
+                        </label>
+                        <span className="badge pull-right" element="Works_li">{Counts !== undefined ? Counts.Work : 0}</span></a>
 
-                        <a href="#">
-                            <i className="icon" element="Cheques_li" ></i>
-                            <label className="title" id="Cheques" element="Cheques_li"
-                                   erowid={(EditedElements === undefined || EditedElements["Cheques"] === undefined) ?
-                                       0 : EditedElements["Cheques"].Id}
-                                   public={(EditedElements === undefined || EditedElements["Cheques"] === undefined) ?
-                                       "false" : EditedElements["Cheques"].IsPublic + ""}
-                            >
-                                {(EditedElements === undefined || EditedElements["Cheques"] === undefined) ?
-                                    this.context.t("Cheques") : EditedElements["Cheques"].Title}
-                            </label>
-                            <span className="badge pull-right" element="Cheques_li">{Counts !== undefined ? Counts.Cheque : 0}</span></a>
-                    </li>}
-
-                    {(DeletedElements === undefined || DeletedElements["Notes_li"] === undefined ||
-                        DeletedElements["Notes_li"].IsShow
-                    ) && <li className="task-note" id="Notes_li">
-                        <a href="#">
-                            <i className="icon" element="Notes_li" ></i>
-                            <label className="title" id="Notes" element="Notes_li"
-                                   erowid={(EditedElements === undefined || EditedElements["Notes"] === undefined) ?
-                                       0 : EditedElements["Notes"].Id}
-                                   public={(EditedElements === undefined || EditedElements["Notes"] === undefined) ?
-                                       "false" : EditedElements["Notes"].IsPublic + ""}
-                            >
-                                {(EditedElements === undefined || EditedElements["Notes"] === undefined) ?
-                                    this.context.t("Notes") : EditedElements["Notes"].Title}
-                            </label>
-                            <span className="badge pull-right" >{Counts !== undefined ? Counts.Note : 0}</span></a>
-                    </li>}
-                    {(DeletedElements === undefined || DeletedElements["Works_li"] === undefined ||
-                        DeletedElements["Works_li"].IsShow
-                    ) && <li className="task-work" id="Works_li">
-
-                        <a href="#">
-                            <i className="icon"  element="Works_li" ></i>
-                            <label className="title" id="Works" element="Works_li"
-                                   erowid={(EditedElements === undefined || EditedElements["Works"] === undefined) ?
-                                       0 : EditedElements["Works"].Id}
-                                   public={(EditedElements === undefined || EditedElements["Works"] === undefined) ?
-                                       "false" : EditedElements["Works"].IsPublic + ""}
-                            >
-                                {(EditedElements === undefined || EditedElements["Works"] === undefined) ?
-                                    this.context.t("Works") : EditedElements["Works"].Title}
-                            </label>
-                            <span className="badge pull-right" element="Works_li">{Counts !== undefined ? Counts.Work : 0}</span></a>
-
-                    </li>}
-                </ul>
-            </MenuProvider>
+                </li>
+            </ul>
         );
     }
 }
@@ -156,15 +90,13 @@ LeftCounts.contextTypes = {
 }
 
 function mapStateToProps(state) {
-    const {Counts} = state.MainPage;
-    const {lang} = state.i18nState;
-    const {Design} = state;
+    const { Counts } = state.MainPage;
+    const { lang } = state.i18nState;
     return {
         lang,
-        Counts,
-        Design
+        Counts
     };
 }
 
 const connectedLeftCounts = connect(mapStateToProps, null)(LeftCounts);
-export {connectedLeftCounts as LeftCounts};
+export { connectedLeftCounts as LeftCounts };

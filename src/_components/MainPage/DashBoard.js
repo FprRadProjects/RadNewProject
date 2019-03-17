@@ -134,14 +134,6 @@ class DashBoard extends Component {
 
                     </div>
                 </div>
-                {/*<MenuProvider id="menu_id">
-                    {ShortKeys!==undefined && Object.keys(ShortKeys).map((keyName, i) =>  {
-                        let keyTarget=ShortKeys[keyName].Meta.replace("element=","rowid='"+ShortKeys[keyName].Id+"' element=");
-                        keyTarget=keyTarget.replace("event", "onclick")
-
-                        return  renderHTML(keyTarget);
-                    })}
-                </MenuProvider>*/}
             </div>
 
         );
@@ -160,14 +152,12 @@ function mapStateToProps(state) {
     const {lang} = state.i18nState;
     const {ShortKeys} = state.Design;
 
-    const {Design} = state
 
     return {
         alert,
         loading,
         lang,
-        ShortKeys,
-        Design
+        ShortKeys
     };
 }
 

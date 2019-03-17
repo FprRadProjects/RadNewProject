@@ -1,20 +1,16 @@
-import React from 'react';
-import {Router, Route} from 'react-router-dom';
-import {connect} from 'react-redux';
+import React, { lazy, Suspense } from 'react';
+import { Router, Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import "bootstrap-v4-rtl/dist/css/bootstrap.min.css"
+import { history } from '../_helpers/index';
+import { PrivateRoute } from '../_components/index';
+import { setLanguage } from "redux-i18n"
+import {diagram_Actions} from "../_actions/General";
 
-import {history} from '../_helpers/index';
-import {alertActions} from '../_actions/index';
-import {PrivateRoute} from '../_components/index';
-import {LoginPage} from '../_components/LoginPage/';
-import {HomePage} from '../_components/MasterPage/index';
-import {diagram_Actions} from '../_actions/General/Diagram'
 class App extends React.Component {
     constructor(props) {
         super(props);
-        const {dispatch} = this.props;
-        history.listen((location, action) => {
-            dispatch(alertActions.clear());
-        });
+        this.props.setLanguage("fa");
 
         const elem = document.getElementById('root')
         const elemHeight = elem.offsetHeight
@@ -23,27 +19,44 @@ class App extends React.Component {
 
 
     render() {
-
-
+        const { user } = this.props;
+        var HomePage = null;
+        var LoginPage = null;
+        if (user !== undefined && user !== null)
+            HomePage = lazy(() => import('../_components/MasterPage/MasterPage'));
+        else
+            LoginPage = lazy(() => import('../_components/LoginPage/LoginPage'));
         return (
-            <div>
-
+            <React.Suspense fallback={<h1></h1>}>
                 <Router history={history}>
-                    <div>
-
-                        <Route path="/login" component={LoginPage} />
-                        <PrivateRoute exact
-                                      path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
-                                      component={HomePage}  />
-                    </div>
+                    <Switch>
+                        {LoginPage !== null && <Route path="/login" render={props => (<LoginPage />)} />}
+                        {LoginPage !== null && <Route path="/" render={props => (<LoginPage />)} />}
+                        {HomePage !== null && <PrivateRoute exact user={user} component={HomePage}
+                                                            path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
+                        />}
+                    </Switch>
                 </Router>
+            </React.Suspense>
 
-            </div>
         );
     }
 }
+const mapDispatchToProps = dispatch => ({
+
+    setLanguage: (param) => {
+        dispatch(setLanguage(param))
+    },
+
+});
+
+function mapStateToProps(state) {
+    const { user } = state.authentication;
+    return {
+        user,
+    };
+}
 
 
-
-const connectedApp = connect(null)(App);
-export {connectedApp as App};
+const connectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
+export { connectedApp as App };

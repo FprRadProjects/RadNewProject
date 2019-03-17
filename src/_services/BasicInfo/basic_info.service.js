@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {BaseUrl} from '../../_helpers/index';
 import {UserConfig} from '../Config.js'
+import Config from '../../Config.json';
 
 export const BasicInfo_service = {
     GetCompanyInfo,
@@ -9,7 +9,7 @@ export const BasicInfo_service = {
 };
 
 function GetCompanyInfo() {
-        return axios.post(BaseUrl + "GetCompanyInfo")
+        return axios.post(Config.BaseUrl + "GetCompanyInfo")
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -19,7 +19,7 @@ function GetCompanyInfo() {
 }
 function UserAccessForm(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "UserAccessForm", params)
+        return axios.post(Config.BaseUrl + "UserAccessForm", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -34,7 +34,7 @@ function SetLog(Form) {
     if (UserConfig.GetToken() !== null) {
         let data = new FormData();
         data.append("Form", Form);
-        return axios.post(BaseUrl + "SetLog", data)
+        return axios.post(Config.BaseUrl + "SetLog", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

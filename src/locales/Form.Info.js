@@ -835,7 +835,12 @@ export const FormInfo =
         fm_par_baznegari: {
             "id": 194,
             "form_name": "بازنگري ",
-            "sys_name": "fm_par_baznegari"
+            "sys_name": "fm_par_baznegari",
+            "fa_module_name1": "فرم های روند کار",
+            "fa_module_name2": "",
+            "en_form_name": "Flows Forms",
+            "en_module_name1": "Flow",
+            "en_module_name2": "",
         },
         fm_par_enteghalshakhe: {
             "id": 195,

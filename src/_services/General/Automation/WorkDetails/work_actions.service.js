@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {BaseUrl} from '../../../../_helpers/index';
-import {UserConfig} from '../../../Config.js'
+import Config from '../../../../Config.json';
+import { UserConfig } from '../../../Config.js'
 
 export const WorkActions_service = {
     RebuildWork,
@@ -9,11 +9,60 @@ export const WorkActions_service = {
     DeleteWork,
     InitConfirmWork,
     FinalFlowConfirmWork,
+    ConfirmReviewWork,
+    DeleteFromWorkMark,
+    InsertIntoWorkMark
 
 };
+
+function InsertIntoWorkMark(peygir_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('peygir_id', peygir_id);
+        return axios.post(Config.BaseUrl + "InsertIntoWorkMark", formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+function DeleteFromWorkMark(peygir_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('peygir_id', peygir_id);
+        return axios.post(Config.BaseUrl + "DeleteFromWorkMark", formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+function ConfirmReviewWork(peygir_id) {
+    if (UserConfig.GetToken() !== null) {
+
+        var formData = new FormData();
+        formData.append('peygir_id', peygir_id);
+        return axios.post(Config.BaseUrl + "ConfirmReviewWork", formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
 function FinalFlowConfirmWork(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "FinalFlowConfirmWork", params)
+        return axios.post(Config.BaseUrl + "FinalFlowConfirmWork", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -25,7 +74,7 @@ function FinalFlowConfirmWork(params) {
 }
 function InitConfirmWork(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "InitConfirmWork", params)
+        return axios.post(Config.BaseUrl + "InitConfirmWork", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -41,7 +90,7 @@ function RebuildWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "RebuildWork", formData)
+        return axios.post(Config.BaseUrl + "RebuildWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -59,7 +108,7 @@ function SeenWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "SeenWork", formData)
+        return axios.post(Config.BaseUrl + "SeenWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -72,7 +121,7 @@ function SeenWork(peygir_id) {
 
 function SaveWorkInfo(data) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "SaveWorkInfo", data)
+        return axios.post(Config.BaseUrl + "SaveWorkInfo", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -92,7 +141,7 @@ function DeleteWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "DeleteWork", formData)
+        return axios.post(Config.BaseUrl + "DeleteWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

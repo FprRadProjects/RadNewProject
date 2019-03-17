@@ -52,6 +52,7 @@ export const translations = {
         Code:"کد",
         FileNumber:"شماره",
         Audience:"مخاطب",
+        AudienceID:"شاخص مخاطب",
         Project:"پروژه",
         HasAttachment:"پیوست دارد?",
         FlowCode:"کد فرآیند",
@@ -84,9 +85,13 @@ export const translations = {
         Result:"نتیجه",
         SelectPopup:"...",
         Description:"شرح",
+        NoSelection:"بدون انتخاب",
+        SelectedDate:"تاریخ انتخاب شده",
         //---------------اقدام------------------شروع
         logout: 'خروج',
         Save: 'ذخیره',
+        Edit: 'ویرایش',
+        SaveAndClose: 'ذخیره و بستن',
         ConfirmAndClose: 'تایید و بستن',
         Rebuild: 'بازسازی',
         Delete: 'حذف',
@@ -95,11 +100,23 @@ export const translations = {
         DeleteControl: 'حذف کنترل',
         AddToShortKey: 'افزودن به دسترسی سریع',
         Select:"انتخاب",
+        RefreshInformation: "بازخوانی اطلاعات",
+        ReferralResult: "نتیجه ارجاع",
+        Marks: "نشانه ها",
+        RemoveMark: "حذف نشانه",
+        Marking: "نشانه گذاری",
+        Diagram: "دیاگرام",
+        FollowUpDiagram: "دیاگرام عطف",
+        WorkFlowSummary: "خلاصه گردش کار",
+
         //--------------اقدام------------------پایان
         //---------------پیام ها----------------شروع
         required_username: 'نام کاربری لازم به ورود است',
         required_password: 'گذرواژه لازم به ورود است',
         user_info_not_available: 'اطلاعات کاربر در دسترس نیست',
+        msg_No_Select_Row: 'سطری انتخاب نشده است...',
+        msg_ActionDate_Not_Valid: 'تاریخ کار معتبر نمی باشد...',
+        msg_Operation_Success: 'عملیات با موفقیت انجام شد....',
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
         frm_System: 'سیستم',
@@ -119,6 +136,10 @@ export const translations = {
         frm_References_Result: 'نتیجه ارجاع',
         frm_Text_Defaults: 'پیش فرض های متنی',
         frm_Flow_Results: 'نتایج فرآیند',
+        frm_Review_Confirm_Work: 'بازنگری تایید کار',
+        frm_Edit_Review_Confirm_Work: 'ویرایش بازنگری تایید کار',
+        frm_HideElements_Template: 'مدیریت کنترل های حذف شده',
+        
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -174,6 +195,7 @@ export const translations = {
         Code:"Code",
         FileNumber:"File Number",
         Audience:"Audience",
+        AudienceID:"AudienceID",
         Project:"Project",
         HasAttachment:"Has Attachment?",
         FlowCode:"Flow Code",
@@ -206,9 +228,13 @@ export const translations = {
         Result:"Result",
         SelectPopup:"...",
         Description:"Description",
+        NoSelection:"No selection",
+        SelectedDate:"Selected Date",
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
+        Edit: 'Edit',
+        SaveAndClose: 'Save And Close',
         ConfirmAndClose: 'Confirm And Close',
         Rebuild: 'Rebuild',
         Delete: 'Delete',
@@ -217,12 +243,24 @@ export const translations = {
         DeleteControl: 'Delete Control',
         AddToShortKey: 'Add To Short Key',
         Select:"Select",
+        RefreshInformation: "Refresh Information",
+        ReferralResult: "Referral Result",
+        Marks: "Marks",
+        RemoveMark: "RemoveMark",
+        Marking: "Marking",
+        Diagram: "Diagram",
+        FollowUpDiagram: "Follow Up Diagram",
+        WorkFlowSummary: "Work Flow Summary",
+
         //End-----------------Actions----------------
 
         //Start---------------Messages----------------
         required_username: "Username is required to login",
         required_password: 'Password required to login',
         user_info_not_available: 'User information is not available',
+        msg_No_Select_Row: 'Row Not Selected...',
+        msg_ActionDate_Not_Valid: 'Action Date Not Valid...',
+        msg_Operation_Success: 'The Operation Was Successful....',
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',
@@ -242,6 +280,10 @@ export const translations = {
         frm_References_Result: 'References Result',
         frm_Text_Defaults: 'Text Defaults',
         frm_Flow_Results: 'Flow Results',
+        frm_Review_Confirm_Work: 'Review Confirm Work',
+        frm_Edit_Review_Confirm_Work: 'Edit Review Confirm Work',
+        frm_HideElements_Template: 'Manage Deleted Controls',
+        
         //End-------------- FORM NAME --------------
 
     },

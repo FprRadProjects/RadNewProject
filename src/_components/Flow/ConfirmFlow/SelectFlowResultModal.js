@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { GridComponent } from "../../Config/GridComponent";
-import { WorkActions_action, WorkBasic_action } from "../../../_actions";
+import { toast } from 'react-toastify';
 
 var currencyColumns = [];
 var hiddenColumnNames = ["p_count"];
@@ -16,32 +16,28 @@ var Params = {
     "direction": "desc",
     "filter": []
 };
-var FinalConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Results: [] };
 
 class SelectFlowResultModal extends Component {
     constructor(props) {
         super(props);
+        const { modal} = this.props;
+    
         this.state = {
             ...this.state,
-            modal: false,
-            backdrop: "static",
-            backdropClassName: "test",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal"
+            FlowResultSelectmodal: modal,
+            modalClass: "modal-dialog-centered r-modal"
         };
 
+        this.SetSelectResultRowData = this.SetSelectResultRowData.bind(this);
+        this.SetSelectResultRowData = this.SetSelectResultRowData.bind(this);
     }
     SetSelectResultRowData = (row) => {
         this.setState({
             row: row
         })
     }
-    SuccesSelectFlowResult = (row, e) => {
-        if (undefined !== row) {
-            const { peygir_id, FinalFlowConfirmWork } = this.props;
-            FinalConfirmParams["peygir_id"] = peygir_id;
-            FinalConfirmParams["Results"] = [row.id];
-            FinalFlowConfirmWork(FinalConfirmParams);
-        }
+    componentWillReceiveProps(nextProps){
+        this.setState({FlowResultSelectmodal:nextProps.modal });
     }
     render() {
         const columns = [
@@ -50,23 +46,17 @@ class SelectFlowResultModal extends Component {
             { name: 'p_count', title: this.context.t("p_count") },
 
         ];
-        const { modal, toggle, peygir_id
-            , SelectFlowResultList_rows, SelectFlowResultList_totalCount } = this.props;
+        const {  toggle, peygir_id
+            , SelectFlowResultList_rows, SelectFlowResultList_totalCount,
+            SuccesSelectFlowResult } = this.props;
         Params.peygir_id = peygir_id;
-        const modalBackDrop = `
-        .modal-backdrop {
-            opacity:.98!important;
-            background: rgb(210,210,210);
-            background: -moz-linear-gradient(-45deg, rgba(210,210,210,1) 0%, rgba(229,235,238,1) 50%, rgba(216,216,216,1) 50.1%, rgba(216,216,216,1) 100%);
-            background: -webkit-linear-gradient(-45deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
-            background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
-        }`;
+        
         return (
             <div>
 
                 <div>
-                    <Modal isOpen={modal} toggle={toggle}
+                    <Modal isOpen={this.state.FlowResultSelectmodal} toggle={toggle}
+                    className={this.state.modalClass}
                     >
                         <ModalHeader>{this.context.t("frm_Flow_Results")}</ModalHeader>
                         <ModalBody>
@@ -78,12 +68,11 @@ class SelectFlowResultModal extends Component {
                             />
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="primary" onClick={this.SuccesSelectFlowResult.bind(this, this.state.row)}>{this.context.t("Select")}</Button>{' '}
+                            <Button color="primary" onClick={SuccesSelectFlowResult.bind(this, this.state.row)}>{this.context.t("Select")}</Button>{' '}
                             <Button color="secondary" onClick={toggle}>{this.context.t("Cancel")}</Button>
                         </ModalFooter>
                     </Modal>
                 </div>
-                <style>{modalBackDrop}</style>
 
             </div>
         );
@@ -92,10 +81,7 @@ class SelectFlowResultModal extends Component {
 
 const mapDispatchToProps = dispatch => ({
 
-    FinalFlowConfirmWork: (Params) => {
-        dispatch(WorkActions_action.FinalFlowConfirmWork(Params))
-    },
-
+ 
 });
 SelectFlowResultModal.contextTypes = {
     t: PropTypes.func.isRequired

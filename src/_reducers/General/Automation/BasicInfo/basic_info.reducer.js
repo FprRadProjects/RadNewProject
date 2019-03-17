@@ -17,12 +17,31 @@ export function Auto_BasicInfo(state = {}, action) {
                 SelectDefaultText_GridRowData:{}
             }
         }
-        case Constant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS: {
+        case Constant.SELECT_MANAGER_LIST_SET_GRID_ROWS: {
             return {
                 ...state,
-                ...action.data
+                SelectManagerList_rows:   Object.keys(action.data).map((item, index) => {
+                    return  { value: action.data[item].id_user, label: action.data[item].username };
+                }),
             }
         }
+        case Constant.SELECT_WORKER_LIST_SET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectWorkerList_rows:  Object.keys(action.data).map((item, index) => {
+                    return  { value: action.data[item].id_user, label: action.data[item].username };
+                }),
+            }
+        }
+        case Constant.SELECT_ASHKHAS_LIST_SET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectAshkhasList_rows:  Object.keys(action.data).map((item, index) => {
+                return  { value: action.data[item].id, label: action.data[item].name };
+            }),
+            }
+        }
+      
         
         default:
             return state;

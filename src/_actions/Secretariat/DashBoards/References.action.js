@@ -8,15 +8,10 @@ import { toast } from 'react-toastify';
 
 
 export const Act_Reference= {
-    GetFormInfo,
     FetchData,
     FetchDataTree
 };
-function GetFormInfo(param) {
-    return dispatch => {
-        dispatch(getFormInfo_Reducer(param));
-    }
-}
+
 
 
 function FetchData(params) {
@@ -30,18 +25,16 @@ function FetchData(params) {
                     if (data.status) {
                         dispatch(AddTotalCount(data.data.totalcount));
                         dispatch(AddRows(data.data.rows));
-                        // dispatch(loadingActions.HideLoading());
                         dispatch(loadingActions.HideGridLoading());
                     }
                     else if (data.code !== 0) {
                         toast.error(data.error);
-                        // dispatch(loadingActions.HideLoading());
                         dispatch(loadingActions.HideGridLoading());
                     }
                     else {
 
                         userActions.logout();
-                        history.push("/login")
+                        window.open('/',"_self");
                     }
                 },
                 error => {

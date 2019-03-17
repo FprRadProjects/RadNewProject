@@ -13,8 +13,6 @@ class LoginPage extends React.Component {
     constructor(props) {
         super(props);
         this.languages = ["fa", "en"];
-        this.props.logout();
-
         this.state = {
             username: '',
             password: '',
@@ -25,7 +23,6 @@ class LoginPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.setLanguage("fa");
         this.props.GetCompanyInfo();
     }
 
@@ -166,5 +163,4 @@ const mapDispatchToProps = dispatch => ({
 });
 
 
-const connectedLoginPage = connect(mapStateToProps,mapDispatchToProps)(LoginPage);
-export { connectedLoginPage as LoginPage };
+export default  connect(mapStateToProps, mapDispatchToProps)(LoginPage)
