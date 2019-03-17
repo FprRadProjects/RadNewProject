@@ -30,7 +30,7 @@ function SetLog(Form) {
                     else if (!data.status && data.code === 0)
                     {
                         userActions.logout();
-                        history.push("/login")
+                        window.open('/',"_self");
                     }
                 },
                 error => {
@@ -55,7 +55,7 @@ function UserAccessForm(param) {
                     } else
                     {
                         userActions.logout();
-                        history.push("/login")
+                        window.open('/',"_self");
                     }
                 },
                 error => {

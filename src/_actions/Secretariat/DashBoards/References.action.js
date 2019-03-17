@@ -34,7 +34,7 @@ function FetchData(params) {
                     else {
 
                         userActions.logout();
-                        history.push("/login")
+                        window.open('/',"_self");
                     }
                 },
                 error => {

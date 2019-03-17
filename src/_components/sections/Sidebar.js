@@ -10,7 +10,6 @@ class Sidebar extends Component {
 
     handleLogout = (event) => {
         userActions.logout();
-        window.open('/login',"_self");
     }
 
     render() {
@@ -66,7 +65,7 @@ class Sidebar extends Component {
                                 </ul>
                             </li>
                             <li>
-                                <Link to="/login" onClick={this.handleLogout.bind(this)}>
+                                <Link to="/" onClick={this.handleLogout.bind(this)}>
                                     <i className="icon-system"></i>
                                     <span>{this.context.t("logout")}</span>
                                 </Link>

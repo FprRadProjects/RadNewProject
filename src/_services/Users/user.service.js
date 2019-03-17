@@ -30,6 +30,7 @@ function login(username, password) {
 // remove user from local storage to log user out
 function logout() {
     localStorage.removeItem('user');
+    window.open('/',"_self");
 }
 
 //Gets "token" // returns token is valid or not
