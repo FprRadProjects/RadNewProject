@@ -9,7 +9,7 @@ export const Service_Dashboard = {
 
 function FetchData(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(Config.BaseUrl+"WorkDashboard", params)
+        return axios.post("http://185.189.120.190:2535"+"WorkDashboard", params)
             .then(response => {
                 return Promise.resolve(response.data)
             })
@@ -22,7 +22,7 @@ function FetchData(params) {
 
 function FetchDataTree(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl+"WorkDashboard", params)
+        return axios.post("http://185.189.120.190:2535"+"WorkDashboard", params)
             .then(response => {
                 return Promise.resolve(response.data)
             })
