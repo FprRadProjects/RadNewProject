@@ -134,14 +134,6 @@ class DashBoard extends Component {
 
                     </div>
                 </div>
-                {/*<MenuProvider id="menu_id">
-                    {ShortKeys!==undefined && Object.keys(ShortKeys).map((keyName, i) =>  {
-                        let keyTarget=ShortKeys[keyName].Meta.replace("element=","rowid='"+ShortKeys[keyName].Id+"' element=");
-                        keyTarget=keyTarget.replace("event", "onclick")
-
-                        return  renderHTML(keyTarget);
-                    })}
-                </MenuProvider>*/}
             </div>
 
         );
