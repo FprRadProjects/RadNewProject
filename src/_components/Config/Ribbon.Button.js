@@ -10,9 +10,9 @@ class RibbonButton extends Component {
 
 {                (DeletedElements === undefined || DeletedElements["lnk-" + Id] === undefined ||
                     DeletedElements["lnk-" + Id].IsShow
-            ) && <a id={"lnk-" + Id} onClick={handleClick.bind(this)}>
-                    <i className={"icon " + Id} id={"icon-" + Id} element={"lnk-" + Id}></i>
-                    <span id={"lbl-" + Id} element={"lnk-" + Id}
+            ) && <a id={"lnk-" + Id} onClick={handleClick.bind(this)} Description={this.context.t(Text)}>
+                    <i className={"icon " + Id} id={"icon-" + Id} element={"lnk-" + Id}  Description={this.context.t(Text)}></i>
+                    <span id={"lbl-" + Id} element={"lnk-" + Id}  Description={this.context.t(Text)}
                         erowid={(EditedElements === undefined || EditedElements["lbl-" + Id] === undefined) ?
                             0 : EditedElements["lbl-" + Id].Id}
                         public={(EditedElements === undefined || EditedElements["lbl-" + Id] === undefined) ?

@@ -104,13 +104,15 @@ class MyAwesomeMenu extends Component {
                 }));
             }
         } else if (!this.state.isshort) {
+            console.log(this.state.event.target)
             var HideParam =
             {
                 RowId: 0,
                 FormId: this.props.FormId,
                 IsShow: false,
                 IsPublic: this.state.public,
-                Element: this.state.event.target.attributes.element.value
+                Element: this.state.event.target.attributes.element.value,
+                Description: this.state.event.target.attributes.Description.value,
             };
             const { Set_Hide_TemplateForm } = this.props;
             Set_Hide_TemplateForm(HideParam);

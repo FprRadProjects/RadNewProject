@@ -3,6 +3,8 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInfo } from "../../../../locales";
 import { ReferenceViewer } from "../../RecordsPage";
+import { HideElementListModal } from "../../../Basic";
+
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton } from "../../../Config";
@@ -19,6 +21,7 @@ class RibbonReferences extends Component {
         this.state = {
             ...this.state,
             ReferenceViewermodal: false,
+            HideElementListmodal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
@@ -91,7 +94,9 @@ class RibbonReferences extends Component {
         FetchData(Params);
     }
     controlpanelClick(){
-
+        this.setState(prevState => ({
+            HideElementListmodal: !prevState.HideElementListmodal
+        }));
     }
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, Design } = this.props;
@@ -421,6 +426,10 @@ class RibbonReferences extends Component {
                     WorkInfo={WorkInfo}
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
+
+                    {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
+                        toggle={this.controlpanelClick.bind(this)}
+                        FormId={FormInfo.fm_dabir_kartabl_erjaat.id} />}
             </div>
         );
     }

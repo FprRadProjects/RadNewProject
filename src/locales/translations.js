@@ -138,6 +138,8 @@ export const translations = {
         frm_Flow_Results: 'نتایج فرآیند',
         frm_Review_Confirm_Work: 'بازنگری تایید کار',
         frm_Edit_Review_Confirm_Work: 'ویرایش بازنگری تایید کار',
+        frm_HideElements_Template: 'مدیریت کنترل های حذف شده',
+        
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -280,6 +282,7 @@ export const translations = {
         frm_Flow_Results: 'Flow Results',
         frm_Review_Confirm_Work: 'Review Confirm Work',
         frm_Edit_Review_Confirm_Work: 'Edit Review Confirm Work',
+        frm_HideElements_Template: 'Manage Deleted Controls',
         
         //End-------------- FORM NAME --------------
 
