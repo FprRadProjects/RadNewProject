@@ -34,7 +34,7 @@ class LeftCounts extends Component {
                         </label>
                         <span className="badge pull-right" element="Secretariat_li">{Counts !== undefined ? Counts.Secretariat : 0}</span></a>
 
-                </li>}
+                </li>
                     <li className="task-message" id="Messages_li">
                     <a href="#" onClick={this.clicked.bind(this)}>
                         <i className="icon" element="Messages_li" ></i>
@@ -42,7 +42,7 @@ class LeftCounts extends Component {
                             {this.context.t("Messages")}
                         </label>
                         <span className="badge pull-right" element="Messages_li">{Counts !== undefined ? Counts.Message : 0}</span></a>
-                </li>}
+                </li>
                    <li className="task-sms" id="SMS_li">
 
                     <a href="#">
