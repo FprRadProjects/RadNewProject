@@ -18,26 +18,27 @@ class App extends React.Component {
         var HomePage = null;
         var LoginPage = null;
         if (user !== undefined && user !== null)
-         HomePage=lazy(() => import('../_components/MasterPage/MasterPage')) ;
-         else
-          LoginPage=lazy(() => import('../_components/LoginPage/LoginPage')) ;
+            HomePage = lazy(() => import('../_components/MasterPage/MasterPage'));
+        else
+            LoginPage = lazy(() => import('../_components/LoginPage/LoginPage'));
         return (
-            <React.Suspense fallback={<h1></h1>}>   
-             <Router history={history}>
-                <Switch>
-                       <Route path="/login" component={LoginPage} />
-                       {HomePage!==null && <PrivateRoute exact user={user} component={HomePage}
+            <React.Suspense fallback={<h1></h1>}>
+                <Router history={history}>
+                    <Switch>
+                        {LoginPage !== null && <Route path="/login" render={props => (<LoginPage />)} />}
+                        {LoginPage !== null && <Route path="/" render={props => (<LoginPage />)} />}
+                        {HomePage !== null && <PrivateRoute exact user={user} component={HomePage}
                             path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
                         />}
-                </Switch>
-            </Router>
+                    </Switch>
+                </Router>
             </React.Suspense>
 
         );
     }
 }
 const mapDispatchToProps = dispatch => ({
- 
+
     setLanguage: (param) => {
         dispatch(setLanguage(param))
     },
@@ -52,5 +53,5 @@ function mapStateToProps(state) {
 }
 
 
-const connectedApp = connect(mapStateToProps,mapDispatchToProps)(App);
+const connectedApp = connect(mapStateToProps, mapDispatchToProps)(App);
 export { connectedApp as App };
