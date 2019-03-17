@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { BaseUrl } from '../../_helpers';
 import { UserConfig } from "../Config";
+import Config from '../../Config.json';
 
 
 export const designService = {
@@ -16,7 +16,7 @@ export const designService = {
 
 function GetHideElementsList(param) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "GetHideElementsList", param)
+        return axios.post(Config.BaseUrl + "GetHideElementsList", param)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -31,7 +31,7 @@ function GetTemplateForm(param) {
     if (UserConfig.GetToken() !== null) {
         let data = new FormData();
         data.append("FormId", param);
-        return axios.post(BaseUrl + "GetTemplateForm", data)
+        return axios.post(Config.BaseUrl + "GetTemplateForm", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -44,7 +44,7 @@ function GetTemplateForm(param) {
 
 function Set_EditText_TemplateForm(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "Set_EditTextElements_Template", params)
+        return axios.post(Config.BaseUrl + "Set_EditTextElements_Template", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -57,7 +57,7 @@ function Set_EditText_TemplateForm(params) {
 
 function Set_Hide_TemplateForm(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "Set_HideElements_Template", params)
+        return axios.post(Config.BaseUrl + "Set_HideElements_Template", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -70,7 +70,7 @@ function Set_Hide_TemplateForm(params) {
 
 function Set_ShortKey_TemplateForm(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "Set_ShortKeyElements_Template", params)
+        return axios.post(Config.BaseUrl + "Set_ShortKeyElements_Template", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -87,7 +87,7 @@ function Delete_ShortKeyElements_Template(FormId, RowId) {
     data.append("FormId", FormId);
     data.append("RowId", RowId);
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "Delete_ShortKeyElements_Template", data)
+        return axios.post(Config.BaseUrl + "Delete_ShortKeyElements_Template", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -105,7 +105,7 @@ function Delete_HideElements_Template(FormId, RowId) {
     data.append("FormId", FormId);
     data.append("RowId", RowId);
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "Delete_HideElements_Template", data)
+        return axios.post(Config.BaseUrl + "Delete_HideElements_Template", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

@@ -1,6 +1,6 @@
 import axios from 'axios'
-import {BaseUrl} from '../../_helpers';
 import {UserConfig} from "../Config";
+import Config from '../../Config.json';
 
 
 export const mainpageService = {
@@ -11,7 +11,7 @@ export const mainpageService = {
 
 function GetCounts(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "GetMainPageCounts", params)
+        return axios.post(Config.BaseUrl + "GetMainPageCounts", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -26,7 +26,7 @@ function GetCounts(params) {
 
 function GetEvents(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "GetMainPageEvents", params)
+        return axios.post(Config.BaseUrl + "GetMainPageEvents", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
