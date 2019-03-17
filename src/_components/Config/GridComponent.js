@@ -231,7 +231,7 @@ class GridComponent extends React.PureComponent {
             return;
         }
         const { fetchData } = this.props;
-        if (fetchData !== undefined) 
+        if (fetchData !== undefined)
         {
             Params.filter = this.state.filters;
             fetchData(Params);

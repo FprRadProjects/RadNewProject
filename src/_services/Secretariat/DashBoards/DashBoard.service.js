@@ -22,7 +22,7 @@ function FetchData(params) {
 
 function FetchDataTree(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.get("https://js.devexpress.com/Demos/Mvc/api/treeListData",{params:{parentIds:params}})
+        return axios.post(BaseUrl+"WorkDashboard", params)
             .then(response => {
                 return Promise.resolve(response.data)
             })

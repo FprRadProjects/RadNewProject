@@ -445,7 +445,8 @@ class References extends Component {
                                     onClick={this.toggleFilter.bind(this)}></Button>
                             </div>
                         </div>
-                        {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
+                        {this.state.ReferenceViewermodal &&
+                        <ReferenceViewer modal={this.state.ReferenceViewermodal}
                             toggle={this.toggleReferenceViewer.bind(this)}
                             WorkInfo={WorkInfo} GetRowInfo={GetWorkInfo}
                             Params={Params} RefreshFormAction={FetchData.bind(this)}
@@ -475,9 +476,9 @@ class References extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-    FetchData: (Params) => {
+    FetchData: (Params) =>
         dispatch(Act_Reference.FetchData(Params))
-    },
+    ,
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },

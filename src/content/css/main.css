@@ -11,6 +11,8 @@ body {
     overflow-x: hidden;
     font-family: IRANSans_Fa;
     color: #333333;
+    height: 100%;
+    width: 100%;
 }
 
 ul {
@@ -33,7 +35,7 @@ p {
 }
 
 code {
-   
+
     background-color: #eeeeee;
     padding: 3px;
     margin: 0 3px;
@@ -7766,6 +7768,7 @@ ul .submenu {
 
 .dashboard-wrap .dashboard-app-sidebar ul li.task-email a > .badge {
     background-color: #39a2fe;
+
 }
 
 .dashboard-wrap .dashboard-app-sidebar ul li.task-letter a > .badge {
@@ -17308,7 +17311,7 @@ footer {
         font-family: Open Sans;
     }
 
-   
+
 .business-top-widget {
     text-align: center;
 }
@@ -34124,15 +34127,15 @@ background-image: url(../images/modal-filter/done-work-icon.svg);
 }
 .r-filter-modal__content .card-header i.seen-work{
     background-image: url(../images/modal-filter/seen-work-icon.svg);
-    
+
     }
     .r-filter-modal__content .card-header i.user-mode{
         background-image: url(../images/modal-filter/user-mode-icon.svg);
-        
+
         }
         .r-filter-modal__content .card-header i.range-date{
             background-image: url(../images/modal-filter/range-date-icon.svg);
-            
+
             }
 
 .r-filter-modal__content .card-body {
@@ -34157,7 +34160,7 @@ background-image: url(../images/modal-filter/done-work-icon.svg);
     top:3px;
 }
 .rtl .r-filter-modal__content .card-body .radio input[type="radio"]:checked + label::before{
-    border-color:#d9d9d9; 
+    border-color:#d9d9d9;
 
 }
     .rtl .r-filter-modal__content .card-body .radio label::after{
@@ -34177,7 +34180,7 @@ background-image: url(../images/modal-filter/done-work-icon.svg);
     width: 67px;
     height:67px;
     background:#3e5efb url(../images/modal-filter/button-icon.svg) center center no-repeat!important;
-    position: absolute; 
+    position: absolute;
     left:50%;
     transform: translateX(-50%);
     border-radius: 50%;
@@ -34708,7 +34711,7 @@ i.icon {
 
     .r-main-box__ribbon .r-main-box__ribbon-tool-button img {
         margin-left: 0;
-   
+
     }
 .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
     background-color: transparent;
@@ -34842,7 +34845,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
   {
     background-color: #3c72f5;
   }
-/*  
+/*
 
 
   .r-main-box .dx-g-bs4-paging-panel{
@@ -34851,14 +34854,14 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
   .dx-g-bs4-toolbar .popover{
       left:20px!important;
       font-family: IRANSans_Fa;
-      
+
   }
   .dx-g-bs4-toolbar .popover .arrow{
     left:25px!important;
   }
   .dx-g-bs4-toolbar .popover .popover-inner{
       max-height: 300px;
-      overflow-y:auto; 
+      overflow-y:auto;
   }
   .dx-g-bs4-toolbar .popover .popover-inner .dx-g-bs4-column-chooser-item{
     font-size: 12px;
@@ -34893,7 +34896,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1b255c', end
     z-index: 10000000!important;
 
   }
-  
+
   .dx-g-bs4-resizing-control-wrapper{
       left: -9px!important;
       right:auto!important;

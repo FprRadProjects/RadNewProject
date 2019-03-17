@@ -7,7 +7,7 @@ import {alertActions} from '../_actions/index';
 import {PrivateRoute} from '../_components/index';
 import {LoginPage} from '../_components/LoginPage/';
 import {HomePage} from '../_components/MasterPage/index';
-
+import {diagram_Actions} from '../_actions/General/Diagram'
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -15,10 +15,16 @@ class App extends React.Component {
         history.listen((location, action) => {
             dispatch(alertActions.clear());
         });
+
+        const elem = document.getElementById('root')
+        const elemHeight = elem.offsetHeight
+        this.props.dispatch(diagram_Actions.Height(elemHeight))
     }
 
 
     render() {
+
+
         return (
             <div>
 
@@ -31,7 +37,7 @@ class App extends React.Component {
                                       component={HomePage}  />
                     </div>
                 </Router>
-                
+
             </div>
         );
     }

@@ -60,14 +60,17 @@ function FetchDataTree(params,reload,Tree) {
 
     return dispatch => {
 
-         Service_Dashboard.FetchDataTree(params).then(
+        return  Service_Dashboard.FetchDataTree(params).then(
             data => {
                 if(reload){
                 dispatch(AddRowsReload())
-                }else if(params==="") {
+                }else if(params.parentId==="") {
                     dispatch(AddRowsTree(data))
                 }else if(Tree){
                     dispatch(AddRowsToTree(data))
+                }else if(params){
+                    dispatch(AddTotalCount(data.data.totalcount));
+                    dispatch(AddRowsTree(data.data.rows))
                 }
                 else{
                     toast.error(data.error);
