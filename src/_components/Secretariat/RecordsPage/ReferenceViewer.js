@@ -247,7 +247,7 @@ class ReferenceViewer extends Component {
                                             <label>{this.context.t("creator")}</label>
                                             <div className="row">
                                                 <div className="col-4">
-                                                    <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.c_date} />
+                                                    <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.cuser} />
                                                 </div>
                                                 <div className="col-4">
                                                     <input type="text" className="form-control" disabled={true} defaultValue={WorkInfo.c_date} />
