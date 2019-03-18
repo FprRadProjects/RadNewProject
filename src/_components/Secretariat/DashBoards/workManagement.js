@@ -1,14 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
 import {Act_Reference, BasicInfo_action, design_Actions, WorkActions_action, WorkBasic_action} from "../../../_actions";
-import {OrgChart} from "../../Config/orgChart"
+
 import PropTypes from "prop-types"
 import {setLanguage} from "redux-i18n";
 import {FormInfo} from "../../../locales";
 import 'open-iconic/font/css/open-iconic-bootstrap.min.css'
 import '@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.css';
 import {TreeGridComponent} from "../../Config/TreeGridComponent";
-
+import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {RadioFilter} from "./RadioFilter";
+import {RibbonReferences} from "./Ribbon/Ribbon.References";
+import {DiagramViewer} from "./Diagram/DiagramViewer"
+import {ReferenceViewer} from "../RecordsPage";
 
 var currencyColumns = [];
 var hiddenColumnNames = ['done', 'tarikhaction', 'id_tel', 'olaviyat', 'cuser',
@@ -40,8 +44,10 @@ class workManagement extends Component {
             ...this.state,
             toggleFilter: false,
             ReferenceViewermodal: false,
+            DiagramModal: false,
             backdrop: "static",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal"
+            modalClass: "modal-dialog-centered modal-lg r-filter-modal",
+            modalDiagramClass: "modal-dialog-centered modal-lg r-modal"
         };
 
     }
@@ -57,6 +63,7 @@ class workManagement extends Component {
             toggleFilter: !prevState.toggleFilter
         }));
     }
+
 
     OpenReferenceViewer() {
         const {WorkInfo, SetLog, lang, SeenWork} = this.props;
@@ -136,20 +143,48 @@ class workManagement extends Component {
         let formName = lang == "fa" ? FormInfo.fm_dabir_kartabl_erjaat.form_name : FormInfo.fm_dabir_kartabl_erjaat.en_form_name;
         Params.Form = formName;
 
+        const modalBackDrop = `
+        .modal-backdrop {
+            opacity:.98!important;
+            background: rgb(210,210,210);
+            background: -moz-linear-gradient(-45deg, rgba(210,210,210,1) 0%, rgba(229,235,238,1) 50%, rgba(216,216,216,1) 50.1%, rgba(216,216,216,1) 100%);
+            background: -webkit-linear-gradient(-45deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
+            background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
+        }`;
+
         return (
             <div className="row">
                 <div className="col-sm-12">
                     <div className="r-main-box">
+                        <div className="r-main-box__ribbon sticky-top">
+                            <RibbonReferences FetchData={FetchData.bind(this)} Params={Params} />
+                         <div className="r-main-box__filter">
+                                <Button color="" className="r-main-box__filter--btn"
+                                        onClick={this.toggleFilter.bind(this)}></Button>
+                            </div>
+                        </div>
+                        <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}
+                               className={this.state.modalClass} backdrop={this.state.backdrop}>
+                            <ModalHeader toggle={this.toggleFilter.bind(this)}></ModalHeader>
+                            <ModalBody>
+                                <RadioFilter Params={Params} fetchData={FetchData.bind(this)} />
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" onClick={this.toggleFilter.bind(this)}></Button>
+                                <style>{modalBackDrop}</style>
+                            </ModalFooter>
+                        </Modal>
 
-                        <OrgChart/>
 
 
 
-                        <TreeGridComponent columns={columns} booleanColumns={booleanColumns}
-                                            totalCount={Dashboards_totalCount}  columnwidth={150}
-                                          UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
-                                          currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
-                        />
+
+                        {/*<TreeGridComponent columns={columns} booleanColumns={booleanColumns}*/}
+                                            {/*totalCount={Dashboards_totalCount}  columnwidth={150}*/}
+                                          {/*UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}*/}
+                                          {/*currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}*/}
+                        {/*/>*/}
                     </div>
                 </div>
             </div>

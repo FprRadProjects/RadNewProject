@@ -5,16 +5,12 @@ import "bootstrap-v4-rtl/dist/css/bootstrap.min.css"
 import { history } from '../_helpers/index';
 import { PrivateRoute } from '../_components/index';
 import { setLanguage } from "redux-i18n"
-import {diagram_Actions} from "../_actions/General";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.props.setLanguage("fa");
 
-        const elem = document.getElementById('root')
-        const elemHeight = elem.offsetHeight
-        this.props.dispatch(diagram_Actions.Height(elemHeight))
     }
 
 
@@ -27,6 +23,7 @@ class App extends React.Component {
         else
             LoginPage = lazy(() => import('../_components/LoginPage/LoginPage'));
         return (
+
             <React.Suspense fallback={<h1></h1>}>
                 <Router history={history}>
                     <Switch>
@@ -35,6 +32,7 @@ class App extends React.Component {
                         {HomePage !== null && <PrivateRoute exact user={user} component={HomePage}
                                                             path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
                         />}
+
                     </Switch>
                 </Router>
             </React.Suspense>
@@ -47,6 +45,7 @@ const mapDispatchToProps = dispatch => ({
     setLanguage: (param) => {
         dispatch(setLanguage(param))
     },
+
 
 });
 

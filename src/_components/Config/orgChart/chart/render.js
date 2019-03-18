@@ -3,6 +3,7 @@ import {onClick} from './on-click'
 import {renderLines} from './render-lines'
 import { wrapText } from '../utils/wrap-text'
 import {  helpers }  from '../utils/helpers'
+import {toggleColorAll} from "../includeToggle"
 const iconLink = require('./components/icon-link')
 const CHART_NODE_CLASS = 'org-chart-node'
 const PERSON_LINK_CLASS = 'org-chart-person-link'
@@ -53,9 +54,9 @@ export function renders(config) {
     const parentNode = sourceNode || treeData
 
 
-    const   toggleColor  =   function(x,id ){
-
-            d3.select('rect.box'+id).attr("fill", x);
+    const toggleColor = function(x,id ){
+setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
+            d3.select('rect.box'+id).attr("stroke", x);
     }
 
 
@@ -67,8 +68,8 @@ export function renders(config) {
         .insert('g')
         .attr('class', CHART_NODE_CLASS)
         .attr('transform', `translate(${parentNode.x0}, ${parentNode.y0})`)
-        .attr('onmousedown',"toggleColorAll('dibox','#fff')")
-        .on('mouseup',d=>toggleColor('blue',d.id))
+        .attr('onmousedown', toggleColorAll('dibox','#85EB55') )
+        .on('mouseup',d=>toggleColor('red',d.id))
         .on('click',onClick(config))
 
 
@@ -80,6 +81,7 @@ export function renders(config) {
         .attr('width', nodeWidth)
         .attr('height', nodeHeight)
         .attr('stroke', borderColor)
+        .attr("stroke-width", 5)
         .attr('rx', nodeBorderRadius)
         .attr('ry', nodeBorderRadius)
         .attr('fill-opacity', 0.05)
@@ -93,8 +95,9 @@ export function renders(config) {
         .attr('width', nodeWidth)
         .attr('height', nodeHeight)
         .attr('id', d => d.id)
-        .attr('fill', backgroundColor)
+        .attr('fill', d => d.WorkInfo.color)
         .attr('stroke', borderColor)
+        .attr("stroke-width", 2.5)
         .attr('rx', nodeBorderRadius)
         .attr('ry', nodeBorderRadius)
         .style('cursor', helpers.getCursorForNode)
@@ -104,44 +107,45 @@ export function renders(config) {
 
 
     const namePos = {
-        x: nodePaddingX * 1.4 + avatarWidth,
-        y: nodePaddingY * 1.8
+        x: nodePaddingX * 2  ,
+        y: nodePaddingY * 1.3
     }
 
+    const WidthForTitle = 45 // getHeightForText(d.person.title)
     // Person's Name
     nodeEnter
         .append('text')
         .attr('class', PERSON_NAME_CLASS)
-        .attr('x', namePos.x)
+        .attr('x', namePos.x+WidthForTitle)
         .attr('y', namePos.y)
         .attr('dy', '.3em')
         .style('cursor', 'pointer')
-        .style('fill', nameColor)
+        .style('fill',titleColor)
         .style('font-size', 8)
-        .text(d => d.person.name)
+        .text(d => d.WorkInfo.title)
 
 
 
-    // Person's Title
-    nodeEnter
-        .append('text')
-        .attr('class', PERSON_TITLE_CLASS + ' unedited')
-        .attr('x', namePos.x)
-        .attr('y', namePos.y + nodePaddingY * 1.2)
-        .attr('dy', '0.1em')
-        .style('font-size', 7)
-        .style('cursor', 'pointer')
-        .style('fill', titleColor)
-        .text(d => d.person.title)
+    // // Person's Title
+    // nodeEnter
+    //     .append('text')
+    //     .attr('class', PERSON_TITLE_CLASS + ' unedited')
+    //     .attr('x', namePos.x)
+    //     .attr('y', namePos.y + nodePaddingY * 1.2)
+    //     .attr('dy', '0.1em')
+    //     .style('font-size', 7)
+    //     .style('cursor', 'pointer')
+    //     .style('fill', titleColor)
+    //     .text(d => d.person.title)
 
-    const heightForTitle = 45 // getHeightForText(d.person.title)
+    const heightForTitle = 12 // getHeightForText(d.person.title)
 
     // Person's Reports
     nodeEnter
         .append('text')
         .attr('class', PERSON_REPORTS_CLASS)
-        .attr('x', namePos.x)
-        .attr('y', namePos.y + nodePaddingY + heightForTitle)
+        .attr('x', namePos.x + WidthForTitle - 16 )
+        .attr('y', namePos.y + heightForTitle )
         .attr('dy', '.9em')
         .style('font-size', 7)
         .style('font-weight', 500)
@@ -151,16 +155,16 @@ export function renders(config) {
 
 
     // Person's Avatar
-    nodeEnter
-        .append('image')
-        .attr('width', avatarWidth)
-        .attr('height', avatarWidth)
-        .attr('x', nodePaddingX)
-        .attr('y', nodePaddingY)
-        .attr('stroke', borderColor)
-        .attr('src', d => d.person.avatar)
-        .attr('xlink:href', d => d.person.avatar)
-        .attr('clip-path', 'url(#avatarClip)')
+    // nodeEnter
+    //     .append('image')
+    //     .attr('width', avatarWidth)
+    //     .attr('height', avatarWidth)
+    //     .attr('x', nodePaddingX)
+    //     .attr('y', nodePaddingY)
+    //     .attr('stroke', borderColor)
+    //     .attr('src', d => d.person.avatar)
+    //     .attr('xlink:href', d => d.person.avatar)
+    //     .attr('clip-path', 'url(#avatarClip)')
 
     // Person's Department
     nodeEnter
@@ -238,8 +242,8 @@ export function renders(config) {
 }
 
 function getDepartmentClass(d) {
-    const { person } = d
-    const deptClass = person.department ? person.department.toLowerCase() : ''
+    const { WorkInfo } = d
+    const deptClass = WorkInfo.title ? WorkInfo.title.toLowerCase() : ''
 
     return [PERSON_DEPARTMENT_CLASS, deptClass].join(' ')
 }

@@ -14,9 +14,11 @@ html, body {
     height: 100%;
     width: 100%;
 
+
 }
 .org-chart-person-name {
     font-weight: 500;
+
 }
 .org-chart-person-link:hover g {
     fill: #409CF9 !important;

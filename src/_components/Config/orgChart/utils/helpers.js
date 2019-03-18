@@ -3,11 +3,11 @@ export const helpers={
 }
 
 export function getTextForTitle(datum) {
-  if (!datum.person || !datum.person.totalReports) {
+  if (!datum.WorkInfo || !datum.WorkInfo.totalReports) {
     return ''
   }
 
-  const { person: { totalReports } } = datum
+  const { WorkInfo: { totalReports } } = datum
   const pluralEnding = totalReports > 1 ? 's' : ''
 
   return `${totalReports} report${pluralEnding}`
@@ -28,17 +28,17 @@ const departmentAbbrMap = {
 }
 
 export   function getTextForDepartment(datum) {
-  if (!datum.person.department) {
+  if (!datum.WorkInfo.department) {
     return ''
   }
 
-  const { department } = datum.person
+  const { department } = datum.WorkInfo
 
   if (departmentAbbrMap[department]) {
     return departmentAbbrMap[department].toUpperCase()
   }
 
-  return datum.person.department.substring(0, 3).toUpperCase()
+  return datum.WorkInfo.department.substring(0, 3).toUpperCase()
 }
 
 export  function getCursorForNode(datum) {

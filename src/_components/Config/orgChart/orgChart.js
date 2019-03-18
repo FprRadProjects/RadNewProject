@@ -7,6 +7,8 @@ import {defineAvatarClip} from "./defs/avatar-clip";
 import {collapse} from "./utils/collapse";
 import {renders} from './chart/render'
 import d3 from "d3";
+
+
 import '../../../content/css/orgChart.css'
 import {DiagramConstant as diagram} from "../../../_constants/General/Diagram";
 var Height=0;
@@ -18,18 +20,10 @@ const PERSON_TITLE_CLASS = 'org-chart-person-title'
 const PERSON_DEPARTMENT_CLASS = 'org-chart-person-dept'
 const PERSON_REPORTS_CLASS = 'org-chart-person-reports'
 
-const data = fakeData()
+const data = fakeData
 
 class OrgChart extends PureComponent {
 
-    constructor(props) {
-        super(props);
-
-        this.state ={
-            Height:0
-        }
-
-    }
     static defaultProps = {
         id: 'react-org-chart'
     }
@@ -82,8 +76,8 @@ class OrgChart extends PureComponent {
         }
 
         // Get the root element
-        const elem = document.querySelector(id)
 
+        const elem = document.body.querySelector(id)
         if (!elem) {
             console.error(`react-org-chart: svg root DOM node not found (id: ${id})`)
             return
@@ -182,17 +176,14 @@ class OrgChart extends PureComponent {
         // Update DOM root height
         d3.select(id).style('height', elemHeight + margin.top + margin.bottom)
     }
-    componentWillReceiveProps(nextProps) {
+    componentDidMount( ) {
         const {id, ...options} = this.props
-
-        if(nextProps.Height!==this.props.Height) {
-            Height=nextProps.Height;
 
             this.init({id: `#${id}`, data, lineType: 'angle'})
             // console.log(JSON.stringify(data, null, 4) )
             // setTimeout(()=>        this.init({id: `#${id}`, data, lineType: 'angle'}) ,5000)
 
-        }
+
     }
 
 

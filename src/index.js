@@ -7,11 +7,13 @@ import I18n from "redux-i18n"
 import './_services/utils/interceptors';
 
 import {translations} from "../src/locales/translations"
+import {OrgChart} from "./_components/Config/orgChart";
 
 render(
     <Provider store={store}>
         <I18n translations={translations}  >
             <App />
+
         </I18n>
     </Provider>,
     document.getElementById('root')
