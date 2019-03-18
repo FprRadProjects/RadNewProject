@@ -3,6 +3,11 @@ import connect from "react-redux/es/connect/connect";
 import PropTypes from "prop-types"
 
 class LeftCounts extends Component {
+    constructor(props) {
+        super(props);
+     
+    }
+    
     clicked(event) {
         //if(event.target!=undefined)
         //alert(event.target)
@@ -14,7 +19,6 @@ class LeftCounts extends Component {
 
     render() {
         const {Counts} = this.props;
-
         return (
             <ul className="nav main-menu">
                 <li className="task-email" id="Email_li">

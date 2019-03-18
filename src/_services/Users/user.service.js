@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {UserConfig} from '../Config.js'
-import Config from '../../Config.json';
+import Config from '../../Config';
 
 export const userService = {
     login,
