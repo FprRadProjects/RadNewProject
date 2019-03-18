@@ -10,6 +10,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.props.setLanguage("fa");
+        const{_config}=this.props;
+        console.log(_config);
     }
 
 

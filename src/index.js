@@ -8,11 +8,13 @@ import './_services/utils/interceptors';
 
 import {translations} from "../src/locales/translations"
 
-render(
+window.RenderApp=(config)=>{
+    render
+    (
     <Provider store={store}>
         <I18n translations={translations}  >
-            <App />
+            <App  _config={config}/>
         </I18n>
     </Provider>,
     document.getElementById('root')
-);
+)};
