@@ -68,7 +68,7 @@ setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
         .insert('g')
         .attr('class', CHART_NODE_CLASS)
         .attr('transform', `translate(${parentNode.x0}, ${parentNode.y0})`)
-        .attr('onmousedown', toggleColorAll('dibox','#85EB55') )
+
         .on('mouseup',d=>toggleColor('red',d.id))
         .on('click',onClick(config))
 

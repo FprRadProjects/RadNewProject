@@ -123,7 +123,7 @@ export const fakeData ={
                     "title": "ارجاع به پرسنل " ,
                     "color":"#f6fffd",
                     "active":"true",
-                    "totalReports": 0
+                    "totalReports": 1
                 },
                 "hasChild": true,
                 "children": []
