@@ -12,6 +12,7 @@ import {
     BasicInfo_action, WorkActions_action
 } from "../../../_actions";
 import { toast } from 'react-toastify';
+import {DiagramViewer} from "../Diagram";
 
 class RibbonReferences extends Component {
     constructor(props) {
@@ -20,6 +21,7 @@ class RibbonReferences extends Component {
         this.state = {
             ...this.state,
             ReferenceViewermodal: false,
+            DiagramModal: false,
             HideElementListmodal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
@@ -47,9 +49,34 @@ class RibbonReferences extends Component {
 
     }
 
+    OpenDiagramViewer() {
+        const { WorkInfo, SetLog, lang, SeenWork } = this.props;
+        if (WorkInfo !== undefined) {
+            let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
+            SetLog(formName);
+            SeenWork(WorkInfo.peygir_id);
+            this.setState({
+                DiagramModal: !this.state.DiagramModal
+            });
+        }
+        else
+            this.setState({
+                DiagramModal: !this.state.DiagramModal
+            });
+            toast.warn(this.context.t("msg_No_Select_Row"));
+
+    }
+
     toggleReferenceViewer() {
         this.setState(prevState => ({
             ReferenceViewermodal: !prevState.ReferenceViewermodal
+        }));
+
+    }
+
+    toggleDiagramViewer() {
+        this.setState(prevState => ({
+            DiagramModal: !prevState.DiagramModal
         }));
 
     }
@@ -202,7 +229,7 @@ class RibbonReferences extends Component {
                                         <RibbonButton
                                             DeletedElements={DeletedElements}
                                             Id="diagram"
-                                            handleClick={this.OpenReferenceViewer.bind(this)}
+                                            handleClick={this.OpenDiagramViewer.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="Diagram"
                                         />
@@ -419,12 +446,17 @@ class RibbonReferences extends Component {
 
                 </nav>
 
+                {this.state.DiagramModal && <DiagramViewer modal={this.state.DiagramModal}
+                                                           toggle={this.toggleDiagramViewer.bind(this)} />}
+
 
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                     toggle={this.toggleReferenceViewer.bind(this)}
                     WorkInfo={WorkInfo}
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
+
+
 
                     {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
                         toggle={this.controlpanelClick.bind(this)}

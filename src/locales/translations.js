@@ -1,6 +1,7 @@
 export const translations = {
     fa: {
         SoftWare_Name: 'اتوماسیون تحت وب راد',
+        version:"نسخه",
         Language: 'زبان',
         fa: 'فارسی',
         en: 'انگلیسی',
@@ -144,6 +145,7 @@ export const translations = {
     },
     en: {
         SoftWare_Name: 'RAD AUTOMATION',
+        version:"Version",
         Language: 'Language',
         fa: 'fa',
         en: 'en',

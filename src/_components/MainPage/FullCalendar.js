@@ -27,7 +27,7 @@ class FullCalendar extends Component {
         const lang= localStorage.getItem("lang");
         this.props.dispatch(setLanguage(lang))
         const { calendar } = this.refs;
-        const{GetEvent,GetCounts,Params}=  this.props;
+        const{GetEvent,GetCounts,Params,ChaneSelectedDate}=  this.props;
         $(calendar).fullCalendar(
         {
             header: {
@@ -38,9 +38,14 @@ class FullCalendar extends Component {
             dayClick: function (date, jsEvent, view, resourceObj) {
                 //alert(jmoment(moment(date).locale('fa').format('YYYY/MM/DD')).format('jYYYY/jMM/jDD'));
 
-                Params.calendar=jmoment(moment(date).locale('fa').format('YYYY/MM/DD')).format('jYYYY/jMM/jDD');
+                let calendar=jmoment(moment(date).locale('fa').format('YYYY/MM/DD')).format('jYYYY/jMM/jDD');
+                Params.calendar=calendar;
                 GetCounts(Params);
-
+                let selectedDate=jmoment(moment(date).locale('fa').format('YYYY/MM/DD')).format('jYYYY/jMM/jDD');
+                if(lang==='en')
+                    selectedDate=moment(date).locale('fa').format('YYYY/MM/DD');
+          
+                ChaneSelectedDate(selectedDate);
                 var thisDate = jmoment(moment(date).locale('fa').format('YYYY/MM/DD')).format('jYYYY-jMM-jDD');
                 $('.fc-day,.fc-day-top').removeClass('fc-highlight');
                 $('[data-date="' + thisDate + '"]').addClass("fc-highlight");

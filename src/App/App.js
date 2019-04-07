@@ -10,6 +10,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.props.setLanguage("fa");
+        const {_config}=this.props;
+        localStorage.setItem("BaseUrl", _config.BaseUrl);
     }
 
 
@@ -22,14 +24,16 @@ class App extends React.Component {
         else
             LoginPage = lazy(() => import('../_components/LoginPage/LoginPage'));
         return (
+
             <React.Suspense fallback={<h1></h1>}>
                 <Router history={history}>
                     <Switch>
                         {LoginPage !== null && <Route path="/login" render={props => (<LoginPage />)} />}
                         {LoginPage !== null && <Route path="/" render={props => (<LoginPage />)} />}
                         {HomePage !== null && <PrivateRoute exact user={user} component={HomePage}
-                            path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
+                                                            path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
                         />}
+
                     </Switch>
                 </Router>
             </React.Suspense>
@@ -42,6 +46,7 @@ const mapDispatchToProps = dispatch => ({
     setLanguage: (param) => {
         dispatch(setLanguage(param))
     },
+
 
 });
 
