@@ -18,3 +18,4 @@ window.RenderApp=(config)=>{
     </Provider>,
     document.getElementById('root')
 )};
+

@@ -21,6 +21,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from 'react-loader-advanced';
 import { workManagement } from "../Secretariat/DashBoards/workManagement";
+import {ReportView} from "../Frameworks/Stimulsoft";
 
 class MasterPage extends React.Component {
     constructor(props) {
@@ -76,6 +77,7 @@ class MasterPage extends React.Component {
                                         <Route path="/works" component={Works} />
                                         <Route path="/references" component={References} />
                                         <Route path="/workManagement" component={workManagement} />
+                                        <Route path="/report" component={ReportView} />
                                         <Route component={NoMatch} />
                                     </Switch>
                                 </div>

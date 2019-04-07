@@ -1,44 +1,59 @@
 import * as React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
 
+import 'bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css';
 import {
-    PagingState,
-    SortingState,
     CustomPaging,
+    CustomTreeData,
+    DataTypeProvider,
+    FilteringState,
     GroupingState,
     IntegratedGrouping,
     IntegratedPaging,
-    FilteringState,
-    DataTypeProvider, TreeDataState, CustomTreeData
+    PagingState,
+    SortingState,
+    TreeDataState
 } from '@devexpress/dx-react-grid';
 import {
-    Grid,
-    Table,
-    TableHeaderRow,
-    PagingPanel,
-    TableGroupRow,
-    GroupingPanel,
-    DragDropProvider,
-    Toolbar,
     ColumnChooser,
-    TableColumnVisibility,
+    DragDropProvider,
+    Grid,
+    GroupingPanel,
+    PagingPanel,
     TableColumnReordering,
     TableColumnResizing,
-    TableFilterRow, VirtualTable, TableTreeColumn
+    TableColumnVisibility,
+    TableFilterRow,
+    TableGroupRow,
+    TableHeaderRow,
+    TableTreeColumn,
+    Toolbar,
+    VirtualTable
 } from '@devexpress/dx-react-grid-bootstrap4';
 
-import 'open-iconic/font/css/open-iconic-bootstrap.min.css'
+
 import {Loading} from '../../theme-sources/bootstrap4/components/loading';
 import {CurrencyTypeProvider} from '../../theme-sources/bootstrap4/components/currency-type-provider';
 import connect from "react-redux/es/connect/connect";
 
+const groupingPanelMessages = {
+    groupByColumn: 'عنوان ستون را برای گروه بندی بر اساس آن ستون بکشید',
+};
+const tableMessages = {
+    noData: 'اطلاعات موجود نیست',
+};
 var Params = {};
-const   BooleanTypeProvider = props => (
-    <DataTypeProvider
-        formatterComponent={BooleanFormatter}
-        editorComponent={BooleanEditor}
-        {...props}
+const TableRow = ({row, ...restProps}) => (
+    <VirtualTable.Row
+        {...restProps}
+        onClick={(e) => {
+            alert(JSON.stringify(row))
+        }
+        }
+        style={{
+            cursor: 'pointer',
+
+        }}
     />
 );
 
@@ -67,6 +82,14 @@ const BooleanEditor = ({value, onValueChange}) => (
         </option>
     </select>
 );
+
+const BooleanTypeProvider = props => (
+    <DataTypeProvider
+        formatterComponent={BooleanFormatter}
+        editorComponent={BooleanEditor}
+        {...props}
+    />
+);
 const URL = 'https://js.devexpress.com/Demos/Mvc/api/treeListData';
 const ROOT_ID = '';
 const getRowId = row => row.id;
@@ -79,37 +102,17 @@ const getChildRows = (row, rootRows) => {
 };
 
 class TreeGridComponent extends React.PureComponent {
-
-    ChangeStyle=(restProps)=>{
-
-    }
-
-    TableRow = ({row, ...restProps}) => (
-        <Table.Row
-            {...restProps}
-            onClick={(e) => {
-                this.props.GetRowInfo(row);
-
-                this.ChangeStyle(restProps);
-            }
-            }
-            style={{
-                cursor: 'pointer',
-            }}
-        />
-    );
     constructor(props) {
         super(props);
-        const { booleanColumns, UrlParams, currencyColumns, hiddenColumnNames,columns,columnwidth} = this.props;
+        const {columns, booleanColumns, UrlParams, currencyColumns, hiddenColumnNames} = this.props;
         Params = UrlParams;
-        let defaultColumnWidths = [];
-        Object.keys(columns).map((item, index) => {
-            return defaultColumnWidths[index++] = { columnName: columns[item].name, width: columnwidth };
-        })
+
         this.state = {
             repeatRows: [],
-            rows: [],
+            params: [],
+            data: [],
             totalCount: 0,
+            columns:columns,
             tableColumnExtensions: [],
             filters: [],
             sorting: [],
@@ -119,12 +122,11 @@ class TreeGridComponent extends React.PureComponent {
             currencyColumns: currencyColumns,
             booleanColumns: booleanColumns,
             currentPage: 0,
+            loading: false,
             hiddenColumnNames: hiddenColumnNames,
             columnWidths: [],
             booleanFilterOperations: ['boolean'],
             currencyFilterOperations: ['equals'],
-            columnOrder: [],
-            defaultColumnWidths: defaultColumnWidths,
             expandedRowIds: []
 
         };
@@ -136,46 +138,59 @@ class TreeGridComponent extends React.PureComponent {
             this.setState({hiddenColumnNames});
         };
         this.changeFilters = this.changeFilters.bind(this);
-        this.changeColumnOrder = this.changeColumnOrder.bind(this);
-        this.changeExpandedRowIds = this.changeExpandedRowIds.bind(this);
+
         this.changeColumnWidths = (columnWidths) => {
             this.setState({columnWidths});
         };
-    }
-    changeColumnOrder(newOrder) {
-        this.setState({ columnOrder: newOrder });
+
+        this.changeExpandedRowIds = this.changeExpandedRowIds.bind(this);
     }
 
     componentDidMount() {
         this.loadData();
-        const classList = ReactDOM.findDOMNode(this).querySelector('.flex-column').classList;
+
 
     }
 
     componentDidUpdate() {
-        this.loadData();
+
+        const queryString = this.queryString();
+        if (queryString === this.lastQuery) {
+            this.setState({loading: false});
+            return;
+        }
+        const {fetchData} = this.props;
+        Params.filter = this.state.filters;
+        fetchData(Params )
+        this.lastQuery = queryString
+
+
     }
 
     changeSorting(sorting) {
         this.setState({
+            loading: true,
             sorting,
         });
     }
 
     changeFilters(filters) {
         this.setState({
+            loading: true,
             filters,
         });
     }
 
     changeGroup(grouping) {
         this.setState({
+            loading: true,
             grouping
         });
     }
 
     changeCurrentPage(currentPage) {
         this.setState({
+            loading: true,
             currentPage,
         });
     }
@@ -187,14 +202,17 @@ class TreeGridComponent extends React.PureComponent {
         const currentPage = Math.min(stateCurrentPage, totalPages - 1);
 
         this.setState({
+            loading: true,
             pageSize,
             currentPage,
+
         });
     }
 
     queryString() {
         const {sorting, pageSize, currentPage, filters} = this.state;
         let queryString = `${URL}?take=${pageSize}&skip=${pageSize * currentPage}`;
+
         Params.page = (currentPage + 1);
         Params.pagesize = (pageSize);
 
@@ -218,18 +236,25 @@ class TreeGridComponent extends React.PureComponent {
             queryString = `${queryString}&filter=${filter}`;
         }
         return queryString;
+
+
     }
 
-    loadData() {
-        const queryString = this.queryString();
-        if (queryString === this.lastQuery) {
-            return;
+
+    ShowGridTree(value, reload,tree) {
+
+        const {fetchData} = this.props
+        const {data, expandedRowIds} = this.state
+
+
+        const rowIdsWithNotLoadedChilds = [ROOT_ID, ...expandedRowIds]
+            .filter(rowId => data.findIndex(row => row.parentId === rowId) === -1);
+
+        if (rowIdsWithNotLoadedChilds.length) {
+            fetchData(value, reload,tree)
         }
-        const {fetchData} = this.props;
-        Params.filter = this.state.filters;
-        fetchData(Params);
-        this.lastQuery = queryString;
     }
+
     changeExpandedRowIds(expandedRowIds) {
         const {data,repeatRows} = this.state
         const parent = (typeof expandedRowIds[expandedRowIds.length - 1] === "undefined" ? "reload" : expandedRowIds[expandedRowIds.length - 1])
@@ -255,36 +280,49 @@ class TreeGridComponent extends React.PureComponent {
         }
 
     }
+
+    loadData() {
+
+        const queryString = this.queryString();
+        if (queryString === this.lastQuery) {
+            this.setState({loading: false});
+            return;
+        }
+        const {fetchData} = this.props;
+        Params.filter = this.state.filters;
+        fetchData(Params)
+        this.lastQuery = queryString
+
+    }
+
+
     render() {
-        var rows = [];
         var totalCount = 0;
-        var columns = [];
         const {
+            data,
+            expandedRowIds,
+            columns,
             currencyColumns,
             sorting,
             pageSize,
             pageSizes,
             currentPage,
+            loading,
             tableColumnExtensions,
             hiddenColumnNames,
-            defaultColumnWidths,
-            booleanColumns,
-            columnOrder,
-            booleanFilterOperations,
-            currencyFilterOperations,
-            expandedRowIds,
-            TableRow,
             columnWidths,
-            loading
-
+            booleanColumns,
+            booleanFilterOperations,
+            currencyFilterOperations
         } = this.state;
+
         if (this.props.rows !== undefined)
-            rows = this.props.rows;
+            this.setState({data:  this.props.rows})
+
         if (this.props.totalCount !== undefined)
             totalCount = this.props.totalCount;
 
-        if (this.props.columns !== undefined)
-            columns = this.props.columns;
+
 
         const groupingPanelMessages = {
             groupByColumn: this.context.t("grouping"),
@@ -295,14 +333,12 @@ class TreeGridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
-
-
-
         return (
-            <div>
+            <div className="card" style={{position: 'relative'}}>
                 <Grid
-                    rows={rows}
+                    rows={data}
                     columns={columns}
+                    getRowId={getRowId}
                 >
                     <DragDropProvider/>
                     <CurrencyTypeProvider
@@ -332,10 +368,6 @@ class TreeGridComponent extends React.PureComponent {
                     <FilteringState
                         onFiltersChange={this.changeFilters}
                     />
-                    <Table rowComponent={this.TableRow}
-                           columnExtensions={tableColumnExtensions}
-                           messages={tableMessages}
-                    />
                     <TreeDataState
                         expandedRowIds={expandedRowIds}
                         onExpandedRowIdsChange={this.changeExpandedRowIds}
@@ -344,16 +376,30 @@ class TreeGridComponent extends React.PureComponent {
                         getChildRows={getChildRows}
                     />
 
-                    <TableColumnReordering
-                        order={columnOrder}
-                        onOrderChange={this.changeColumnOrder}
-                    /> <TableColumnResizing
-                    defaultColumnWidths={defaultColumnWidths}
-                />
+                    <VirtualTable
+                        columnExtensions={tableColumnExtensions}
+                        rowComponent={TableRow}
+                        messages={tableMessages}
+                    />
+
+
+                    <CustomPaging
+                        totalCount={totalCount}
+                    />
+                    <TableColumnResizing
+                        columnWidths={columnWidths}
+                        onColumnWidthsChange={this.changeColumnWidths}
+                    />
                     <TableHeaderRow showSortingControls/>
                     <TableTreeColumn
-                        for="peygir_id"
+                        for="manager"
                     />
+
+
+                    <TableColumnReordering
+                        defaultOrder={["peygir_id", "done", 'worker', 'wt_id', 'tarikhaction', 'id_tel']}
+                    />
+
 
                     <CustomPaging
                         totalCount={totalCount}
@@ -388,7 +434,6 @@ function mapStateToProps(state) {
     const { gridloading } = state.loading;
 
     return {
-
         gridloading,
         lang,
     }
@@ -404,5 +449,5 @@ const mapDispatchToProps = dispatch => ({
          dispatch(BasicInfo_action.GetRowData(data))
      },*/
 });
-const connectedTreeGridComponent = connect(mapStateToProps, mapDispatchToProps)(TreeGridComponent);
-export {connectedTreeGridComponent as TreeGridComponent};
+const connectedApiGridComponent = connect(mapStateToProps, mapDispatchToProps)(TreeGridComponent);
+export {connectedApiGridComponent as TreeGridComponent};

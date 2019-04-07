@@ -139,11 +139,11 @@ class References extends Component {
                             <RibbonReferences FetchData={FetchData.bind(this)} Params={Params} />
                             <div className="r-main-box__filter">
                                 <Button color="" className="r-main-box__filter--btn"
-                                    onClick={this.toggleFilter.bind(this)}></Button>
+                                        onClick={this.toggleFilter.bind(this)}></Button>
                             </div>
                         </div>
                         <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}
-                            className={this.state.modalClass} backdrop={this.state.backdrop}>
+                               className={this.state.modalClass} backdrop={this.state.backdrop}>
                             <ModalHeader toggle={this.toggleFilter.bind(this)}></ModalHeader>
                             <ModalBody>
                                 <RadioFilter Params={Params} fetchData={FetchData.bind(this)} />
@@ -154,9 +154,9 @@ class References extends Component {
                             </ModalFooter>
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
-                            rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
-                            UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
-                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                                          rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
+                                          UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
+                                          currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>
                 </div>
@@ -210,6 +210,5 @@ function mapStateToProps(state) {
 
 const connectedReferences = connect(mapStateToProps, mapDispatchToProps)(References);
 export { connectedReferences as References };
-
 
 
