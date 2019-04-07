@@ -57,9 +57,9 @@ class DashBoard extends Component {
     }
     ChangeUserMode(event) {
         if(event.target.id=="manager")
-            CalParams.worker=1;
+            CalParams.worker="1";
         else if(event.target.id=="worker")
-            CalParams.worker=0;
+            CalParams.worker="0";
         event.target.classList.add('is-active');
         const {GetCounts} = this.props;
         GetCounts(CalParams);
@@ -87,9 +87,8 @@ class DashBoard extends Component {
             background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
         }`;
-        var AdminclassName = CalParams.worker===1 ? 'admin-view is-active' : 'admin-view ';
-        var WorkrclassName = CalParams.worker===0 ? 'user-view  is-active' : 'user-view ';
-
+        var AdminclassName = CalParams.worker==="1" ? 'admin-view is-active' : 'admin-view ';
+        var WorkrclassName = CalParams.worker==="0" ? 'user-view  is-active' : 'user-view ';
         return (
             <div className="row">
                 <div className="col-sm-12">
