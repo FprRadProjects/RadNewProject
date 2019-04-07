@@ -15,7 +15,8 @@ function login(username, password) {
     let data = new FormData();
     data.append("username", username);
     data.append("password", password);
-    return axios.post(Config.BaseUrl + "Login", data)
+    const BaseUrl = localStorage.getItem("BaseUrl");
+    return axios.post(BaseUrl + "Login", data)
         .then(user => {
             if (user.data.data != null)
                 localStorage.setItem("user", JSON.stringify(user.data.data));
