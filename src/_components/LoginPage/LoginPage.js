@@ -23,7 +23,7 @@ class LoginPage extends React.Component {
     }
 
     componentDidMount() {
-        this.props.GetCompanyInfo();
+        this.props.GetCompanyInfo(false);
     }
 
 
@@ -147,8 +147,8 @@ function mapStateToProps(state) {
 
 
 const mapDispatchToProps = dispatch => ({
-    GetCompanyInfo: () => {
-        dispatch(BasicInfo_action.GetCompanyInfo())
+    GetCompanyInfo: (login) => {
+        dispatch(BasicInfo_action.GetCompanyInfo(login))
     },
     logout: () => {
         dispatch(userActions.logout())

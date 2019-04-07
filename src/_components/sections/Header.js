@@ -13,7 +13,7 @@ import {BasicInfo_action} from "../../_actions/BaseInfo";
 
 class Header extends Component {
     componentDidMount() {
-        this.props.GetCompanyInfo();
+        this.props.GetCompanyInfo(true);
 
     }
 
@@ -101,8 +101,8 @@ Header.contextTypes = {
 
 
 const mapDispatchToProps = dispatch => ({
-    GetCompanyInfo: () => {
-        dispatch(BasicInfo_action.GetCompanyInfo())
+    GetCompanyInfo: (login) => {
+        dispatch(BasicInfo_action.GetCompanyInfo(login))
     },
 
 
