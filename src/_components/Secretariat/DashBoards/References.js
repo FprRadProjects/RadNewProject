@@ -11,7 +11,7 @@ import { RadioFilter } from "./RadioFilter";
 import PropTypes from "prop-types"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FormInfo } from "../../../locales";
-import { RibbonReferences } from './Ribbon/Ribbon.References';
+import { RibbonReferences } from '../Ribbon/Ribbon.References';
 
 var currencyColumns = [];
 var hiddenColumnNames = ['done', 'id_tel', 'olaviyat', 'cuser',
