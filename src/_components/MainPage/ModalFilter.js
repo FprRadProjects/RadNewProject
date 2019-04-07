@@ -7,14 +7,10 @@ class ModalFilter extends Component {
 
     constructor(props) {
         super(props);
+        const { Params } = this.props;
         this.state = {
             ...this.state,
-            filterFields: {
-                done: "0",
-                seen: "2",
-                worker: "0",
-                date: "0"
-            }
+            filterFields: Params
         }
     }
 
