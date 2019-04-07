@@ -1,15 +1,17 @@
 import axios from 'axios'
 import {UserConfig} from '../../Config.js'
 import Config from '../../../Config.json';
+const BaseUrl = localStorage.getItem("BaseUrl");
 
 export const Service_Dashboard = {
-    FetchData,    FetchDataTree
+    FetchData,    
+    FetchDataTree
 };
 
 
 function FetchData(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(Config.BaseUrl+"WorkDashboard", params)
+        return axios.post(BaseUrl+"WorkDashboard", params)
             .then(response => {
                 return Promise.resolve(response.data)
             })
@@ -22,7 +24,7 @@ function FetchData(params) {
 
 function FetchDataTree(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(Config.BaseUrl+"WorkDashboard", params)
+        return axios.post(BaseUrl+"WorkDashboard", params)
             .then(response => {
                 return Promise.resolve(response.data)
             })

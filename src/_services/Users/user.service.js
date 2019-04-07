@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {UserConfig} from '../Config.js'
-import Config from '../../Config';
+const BaseUrl = localStorage.getItem("BaseUrl");
 
 export const userService = {
     login,
@@ -15,7 +15,6 @@ function login(username, password) {
     let data = new FormData();
     data.append("username", username);
     data.append("password", password);
-    const BaseUrl = localStorage.getItem("BaseUrl");
     return axios.post(BaseUrl + "Login", data)
         .then(user => {
             if (user.data.data != null)
@@ -37,7 +36,7 @@ function logout() {
 //Gets "token" // returns token is valid or not
 function CheckToken() {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(Config.BaseUrl + "CheckToken", null)
+        return axios.post(BaseUrl + "CheckToken", null)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -52,7 +51,7 @@ function CheckToken() {
 //Gets "token" // returns  "username","fullname","id_user","id_role"
 function GetUserInfo() {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(Config.BaseUrl + "GetUserInfo", null)
+        return axios.post(BaseUrl + "GetUserInfo", null)
             .then(Response => {
                 return Promise.resolve(Response.data);
             })
@@ -68,7 +67,7 @@ function GetUserInfo() {
 //Gets "token" // returns  "isadmin"
 function UserIsAdmin() {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(Config.BaseUrl + "UserIsAdmin", null)
+        return axios.post(BaseUrl + "UserIsAdmin", null)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

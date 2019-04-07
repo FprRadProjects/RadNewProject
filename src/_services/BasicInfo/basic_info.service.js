@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {UserConfig} from '../Config.js'
-import Config from '../../Config.json';
 
 export const BasicInfo_service = {
     GetCompanyInfo,
@@ -9,7 +8,8 @@ export const BasicInfo_service = {
 };
 
 function GetCompanyInfo() {
-        return axios.post(Config.BaseUrl + "GetCompanyInfo")
+        const BaseUrl = localStorage.getItem("BaseUrl");
+        return axios.post(BaseUrl + "GetCompanyInfo")
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -18,8 +18,9 @@ function GetCompanyInfo() {
             })
 }
 function UserAccessForm(params) {
+    const BaseUrl = localStorage.getItem("BaseUrl");
     if (UserConfig.GetToken() !== null) {
-        return axios.post(Config.BaseUrl + "UserAccessForm", params)
+        return axios.post(BaseUrl + "UserAccessForm", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -31,10 +32,11 @@ function UserAccessForm(params) {
 
 }
 function SetLog(Form) {
+    const BaseUrl = localStorage.getItem("BaseUrl");
     if (UserConfig.GetToken() !== null) {
         let data = new FormData();
         data.append("Form", Form);
-        return axios.post(Config.BaseUrl + "SetLog", data)
+        return axios.post(BaseUrl + "SetLog", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
