@@ -1,6 +1,6 @@
 import axios from 'axios'
-import Config from '../../../../Config.json';
 import {UserConfig} from '../../../Config.js'
+const BaseUrl = localStorage.getItem("BaseUrl");
 
 export const WorkBasic_service = {
     GetWorkInfo,
@@ -13,7 +13,7 @@ function GetWorkInfo(peygir_id) {
     if (UserConfig.GetToken() !== null) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
-        return axios.post(Config.BaseUrl + "WorkInfo", formData)
+        return axios.post(BaseUrl + "WorkInfo", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -25,7 +25,7 @@ function GetWorkInfo(peygir_id) {
 }
 function FlowResultListOnWork(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(Config.BaseUrl + "FlowResultListOnWork", params)
+        return axios.post(BaseUrl + "FlowResultListOnWork", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -37,7 +37,7 @@ function FlowResultListOnWork(params) {
 }
 function ReviewWorkConfirmList(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(Config.BaseUrl + "ReviewWorkConfirmList", params)
+        return axios.post(BaseUrl + "ReviewWorkConfirmList", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {UserConfig} from '../../Config.js'
-import Config from '../../../Config.json';
 const BaseUrl = localStorage.getItem("BaseUrl");
 
 export const Service_Dashboard = {

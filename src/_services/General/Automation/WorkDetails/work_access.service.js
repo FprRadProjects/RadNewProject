@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {UserConfig} from '../../../Config.js'
-import Config from '../../../../Config.json';
+const BaseUrl = localStorage.getItem("BaseUrl");
 
 export const WorkAccess_service = {
     CheckAccess,
@@ -18,7 +18,7 @@ function CheckAccess(peygir_id) {
     var formData = new FormData();
     formData.append('peygir_id', peygir_id);
 
-    return axios.post(Config.BaseUrl + "CheckAccess", formData)
+    return axios.post(BaseUrl + "CheckAccess", formData)
         .then(Response => {
             return Promise.resolve(Response.data)
         })
@@ -36,7 +36,7 @@ function CanSetInfoOnWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(Config.BaseUrl + "CanSetInfoOnWork", formData)
+        return axios.post(BaseUrl + "CanSetInfoOnWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -54,7 +54,7 @@ function CanSetProjectOnWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(Config.BaseUrl + "CanSetProjectOnWork", formData)
+        return axios.post(BaseUrl + "CanSetProjectOnWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -73,7 +73,7 @@ function CanEditOnWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(Config.BaseUrl + "CanEditOnWork", formData)
+        return axios.post(BaseUrl + "CanEditOnWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -94,7 +94,7 @@ function CanSubOnWork(peygir_id , id_tel) {
         formData.append('id_tel', id_tel);
         formData.append('type', 'raddf');
 
-        return axios.post(Config.BaseUrl + "CanAddOrSubOnWork", formData)
+        return axios.post(BaseUrl + "CanAddOrSubOnWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -113,7 +113,7 @@ function CanSubOnWork(peygir_id , id_tel) {
             formData.append('id_tel', id_tel);
             formData.append('type', 'radd');
 
-            return axios.post(Config.BaseUrl + "CanAddOrSubOnWork", formData)
+            return axios.post(BaseUrl + "CanAddOrSubOnWork", formData)
                 .then(Response => {
                     return Promise.resolve(Response.data)
                 })

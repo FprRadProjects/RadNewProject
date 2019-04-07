@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { UserConfig } from "../Config";
-import Config from '../../Config.json';
 
 const BaseUrl = localStorage.getItem("BaseUrl");
 

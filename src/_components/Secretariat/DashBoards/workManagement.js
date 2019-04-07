@@ -10,8 +10,8 @@ import '@devexpress/dx-react-grid-bootstrap4/dist/dx-react-grid-bootstrap4.css';
 import {TreeGridComponent} from "../../Config/TreeGridComponent";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {RadioFilter} from "./RadioFilter";
-import {RibbonReferences} from "./Ribbon/Ribbon.References";
-import {DiagramViewer} from "./Diagram/DiagramViewer"
+import {RibbonReferences} from "../Ribbon/Ribbon.References";
+import {DiagramViewer} from "../../Frameworks/Diagram"
 import {ReferenceViewer} from "../RecordsPage";
 
 var currencyColumns = [];

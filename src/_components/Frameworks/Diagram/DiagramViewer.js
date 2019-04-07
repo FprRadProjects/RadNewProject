@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
-import {OrgChart} from "../../../Config/orgChart";
+import {OrgChart} from "../../Config/orgChart";
 
 class DiagramViewer extends Component {
     constructor(props) {
