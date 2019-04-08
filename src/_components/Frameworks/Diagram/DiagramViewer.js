@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
-import {OrgChart} from "../../Config/orgChart";
+import { OrgChart } from "../../Config/orgChart";
 
 class DiagramViewer extends Component {
     constructor(props) {
         super(props);
         this.state = {
             ...this.state,
-            toggleDiagram : false,
+            toggleDiagram: false,
             modalClass: "modal-dialog-centered modal-lg r-modal"
         };
 
@@ -38,19 +38,16 @@ class DiagramViewer extends Component {
         return (
             <div>
                 <Modal isOpen={modal} toggle={toggle} keyboard={false}
-                       className={this.state.modalClass} backdrop={this.state.backdrop}>
+                    className={this.state.modalClass} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={toggle}>دیاگرام</ModalHeader>
                     <ModalBody>
-                        <OrgChart/>
+                        <OrgChart />
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.toggleDiagram.bind(this)}></Button>
                         <style>{modalBackDrop}</style>
                     </ModalFooter>
                 </Modal>
-
-
-
             </div>
         );
     }
