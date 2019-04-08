@@ -5,6 +5,9 @@ import { Menu, Item, Separator, Submenu, MenuProvider } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.min.css';
 import connect from "react-redux/es/connect/connect";
 
+import {
+    BasicInfo_action
+} from "../../_actions";
 
 class MyAwesomeMenu extends Component {
     constructor(props) {
@@ -39,7 +42,7 @@ class MyAwesomeMenu extends Component {
         else if (id.indexOf("ShortKey") !== -1) {
             if (event.target.nodeName == "I") {
                 var RowId = event.target.attributes.rowid.value;
-                var FormId = this.props.FormId;
+                var FormId = event.target.attributes.formid.value;
                 const { Delete_ShortKeyElements_Template } = this.props;
                 Delete_ShortKeyElements_Template(FormId, RowId);
             }
@@ -92,7 +95,7 @@ class MyAwesomeMenu extends Component {
                 var Params =
                 {
                     RowId: this.state.erowid,
-                    FormId: this.props.FormId,
+                    FormId: this.state.event.target.attributes.formid.value,
                     Title: this.state.text,
                     IsPublic: this.state.public,
                     Element: id
@@ -104,11 +107,11 @@ class MyAwesomeMenu extends Component {
                 }));
             }
         } else if (!this.state.isshort) {
-            console.log(this.state.event.target)
+            console.log(this.state.event.target.attributes)
             var HideParam =
             {
                 RowId: 0,
-                FormId: this.props.FormId,
+                FormId: this.state.event.target.attributes.formid.value,
                 IsShow: false,
                 IsPublic: this.state.public,
                 Element: this.state.event.target.attributes.element.value,
@@ -124,7 +127,7 @@ class MyAwesomeMenu extends Component {
             var Params =
             {
                 RowId: 0,
-                FormId: this.props.FormId,
+                FormId: this.state.event.target.attributes.FormId.value,
                 Meta: "",
                 Element: "",
                 IsPublic: this.state.public,
@@ -134,9 +137,12 @@ class MyAwesomeMenu extends Component {
                     if (this.state.event.target.attributes.id.value.indexOf("ShortKey") === -1) {
                         const { Set_ShortKey_TemplateForm, ShortKeys } = this.props;
                         Params.Element = "ShortKey" + this.state.event.target.attributes.id.value;
-                        if (ShortKeys[Params.Element] === undefined) {
+                        if (ShortKeys === undefined) {
                             this.state.event.target.attributes.element.value = Params.Element;
-                            Params.Meta = this.state.event.target.outerHTML.replace('id="', 'key="' + Params.Element + '" id="ShortKey');
+                            Set_ShortKey_TemplateForm(Params);
+                        }
+                        else if (ShortKeys[Params.Element] === undefined) {
+                            this.state.event.target.attributes.element.value = Params.Element;
                             Set_ShortKey_TemplateForm(Params);
                         }
                     }
@@ -210,11 +216,14 @@ MyAwesomeMenu.contextTypes = {
 
 function mapStateToProps(state) {
     const { lang } = state.i18nState;
-    const { ShortKeys } = state.Design;
+    const { SelectedFormId } = state.BasicInfo;
+    var FormId = SelectedFormId;
+    if (SelectedFormId === undefined)
+        FormId = 0;
+    var ShortKeys = state.Design["ShortKeys" + FormId];
     return {
         lang,
         ShortKeys
-
     };
 }
 

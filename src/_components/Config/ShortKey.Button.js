@@ -3,11 +3,11 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 class ShortKeyButton extends Component {
     render() {
-        const { Key, ShortKey, handleClick, Id } = this.props;
+        const { Key, ShortKey, handleClick, Id,FormId } = this.props;
         return (
             <li key={Key}>
                 <a>
-                    <i onClick={handleClick.bind(this)}
+                    <i onClick={handleClick.bind(this)} formid={FormId}
                         id={ShortKey.Element} rowid={ShortKey.Id + ""}
                         className={"icon " + Id} ></i>
                 </a>

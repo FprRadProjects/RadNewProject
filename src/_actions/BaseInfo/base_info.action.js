@@ -7,17 +7,18 @@ import { toast } from 'react-toastify';
 export const BasicInfo_action = {
     GetCompanyInfo,
     UserAccessForm,
-    GetFormInfo,
     SetLog,
-    GetRowData
+    GetRowData,
+    GetSelectedFormId
 
 };
 
-function GetFormInfo(param) {
-    return dispatch => {dispatch(getFormInfo_Reducer(param));}
-}
+
 function GetRowData(data) {
     return dispatch => {dispatch(getGridRowData_Reducer(data));}
+}
+function GetSelectedFormId(FormId) {
+    return dispatch => {dispatch(getSelectedFormId_Reducer(FormId));}
 }
 function SetLog(Form) {
     return dispatch => {
@@ -103,8 +104,10 @@ function PassCompInfo_Reducer(data) {
 }
 function UserAccessForm_Reducer(data) {
     return {type: BasicInfoConstant.USER_ACCESS_FORM_SUCCESS, data}
-}function getFormInfo_Reducer(data) {
-    return {type: BasicInfoConstant.GET_FORM_INFO_SUCCESS, data}
 }function getGridRowData_Reducer(data) {
     return {type: BasicInfoConstant.GET_GRID_ROW_DATA_SUCCESS, data}
 }
+function getSelectedFormId_Reducer(data) {
+    return {type: BasicInfoConstant.GET_SELECTED_FORM_ID, data}
+}
+

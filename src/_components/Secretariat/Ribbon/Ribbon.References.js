@@ -29,7 +29,7 @@ class RibbonReferences extends Component {
 
     }
     componentDidMount() {
-        const { GetTemplateForm, GetFormInfo } = this.props;
+        const { GetTemplateForm } = this.props;
         GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id);
     }
 
@@ -159,7 +159,7 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         {/* بازخوانی اطلاعات */}
-                                        <RibbonButton
+                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="refresh-information"
                                             handleClick={this.refreshClick.bind(this)}
@@ -168,7 +168,7 @@ class RibbonReferences extends Component {
                                         />
 
                                         {/* نتیجه ارجاع */}
-                                        <RibbonButton
+                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="referral-result"
                                             handleClick={this.OpenReferenceViewer.bind(this)}
@@ -183,7 +183,7 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         {/* نشانه ها */}
-                                        <RibbonButton
+                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="marks"
                                             handleClick={this.markViewerClick.bind(this)}
@@ -192,7 +192,7 @@ class RibbonReferences extends Component {
                                         />
 
                                         {/* حذف نشانه  */}
-                                        <RibbonButton
+                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="remove-mark"
                                             handleClick={this.deleteFromMarkClick.bind(this)}
@@ -201,7 +201,7 @@ class RibbonReferences extends Component {
                                         />
 
                                         {/* نشانه گذاری  */}
-                                        <RibbonButton
+                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="marking"
                                             handleClick={this.setToMarkClick.bind(this)}
@@ -217,7 +217,7 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         {/* دیاگرام عطف  */}
-                                        <RibbonButton
+                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="follow-up-diagram"
                                             handleClick={this.OpenReferenceViewer.bind(this)}
@@ -226,7 +226,7 @@ class RibbonReferences extends Component {
                                         />
 
                                         {/* دیاگرام  */}
-                                        <RibbonButton
+                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="diagram"
                                             handleClick={this.OpenDiagramViewer.bind(this)}
@@ -399,43 +399,43 @@ class RibbonReferences extends Component {
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
                                 if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.OpenReferenceViewer.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.OpenReferenceViewer.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="referral-result" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-refresh-information") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.refreshClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.refreshClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="refresh-information" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-marks") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.markViewerClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.markViewerClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="marks" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-remove-mark") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.deleteFromMarkClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.deleteFromMarkClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="remove-mark" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-marking") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.setToMarkClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.setToMarkClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="marking" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-follow-up-diagram") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="follow-up-diagram" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-diagram") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}  key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="diagram" />
                                     )
                                 }
@@ -491,12 +491,12 @@ RibbonReferences.contextTypes = {
 function mapStateToProps(state) {
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
-    const { ShortKeys } = state.Design;
+    const { ShortKeys342 } = state.Design;
     const { Design } = state;
     return {
         lang,
         WorkInfo,
-        ShortKeys,
+        ShortKeys:ShortKeys342,
         Design
     };
 }

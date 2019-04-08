@@ -5,13 +5,13 @@ import PropTypes from "prop-types"
 import { SelectProjectModal } from "../../Project/";
 import { SelectDefaultTextModal } from "../../Basic/";
 
-import { WorkAccess_action, design_Actions, common_Actions, WorkBasic_action, WorkActions_action } from "../../../_actions";
+import { Act_Reference,WorkAccess_action,BasicInfo_action, design_Actions, WorkBasic_action, WorkActions_action } from "../../../_actions";
 import { FormInfo } from "../../../locales";
 import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 import { toast } from 'react-toastify';
+import { RibbonReferenceViewer } from '../Ribbon/Ribbon.ReferenceViewer';
 
 var SaveParams = { form: "", data: [] };
-var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: {} };
 
 class ReferenceViewer extends Component {
     constructor(props) {
@@ -29,7 +29,7 @@ class ReferenceViewer extends Component {
         this.SuccessSelectProject = this.SuccessSelectProject.bind(this);
 
     }
-
+  
     OpenSelectProject = () => {
         const { WorkInfo, showError } = this.props;
         WorkAccess_action.CanSetProjectOnWork(WorkInfo.peygir_id).then(
@@ -66,6 +66,8 @@ class ReferenceViewer extends Component {
         }
         else
             toast.warn(this.context.t("msg_No_Select_Row"));
+        console.log(SaveParams)
+
 
     }
 
@@ -111,85 +113,35 @@ class ReferenceViewer extends Component {
         }
         else
             toast.warn(this.context.t("msg_No_Select_Row"));
-    }
-    ConfirmationHandle = (e) => {
-        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, RefreshParentForm } = this.props;
-        ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
-        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
-        ConfirmParams["Form"] = formname;
-        SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
-        SaveParams.form = formname;
-        let obj = [];
-        Object.keys(SaveParams.data).map((item, index) => {
-            return obj[index++] = SaveParams.data[item];
-        })
-        SaveParams.data = obj;
-        ConfirmParams.SaveParams = SaveParams;
-        console.log(ConfirmParams.SaveParams)
-        //this.saveHandle("");
-        InitConfirmWork(ConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
-            if (data.status) {
-                if (data.code === 2 && data.data !== null) {
-                    this.setState({
-                        FlowResultSelectmodal: true,
-                    });
-                }
-                else {
-                    FetchWorkInfo(WorkInfo.peygir_id);
-                    RefreshParentForm(Params);
+        console.log(SaveParams)
 
-                }
-            }
-        });
-        SaveParams = { form: "", data: [] };
     }
+
+   
 
     CloseleSelectFlowResult = (e) => {
         this.setState({
             FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
         });
     }
-    saveHandle = (msg) => {
-        const { ParentForm, WorkInfo, SaveWorkInfo, lang, FetchWorkInfo,
-            RefreshParentForm, Params
-        } = this.props;
-        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
-        SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
-        SaveParams.form = formname;
-        let obj = [];
-        Object.keys(SaveParams.data).map((item, index) => {
-            return obj[index++] = SaveParams.data[item];
-        })
-        SaveParams.data = obj;
-        SaveWorkInfo(SaveParams, msg).then(data => {
-            if (data.status) {
-                RefreshParentForm(Params);
-                FetchWorkInfo(WorkInfo.peygir_id);
-            }
-        });
-        SaveParams = { form: "", data: [] };
-    }
+    
 
     changeHandle = (e) => {
         const { WorkInfo } = this.props;
         const { name, value } = e.target;
         if (!WorkInfo.done)
             SaveParams.data[[name]] = { [name]: value };
-    }
+        console.log(SaveParams)
 
-    rebuildHandle() {
-        const { RebuildWork, WorkInfo, RefreshParentForm, FetchWorkInfo, Params } = this.props;
-        RebuildWork(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
-            if (data.status) {
-                RefreshParentForm(Params);
-                FetchWorkInfo(WorkInfo.peygir_id);
-            }
-        });
     }
-
+    clearSaveParams = (e) => {
+        SaveParams = { form: "", data: [] };
+    }
+    
 
     render() {
-        const { modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm } = this.props;
+        const { FetchData,modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm, Design } = this.props;
+        console.log(SaveParams)
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -206,232 +158,7 @@ class ReferenceViewer extends Component {
                     <ModalHeader toggle={toggle}>نتیجه ارجاع</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <div className="r-main-box__toggle">
-                                <label className="switch">
-                                    <input type="checkbox" id="sidebar-toggle" />
-                                    <span className="switch-state"></span>
-                                </label>
-                            </div>
-
-                            <ul className="nav nav-tabs" id="ribbon-tab">
-                                <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">تب
-                                    باز</a></li>
-                                {/* <li className="nav-item"><a href="#tab2" className="nav-link" data-toggle="tab">تب
-                                    بسته</a></li>
-                    <li className="nav-item"><a href="#tab3" className="nav-link" data-toggle="tab">تب
-                                    بسته</a></li>
-                    <li className="nav-item"><a href="#tab4" className="nav-link" data-toggle="tab">تب
-                                    بسته</a></li> */}
-                            </ul>
-                            <div className="tab-content">
-                                <div className="gradient"></div>
-                                <div className="tab-pane active" id="tab1">
-                                    <div className="tab-panel">
-                                        <div className="tab-panel-group">
-                                            <div className="tab-group-caption">امکانات</div>
-                                            <div className="tab-group-content">
-                                                <div className="tab-content-segment">
-                                                    <a href="#!">
-                                                        <i className="icon"></i>
-                                                        <span>بازخوانی اطلاعات</span>
-                                                    </a>
-                                                    <a href="#!">
-                                                        <i className="icon"></i>
-                                                        <span>نمایش کار</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="tab-panel-group">
-                                            <div className="tab-group-caption">نشانه گذاری</div>
-                                            <div className="tab-group-content">
-                                                <div className="tab-content-segment">
-                                                    <a href="#!">
-                                                        <i className="icon"></i>
-                                                        <span>نشانه ها</span>
-                                                    </a>
-                                                    <a href="#!">
-                                                        <i className="icon"></i>
-                                                        <span>حذف نشانه ها</span>
-                                                    </a>
-                                                    <a href="#!">
-                                                        <i className="icon"></i>
-                                                        <span>نشانه گذاری</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="tab-panel-group">
-                                            <div className="tab-group-caption">پیگیری وضعیت</div>
-                                            <div className="tab-group-content">
-                                                <div className="tab-content-segment">
-                                                    <a href="#!">
-                                                        <i className="icon"></i>
-                                                        <span>پیش نیازها</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div> </div>
-                                {/* <div role="tabpanel" className="tab-pane fade" id="tab2">
-                        <div className="tab-panel">
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">امکانات</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>بازخوانی اطلاعات</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نمایش کار</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">نشانه گذاری</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه ها</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>حذف نشانه ها</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه گذاری</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">پیگیری وضعیت</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>پیش نیازها</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div role="tabpanel" className="tab-pane fade" id="tab3">
-                        <div className="tab-panel">
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">دیاگرام</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام عطف</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">سایر</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>خلاصه گردش کار</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>گروه آرشیو کاربر</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نمایش دبیرخانه</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>ایجاد رونوشت</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>ارجاع</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>ویرایش ارجاع</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>فراخوانی از ایمیل کاربر</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div role="tabpanel" className="tab-pane fade" id="tab4">
-                        <div className="tab-panel">
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">نشانه گذاری</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه ها</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>حذف نشانه ها</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه گذاری</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">پیگیری وضعیت</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>پیش نیازها</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">دیاگرام</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام عطف</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>*/}
-                            </div>
-                            <nav className="radialnav">
-                                <a href="#" className="ellipsis"></a>
-
-                            </nav>
+                        <RibbonReferenceViewer clearSaveParams={this.clearSaveParams.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} FetchData={FetchData.bind(this)} Params={Params} />
                         </div>
 
                         {/*<Button color="success"
@@ -674,16 +401,16 @@ class ReferenceViewer extends Component {
                                         Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
                                         peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
                             </div>}
-                        <style>{modalBackDrop}</style>
+                            <style>{modalBackDrop}</style>
                     </ModalBody>
-                    <ModalFooter>
+                    {/* <ModalFooter>
                         <Button color="primary" className="ml-2"
                             onClick={this.saveHandle.bind(this, this.context.t("msg_Operation_Success"))}>{this.context.t("Save")}</Button>
                         <Button color="warning" className="ml-2"
                             onClick={this.rebuildHandle.bind(this)}>{this.context.t("Rebuild")}</Button>
                         <Button color="success" className="ml-2"
                             onClick={this.ConfirmationHandle.bind(this)}>{this.context.t("Confirmation")}</Button>
-                    </ModalFooter>
+                    </ModalFooter> */}
                 </Modal>
 
             </div >
@@ -692,6 +419,9 @@ class ReferenceViewer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
+    FetchData: (Params) => {
+        dispatch(Act_Reference.FetchData(Params))
+    },
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },

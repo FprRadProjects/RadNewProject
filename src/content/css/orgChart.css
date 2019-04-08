@@ -1,6 +1,12 @@
 
+<<<<<<< HEAD
+#react-org-chart {
+    margin: 0;
+    cursor: move;
+=======
 #root #react-org-chart {
     margin: 0;
+>>>>>>> 5a503d90bb5e7fa24a7b6c45002796cbdb1da473
     height: 100%;
     width: 100%;
 
