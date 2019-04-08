@@ -43,14 +43,16 @@ class DiagramViewer extends Component {
                     <ModalHeader toggle={toggle}>دیاگرام</ModalHeader>
                     <ModalBody>
 <<<<<<< HEAD:src/_components/Config/DiagramViewer.js
+<<<<<<< HEAD:src/_components/Config/DiagramViewer.js
 =======
 <<<<<<< HEAD
                         <OrgChart />
 =======
                         masalan
 >>>>>>> dc7345301d8768bb5751d1c78107f497b793b2bd:src/_components/Frameworks/Diagram/DiagramViewer.js
+=======
+>>>>>>> 43cfb59f8aa200487b6a9b466bf6ed833444c780:src/_components/Frameworks/Diagram/DiagramViewer.js
                         <OrgChart/>
->>>>>>> 1e24a9ad9f10b3041295935cff40ade384ae37f9
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.toggleDiagram.bind(this)}></Button>
