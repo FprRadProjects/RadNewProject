@@ -14,18 +14,20 @@ export function BasicInfo(state = {}, action) {
                 FormAccessInfo:{ ...action.data}
             }
         }
-        case BaseConstant.GET_FORM_INFO_SUCCESS: {
-            return {
-                ...state,
-                FormInfo:{ ...action.data}
-            }
-        }
+  
         case BaseConstant.GET_GRID_ROW_DATA_SUCCESS: {
             return {
                 ...state,
                 GridRowData:{ ...action.data}
             }
         }
+        case BaseConstant.GET_SELECTED_FORM_ID: {
+            return {
+                ...state,
+                SelectedFormId:action.data
+            }
+        }
+        
         default:
             return state;
     }

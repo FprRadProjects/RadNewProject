@@ -9159,8 +9159,8 @@ ul .submenu {
         }
 
             .switch input:checked + .switch-state:before {
-                -webkit-transform: translateX(26px);
-                transform: translateX(26px);
+                -webkit-transform: translateX(28px);
+                transform: translateX(28px);
             }
 
         .switch input:focus + .switch-state {
@@ -34240,37 +34240,38 @@ background-image: url(../images/modal-filter/done-work-icon.svg);
 
 .radialnav {
     position: absolute;
-    top: 360px;
-    left: 0;
+    
+    left: -63px;
     display: block;
     width: 250px;
-    height: 250px;
+    height: 125px;
     font: 500 14px/14px arial normal;
-    transform: rotate(90deg) translateX(-50%);
+    transform: rotate(90deg) translateX(50%);
     -webkit-backface-visibility: hidden;
+    z-index: 1;
 }
 
     .radialnav .ellipsis {
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%) rotate(90deg);
-        bottom: -23px;
-        z-index: 2;
-        width: 44px;
-        height: 90px;
-        border-bottom-left-radius: 90px;
-        border-top-left-radius: 90px;
-        background: #fdfdfd;
-        background-image: url(../images/fast-btn-toggle-icon.svg);
-        background-size: 50px;
-        background-position: left center;
-        background-repeat: no-repeat;
-        color: white;
-        text-align: center;
-        -webkit-transition: all 0.3s ease-in-out;
-        transition: all 0.3s ease-in-out;
-        box-shadow: -5px 0px 5px 0 rgba(0,0,0,.1);
-    }
+    left: 50%;
+    -webkit-transform: translateX(-50%) rotate(90deg);
+    transform: translateX(-50%) rotate(90deg);
+    bottom: -18px;
+    z-index: 2;
+    width: 34px;
+    height: 70px;
+    border-bottom-left-radius: 90px;
+    border-top-left-radius: 90px;
+    background: #fdfdfd;
+    background-image: url(/static/media/fast-btn-toggle-icon.3e268e7a.svg);
+    background-size: 35px;
+    background-position: left center;
+    background-repeat: no-repeat;
+    color: white;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    box-shadow: -5px 0px 5px 0 rgba(0,0,0,.1);
+}
 
 
 
@@ -34297,7 +34298,7 @@ background-image: url(../images/modal-filter/done-work-icon.svg);
 
 .menu {
     position: absolute;
-    top: 50%;
+    top:0;
     left: 0;
     z-index: 0;
     width: 250px;
@@ -34376,8 +34377,8 @@ background-image: url(../images/modal-filter/done-work-icon.svg);
                     }*/
 
             .menu > li a i {
-                width: 15px;
-                height: 15px;
+                width: 12px;
+                height: 12px;
                 background-position: center;
                 background-repeat: no-repeat;
                 display: inline-block;
@@ -34596,7 +34597,7 @@ i.icon {
             position: relative;
             display: block;
             float: right;
-            padding: 10px 15px;
+            padding: 10px 15px 5px;
             min-height: 1px;
         }
 
@@ -34607,7 +34608,7 @@ i.icon {
         .r-main-box__ribbon .tab-content .tab-panel .tab-group-caption {
             font-size: 12px;
             font-weight: 400;
-            margin: -28px 0 0;
+            margin: -25px 0 0;
             text-align: center;
             display: block;
             position: absolute;
@@ -34963,6 +34964,15 @@ i.icon.follow-up-diagram{
 }
 i.icon.diagram{
     background-image: url(../images/Ribbon/diagram.svg);
+}
+i.icon.confirmation{
+    background-image: url(../images/Ribbon/confirmation.svg);
+}
+i.icon.rebuild{
+    background-image: url(../images/Ribbon/rebuild.svg);
+}
+i.icon.save{
+    background-image: url(../images/Ribbon/save.svg);
 }
 
 .modal-form-action{

@@ -97,7 +97,7 @@ class OrgChart extends PureComponent {
 
         // Calculate width of a node with expanded children
         const childrenWidth = parseInt(treeData.children.length * nodeWidth / 2)
-        console.log("eeeeeeeeeeeeeeeeeeeeeeeeeeeee",elemHeight)
+
         // Add svg root for d3
         const svgroot = d3
             .select(id)

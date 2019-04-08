@@ -49,11 +49,7 @@ class References extends Component {
         };
 
     }
-    componentDidMount() {
-        const { GetTemplateForm, GetFormInfo } = this.props;
-        GetFormInfo(FormInfo.fm_dabir_kartabl_erjaat);
-        GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id);
-    }
+   
     toggleFilter() {
         this.setState(prevState => ({
             toggleFilter: !prevState.toggleFilter
@@ -169,12 +165,6 @@ class References extends Component {
 const mapDispatchToProps = dispatch => ({
     FetchData: (Params) => {
         dispatch(Act_Reference.FetchData(Params))
-    },
-    GetTemplateForm: (Params) => {
-        dispatch(design_Actions.GetTemplateForm(Params))
-    },
-    GetFormInfo: (Param) => {
-        dispatch(BasicInfo_action.GetFormInfo(Param))
     },
     GetWorkInfo: (Params) => {
         dispatch(WorkBasic_action.GetWorkInfo(Params))
