@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { FormInfo } from "../../../../locales";
-import { ReferenceViewer } from "../../RecordsPage";
+import { FormInfo } from "../../../locales";
+import { ReferenceViewer } from "../RecordsPage";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton } from "../../../Config";
+import { RibbonButton, ShortKeyButton } from "../../Config";
+import { HideElementListModal } from "../../Basic";
 import {
+    Act_Reference,
+    WorkBasic_action,
     design_Actions,
-    BasicInfo_action, WorkActions_action
-} from "../../../../_actions";
+    WorkActions_action
+} from "../../../_actions";
 import { toast } from 'react-toastify';
+var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: {} };
 
 class RibbonReferenceViewer extends Component {
     constructor(props) {
@@ -19,14 +23,15 @@ class RibbonReferenceViewer extends Component {
         this.state = {
             ...this.state,
             ReferenceViewermodal: false,
+            HideElementListmodal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
 
     }
     componentDidMount() {
-        const { GetTemplateForm, GetFormInfo } = this.props;
-        GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id);
+        const { GetTemplateForm } = this.props;
+        GetTemplateForm(FormInfo.fm_dabir_natije_erja.id);
     }
 
 
@@ -90,8 +95,71 @@ class RibbonReferenceViewer extends Component {
         Params.mark = "1";
         FetchData(Params);
     }
-    controlpanelClick(){
 
+    saveHandle = (msg) => {
+        const { ParentForm, WorkInfo, SaveWorkInfo, lang, FetchWorkInfo,
+            RefreshParentForm, Params, SaveParams, clearSaveParams
+        } = this.props;
+        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
+        SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
+        SaveParams.form = formname;
+        let obj = [];
+        Object.keys(SaveParams.data).map((item, index) => {
+            return obj[index++] = SaveParams.data[item];
+        })
+        SaveParams.data = obj;
+        SaveWorkInfo(SaveParams, msg).then(data => {
+            if (data.status) {
+                RefreshParentForm(Params);
+                FetchWorkInfo(WorkInfo.peygir_id);
+            }
+        });
+        clearSaveParams();
+    }
+    ConfirmationHandle = (e) => {
+        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, RefreshParentForm, SaveParams } = this.props;
+        ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
+        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
+        ConfirmParams["Form"] = formname;
+        SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
+        SaveParams.form = formname;
+        let obj = [];
+        Object.keys(SaveParams.data).map((item, index) => {
+            return obj[index++] = SaveParams.data[item];
+        })
+        SaveParams.data = obj;
+        ConfirmParams.SaveParams = SaveParams;
+        console.log(ConfirmParams.SaveParams)
+        //this.saveHandle("");
+        InitConfirmWork(ConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
+            if (data.status) {
+                if (data.code === 2 && data.data !== null) {
+                    this.setState({
+                        FlowResultSelectmodal: true,
+                    });
+                }
+                else {
+                    FetchWorkInfo(WorkInfo.peygir_id);
+                    RefreshParentForm(Params);
+
+                }
+            }
+        });
+        SaveParams = { form: "", data: [] };
+    }
+    rebuildHandle() {
+        const { RebuildWork, WorkInfo, RefreshParentForm, FetchWorkInfo, Params } = this.props;
+        RebuildWork(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
+            if (data.status) {
+                RefreshParentForm(Params);
+                FetchWorkInfo(WorkInfo.peygir_id);
+            }
+        });
+    }
+    controlpanelClick() {
+        this.setState(prevState => ({
+            HideElementListmodal: !prevState.HideElementListmodal
+        }));
     }
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, Design } = this.props;
@@ -107,315 +175,78 @@ class RibbonReferenceViewer extends Component {
                 </div>
                 <div className="r-main-box__controlpanel">
                     <a className="r-main-box__controlpanel--action"
-                    title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
+                        title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
                 </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
                     <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">تب
                                     باز</a></li>
-                    {/* <li className="nav-item"><a href="#tab2" className="nav-link" data-toggle="tab">تب
-                                    بسته</a></li>
-                    <li className="nav-item"><a href="#tab3" className="nav-link" data-toggle="tab">تب
-                                    بسته</a></li>
-                    <li className="nav-item"><a href="#tab4" className="nav-link" data-toggle="tab">تب
-                                    بسته</a></li> */}
                 </ul>
                 <div className="tab-content">
                     <div className="gradient"></div>
                     <div className="tab-pane active" id="tab1">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
-                                <div className="tab-group-caption">امکانات</div>
+                                <div className="tab-group-caption">ثبت</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
-                                        {/* بازخوانی اطلاعات */}
-                                        <RibbonButton
+                                        <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
                                             DeletedElements={DeletedElements}
-                                            Id="refresh-information"
-                                            handleClick={this.refreshClick.bind(this)}
+                                            Id="confirmation"
+                                            handleClick={this.ConfirmationHandle.bind(this)}
                                             EditedElements={EditedElements}
-                                            Text="RefreshInformation"
+                                            Text="Confirmation"
                                         />
-
-                                        {/* نتیجه ارجاع */}
-                                        <RibbonButton
+                                        <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
                                             DeletedElements={DeletedElements}
-                                            Id="referral-result"
-                                            handleClick={this.OpenReferenceViewer.bind(this)}
+                                            Id="rebuild"
+                                            handleClick={this.rebuildHandle.bind(this)}
                                             EditedElements={EditedElements}
-                                            Text="ReferralResult"
+                                            Text="Rebuild"
                                         />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">نشانه گذاری</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        {/* نشانه ها */}
-                                        <RibbonButton
+                                        <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
                                             DeletedElements={DeletedElements}
-                                            Id="marks"
-                                            handleClick={this.markViewerClick.bind(this)}
+                                            Id="save"
+                                            handleClick={this.saveHandle.bind(this, this.context.t("msg_Operation_Success"))}
                                             EditedElements={EditedElements}
-                                            Text="Marks"
-                                        />
-
-                                        {/* حذف نشانه  */}
-                                        <RibbonButton
-                                            DeletedElements={DeletedElements}
-                                            Id="remove-mark"
-                                            handleClick={this.deleteFromMarkClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="RemoveMark"
-                                        />
-
-                                        {/* نشانه گذاری  */}
-                                        <RibbonButton
-                                            DeletedElements={DeletedElements}
-                                            Id="marking"
-                                            handleClick={this.setToMarkClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="Marking"
-                                        />
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">دیاگرام</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        {/* دیاگرام عطف  */}
-                                        <RibbonButton
-                                            DeletedElements={DeletedElements}
-                                            Id="follow-up-diagram"
-                                            handleClick={this.OpenReferenceViewer.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="FollowUpDiagram"
-                                        />
-
-                                        {/* دیاگرام  */}
-                                        <RibbonButton
-                                            DeletedElements={DeletedElements}
-                                            Id="diagram"
-                                            handleClick={this.OpenReferenceViewer.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="Diagram"
+                                            Text="Save"
                                         />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {/* <div role="tabpanel" className="tab-pane fade" id="tab2">
-                        <div className="tab-panel">
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">امکانات</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>بازخوانی اطلاعات</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نمایش کار</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">نشانه گذاری</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه ها</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>حذف نشانه ها</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه گذاری</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">پیگیری وضعیت</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>پیش نیازها</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div role="tabpanel" className="tab-pane fade" id="tab3">
-                        <div className="tab-panel">
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">دیاگرام</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام عطف</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">سایر</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>خلاصه گردش کار</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>گروه آرشیو کاربر</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نمایش دبیرخانه</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>ایجاد رونوشت</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>ارجاع</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>ویرایش ارجاع</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>فراخوانی از ایمیل کاربر</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div role="tabpanel" className="tab-pane fade" id="tab4">
-                        <div className="tab-panel">
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">نشانه گذاری</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه ها</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>حذف نشانه ها</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>نشانه گذاری</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">پیگیری وضعیت</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>پیش نیازها</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">دیاگرام</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام عطف</span>
-                                        </a>
-                                        <a href="#!">
-                                            <i className="icon"></i>
-                                            <span>دیاگرام</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>*/}
                 </div>
                 <nav className="radialnav">
                     <a href="#" className="ellipsis"></a>
                     <MenuProvider id="menu_id">
                         <ul className="menu">
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
-                                if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
+                                if (ShortKeys[keyName].Element === "ShortKeyicon-confirmation") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.OpenReferenceViewer.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="referral-result" />
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.ConfirmationHandle.bind(this)}
+                                            ShortKey={ShortKeys[keyName]} Id="confirmation" />
                                     )
                                 }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-refresh-information") {
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-save") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.refreshClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="refresh-information" />
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.saveHandle.bind(this)}
+                                            ShortKey={ShortKeys[keyName]} Id="save" />
                                     )
                                 }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-marks") {
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-rebuild") {
                                     return (
-                                        <ShortKeyButton key={index} handleClick={this.markViewerClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="marks" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-remove-mark") {
-                                    return (
-                                        <ShortKeyButton key={index} handleClick={this.deleteFromMarkClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="remove-mark" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-marking") {
-                                    return (
-                                        <ShortKeyButton key={index} handleClick={this.setToMarkClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="marking" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-follow-up-diagram") {
-                                    return (
-                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="follow-up-diagram" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-diagram") {
-                                    return (
-                                        <ShortKeyButton key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="diagram" />
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.rebuildHandle.bind(this)}
+                                            ShortKey={ShortKeys[keyName]} Id="rebuild" />
                                     )
                                 }
                             })}
-
                         </ul>
                     </MenuProvider>
-
                 </nav>
 
-
+                {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
+                    toggle={this.controlpanelClick.bind(this)}
+                    FormId={FormInfo.fm_dabir_natije_erja.id} />}
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                     toggle={this.toggleReferenceViewer.bind(this)}
                     WorkInfo={WorkInfo}
@@ -428,21 +259,29 @@ class RibbonReferenceViewer extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
+    FetchData: (Params) => {
+        dispatch(Act_Reference.FetchData(Params))
+    },
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
-    SetLog: (Form) => {
-        dispatch(BasicInfo_action.SetLog(Form))
+    SaveWorkInfo: (SaveParams, msg) => {
+        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
     },
-    SeenWork: (peygir_id) => {
-        dispatch(WorkActions_action.SeenWork(peygir_id))
+    RebuildWork: (Peygir_id, msg) => {
+        return dispatch(WorkActions_action.RebuildWork(Peygir_id, msg))
     },
-    DeleteFromWorkMark: (peygir_id, msg) => {
-        return dispatch(WorkActions_action.DeleteFromWorkMark(peygir_id, msg))
+    DeleteWork: (Peygir_id, msg) => {
+        dispatch(WorkActions_action.DeleteWork(Peygir_id))
     },
-    InsertIntoWorkMark: (peygir_id, msg) => {
-        return dispatch(WorkActions_action.InsertIntoWorkMark(peygir_id, msg))
+    InitConfirmWork: (Params, msg) => {
+        return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
     },
+
+    FetchWorkInfo: (peygir_id) => {
+        dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
+    }
+
 });
 RibbonReferenceViewer.contextTypes = {
     t: PropTypes.func.isRequired
@@ -451,12 +290,12 @@ RibbonReferenceViewer.contextTypes = {
 function mapStateToProps(state) {
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
-    const { ShortKeys } = state.Design;
+    const { ShortKeys340 } = state.Design;
     const { Design } = state;
     return {
         lang,
         WorkInfo,
-        ShortKeys,
+        ShortKeys: ShortKeys340,
         Design
     };
 }

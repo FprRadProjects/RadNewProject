@@ -28,10 +28,10 @@ $(document).on('click', '.mobile-toggle', function (e) {
 
 $(document).on('click', '.ellipsis', function (e) {
     e.preventDefault();
-    if (!$('.radialnav').hasClass('active'))
-        $('.radialnav').addClass('active');
+    if (!$(this).parent('.radialnav').hasClass('active'))
+        $(this).parent('.radialnav').addClass('active');
     else
-        $('.radialnav').removeClass('active');
+        $(this).parent('.radialnav').removeClass('active');
 });
 
 $(document).on('change', '#sidebar-toggle', function (e) {
