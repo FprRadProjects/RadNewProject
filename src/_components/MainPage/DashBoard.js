@@ -66,9 +66,8 @@ class DashBoard extends Component {
 
     }
     componentDidMount() {
-        const {GetCounts, GetTemplateForm,GetFormInfo} = this.props;
+        const {GetCounts, GetTemplateForm} = this.props;
         GetCounts(CalParams);
-        GetFormInfo(FormInfo.web_fm_mainpage);
         GetTemplateForm(FormInfo.web_fm_mainpage.id);
 
     }
