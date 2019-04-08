@@ -12,7 +12,7 @@ import {
     BasicInfo_action, WorkActions_action
 } from "../../../_actions";
 import { toast } from 'react-toastify';
-import {DiagramViewer} from "../../Frameworks/Diagram";
+import {DiagramViewer} from "../../Config/DiagramViewer";
 
 class RibbonReferences extends Component {
     constructor(props) {

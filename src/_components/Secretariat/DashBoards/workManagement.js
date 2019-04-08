@@ -11,7 +11,7 @@ import {TreeGridComponent} from "../../Config/TreeGridComponent";
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {RadioFilter} from "./RadioFilter";
 import {RibbonReferences} from "../Ribbon/Ribbon.References";
-import {DiagramViewer} from "../../Frameworks/Diagram"
+import {DiagramViewer} from "../../Config/DiagramViewer"
 import {ReferenceViewer} from "../RecordsPage";
 
 var currencyColumns = [];
