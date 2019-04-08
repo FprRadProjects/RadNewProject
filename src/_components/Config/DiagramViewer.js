@@ -42,17 +42,8 @@ class DiagramViewer extends Component {
                     className={this.state.modalClass} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={toggle}>دیاگرام</ModalHeader>
                     <ModalBody>
-<<<<<<< HEAD:src/_components/Config/DiagramViewer.js
-<<<<<<< HEAD:src/_components/Config/DiagramViewer.js
-=======
-<<<<<<< HEAD
+
                         <OrgChart />
-=======
-                        masalan
->>>>>>> dc7345301d8768bb5751d1c78107f497b793b2bd:src/_components/Frameworks/Diagram/DiagramViewer.js
-=======
->>>>>>> 43cfb59f8aa200487b6a9b466bf6ed833444c780:src/_components/Frameworks/Diagram/DiagramViewer.js
-                        <OrgChart/>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.toggleDiagram.bind(this)}></Button>
