@@ -41,6 +41,7 @@ class DiagramViewer extends Component {
                        className={this.state.modalClass} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={toggle}>دیاگرام</ModalHeader>
                     <ModalBody>
+                        masalan
                         <OrgChart/>
                     </ModalBody>
                     <ModalFooter>

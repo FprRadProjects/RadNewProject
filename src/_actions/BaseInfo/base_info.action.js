@@ -67,14 +67,15 @@ function UserAccessForm(param) {
     }
 }
 
-function GetCompanyInfo() {
+function GetCompanyInfo(login) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        if (localStorage.getItem("CompanyInfo") === null) {
+        if (localStorage.getItem("CompanyInfo") === null || !login) {
             BasicInfo_service.GetCompanyInfo()
                 .then(
                     data => {
-                        if (data.status) {localStorage.setItem("CompanyInfo", JSON.stringify(data.data));
+                        if (data.status) {
+                            localStorage.setItem("CompanyInfo", JSON.stringify(data.data));
                             dispatch(PassCompInfo_Reducer(data.data));
                             dispatch(loadingActions.HideLoading());
 
