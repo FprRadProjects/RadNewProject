@@ -185,9 +185,6 @@ const mapDispatchToProps = dispatch => ({
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
-    GetFormInfo: (Param) => {
-        dispatch(BasicInfo_action.GetFormInfo(Param))
-    },
 
 });
 const connectedDashBoard = connect(mapStateToProps, mapDispatchToProps)(DashBoard);
