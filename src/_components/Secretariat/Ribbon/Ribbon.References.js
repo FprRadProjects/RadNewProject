@@ -3,17 +3,16 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { ReferenceViewer } from "../RecordsPage";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton } from "../../Config";
-import {HideElementListModal} from "../../Basic";
+import { HideElementListModal } from "../../Basic";
 import {
     design_Actions,
     BasicInfo_action, WorkActions_action
+    , WorkAccess_action, WorkBasic_action
 } from "../../../_actions";
 import { toast } from 'react-toastify';
-import {DiagramViewer} from "../../Config/DiagramViewer";
-
+import { DiagramViewer } from "../../Config/DiagramViewer";
 class RibbonReferences extends Component {
     constructor(props) {
 
@@ -35,26 +34,36 @@ class RibbonReferences extends Component {
 
 
     OpenReferenceViewer() {
-        const { WorkInfo, SetLog, lang, SeenWork } = this.props;
-        if (WorkInfo !== undefined) {
-            let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
-            SetLog(formName);
-            SeenWork(WorkInfo.peygir_id);
-            this.setState({
-                ReferenceViewermodal: !this.state.ReferenceViewermodal
-            });
-        }
-        else
-            toast.warn(this.context.t("msg_No_Select_Row"));
+        const { SelectedRow, SetLog, lang, SeenWork, CheckAccess } = this.props;
+        CheckAccess(SelectedRow.peygir_id).then(data => {
+            if (data.status) {
+                if (SelectedRow !== undefined) {
+                    let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
+                    SetLog(formName);
+                    SeenWork(SelectedRow.peygir_id);
+                    const { GetWorkInfo } = this.props;
+                    GetWorkInfo(SelectedRow).then(data => {
+                        if (data.status) {
+                            this.setState({
+                                ReferenceViewermodal: !this.state.ReferenceViewermodal
+                            });
+                        }
+                    });
+                }
+                else
+                    toast.warn(this.context.t("msg_No_Select_Row"));
+            }
+        });
+
 
     }
 
     OpenDiagramViewer() {
-        const { WorkInfo, SetLog, lang, SeenWork } = this.props;
-        if (WorkInfo !== undefined) {
+        const { SelectedRow, SetLog, lang, SeenWork } = this.props;
+        if (SelectedRow !== undefined) {
             let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
             SetLog(formName);
-            SeenWork(WorkInfo.peygir_id);
+            SeenWork(SelectedRow.peygir_id);
             this.setState({
                 DiagramModal: !this.state.DiagramModal
             });
@@ -63,11 +72,12 @@ class RibbonReferences extends Component {
             this.setState({
                 DiagramModal: !this.state.DiagramModal
             });
-            toast.warn(this.context.t("msg_No_Select_Row"));
+        toast.warn(this.context.t("msg_No_Select_Row"));
 
     }
 
     toggleReferenceViewer() {
+
         this.setState(prevState => ({
             ReferenceViewermodal: !prevState.ReferenceViewermodal
         }));
@@ -89,9 +99,9 @@ class RibbonReferences extends Component {
         FetchData(Params);
     }
     setToMarkClick() {
-        const { FetchData, Params, WorkInfo, InsertIntoWorkMark } = this.props;
-        if (WorkInfo !== undefined) {
-            InsertIntoWorkMark(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
+        const { FetchData, Params, SelectedRow, InsertIntoWorkMark } = this.props;
+        if (SelectedRow !== undefined) {
+            InsertIntoWorkMark(SelectedRow.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
                 if (data.status) {
                     FetchData(Params);
                 }
@@ -102,9 +112,9 @@ class RibbonReferences extends Component {
     }
 
     deleteFromMarkClick() {
-        const { FetchData, Params, WorkInfo, DeleteFromWorkMark } = this.props;
-        if (WorkInfo !== undefined) {
-            DeleteFromWorkMark(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
+        const { FetchData, Params, SelectedRow, DeleteFromWorkMark } = this.props;
+        if (SelectedRow !== undefined) {
+            DeleteFromWorkMark(SelectedRow.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
                 if (data.status) {
                     FetchData(Params);
                 }
@@ -119,13 +129,13 @@ class RibbonReferences extends Component {
         Params.mark = "1";
         FetchData(Params);
     }
-    controlpanelClick(){
+    controlpanelClick() {
         this.setState(prevState => ({
             HideElementListmodal: !prevState.HideElementListmodal
         }));
     }
     render() {
-        const { WorkInfo, FetchData, Params, ShortKeys,DeletedElements,EditedElements } = this.props;
+        const { SelectedRow, FetchData, Params, ShortKeys, DeletedElements, EditedElements } = this.props;
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -136,7 +146,7 @@ class RibbonReferences extends Component {
                 </div>
                 <div className="r-main-box__controlpanel">
                     <a className="r-main-box__controlpanel--action"
-                    title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
+                        title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
                 </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
                     <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">تب
@@ -157,7 +167,7 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         {/* بازخوانی اطلاعات */}
-                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="refresh-information"
                                             handleClick={this.refreshClick.bind(this)}
@@ -166,7 +176,7 @@ class RibbonReferences extends Component {
                                         />
 
                                         {/* نتیجه ارجاع */}
-                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="referral-result"
                                             handleClick={this.OpenReferenceViewer.bind(this)}
@@ -181,7 +191,7 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         {/* نشانه ها */}
-                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="marks"
                                             handleClick={this.markViewerClick.bind(this)}
@@ -190,7 +200,7 @@ class RibbonReferences extends Component {
                                         />
 
                                         {/* حذف نشانه  */}
-                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="remove-mark"
                                             handleClick={this.deleteFromMarkClick.bind(this)}
@@ -199,7 +209,7 @@ class RibbonReferences extends Component {
                                         />
 
                                         {/* نشانه گذاری  */}
-                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="marking"
                                             handleClick={this.setToMarkClick.bind(this)}
@@ -215,7 +225,7 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         {/* دیاگرام عطف  */}
-                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="follow-up-diagram"
                                             handleClick={this.OpenReferenceViewer.bind(this)}
@@ -224,7 +234,7 @@ class RibbonReferences extends Component {
                                         />
 
                                         {/* دیاگرام  */}
-                                        <RibbonButton  FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="diagram"
                                             handleClick={this.OpenDiagramViewer.bind(this)}
@@ -433,7 +443,7 @@ class RibbonReferences extends Component {
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-diagram") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}  key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="diagram" />
                                     )
                                 }
@@ -445,20 +455,20 @@ class RibbonReferences extends Component {
                 </nav>
 
                 {this.state.DiagramModal && <DiagramViewer modal={this.state.DiagramModal}
-                                                           toggle={this.toggleDiagramViewer.bind(this)} />}
+                    toggle={this.toggleDiagramViewer.bind(this)} />}
 
 
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                     toggle={this.toggleReferenceViewer.bind(this)}
-                    WorkInfo={WorkInfo}
+                    SelectedRow={SelectedRow}
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
 
 
 
-                    {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
-                        toggle={this.controlpanelClick.bind(this)}
-                        FormId={FormInfo.fm_dabir_kartabl_erjaat.id} />}
+                {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
+                    toggle={this.controlpanelClick.bind(this)}
+                    FormId={FormInfo.fm_dabir_kartabl_erjaat.id} />}
             </div>
         );
     }
@@ -481,6 +491,13 @@ const mapDispatchToProps = dispatch => ({
     InsertIntoWorkMark: (peygir_id, msg) => {
         return dispatch(WorkActions_action.InsertIntoWorkMark(peygir_id, msg))
     },
+    CheckAccess: (Params) => {
+        return dispatch(WorkAccess_action.CheckAccess(Params))
+    },
+    GetWorkInfo: (Params) => {
+        return dispatch(WorkBasic_action.GetWorkInfo(Params))
+    },
+
 });
 RibbonReferences.contextTypes = {
     t: PropTypes.func.isRequired
@@ -488,16 +505,14 @@ RibbonReferences.contextTypes = {
 
 function mapStateToProps(state) {
     const { lang } = state.i18nState
-    const { WorkInfo } = state.Auto_WorkBasic;
     const { ShortKeys342 } = state.Design;
     const { DeletedElements342 } = state.Design !== undefined ? state.Design : {};
     const { EditedElements342 } = state.Design !== undefined ? state.Design : {};
     return {
         lang,
-        WorkInfo,
-        ShortKeys:ShortKeys342,
-        DeletedElements:DeletedElements342,
-        EditedElements:EditedElements342
+        ShortKeys: ShortKeys342,
+        DeletedElements: DeletedElements342,
+        EditedElements: EditedElements342
     };
 }
 

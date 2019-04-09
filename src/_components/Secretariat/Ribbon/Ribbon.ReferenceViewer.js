@@ -117,7 +117,8 @@ class RibbonReferenceViewer extends Component {
         clearSaveParams();
     }
     ConfirmationHandle = (e) => {
-        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, RefreshParentForm, SaveParams } = this.props;
+        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, 
+            clearSaveParams,RefreshParentForm, SaveParams } = this.props;
         ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         ConfirmParams["Form"] = formname;
@@ -145,7 +146,7 @@ class RibbonReferenceViewer extends Component {
                 }
             }
         });
-        SaveParams = { form: "", data: [] };
+        clearSaveParams();
     }
     rebuildHandle() {
         const { RebuildWork, WorkInfo, RefreshParentForm, FetchWorkInfo, Params } = this.props;
