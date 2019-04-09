@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { SelectProjectModal } from "../../Project/";
 import { SelectDefaultTextModal } from "../../Basic/";
 
-import { Act_Reference,WorkAccess_action,BasicInfo_action, design_Actions, WorkBasic_action, WorkActions_action } from "../../../_actions";
+import { Act_Reference,WorkAccess_action,WorkBasic_action, design_Actions, WorkActions_action } from "../../../_actions";
 import { FormInfo } from "../../../locales";
 import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 import { toast } from 'react-toastify';
@@ -27,7 +27,7 @@ class ReferenceViewer extends Component {
             modalClass: "modal-dialog-centered r-modal"
         };
         this.SuccessSelectProject = this.SuccessSelectProject.bind(this);
-
+    
     }
   
     OpenSelectProject = () => {
@@ -66,7 +66,6 @@ class ReferenceViewer extends Component {
         }
         else
             toast.warn(this.context.t("msg_No_Select_Row"));
-        console.log(SaveParams)
 
 
     }
@@ -113,7 +112,6 @@ class ReferenceViewer extends Component {
         }
         else
             toast.warn(this.context.t("msg_No_Select_Row"));
-        console.log(SaveParams)
 
     }
 
@@ -131,7 +129,6 @@ class ReferenceViewer extends Component {
         const { name, value } = e.target;
         if (!WorkInfo.done)
             SaveParams.data[[name]] = { [name]: value };
-        console.log(SaveParams)
 
     }
     clearSaveParams = (e) => {
@@ -141,7 +138,6 @@ class ReferenceViewer extends Component {
 
     render() {
         const { FetchData,modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm, Design } = this.props;
-        console.log(SaveParams)
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -440,7 +436,7 @@ const mapDispatchToProps = dispatch => ({
 
     FetchWorkInfo: (peygir_id) => {
         dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
-    },
+    }
 
 
 });
@@ -455,10 +451,12 @@ function mapStateToProps(state) {
     const { Refresh_Form } = state.Common;
     const { SelectFlowResultTogleModal } = state.Auto_WorkBasic;
     const { ReviewWorkTogleModal } = state.Auto_WorkBasic;
+    const { WorkInfo } = state.Auto_WorkBasic;
 
     return {
         alert,
         loading,
+        WorkInfo,
         lang,
         Refresh_Form,
         SelectFlowResultTogleModal,

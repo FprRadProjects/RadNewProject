@@ -15,7 +15,7 @@ export const WorkAccess_action = {
 
 function CheckAccess(peygir_id) {
     return dispatch => {
-        WorkAccess_service.CheckAccess(peygir_id)
+        return  WorkAccess_service.CheckAccess(peygir_id)
             .then(
                 data => {
                     if (data.status) {
@@ -23,6 +23,7 @@ function CheckAccess(peygir_id) {
                     } else {
                         toast.error(data.error);
                     }
+                    return Promise.resolve(data)
                 },
                 error => {
                     toast.error(error);
