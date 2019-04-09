@@ -12,7 +12,7 @@ import {
     BasicInfo_action, WorkActions_action
 } from "../../../_actions";
 import { toast } from 'react-toastify';
-import {DiagramViewer} from "../../Frameworks/Diagram";
+import {DiagramViewer} from "../../Config/DiagramViewer";
 
 class RibbonReferences extends Component {
     constructor(props) {
@@ -125,9 +125,7 @@ class RibbonReferences extends Component {
         }));
     }
     render() {
-        const { WorkInfo, FetchData, Params, ShortKeys, Design } = this.props;
-        const { DeletedElements } = Design !== undefined ? Design : {};
-        const { EditedElements } = Design !== undefined ? Design : {};
+        const { WorkInfo, FetchData, Params, ShortKeys,DeletedElements,EditedElements } = this.props;
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -492,12 +490,14 @@ function mapStateToProps(state) {
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
     const { ShortKeys342 } = state.Design;
-    const { Design } = state;
+    const { DeletedElements342 } = state.Design !== undefined ? state.Design : {};
+    const { EditedElements342 } = state.Design !== undefined ? state.Design : {};
     return {
         lang,
         WorkInfo,
         ShortKeys:ShortKeys342,
-        Design
+        DeletedElements:DeletedElements342,
+        EditedElements:EditedElements342
     };
 }
 

@@ -90,39 +90,66 @@ setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
 
 
     // Person Card Container
-    nodeEnter
-        .append('rect')
-        .attr('width', nodeWidth)
-        .attr('height', nodeHeight)
-        .attr('id', d => d.id)
-        .attr('fill', d => d.WorkInfo.color)
-        .attr('stroke', borderColor)
-        .attr("stroke-width", 2.5)
-        .attr('rx', nodeBorderRadius)
-        .attr('ry', nodeBorderRadius)
-        .style('cursor', helpers.getCursorForNode)
-        .attr('class', d=> 'dibox box'+d.id )
+    // nodeEnter
+    //     .append('rect')
+    //     .attr('width', nodeWidth)
+    //     .attr('height', nodeHeight)
+    //     .attr('id', d => d.id)
+    //     .attr('fill', d => d.WorkInfo.color)
+    //     .attr('stroke', borderColor)
+    //     .attr("stroke-width", 2.5)
+    //     .attr('rx', nodeBorderRadius)
+    //     .attr('ry', nodeBorderRadius)
+    //     .style('cursor', helpers.getCursorForNode)
+    //     .attr('class', d=> 'dibox box'+d.id )
 
+    // Person Card Container
+    // Person Card Container
+    // nodeEnter
+    //     .append('circle')
+    //     .attr('cx',48.661513 )
+    //     .attr('cy', 27.05917399 )
+    //     .attr("r", "35")
+    //
+    //     .attr("dy", ".35em")
+    //     .attr('width', nodeWidth)
+    //     .attr('height', nodeHeight)
+    //     .attr('id', d => d.id)
+    //     .attr('fill', d => d.WorkInfo.color)
+    //     .attr('stroke', borderColor)
+    //     .attr("stroke-width", 2.5)
+    //
+    //     .style('cursor', helpers.getCursorForNode)
+    //     .attr('class', d=> 'dibox box'+d.id )
+
+    nodeEnter
+        .append("path")
+
+        .attr("d", "M5 32 L50 62 L93 32 L50 2 Z")
+        .style("stroke-width", 1)
+        .style("stroke-dasharray", "1,0")
+        .style("fill", "red")
+        .style("stroke", "black");
 
 
 
     const namePos = {
         x: nodePaddingX * 2  ,
-        y: nodePaddingY * 1.3
+        y: nodePaddingY * 1.9
     }
 
     const WidthForTitle = 45 // getHeightForText(d.person.title)
     // Person's Name
     nodeEnter
         .append('text')
+        .text(d => d.WorkInfo.title)
         .attr('class', PERSON_NAME_CLASS)
         .attr('x', namePos.x+WidthForTitle)
         .attr('y', namePos.y)
-        .attr('dy', '.3em')
         .style('cursor', 'pointer')
         .style('fill',titleColor)
-        .style('font-size', 8)
-        .text(d => d.WorkInfo.title)
+        .style("font-size", function(d) { return Math.min(2 * 20, (2 * 20 - 8) / this.getComputedTextLength() * 24) + "px"; })
+        .attr("dy", ".35em");
 
 
 
@@ -138,7 +165,8 @@ setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
     //     .style('fill', titleColor)
     //     .text(d => d.person.title)
 
-    const heightForTitle = 12 // getHeightForText(d.person.title)
+    const heightForTitle = 10 // getHeightForText(d.person.title)
+
 
     // Person's Reports
     nodeEnter

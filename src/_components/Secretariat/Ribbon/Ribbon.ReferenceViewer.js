@@ -162,9 +162,7 @@ class RibbonReferenceViewer extends Component {
         }));
     }
     render() {
-        const { WorkInfo, FetchData, Params, ShortKeys, Design } = this.props;
-        const { DeletedElements } = Design !== undefined ? Design : {};
-        const { EditedElements } = Design !== undefined ? Design : {};
+        const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements,EditedElements } = this.props;
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -291,12 +289,14 @@ function mapStateToProps(state) {
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
     const { ShortKeys340 } = state.Design;
-    const { Design } = state;
+    const { DeletedElements340 } = state.Design !== undefined ? state.Design : {};
+    const { EditedElements340 } = state.Design !== undefined ? state.Design : {};
     return {
         lang,
         WorkInfo,
         ShortKeys: ShortKeys340,
-        Design
+        DeletedElements:DeletedElements340,
+        EditedElements:EditedElements340
     };
 }
 
