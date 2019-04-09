@@ -8,20 +8,19 @@ html {
 body {
     background-attachment: fixed;
     background-color: #fff;
-    background-image: url('../images/body-bg-left.png'),url('../images/body-bg-right.png');
+    /* background-image: url('../images/body-bg-left.png'),url('../images/body-bg-right.png');
     background-position: bottom left,top right;
     background-repeat: no-repeat,no-repeat;
-    background-size: 600px,650px;
+    background-size: 600px,650px; */
     font-size: 13px;
-        overflow-x: hidden;
-        font-family: IRANSans_Fa;
+    font-family: IRANSans_Fa;
     color: #333333;
     height: 100%;
     width: 100%;
 }
 
-
-/* @media (min-width:1009px) {
+/* 
+@media (min-width:1009px) {
     body {
         overflow-x: hidden;
     }
@@ -33845,7 +33844,8 @@ body .page-wrapper .page-body-wrapper .page-sidebar.native-image-bg .sidebar-use
     }
 }
 
-.r-modal {
+.modal-xl {
+    min-width: 1009px!important;
     max-width: 90%!important;
 }
 
