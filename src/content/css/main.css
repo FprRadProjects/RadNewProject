@@ -19,7 +19,7 @@ body {
     width: 100%;
 }
 
-/* 
+
 @media (min-width:1009px) {
     body {
         overflow-x: hidden;
@@ -52,7 +52,7 @@ body:before {
 .container, .container-fluid {
     min-width: 1009px!important;
     max-width: 1676px!important;
-} */
+}
 
 ul {
     padding-left: 0;
