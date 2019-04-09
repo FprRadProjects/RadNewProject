@@ -24,7 +24,7 @@ class ReferenceViewer extends Component {
             FlowResultSelectmodal: false,
             ReviewWorkModal: false,
             backdrop: "static",
-            modalClass: "modal-dialog-centered modal-lg r-modal"
+            modalClass: "modal-dialog-centered r-modal"
         };
         this.SuccessSelectProject = this.SuccessSelectProject.bind(this);
 
@@ -374,7 +374,7 @@ class ReferenceViewer extends Component {
                                                                     onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
 
                                                             </div>
-                                                            <textarea type="text" className="form-control" defaultValue={WorkInfo.natije} readOnly={WorkInfo.done ? true : false}
+                                                            <textarea type="text" className="form-control" rows="5" defaultValue={WorkInfo.natije} readOnly={WorkInfo.done ? true : false}
                                                                 name="natije" ref="ResultTextArea"
                                                                 onChange={this.changeHandle.bind(this)}></textarea>
                                                         </div>
