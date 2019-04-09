@@ -34,28 +34,21 @@ class RibbonReferences extends Component {
 
 
     OpenReferenceViewer() {
-        const { SelectedRow, SetLog, lang, SeenWork, CheckAccess } = this.props;
-        CheckAccess(SelectedRow.peygir_id).then(data => {
-            if (data.status) {
-                if (SelectedRow !== undefined) {
+        const { SelectedRow, SetLog, lang, SeenWork, GetWorkInfo } = this.props;
+        if (SelectedRow !== undefined) {
+            GetWorkInfo(SelectedRow).then(data => {
+                if (data.status) {
                     let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
                     SetLog(formName);
                     SeenWork(SelectedRow.peygir_id);
-                    const { GetWorkInfo } = this.props;
-                    GetWorkInfo(SelectedRow).then(data => {
-                        if (data.status) {
-                            this.setState({
-                                ReferenceViewermodal: !this.state.ReferenceViewermodal
-                            });
-                        }
+                    this.setState({
+                        ReferenceViewermodal: !this.state.ReferenceViewermodal
                     });
                 }
-                else
-                    toast.warn(this.context.t("msg_No_Select_Row"));
-            }
-        });
-
-
+               
+            });
+        } else
+        toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
     OpenDiagramViewer() {
