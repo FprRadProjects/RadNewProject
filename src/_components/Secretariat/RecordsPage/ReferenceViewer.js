@@ -7,7 +7,6 @@ import { SelectDefaultTextModal } from "../../Basic/";
 
 import { Act_Reference,WorkAccess_action,WorkBasic_action, design_Actions, WorkActions_action } from "../../../_actions";
 import { FormInfo } from "../../../locales";
-import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 import { toast } from 'react-toastify';
 import { RibbonReferenceViewer } from '../Ribbon/Ribbon.ReferenceViewer';
 
@@ -117,12 +116,6 @@ class ReferenceViewer extends Component {
 
    
 
-    CloseleSelectFlowResult = (e) => {
-        this.setState({
-            FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
-        });
-    }
-    
 
     changeHandle = (e) => {
         const { WorkInfo } = this.props;
@@ -147,6 +140,7 @@ class ReferenceViewer extends Component {
             background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
         }`;
+
         return (
             <div>
                 <Modal isOpen={modal} toggle={toggle} keyboard={false}
@@ -391,11 +385,7 @@ class ReferenceViewer extends Component {
                                         toggle={this.CloseSelectDefaultText.bind(this)}
                                         Successtoggle={this.SuccessSelectSubject.bind(this)}
                                         id_tel={WorkInfo.id_tel} />}
-                                {this.state.FlowResultSelectmodal &&
-                                    <ConfirmFlow ParentForm={ParentForm}
-                                        flowResultSelectModal={this.state.FlowResultSelectmodal}
-                                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
-                                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
+                          
                             </div>}
                             <style>{modalBackDrop}</style>
                     </ModalBody>

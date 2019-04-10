@@ -14,6 +14,7 @@ class ConfirmFlow extends Component {
     constructor(props) {
         super(props);
         const { flowResultSelectModal } = this.props;
+        console.log(flowResultSelectModal)
         this.state = {
             ...this.state,
             FlowResultSelectmodal: flowResultSelectModal === undefined || !flowResultSelectModal ? false : true,
