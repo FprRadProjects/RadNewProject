@@ -135,7 +135,8 @@ class References extends Component {
                 <div className="col-sm-12">
                     <div className="r-main-box">
                         <div className="r-main-box__ribbon sticky-top">
-                            <RibbonReferences FetchData={FetchData.bind(this)} Params={Params}  SelectedRow={this.state.SelectedRow} />
+                            <RibbonReferences FetchData={FetchData.bind(this)} Params={Params}  
+                            SelectedRow={this.state.SelectedRow}  />
                             <div className="r-main-box__filter">
                                 <Button color="" className="r-main-box__filter--btn"
                                         onClick={this.toggleFilter.bind(this)}></Button>

@@ -172,7 +172,9 @@ class RibbonReferenceViewer extends Component {
     }
     
     render() {
-        const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements,EditedElements,RefreshParentForm ,ParentForm} = this.props;
+        const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements,EditedElements,RefreshParentForm ,ParentForm
+            ,FetchWorkInfo
+        } = this.props;
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -263,7 +265,7 @@ class RibbonReferenceViewer extends Component {
                                     <ConfirmFlow ParentForm={ParentForm}
                                         flowResultSelectModal={this.state.FlowResultSelectmodal}
                                         Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
-                                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
+                                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} FetchWorkInfo={FetchWorkInfo}/>}
             </div>
         );
     }
