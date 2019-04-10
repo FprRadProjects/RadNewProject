@@ -163,32 +163,32 @@ class ReferenceViewer extends Component {
                         {WorkInfo !== undefined &&
                             <div className="referral-result-modal">
                                 <div className="row bg-gray mg-b-5">
-                                    <div className="col-md-1 d-flex">
+                                    <div className="col-1 d-flex">
                                         <span className="row-icon audience"></span>
                                     </div>
-                                    <div className="col-md-11">
+                                    <div className="col-11">
                                         <div className="row">
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("PartyAccountName")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("PartyAccountName")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.name} />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("CompanyName")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("CompanyName")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.coname} />
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("Audience")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("Audience")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.ashkhasname} />
                                                     </div>
                                                 </div>
@@ -198,31 +198,31 @@ class ReferenceViewer extends Component {
 
                                 </div>
                                 <div className="row bg-gray mg-b-5">
-                                    <div className="col-md-1 d-flex">
+                                    <div className="col-1 d-flex">
                                         <span className="row-icon flow"></span>
                                     </div>
-                                    <div className="col-md-11">
+                                    <div className="col-11">
                                         <div className="row">
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("WorkID")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("WorkID")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.peygir_id} />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("Flow")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("Flow")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.flow} />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("WorkType")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("WorkType")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.wtype} />
                                                     </div>
                                                 </div>
@@ -231,32 +231,32 @@ class ReferenceViewer extends Component {
                                     </div>
                                 </div>
                                 <div className="row bg-gray mg-b-5">
-                                    <div className="col-md-1 d-flex">
+                                    <div className="col-1 d-flex">
                                         <span className="row-icon creator"></span>
                                     </div>
-                                    <div className="col-md-11">
+                                    <div className="col-11">
                                         <div className="row">
 
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("creator")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("creator")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.cuser} />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("CreatedDate")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("CreatedDate")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.c_date} />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("CreatedTime")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("CreatedTime")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.c_time} />
                                                     </div>
                                                 </div>
@@ -265,15 +265,15 @@ class ReferenceViewer extends Component {
                                     </div>
                                 </div>
                                 <div className="row bg-gray mg-b-10">
-                                    <div className="col-md-1 d-flex">
+                                    <div className="col-1 d-flex">
                                         <span className="row-icon description"></span>
                                     </div>
-                                    <div className="col-md-11">
+                                    <div className="col-11">
                                         <div className="row">
-                                            <div className="col-md-12">
+                                            <div className="col-12">
                                                 <div className="form-group row">
-                                                    <label className="col-md-1 col-form-label">{this.context.t("Description")}</label>
-                                                    <div className="col-md-11">
+                                                    <label className="col-1 col-form-label">{this.context.t("Description")}</label>
+                                                    <div className="col-11">
                                                         <textarea type="text" rows="3" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.tozihat}></textarea>
                                                     </div>
                                                 </div>
@@ -282,15 +282,15 @@ class ReferenceViewer extends Component {
                                     </div>
                                 </div>
                                 <div className="row bg-gray mg-b-5">
-                                    <div className="col-md-1 d-flex">
+                                    <div className="col-1 d-flex">
                                         <span className="row-icon project"></span>
                                     </div>
-                                    <div className="col-md-11">
+                                    <div className="col-11">
                                         <div className="row">
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("Project")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("Project")}</label>
+                                                    <div className="col-8">
                                                         <div className="input-group my-2">
                                                             <div className="input-group-prepend">
                                                                 <Button color="primary"
@@ -303,10 +303,10 @@ class ReferenceViewer extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("FileNumber")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("FileNumber")}</label>
+                                                    <div className="col-8">
 
                                                         <input type="text" autoComplete="off" className="form-control my-2" defaultValue={WorkInfo.shomare} name="shomare"
                                                             readOnly={WorkInfo.done ? true : false}
@@ -314,30 +314,30 @@ class ReferenceViewer extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("Code")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("Code")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" autoComplete="off" className="form-control my-2" onChange={this.changeHandle.bind(this)}
                                                             readOnly={WorkInfo.done ? true : false}
                                                             defaultValue={WorkInfo.code} name="code" id="Code" />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-4">
+                                            <div className="col-4">
                                                 <div className="form-group row">
-                                                    <label className="col-md-4 col-form-label">{this.context.t("Duration_Of_Work_Short")}</label>
-                                                    <div className="col-md-8">
+                                                    <label className="col-4 col-form-label">{this.context.t("Duration_Of_Work_Short")}</label>
+                                                    <div className="col-8">
                                                         <input type="text" autoComplete="off" className="form-control mb-2" name="modat_anjam_w" defaultValue={WorkInfo.modat_anjam_w}
                                                             readOnly={WorkInfo.done ? true : false}
                                                             onChange={this.changeHandle.bind(this)} />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="col-md-8">
+                                            <div className="col-8">
                                                 <div className="form-group row">
-                                                    <label className="col-md-2 col-form-label">{this.context.t("Subject")}</label>
-                                                    <div className="col-md-10">
+                                                    <label className="col-2 col-form-label">{this.context.t("Subject")}</label>
+                                                    <div className="col-10">
                                                         <div className="input-group mb-2">
                                                             <div className="input-group-prepend">
                                                                 <Button color="primary" name="subject"
@@ -355,15 +355,15 @@ class ReferenceViewer extends Component {
                                     </div>
                                 </div>
                                 <div className="row bg-gray">
-                                    <div className="col-md-1 d-flex">
+                                    <div className="col-1 d-flex">
                                         <span className="row-icon result"></span>
                                     </div>
-                                    <div className="col-md-11">
+                                    <div className="col-11">
                                         <div className="row">
-                                            <div className="col-md-12">
+                                            <div className="col-12">
                                                 <div className="form-group row">
-                                                    <label className="col-md-1 col-form-label">{this.context.t("Result")}</label>
-                                                    <div className="col-md-11">
+                                                    <label className="col-1 col-form-label">{this.context.t("Result")}</label>
+                                                    <div className="col-11">
                                                         <div className="input-group my-2">
                                                             <div className="input-group-prepend align-self-stretch">
                                                                 <Button color="primary" name="result"

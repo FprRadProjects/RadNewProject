@@ -142,8 +142,7 @@ class RibbonReferences extends Component {
                         title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
                 </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
-                    <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">تب
-                                    باز</a></li>
+                    <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">عملیات</a></li>
                     {/* <li className="nav-item"><a href="#tab2" className="nav-link" data-toggle="tab">تب
                                     بسته</a></li>
                     <li className="nav-item"><a href="#tab3" className="nav-link" data-toggle="tab">تب
