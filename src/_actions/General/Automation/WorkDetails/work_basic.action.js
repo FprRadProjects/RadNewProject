@@ -19,7 +19,7 @@ export const WorkBasic_action = {
 function GetReviewWorkInfo(row) {
     const peygir_id = row.peygir_id;
     return dispatch => {
-        WorkBasic_service.GetWorkInfo(peygir_id)
+        return   WorkBasic_service.GetWorkInfo(peygir_id)
             .then(
                 data => {
                     if (data.status) {
@@ -28,6 +28,7 @@ function GetReviewWorkInfo(row) {
                     else {
                         toast.error(data.error);
                     }
+                    return Promise.resolve(data);
                 },
                 error => {
                     toast.error(error);
