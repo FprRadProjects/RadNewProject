@@ -90,12 +90,12 @@ class DashBoard extends Component {
         var WorkrclassName = CalParams.worker==="0" ? 'user-view  is-active' : 'user-view ';
         return (
             <div className="row">
-                <div className="col-sm-12">
+                <div className="col-12">
                     <div className="dashboard-wrap">
 
                         <div className="row">
 
-                            <div className="col-xl-3 col-md-6">
+                            <div className="col-3">
                                 <div className="dashboard-right-aside">
                                     <div className="card bg-white"
                                          style={{minHeight: 260 + 'px', borderRadius: 10 + 'px'}}>
@@ -105,14 +105,14 @@ class DashBoard extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-xl-6 col-md-12">
+                            <div className="col-6">
                                 <div className="dashboard-calendar">
                                     <div className="card">
                                         <FullCalendar ChaneSelectedDate={this.ChaneSelectedDate.bind(this)} GetCounts={GetCounts} GetEvent={GetEvents} Params={CalParams}/>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-xl-3 col-md-6">
+                            <div className="col-3">
                                 <div className="dashboard-left-aside">
                                     <Modal isOpen={this.state.modal} toggle={this.toggle}
                                            className={this.state.modalClass} backdrop={this.state.backdrop}>
