@@ -47,6 +47,8 @@ class workManagement extends Component {
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
+        console.log(FormInfo.fm_dabir_kartabl_erjaat)
+        localStorage.setItem("MasterFormInfo", JSON.stringify( FormInfo.fm_dabir_kartabl_erjaat));
 
     }
 
@@ -55,7 +57,9 @@ class workManagement extends Component {
             toggleFilter: !prevState.toggleFilter
         }));
     }
-
+    SelectRow(row) {
+        this.setState({SelectedRow:row});
+    }
 
     render() {
 
@@ -127,12 +131,14 @@ class workManagement extends Component {
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
         }`;
 
+
         return (
             <div className="row">
                 <div className="col-sm-12">
                     <div className="r-main-box">
                         <div className="r-main-box__ribbon sticky-top">
-                            <RibbonReferences FetchData={FetchData.bind(this)}   Params={Params} />
+                            <RibbonReferences FetchData={FetchData.bind(this)} Params={Params}
+                                              SelectedRow={this.state.SelectedRow}  />
                             <div className="r-main-box__filter">
                                 <Button color="" className="r-main-box__filter--btn"
                                         onClick={this.toggleFilter.bind(this)}></Button>
@@ -151,7 +157,7 @@ class workManagement extends Component {
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
                                           rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
-                                          UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
+                                          UrlParams={Params} fetchData={FetchData.bind(this)} SelectRow ={this.SelectRow.bind(this)}
                                           currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>
@@ -165,12 +171,8 @@ class workManagement extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-
     FetchData: (Params) => {
         dispatch(Act_Reference.FetchData(Params))
-    },
-    GetWorkInfo: (Params) => {
-        dispatch(WorkBasic_action.GetWorkInfo(Params))
     },
     SetLog: (Form) => {
         dispatch(BasicInfo_action.SetLog(Form))
@@ -190,7 +192,6 @@ function mapStateToProps(state) {
     const { loading } = state.loading;
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
-
     return {
         alert,
         loading,
@@ -200,6 +201,7 @@ function mapStateToProps(state) {
         WorkInfo
     };
 }
+
 
 
 const connectedReferences = connect(mapStateToProps, mapDispatchToProps)(workManagement);

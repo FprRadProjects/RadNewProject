@@ -20,6 +20,8 @@ export function renders(config) {
         animationDuration,
         nodeWidth,
         nodeHeight,
+        SquareWidth,
+        SquareHeight,
         nodePaddingX,
         nodePaddingY,
         nodeBorderRadius,
@@ -55,8 +57,8 @@ export function renders(config) {
 
 
     const toggleColor = function(x,id ){
-setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
-            d3.select('rect.box'+id).attr("stroke", x);
+setTimeout(()=>{document.getElementById(id).setAttribute('stroke',x);},100)
+
     }
 
 
@@ -69,41 +71,446 @@ setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
         .attr('class', CHART_NODE_CLASS)
         .attr('transform', `translate(${parentNode.x0}, ${parentNode.y0})`)
 
-        .on('mouseup',d=>toggleColor('red',d.id))
+        .on('mouseup',d=>toggleColor('#3C69F7',d.id))
         .on('click',onClick(config))
 
 
+                // Person Card Shadow
+                nodeEnter
+                    .append(d=> {
+
+                        switch(d.WorkInfo.shape){
+
+                            case "Square" :
+                                return document.createElementNS('http://www.w3.org/2000/svg', "rect");
+
+                                break;
+                            case "HemmedSquare" :
+                                return document.createElementNS('http://www.w3.org/2000/svg', "rect");
+                                break;
+                            case "Oval" :
+                                return document.createElementNS('http://www.w3.org/2000/svg', "circle");
+                                break;
+                            case "Diamond" :
+                                return document.createElementNS('http://www.w3.org/2000/svg', "path");
+                                break;
+                            default:
+
+                                return document.createElementNS('http://www.w3.org/2000/svg', "rect");
+
+                                break;
+                        }
+                    })
+                    .attr('x',d=> {
+                        switch (d.WorkInfo.shape) {
+
+                            case 'Square' :
+                            {
+                                return 7
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return 7
+                            }
+                            case 'Oval' :
+                            {
+                                return 1
+                            }
+                            case 'Diamond' :
+                            {
+                                return 1
+                            }
+                        }
+                    })
+                    .attr('y', d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Square' :
+                            {
+                                return 1
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return 1
+                            }
+                            case 'Oval' :
+                            {
+                                return 1
+                            }
+                            case 'Diamond' :
+                            {
+                                return 1
+                            }
+                        }
+                    })
+                    .attr('cx',
+                        d=> {
+                            switch (d.WorkInfo.shape) {
+                                case 'Oval' :
+                                {
+                                    return  56.661513
+                                }
+
+                                default:
+                                    return ''
+                            }
+                        }
+
+                       )
+                    .attr('cy', d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Oval' :
+                            {
+                                return  33.05917399
+                            }
+
+                            default:
+                                return ''
+                        }
+                    }  )
+                    .attr("r", d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Oval' :
+                            {
+                                return  44
+                            }
+
+                            default:
+                                return ''
+                        }
+                    } )
+                    .attr('width', d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Square' :
+                            {
+                               return SquareWidth
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return SquareWidth
+                            }
+                            case 'Oval' :
+                            {
+                                return nodeWidth
+                            }
+                            case 'Diamond' :
+                            {
+                                return nodeWidth
+                            }
+                        }
+                    })
+                    .attr('height',  d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Square' :
+                            {
+                                return SquareHeight
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return SquareHeight
+                            }
+                            case 'Oval' :
+                            {
+                                return nodeHeight
+                            }
+                            case 'Diamond' :
+                            {
+                                return nodeHeight
+                            }
+                        }
+                    })
+                    .attr('stroke', borderColor)
+                    .attr("stroke-width", 5)
+                    .attr('rx',
+                        d=> {
+                            switch (d.WorkInfo.shape) {
+                                case 'Square' :
+                                {
+                                    return nodeBorderRadius
+                                }
+                                case 'HemmedSquare' :
+                                {
+                                    return 20
+                                }
+                                default:
+                                    return ''
+                            }
+                        }
+                        )
+                    .attr('ry', d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Square' :
+                            {
+                                return nodeBorderRadius
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return 20
+                            }
+                            default:
+                                return ''
+                        }
+                    } )
+                    .attr('fill-opacity', 0.05)
+                    .attr('stroke-opacity', 0.025)
+                    .attr('filter', 'url(#boxShadow)')
+                    .attr("d",
+                        d=> {
+                            switch (d.WorkInfo.shape) {
+
+                                case 'Diamond' :
+                                {
+                                    return "M0 32 L57 62 L113 32 L57 2 Z"
+                                }
+                                default:
+                                    return ''
+                            }
+                        }
+                    )
 
 
-    // Person Card Shadow
-    nodeEnter
-        .append('rect')
-        .attr('y', 8)
-        .attr('width', nodeWidth)
-        .attr('height', nodeHeight)
-        .attr('stroke', borderColor)
-        .attr("stroke-width", 5)
-        .attr('rx', nodeBorderRadius)
-        .attr('ry', nodeBorderRadius)
-        .attr('fill-opacity', 0.05)
-        .attr('stroke-opacity', 0.025)
-        .attr('filter', 'url(#boxShadow)')
 
 
-    // Person Card Container
-    nodeEnter
-        .append('rect')
-        .attr('y', 8)
-        .attr('width', nodeWidth)
-        .attr('height', nodeHeight)
-        .attr('id', d => d.id)
-        .attr('fill', d => d.WorkInfo.color)
-        .attr('stroke', borderColor)
-        .attr("stroke-width", 2.5)
-        .attr('rx', nodeBorderRadius)
-        .attr('ry', nodeBorderRadius)
-        .style('cursor', helpers.getCursorForNode)
-        .attr('class', d=> 'dibox box'+d.id )
+
+
+
+
+
+                // Person Card Container
+                nodeEnter
+                    .append(d=> {
+
+                        switch(d.WorkInfo.shape){
+
+                            case "Square" :
+                                return document.createElementNS('http://www.w3.org/2000/svg', "rect");
+
+                                break;
+                            case "HemmedSquare" :
+                                return document.createElementNS('http://www.w3.org/2000/svg', "rect");
+                                break;
+                            case "Oval" :
+                                return document.createElementNS('http://www.w3.org/2000/svg', "circle");
+                                break;
+                            case "Diamond" :
+                                return document.createElementNS('http://www.w3.org/2000/svg', "path");
+                                break;
+                            default:
+
+                                return document.createElementNS('http://www.w3.org/2000/svg', "rect");
+
+                                break;
+                        }
+                    })
+                    .attr('cx',
+                        d=> {
+                            switch (d.WorkInfo.shape) {
+                                case 'Oval' :
+                                {
+                                    return  56.661513
+                                }
+
+                                default:
+                                    return ''
+                            }
+                        }
+
+                    )
+                    .attr('cy', d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Oval' :
+                            {
+                                return  33.05917399
+                            }
+
+                            default:
+                                return ''
+                        }
+                    }  )
+                    .attr("r", d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Oval' :
+                            {
+                                return  44
+                            }
+
+                            default:
+                                return ''
+                        }
+                    } )
+                    .attr('x',d=> {
+                        switch (d.WorkInfo.shape) {
+
+                            case 'Square' :
+                            {
+                                return 7
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return 7
+                            }
+                            case 'Oval' :
+                            {
+                                return 1
+                            }
+                            case 'Diamond' :
+                            {
+                                return 1
+                            }
+                        }
+                    })
+                    .attr('y', d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Square' :
+                            {
+                                return 1
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return 1
+                            }
+                            case 'Oval' :
+                            {
+                                return 1
+                            }
+                            case 'Diamond' :
+                            {
+                                return 1
+                            }
+                        }
+                    })
+
+                    .attr('width', d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Square' :
+                            {
+                                return SquareWidth
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return SquareWidth
+                            }
+                            case 'Oval' :
+                            {
+                                return nodeWidth
+                            }
+                            case 'Diamond' :
+                            {
+                                return nodeWidth
+                            }
+                        }
+                    })
+                    .attr('height',  d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Square' :
+                            {
+                                return SquareHeight
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return SquareHeight
+                            }
+                            case 'Oval' :
+                            {
+                                return nodeHeight
+                            }
+                            case 'Diamond' :
+                            {
+                                return nodeHeight
+                            }
+                        }
+                    })
+                    .attr('id', d => d.id )
+                    .attr('fill', d => d.WorkInfo.color)
+                    .attr('stroke', borderColor)
+                    .attr("stroke-width", 2.5)
+                    .attr('rx',  d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Square' :
+                            {
+                                return nodeBorderRadius
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return 20
+                            }
+                            case 'Oval' :
+                            {
+                                return nodeBorderRadius
+                            }
+                            case 'Diamond' :
+                            {
+                                return nodeBorderRadius
+                            }
+                        }
+                    })
+                    .attr('ry', d=> {
+                        switch (d.WorkInfo.shape) {
+                            case 'Square' :
+                            {
+                                return nodeBorderRadius
+                            }
+                            case 'HemmedSquare' :
+                            {
+                                return 20
+                            }
+                            case 'Oval' :
+                            {
+                                return nodeBorderRadius
+                            }
+                            case 'Diamond' :
+                            {
+                                return nodeBorderRadius
+                            }
+                        }
+                    })
+                    .style('cursor', helpers.getCursorForNode)
+                    .attr('class', d=> 'dibox box'+d.id )
+                    .attr("d", "")
+                    .style("stroke-dasharray", "1,0")
+                    .attr("d",
+                        d=> {
+                            switch (d.WorkInfo.shape) {
+
+                                case 'Diamond' :
+                                {
+                                    return "M0 32 L57 62 L113 32 L57 2 Z"
+                                }
+                                default:
+                                    return ''
+                            }
+                        }
+                        )
+
+
+    // // Person Card Shadow
+    // nodeEnter
+    //     .append('rect')
+    //     .attr('y', 8)
+    //     .attr('width', nodeWidth)
+    //     .attr('height', nodeHeight)
+    //     .attr('stroke', borderColor)
+    //     .attr("stroke-width", 5)
+    //     .attr('rx', nodeBorderRadius)
+    //     .attr('ry', nodeBorderRadius)
+    //     .attr('fill-opacity', 0.05)
+    //     .attr('stroke-opacity', 0.025)
+    //     .attr('filter', 'url(#boxShadow)')
+    //
+    //
+    // // Person Card Container
+    // nodeEnter
+    //     .append('rect')
+    //     .attr('y', 8)
+    //     .attr('width', nodeWidth)
+    //     .attr('height', nodeHeight)
+    //     .attr('id', d => d.id)
+    //     .attr('fill', d => d.WorkInfo.color)
+    //     .attr('stroke', borderColor)
+    //     .attr("stroke-width", 2.5)
+    //     .attr('rx', nodeBorderRadius)
+    //     .attr('ry', nodeBorderRadius)
+    //     .style('cursor', helpers.getCursorForNode)
+    //     .attr('class', d=> 'dibox box'+d.id )
 
     // Person Card Container
     // Person Card Container
@@ -123,34 +530,46 @@ setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
     //
     //     .style('cursor', helpers.getCursorForNode)
     //     .attr('class', d=> 'dibox box'+d.id )
-
+    //
     // nodeEnter
     //     .append("path")
     //
-    //     .attr("d", "M5 32 L50 62 L93 32 L50 2 Z")
-    //     .style("stroke-width", 1)
+    //     .attr("d", "M0 32 L57 62 L113 32 L57 2 Z")
     //     .style("stroke-dasharray", "1,0")
-    //     .style("fill", "red")
-    //     .style("stroke", "black");
-    //
+    //     .style("stroke", "#7AEA45")
+    //     .attr('id', d => d.id)
+    //     .attr('fill', d => d.WorkInfo.color)
+    //     .attr('stroke', borderColor)
+    //     .attr("stroke-width", 2.5)
+    //     .attr('rx', nodeBorderRadius)
+    //     .attr('ry', nodeBorderRadius)
+    //     .style('cursor', helpers.getCursorForNode)
+    //     .attr('class', d=> 'dibox box'+d.id )
+
 
 
     const namePos = {
-        x: nodePaddingX * 2  ,
+        x: nodePaddingX * 2.8 ,
         y: nodePaddingY * 1.9
     }
 
-    const WidthForTitle = 45 // getHeightForText(d.person.title)
+    const WidthForTitle = 14 // getHeightForText(d.person.title)
     // Person's Name
     nodeEnter
         .append('text')
-        .text(d => d.WorkInfo.title)
+        .text(d =>  d.WorkInfo.title )
         .attr('class', PERSON_NAME_CLASS)
         .attr('x', namePos.x+WidthForTitle)
         .attr('y', namePos.y)
         .style('cursor', 'pointer')
         .style('fill',titleColor)
-        .style("font-size", function(d) { return Math.min(2 * 20, (2 * 20 - 8) / this.getComputedTextLength() * 24) + "px"; })
+        .style("font-size", function(d) {
+          const  size=Math.min(2 * 25, (2 * 25 - 8) / this.getComputedTextLength() * 24)
+
+            return size>=16  ? 15 + "px": size + "px" ;
+
+        })
+        .style("text-anchor", "middle")
         .attr("dy", ".35em");
 
 
@@ -167,15 +586,16 @@ setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
     //     .style('fill', titleColor)
     //     .text(d => d.person.title)
 
-    const heightForTitle = 10 // getHeightForText(d.person.title)
+    const heightForReport = 22 // getHeightForText(d.person.title)
+    const widthForReport = 23 // getHeightForText(d.person.title)
 
 
     // Person's Reports
     nodeEnter
         .append('text')
         .attr('class', PERSON_REPORTS_CLASS)
-        .attr('x', namePos.x + WidthForTitle - 16 )
-        .attr('y', namePos.y + heightForTitle )
+        .attr('x', namePos.x + widthForReport )
+        .attr('y', namePos.y + heightForReport )
         .attr('dy', '.9em')
         .style('font-size', 7)
         .style('font-weight', 500)

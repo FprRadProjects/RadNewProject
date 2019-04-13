@@ -54,22 +54,21 @@ class RibbonReferences extends Component {
 
     OpenDiagramViewer() {
 
-        const { WorkInfo, SetLog, lang, SeenWork,workDiagram,deee } = this.props;
-        if (WorkInfo !== undefined) {
-            let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
-            SetLog(formName);
-            SeenWork(WorkInfo.peygir_id);
-            workDiagram(140).then(data => {
-            console.log(data)
+
+        const { SelectedRow, SetLog, lang, SeenWork, GetWorkInfo,workDiagram } = this.props;
+        if (SelectedRow !== undefined) {
+            workDiagram(SelectedRow.peygir_id).then(data => {
+                let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
+                SetLog(formName);
+                SeenWork(SelectedRow.peygir_id);
+                this.setState({
+                    DiagramModal: !this.state.DiagramModal
+                });
+
             });
 
-
-
-        }
-        else
-            toast.warn(this.context.t("msg_No_Select_Row"));
-
-
+        }  else
+    toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
     toggleReferenceViewer() {
@@ -131,13 +130,12 @@ class RibbonReferences extends Component {
         }));
     }
     render() {
-<<<<<<< HEAD
-        const { WorkInfo, FetchData, Params, ShortKeys, Design ,FetchDataDiagram} = this.props;
+
+        const {  SelectedRow , FetchData, Params, ShortKeys, Design ,FetchDataDiagram} = this.props;
         const { DeletedElements } = Design !== undefined ? Design : {};
         const { EditedElements } = Design !== undefined ? Design : {};
-=======
-        const { SelectedRow, FetchData, Params, ShortKeys, DeletedElements, EditedElements } = this.props;
->>>>>>> 499a67d4bfe014fcc0193e10d13615e91cbd2746
+
+
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -455,14 +453,11 @@ class RibbonReferences extends Component {
 
                 </nav>
 
-<<<<<<< HEAD
-                {this.state.DiagramModal && <DiagramViewer
-                    modal={this.state.DiagramModal}
-                    toggle={this.toggleDiagramViewer.bind(this)}/>}
-=======
+
                 {this.state.DiagramModal && <DiagramViewer modal={this.state.DiagramModal}
-                    toggle={this.toggleDiagramViewer.bind(this)} />}
->>>>>>> 499a67d4bfe014fcc0193e10d13615e91cbd2746
+                    toggle={this.toggleDiagramViewer.bind(this)}
+                                                           SelectedRow={SelectedRow}/>}
+
 
 
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
@@ -517,16 +512,7 @@ RibbonReferences.contextTypes = {
 function mapStateToProps(state) {
     const { lang } = state.i18nState
     const { ShortKeys342 } = state.Design;
-<<<<<<< HEAD
-    const { Design } = state;
-    const  deee   = state;
-    return {
-        lang,
-        WorkInfo,
-        ShortKeys:ShortKeys342,
-        Design,
-        deee
-=======
+
     const { DeletedElements342 } = state.Design !== undefined ? state.Design : {};
     const { EditedElements342 } = state.Design !== undefined ? state.Design : {};
     return {
@@ -534,7 +520,7 @@ function mapStateToProps(state) {
         ShortKeys: ShortKeys342,
         DeletedElements: DeletedElements342,
         EditedElements: EditedElements342
->>>>>>> 499a67d4bfe014fcc0193e10d13615e91cbd2746
+
     };
 }
 

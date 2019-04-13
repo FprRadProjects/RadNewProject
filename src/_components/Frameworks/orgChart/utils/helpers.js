@@ -8,9 +8,9 @@ export function getTextForTitle(datum) {
   }
 
   const { WorkInfo: { totalReports } } = datum
-  const pluralEnding = totalReports > 1 ? 's' : ''
+  // const pluralEnding = totalReports > 1 ? 's' : ''
 
-  return `${totalReports} report${pluralEnding}`
+  return `${totalReports} شاخه  `
 }
 
 const departmentAbbrMap = {

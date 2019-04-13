@@ -37,7 +37,7 @@ class DiagramViewer extends Component {
             background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
         }`;
-        setTimeout(()=>console.log("eeeeeeeeeeeeeeeee",this.props.Wofo_Diagram),4000)
+
         return (
             <div>
                 <Modal isOpen={modal} toggle={toggle} keyboard={false}
@@ -68,13 +68,13 @@ function mapStateToProps(state) {
     const { alert } = state;
     const { loading } = state.loading;
     const { lang } = state.i18nState
-    const   Wofo_Diagram   = state;
+    const {WorkInfo_Diagram} =  state.Auto_WorkBasic
 
     return {
         alert,
         loading,
         lang,
-        Wofo_Diagram
+        WorkInfo_Diagram
     };
 
 }
