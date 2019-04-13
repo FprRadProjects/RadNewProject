@@ -1,7 +1,6 @@
 import { BasicInfo_service, WorkActions_service } from "../../../../_services";
 import {
-    loadingActions, userActions, common_Actions
-    , WorkBasic_action
+    loadingActions, userActions
 } from "../../../index";
 import { history } from "../../../../_helpers";
 import { toast } from 'react-toastify';

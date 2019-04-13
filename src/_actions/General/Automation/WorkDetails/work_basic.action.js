@@ -57,7 +57,8 @@ function FetchGetReviewWorkInfo(peygir_id) {
 function GetWorkInfo(row) {
     const peygir_id = row.peygir_id;
     return dispatch => {
-      return  WorkBasic_service.GetWorkInfo(peygir_id)
+        dispatch(loadingActions.ShowLoading());
+        return  WorkBasic_service.GetWorkInfo(peygir_id)
             .then(
                 data => {
                     if (data.status) {
@@ -66,9 +67,11 @@ function GetWorkInfo(row) {
                     else {
                         toast.error(data.error);
                     }
+                    dispatch(loadingActions.HideLoading());
                     return Promise.resolve(data)
                 },
                 error => {
+                    dispatch(loadingActions.HideLoading());
                     toast.error(error);
                 }
             );
