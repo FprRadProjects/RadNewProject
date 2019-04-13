@@ -68,12 +68,12 @@ class Header extends Component {
                     </div>
                     <div className="col-5">
                         <ul className="breadcrumb">
-                            {lang ==='fa' && FormInfo!==undefined? FormInfo.fa_module_name2!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.fa_module_name2:""}</a></li>:""}
-                            {lang ==='en' && FormInfo!==undefined? FormInfo.en_module_name2!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.en_module_name2:""}</a></li>:""}
-                            {lang ==='fa' && FormInfo!==undefined? FormInfo.fa_module_name1!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.fa_module_name1:""}</a></li>:""}
-                            {lang ==='en' && FormInfo!==undefined? FormInfo.en_module_name1!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.en_module_name1:""}</a></li>:""}
-                            {lang ==='fa' && FormInfo!==undefined? FormInfo.form_name!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.form_name:""}</a></li>:""}
-                            {lang ==='en' && FormInfo!==undefined? FormInfo.en_form_name!==""&&<li className="breadcrumb-item active"><a href="#">{FormInfo!==undefined? FormInfo.en_form_name:""}</a></li>:""}
+                            {lang ==='fa' && FormInfo!==null? FormInfo.fa_module_name2!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.fa_module_name2:""}</a></li>:""}
+                            {lang ==='en' && FormInfo!==null? FormInfo.en_module_name2!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.en_module_name2:""}</a></li>:""}
+                            {lang ==='fa' && FormInfo!==null? FormInfo.fa_module_name1!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.fa_module_name1:""}</a></li>:""}
+                            {lang ==='en' && FormInfo!==null? FormInfo.en_module_name1!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.en_module_name1:""}</a></li>:""}
+                            {lang ==='fa' && FormInfo!==null? FormInfo.form_name!==""&&<li className="breadcrumb-item"><a href="#">{FormInfo!==undefined? FormInfo.form_name:""}</a></li>:""}
+                            {lang ==='en' && FormInfo!==null? FormInfo.en_form_name!==""&&<li className="breadcrumb-item active"><a href="#">{FormInfo!==undefined? FormInfo.en_form_name:""}</a></li>:""}
                         </ul>
                     </div>
                     <div className="col-4">
