@@ -54,7 +54,7 @@ function workDiagram(params) {
     var formData = new FormData();
     formData.append('peygir_id', params);
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "WorkDiagram", formData)
+        return axios.post(_Config.BaseUrl + "WorkDiagram", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
