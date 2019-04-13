@@ -8,7 +8,7 @@ import PropTypes from "prop-types"
 import {connect} from 'react-redux';
 import {ModalFilter} from './ModalFilter';
 import {FormInfo} from '../../locales/';
-import {Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, Label, Form, FormGroup} from 'reactstrap';
+import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 /*import {MenuProvider} from "react-contexify";
 import renderHTML from "react-render-html";
 */
@@ -43,6 +43,7 @@ class DashBoard extends Component {
             selectedDate: this.convertDate(selectedDate)
         };
         this.toggle = this.toggle.bind(this);
+        localStorage.setItem("MasterFormInfo", JSON.stringify( FormInfo.web_fm_mainpage));
     }
     convertDate=(selectedDate)=>{
     const {lang} = this.props;

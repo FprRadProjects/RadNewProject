@@ -139,10 +139,10 @@ class RibbonReferences extends Component {
                 </div>
                 <div className="r-main-box__controlpanel">
                     <a className="r-main-box__controlpanel--action"
-                        title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
+                        title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}></a>
                 </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
-                    <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">عملیات</a></li>
+                    <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">{this.context.t("Operations")}</a></li>
                     {/* <li className="nav-item"><a href="#tab2" className="nav-link" data-toggle="tab">تب
                                     بسته</a></li>
                     <li className="nav-item"><a href="#tab3" className="nav-link" data-toggle="tab">تب
@@ -155,7 +155,7 @@ class RibbonReferences extends Component {
                     <div className="tab-pane active" id="tab1">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
-                                <div className="tab-group-caption">امکانات</div>
+                                <div className="tab-group-caption">{this.context.t("Features")}</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         {/* بازخوانی اطلاعات */}
@@ -179,7 +179,7 @@ class RibbonReferences extends Component {
                                 </div>
                             </div>
                             <div className="tab-panel-group">
-                                <div className="tab-group-caption">نشانه گذاری</div>
+                                <div className="tab-group-caption">{this.context.t("Marking")}</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         {/* نشانه ها */}
@@ -213,7 +213,7 @@ class RibbonReferences extends Component {
                                 </div>
                             </div>
                             <div className="tab-panel-group">
-                                <div className="tab-group-caption">دیاگرام</div>
+                                <div className="tab-group-caption">{this.context.t("Diagram")}</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         {/* دیاگرام عطف  */}

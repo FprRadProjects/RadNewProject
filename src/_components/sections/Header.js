@@ -10,6 +10,7 @@ import messageIcon from '../../content/images/master/header/message-icon.svg';
 import userAvatar from '../../content/images/master/header/user-avatar.svg';
 import {BasicInfo_action} from "../../_actions/BaseInfo";
 
+var FormInfo=null;
 
 class Header extends Component {
     componentDidMount() {
@@ -18,7 +19,9 @@ class Header extends Component {
     }
 
     render() {
-        const { CompanyName ,FormInfo,lang} = this.props;
+        if(localStorage.getItem("MasterFormInfo")!==undefined && localStorage.getItem("MasterFormInfo")!==null)
+            FormInfo=JSON.parse(localStorage.getItem("MasterFormInfo"));
+        const { CompanyName ,lang} = this.props;
         return (
             <div className="page-main-header">
                 <div className="main-header-left">
