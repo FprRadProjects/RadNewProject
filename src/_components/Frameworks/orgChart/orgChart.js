@@ -186,7 +186,6 @@ class OrgChart extends PureComponent {
 
     componentDidMount() {
         const {id, data, ...options} = this.props
-        console.log(data)
 
         this.init({id: `#${id}`, data, lineType: 'angle'})
         // console.log(JSON.stringify(data, null, 4) )
