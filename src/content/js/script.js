@@ -75,6 +75,7 @@ $(document).on('click', '.sidebar-menu li a', function (e) {
         e.preventDefault();
        
     }
+    //add n
     if($this.attr('href') !== undefined) 
     {
         $(".sidebar-toggle input").prop('checked', true);
@@ -84,6 +85,7 @@ $(document).on('click', '.sidebar-menu li a', function (e) {
             "background": "none"
         })
     }
+    //add n
 });
 
 $(document).ready(function () {

@@ -8,8 +8,8 @@ export const BasicInfo_service = {
 };
 
 function GetCompanyInfo() {
-        const BaseUrl = localStorage.getItem("BaseUrl");
-        return axios.post(BaseUrl + "GetCompanyInfo")
+        const _Config =JSON.parse(localStorage.getItem("_Config"));
+        return axios.post(_Config.BaseUrl + "GetCompanyInfo")
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -18,9 +18,9 @@ function GetCompanyInfo() {
             })
 }
 function UserAccessForm(params) {
-    const BaseUrl = localStorage.getItem("BaseUrl");
+    const _Config =JSON.parse(localStorage.getItem("_Config"));
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "UserAccessForm", params)
+        return axios.post(_Config.BaseUrl + "UserAccessForm", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -32,11 +32,11 @@ function UserAccessForm(params) {
 
 }
 function SetLog(Form) {
-    const BaseUrl = localStorage.getItem("BaseUrl");
+    const _Config =JSON.parse(localStorage.getItem("_Config"));
     if (UserConfig.GetToken() !== null) {
         let data = new FormData();
         data.append("Form", Form);
-        return axios.post(BaseUrl + "SetLog", data)
+        return axios.post(_Config.BaseUrl + "SetLog", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

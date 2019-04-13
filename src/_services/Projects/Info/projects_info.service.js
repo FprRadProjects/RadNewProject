@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {UserConfig} from '../../Config.js'
-const BaseUrl = localStorage.getItem("BaseUrl");
+const _Config =JSON.parse(localStorage.getItem("_Config"));
 
 export const ProjectsInfo_service = {
     GetSelectProject
@@ -11,7 +11,7 @@ function GetSelectProject(params) {
     if (UserConfig.GetToken() !== null) {
 
 
-        return axios.post(BaseUrl + "GetSelectProject", params)
+        return axios.post(_Config.BaseUrl + "GetSelectProject", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
