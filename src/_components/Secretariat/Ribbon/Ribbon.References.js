@@ -9,7 +9,7 @@ import { RibbonButton, ShortKeyButton } from "../../Config";
 import {HideElementListModal} from "../../Basic";
 import {
     design_Actions,
-    BasicInfo_action, WorkActions_action
+    BasicInfo_action, WorkActions_action, WorkBasic_action
 } from "../../../_actions";
 import { toast } from 'react-toastify';
 import {DiagramViewer} from "../../Config/DiagramViewer";
@@ -50,19 +50,19 @@ class RibbonReferences extends Component {
     }
 
     OpenDiagramViewer() {
-        const { WorkInfo, SetLog, lang, SeenWork } = this.props;
+        const { WorkInfo, SetLog, lang, SeenWork,workDiagram,deee } = this.props;
         if (WorkInfo !== undefined) {
             let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
             SetLog(formName);
             SeenWork(WorkInfo.peygir_id);
-            this.setState({
-                DiagramModal: !this.state.DiagramModal
-            });
+            workDiagram(140).then(data => {
+            console.log(data)
+            });;
+
+
+
         }
         else
-            this.setState({
-                DiagramModal: !this.state.DiagramModal
-            });
             toast.warn(this.context.t("msg_No_Select_Row"));
 
     }
@@ -125,7 +125,7 @@ class RibbonReferences extends Component {
         }));
     }
     render() {
-        const { WorkInfo, FetchData, Params, ShortKeys, Design } = this.props;
+        const { WorkInfo, FetchData, Params, ShortKeys, Design ,FetchDataDiagram} = this.props;
         const { DeletedElements } = Design !== undefined ? Design : {};
         const { EditedElements } = Design !== undefined ? Design : {};
         return (
@@ -446,8 +446,9 @@ class RibbonReferences extends Component {
 
                 </nav>
 
-                {this.state.DiagramModal && <DiagramViewer modal={this.state.DiagramModal}
-                                                           toggle={this.toggleDiagramViewer.bind(this)} />}
+                {this.state.DiagramModal && <DiagramViewer
+                    modal={this.state.DiagramModal}
+                    toggle={this.toggleDiagramViewer.bind(this)}/>}
 
 
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
@@ -468,6 +469,10 @@ class RibbonReferences extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
+    workDiagram:(Params)=> {
+        return dispatch(WorkBasic_action.workDiagram(Params))
+    }
+    ,
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
@@ -493,11 +498,13 @@ function mapStateToProps(state) {
     const { WorkInfo } = state.Auto_WorkBasic;
     const { ShortKeys342 } = state.Design;
     const { Design } = state;
+    const  deee   = state;
     return {
         lang,
         WorkInfo,
         ShortKeys:ShortKeys342,
-        Design
+        Design,
+        deee
     };
 }
 

@@ -20,7 +20,7 @@ const PERSON_TITLE_CLASS = 'org-chart-person-title'
 const PERSON_DEPARTMENT_CLASS = 'org-chart-person-dept'
 const PERSON_REPORTS_CLASS = 'org-chart-person-reports'
 
-const data = fakeData
+// const data = fakeData
 
 class OrgChart extends PureComponent {
 
@@ -95,8 +95,14 @@ class OrgChart extends PureComponent {
             .tree()
             .nodeSize([nodeWidth + nodeSpacing, nodeHeight + nodeSpacing])
 
-        // Calculate width of a node with expanded children
-        const childrenWidth = parseInt(treeData.children.length * nodeWidth / 2)
+        if(treeData.children === undefined) {
+            treeData.children = treeData._children
+            treeData._children = null
+        }
+
+        console.log(treeData)
+            // Calculate width of a node with expanded children
+            const childrenWidth = parseInt(treeData.children.length * nodeWidth / 2)
 
         // Add svg root for d3
         const svgroot = d3
@@ -177,7 +183,7 @@ class OrgChart extends PureComponent {
         d3.select(id).style('height', elemHeight + margin.top + margin.bottom)
     }
     componentDidMount( ) {
-        const {id, ...options} = this.props
+        const {id,data, ...options} = this.props
 
             this.init({id: `#${id}`, data, lineType: 'angle'})
             // console.log(JSON.stringify(data, null, 4) )

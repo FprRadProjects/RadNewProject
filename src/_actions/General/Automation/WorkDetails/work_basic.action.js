@@ -12,6 +12,7 @@ export const WorkBasic_action = {
     ReviewWorkConfirmList,
     GetReviewWorkInfo,
     FetchGetReviewWorkInfo,
+    workDiagram
 
 };
 
@@ -128,6 +129,27 @@ function ReviewWorkConfirmList(params) {
             );
     }
 }
+
+function workDiagram(params){
+    return dispatch => {
+      return  WorkBasic_service.workDiagram(params)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(workDiagram_Reducer(data.data.Diagram));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                 return   Promise.resolve(data)
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
+
 function UserGetWorkInfo_Reducer(data) {
     return { type: AutoWorkBasicConstant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS, data }
 }
@@ -141,4 +163,8 @@ function flowResultAddTotalCount(data) {
 
 function flowResultAddRows(data) {
     return {type: AutoWorkBasicConstant.SELECT_FLOW_RESULT_SET_GRID_ROWS, data}
+}
+
+function workDiagram_Reducer(data) {
+    return {type:AutoWorkBasicConstant.GET_WORK_INFO_DIAGRAM_DATA_SUCCESS,data }
 }

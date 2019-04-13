@@ -78,6 +78,7 @@ setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
     // Person Card Shadow
     nodeEnter
         .append('rect')
+        .attr('y', 8)
         .attr('width', nodeWidth)
         .attr('height', nodeHeight)
         .attr('stroke', borderColor)
@@ -90,18 +91,19 @@ setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
 
 
     // Person Card Container
-    // nodeEnter
-    //     .append('rect')
-    //     .attr('width', nodeWidth)
-    //     .attr('height', nodeHeight)
-    //     .attr('id', d => d.id)
-    //     .attr('fill', d => d.WorkInfo.color)
-    //     .attr('stroke', borderColor)
-    //     .attr("stroke-width", 2.5)
-    //     .attr('rx', nodeBorderRadius)
-    //     .attr('ry', nodeBorderRadius)
-    //     .style('cursor', helpers.getCursorForNode)
-    //     .attr('class', d=> 'dibox box'+d.id )
+    nodeEnter
+        .append('rect')
+        .attr('y', 8)
+        .attr('width', nodeWidth)
+        .attr('height', nodeHeight)
+        .attr('id', d => d.id)
+        .attr('fill', d => d.WorkInfo.color)
+        .attr('stroke', borderColor)
+        .attr("stroke-width", 2.5)
+        .attr('rx', nodeBorderRadius)
+        .attr('ry', nodeBorderRadius)
+        .style('cursor', helpers.getCursorForNode)
+        .attr('class', d=> 'dibox box'+d.id )
 
     // Person Card Container
     // Person Card Container
@@ -122,15 +124,15 @@ setTimeout(()=>{ d3.select('rect.box'+id).attr("stroke", x);},100)
     //     .style('cursor', helpers.getCursorForNode)
     //     .attr('class', d=> 'dibox box'+d.id )
 
-    nodeEnter
-        .append("path")
-
-        .attr("d", "M5 32 L50 62 L93 32 L50 2 Z")
-        .style("stroke-width", 1)
-        .style("stroke-dasharray", "1,0")
-        .style("fill", "red")
-        .style("stroke", "black");
-
+    // nodeEnter
+    //     .append("path")
+    //
+    //     .attr("d", "M5 32 L50 62 L93 32 L50 2 Z")
+    //     .style("stroke-width", 1)
+    //     .style("stroke-dasharray", "1,0")
+    //     .style("fill", "red")
+    //     .style("stroke", "black");
+    //
 
 
     const namePos = {

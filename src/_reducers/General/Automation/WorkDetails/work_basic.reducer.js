@@ -16,7 +16,7 @@ export  function Auto_WorkBasic(state = {}, action) {
                 SelectFlowResultList_rows:  action.data,
                 SelectFlowResultList_GridRowData:{}
             }
-        }    
+        }
        case Constant.REVIEW_WORK_GET_GRID_TOTAL_COUNT: {
             return {
                 ...state,
@@ -31,20 +31,27 @@ export  function Auto_WorkBasic(state = {}, action) {
                 ReviewWorkList_rows:  action.data,
                 ReviewWorkList_GridRowData:{}
             }
-        }    
+        }
         case Constant.GET_WORK_INFO_GRID_ROW_DATA_SUCCESS: {
             return {
                 ...state,
                 ...action.data
             }
-        }  
+        }
         case Constant.GET_WORK_INFO_REVIEW_CONFIRM_GRID_ROW_DATA_SUCCESS: {
             return {
                 ...state,
                 ReviewWork_Info:  action.data.WorkInfo,
             }
         }
-        
+        case Constant.GET_WORK_INFO_DIAGRAM_DATA_SUCCESS: {
+
+            return {
+                ...state,
+                WorkInfo_Diagram:  action.data,
+            }
+        }
+
         default:
             return state;
     }

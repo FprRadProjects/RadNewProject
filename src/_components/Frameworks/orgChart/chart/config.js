@@ -2,8 +2,8 @@ const animationDuration = 600
 const shouldResize = true
 
 // Nodes
-const nodeWidth = 100
-const nodeHeight = 45
+const nodeWidth = 115
+const nodeHeight = 60
 const nodeSpacing = 6
 const nodePaddingX = 16
 const nodePaddingY = 16
