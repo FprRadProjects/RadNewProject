@@ -1,9 +1,10 @@
 import { userConstants } from '../../_constants';
 import { userService } from '../../_services';
 import { alertActions } from '..';
-import { history } from '../../_helpers';
 import { toast } from 'react-toastify';
-
+import {
+    loadingActions
+} from "../index";
 export const userActions = {
     login,
     logout,
@@ -14,6 +15,7 @@ export const userActions = {
 
 function login(username, password) {
     return dispatch => {
+        dispatch(loadingActions.ShowLoading());
         userService.login(username, password)
             .then(
                 user => {
@@ -24,6 +26,7 @@ function login(username, password) {
                     else {
                         dispatch(alertActions.error(user.error));
                     }
+                    dispatch(loadingActions.HideLoading());
                 },
                 error => {
                     toast.error(error);

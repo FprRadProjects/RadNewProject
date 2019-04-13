@@ -1,6 +1,9 @@
 export const translations = {
     fa: {
         SoftWare_Name: 'اتوماسیون تحت وب راد',
+        Toolbox:"جعبه ابزار",
+        Features:"امکانات",
+        Operations:"عملیات",
         version:"نسخه",
         Language: 'زبان',
         fa: 'فارسی',
@@ -118,6 +121,7 @@ export const translations = {
         msg_No_Select_Row: 'سطری انتخاب نشده است...',
         msg_ActionDate_Not_Valid: 'تاریخ کار معتبر نمی باشد...',
         msg_Operation_Success: 'عملیات با موفقیت انجام شد....',
+        msg_DontHave_Access: 'شما دسترسی دیدن جزییات این کار را ندارید....',
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
         frm_System: 'سیستم',
@@ -131,6 +135,7 @@ export const translations = {
         frm_Reports: 'گزارشات',
         frm_System_Administrator_Settings: 'تنظیمات مدیر سیستم',
         frm_Home: 'صفحه اصلی',
+        frm_User_Settings: 'تنظیمات کاربری',
         frm_Dashboard_Work: 'کارتابل کار',
         frm_Dashboard_References: 'کار تابل ارجاعات',
         frm_Select_Project: 'انتخاب پروژه',
@@ -140,11 +145,19 @@ export const translations = {
         frm_Review_Confirm_Work: 'بازنگری تایید کار',
         frm_Edit_Review_Confirm_Work: 'ویرایش بازنگری تایید کار',
         frm_HideElements_Template: 'مدیریت کنترل های حذف شده',
-        
+        frm_Secretariat_Defaults:"پیش فرض های دبیرخانه",
+        frm_Insert_Incoming_Letter:"ثبت نامه وارده",
+        frm_Insert_Letter_Issuedr:"ثبت نامه صادره",
+        frm_Insert_Internal_Letter:"ثبت نامه داخلی",
+        frm_Insert_Draft_Letter_Issued:"ثبت پیش نویس نامه صادره",
+        frm_Dashboard_Letters:"کارتابل نامه ها",
         //--------------نام فرم ها--------------پایان
     },
     en: {
         SoftWare_Name: 'RAD AUTOMATION',
+        Toolbox:"Toolbox",
+        Features:"Features",
+        Operations:"Operations",
         version:"Version",
         Language: 'Language',
         fa: 'fa',
@@ -263,6 +276,7 @@ export const translations = {
         msg_No_Select_Row: 'Row Not Selected...',
         msg_ActionDate_Not_Valid: 'Action Date Not Valid...',
         msg_Operation_Success: 'The Operation Was Successful....',
+        msg_DontHave_Access: 'You Do Not Have Access To See Delaits of This....',
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',
@@ -276,6 +290,7 @@ export const translations = {
         frm_Reports: 'Reports',
         frm_System_Administrator_Settings: 'Administrator Settings',
         frm_Home: 'Home',
+        frm_User_Settings: 'User Settings',
         frm_Dashboard_Work: 'Work Dashboard',
         frm_Dashboard_References: 'References Dashboard',
         frm_Select_Project: 'Select Project',
@@ -285,7 +300,13 @@ export const translations = {
         frm_Review_Confirm_Work: 'Review Confirm Work',
         frm_Edit_Review_Confirm_Work: 'Edit Review Confirm Work',
         frm_HideElements_Template: 'Manage Deleted Controls',
-        
+        frm_Secretariat_Defaults:"Secretariat Defaults",
+        frm_Insert_Incoming_Letter:"Insert Incoming Letter",
+        frm_Insert_Letter_Issuedr:"Insert Letter Issuedr",
+        frm_Insert_Internal_Letter:"Insert Internal Letter",
+        frm_Insert_Internal_Letter:"Insert Internal Letter",
+        frm_Insert_Draft_Letter_Issued:"Insert Draft Letter Issued",
+        frm_Dashboard_Letters:"Dashboard Letters",
         //End-------------- FORM NAME --------------
 
     },

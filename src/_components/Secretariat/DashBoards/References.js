@@ -47,6 +47,8 @@ class References extends Component {
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
+        console.log(FormInfo.fm_dabir_kartabl_erjaat)
+        localStorage.setItem("MasterFormInfo", JSON.stringify( FormInfo.fm_dabir_kartabl_erjaat));
 
     }
    
@@ -54,6 +56,9 @@ class References extends Component {
         this.setState(prevState => ({
             toggleFilter: !prevState.toggleFilter
         }));
+    }
+    SelectRow(row) {
+        this.setState({SelectedRow:row});
     }
 
 
@@ -132,7 +137,8 @@ class References extends Component {
                 <div className="col-sm-12">
                     <div className="r-main-box">
                         <div className="r-main-box__ribbon sticky-top">
-                            <RibbonReferences FetchData={FetchData.bind(this)} Params={Params} />
+                            <RibbonReferences FetchData={FetchData.bind(this)} Params={Params}  
+                            SelectedRow={this.state.SelectedRow}  />
                             <div className="r-main-box__filter">
                                 <Button color="" className="r-main-box__filter--btn"
                                         onClick={this.toggleFilter.bind(this)}></Button>
@@ -151,7 +157,7 @@ class References extends Component {
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
                                           rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
-                                          UrlParams={Params} fetchData={FetchData.bind(this)} GetRowInfo={GetWorkInfo}
+                                          UrlParams={Params} fetchData={FetchData.bind(this)} SelectRow={this.SelectRow.bind(this)} 
                                           currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>
@@ -165,9 +171,6 @@ class References extends Component {
 const mapDispatchToProps = dispatch => ({
     FetchData: (Params) => {
         dispatch(Act_Reference.FetchData(Params))
-    },
-    GetWorkInfo: (Params) => {
-        dispatch(WorkBasic_action.GetWorkInfo(Params))
     },
     SetLog: (Form) => {
         dispatch(BasicInfo_action.SetLog(Form))

@@ -13,6 +13,8 @@ import {
     design_Actions,
     WorkActions_action
 } from "../../../_actions";
+import { ConfirmFlow } from '../../Flow/ConfirmFlow';
+
 import { toast } from 'react-toastify';
 var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: {} };
 
@@ -117,7 +119,8 @@ class RibbonReferenceViewer extends Component {
         clearSaveParams();
     }
     ConfirmationHandle = (e) => {
-        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, RefreshParentForm, SaveParams } = this.props;
+        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, 
+            clearSaveParams,RefreshParentForm, SaveParams } = this.props;
         ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         ConfirmParams["Form"] = formname;
@@ -145,7 +148,7 @@ class RibbonReferenceViewer extends Component {
                 }
             }
         });
-        SaveParams = { form: "", data: [] };
+        clearSaveParams();
     }
     rebuildHandle() {
         const { RebuildWork, WorkInfo, RefreshParentForm, FetchWorkInfo, Params } = this.props;
@@ -161,10 +164,17 @@ class RibbonReferenceViewer extends Component {
             HideElementListmodal: !prevState.HideElementListmodal
         }));
     }
+    
+    CloseleSelectFlowResult = (e) => {
+        this.setState({
+            FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
+        });
+    }
+    
     render() {
-        const { WorkInfo, FetchData, Params, ShortKeys, Design } = this.props;
-        const { DeletedElements } = Design !== undefined ? Design : {};
-        const { EditedElements } = Design !== undefined ? Design : {};
+        const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements,EditedElements,RefreshParentForm ,ParentForm
+            ,FetchWorkInfo
+        } = this.props;
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -178,8 +188,7 @@ class RibbonReferenceViewer extends Component {
                         title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
                 </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
-                    <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">تب
-                                    باز</a></li>
+                    <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">عملیات</a></li>
                 </ul>
                 <div className="tab-content">
                     <div className="gradient"></div>
@@ -252,6 +261,11 @@ class RibbonReferenceViewer extends Component {
                     WorkInfo={WorkInfo}
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
+                          {this.state.FlowResultSelectmodal &&
+                                    <ConfirmFlow ParentForm={ParentForm}
+                                        flowResultSelectModal={this.state.FlowResultSelectmodal}
+                                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
+                                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} FetchWorkInfo={FetchWorkInfo}/>}
             </div>
         );
     }
@@ -291,12 +305,14 @@ function mapStateToProps(state) {
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
     const { ShortKeys340 } = state.Design;
-    const { Design } = state;
+    const { DeletedElements340 } = state.Design !== undefined ? state.Design : {};
+    const { EditedElements340 } = state.Design !== undefined ? state.Design : {};
     return {
         lang,
         WorkInfo,
         ShortKeys: ShortKeys340,
-        Design
+        DeletedElements:DeletedElements340,
+        EditedElements:EditedElements340
     };
 }
 

@@ -256,3 +256,185 @@ body {
             bottom: unset;
         }
     }
+
+    
+/**=====================
+     04. Loader CSS Start
+==========================**/
+
+.loader-wrapper {
+    height: 100%;
+    width: 100%;
+    display: block;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10000000;
+    top: 0;
+}
+
+.loader-wrapper .loader {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    text-align: center;
+    right: 0;
+    margin: 0 auto;
+}
+
+.loader-wrapper .loader h4 {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: #fff !important;
+    font-size: 16px;
+}
+
+.loader-wrapper .loader h4 span {
+    font-size: 34px;
+}
+
+.loader .line {
+    -webkit-animation: expand 1s ease-in-out infinite;
+    animation: expand 1s ease-in-out infinite;
+    border-radius: 10px;
+    display: inline-block;
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+    margin: 0 5px;
+    width: 5px;
+    height: 35px;
+}
+
+.loader .line:nth-child(1) {
+    background: #00c292;
+}
+
+.loader .line:nth-child(2) {
+    -webkit-animation-delay: 180ms;
+    animation-delay: 180ms;
+    background: #ab8ce4;
+}
+
+.loader .line:nth-child(3) {
+    -webkit-animation-delay: 360ms;
+    animation-delay: 360ms;
+    background: #FF5370;
+}
+
+.loader .line:nth-child(4) {
+    -webkit-animation-delay: 540ms;
+    animation-delay: 540ms;
+    background: #4099ff;
+}
+
+@-webkit-keyframes expand {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    25% {
+        -webkit-transform: scale(2);
+        transform: scale(2);
+    }
+}
+
+@keyframes expand {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+    25% {
+        -webkit-transform: scale(2);
+        transform: scale(2);
+    }
+}
+
+.loader-box {
+    height: 150px;
+    text-align: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.rotate {
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+    -webkit-animation-duration: 3s;
+    animation-duration: 3s;
+    -webkit-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-name: rotate;
+    animation-name: rotate;
+    border: 3px dotted #ab8ce4;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    display: block;
+    margin: 1em;
+    float: left;
+}
+
+@-webkit-keyframes rotate {
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotate {
+    to {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.solid {
+    border-style: solid;
+    border-color: #00c292 #008f6c;
+}
+
+.dotted {
+    border-style: dotted;
+}
+
+.dashed {
+    border-style: dashed;
+}
+
+.double {
+    border-style: double;
+}
+
+.groove {
+    border-style: groove;
+}
+
+.ridge {
+    border-style: ridge;
+}
+
+.inset {
+    border-style: inset;
+}
+
+.outset {
+    border-style: outset;
+}
+
+.colored {
+    border-color: #FF5370 #ab8ce4 #00c292 #4099ff;
+}
+
+/**=====================
+     04. Loader CSS Ends
+==========================**/

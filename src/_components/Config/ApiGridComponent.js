@@ -78,8 +78,9 @@ class ApiGridComponent extends React.PureComponent {
         <Table.Row
             {...restProps}
             onClick={(e) => {
-                this.props.GetRowInfo(row);
-
+              //  this.props.GetRowInfo(row);
+                this.props.SelectRow(row);
+                
                 this.ChangeStyle(restProps);
             }
             }

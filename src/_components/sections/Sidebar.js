@@ -13,51 +13,45 @@ class Sidebar extends Component {
     }
 
     render() {
-        const { auth: isAuthenticated, users,lang } = this.props;
+        const { auth: isAuthenticated, users, lang } = this.props;
         return (
             // <div >
             <div className="page-sidebar custom-scrollbar">
                 <ul className="sidebar-menu">
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-system"></i>
                             <span>{this.context.t("frm_System")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
                         <ul className="sidebar-submenu">
                             <li>
-                                <a href="#!">
+                                <a >
                                     <i className="icon-system"></i>
-                                    <span>تغییر کاربر</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#!">
-                                    <i className="icon-system"></i>
-                                    <span>تنظیمات کاربری</span>
+                                    <span>{this.context.t("frm_User_Settings")}</span>
                                     <i className="fa fa-angle-left pull-left"></i>
                                 </a>
                                 <ul className="sidebar-submenu">
                                     <li>
-                                        <a href="#!">
+                                        <a >
                                             <i className="icon-system"></i>
                                             <span>تغییر کلمه عبور</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#!">
+                                        <a >
                                             <i className="icon-system"></i>
                                             <span>معرفی جانشین</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#!">
+                                        <a >
                                             <i className="icon-system"></i>
                                             <span>تنظیمات فرم مدیریت کارها</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#!">
+                                        <a >
                                             <i className="icon-system"></i>
                                             <span>تنظیمات دسترسی تقویم</span>
                                         </a>
@@ -73,44 +67,44 @@ class Sidebar extends Component {
                         </ul>
                     </li>
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-automation"></i>
                             <span>{this.context.t("frm_Automation")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
                         <ul className="sidebar-submenu">
                             <li>
-                                <a href="#!">
+                                <a >
                                     <i className="icon-system"></i>
                                     <span>تعریف کار و پیش نیازها</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#!">
+                                <a >
                                     <i className="icon-system"></i>
                                     <span>طرف حساب و پیش نیازها</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#!">
+                                <a >
                                     <i className="icon-system"></i>
                                     <span>پیش فرض های ویرایشگر</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#!">
+                                <a >
                                     <i className="icon-system"></i>
                                     <span>پیش فرض های متنی</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#!">
+                                <a >
                                     <i className="icon-system"></i>
                                     <span>پرونده</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#!">
+                                <a >
                                     <i className="icon-system"></i>
                                     <span>ثبت کار</span>
                                 </a>
@@ -122,35 +116,34 @@ class Sidebar extends Component {
                         </ul>
                     </li>
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-secretariat"></i>
                             <span>{this.context.t("frm_Secretariat")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
                         <ul className="sidebar-submenu">
                             <li>
-                                <a href="#!">
+                                <Link to="#" >
                                     <i className="icon-system"></i>
-                                    <span>پیش فرض های دبیرخانه</span>
-                                </a>
+                                    <span>{this.context.t("frm_Secretariat_Defaults")}</span>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#!">
+                                <Link to="#" >
                                     <i className="icon-system"></i>
-                                    <span>ثبت نامه وارده</span>
-                                </a>
+                                    <span>{this.context.t("frm_Insert_Incoming_Letter")}</span>
+                                </Link>
+                            </li><li>
+                                <Link to="#" >
+                                    <i className="icon-system"></i>
+                                    <span>{this.context.t("frm_Insert_Letter_Issuedr")}</span>
+                                </Link>
                             </li>
                             <li>
-                                <a href="#!">
+                                <Link to="#" >
                                     <i className="icon-system"></i>
-                                    <span>ثبت نامه صادره</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#!">
-                                    <i className="icon-system"></i>
-                                    <span>نامه داخلی</span>
-                                </a>
+                                    <span>{this.context.t("frm_Insert_Draft_Letter_Issued")}</span>
+                                </Link>
                             </li>
                             <li>
                                 <Link to="/references" >
@@ -158,29 +151,35 @@ class Sidebar extends Component {
                                     <span>{this.context.t("frm_Dashboard_References")}</span>
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="#" >
+                                    <i className="icon-system"></i>
+                                    <span>{this.context.t("frm_Dashboard_Letters")}</span>
+                                </Link>
+                            </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-project"></i>
                             <span>{this.context.t("frm_Projects")}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-financial"></i>
                             <span>{this.context.t("frm_Financial_Operations")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
                         </a>
                         <ul className="sidebar-submenu">
                             <li>
-                                <a href="#!">
+                                <a >
                                     <i className="icon-system"></i>
                                     <span>تعاریف حسابداری</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#!">
+                                <a >
                                     <i className="icon-system"></i>
                                     <span>تعاریف خزانه داری و پیش نیازها</span>
                                 </a>
@@ -188,7 +187,7 @@ class Sidebar extends Component {
                         </ul>
                     </li>
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-archive"></i>
                             <span>{this.context.t("frm_Archives")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
@@ -196,7 +195,7 @@ class Sidebar extends Component {
 
                     </li>
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-terminal"></i>
                             <span>{this.context.t("frm_Data_Terminal")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
@@ -204,7 +203,7 @@ class Sidebar extends Component {
 
                     </li>
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-dashboard"></i>
                             <span>{this.context.t("frm_Dashboards")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
@@ -220,7 +219,7 @@ class Sidebar extends Component {
                         </ul>
                     </li>
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-report"></i>
                             <span>{this.context.t("frm_Reports")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
@@ -228,7 +227,7 @@ class Sidebar extends Component {
 
                     </li>
                     <li>
-                        <a href="#" className="sidebar-header">
+                        <a className="sidebar-header">
                             <i className="icon-setting"></i>
                             <span>{this.context.t("frm_System_Administrator_Settings")}</span>
                             <i className="fa fa-angle-left pull-left"></i>
@@ -239,11 +238,11 @@ class Sidebar extends Component {
                 <div className="sidebar-widget text-center">
                     <div className="sidebar-widget-bottom p-10">
                         <p>
-                        {this.context.t("version")} 0.1.1
+                            {this.context.t("version")} 0.1.1
                         </p>
                         <br />
                         <p>
-                          {lang=="fa" ? "1397/12/25":"2019/03/17"}  
+                            {lang == "fa" ? "1397/12/25" : "2019/03/17"}
                         </p>
                     </div>
                 </div>

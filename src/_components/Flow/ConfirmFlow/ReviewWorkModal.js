@@ -29,16 +29,9 @@ class ReviewWorkModal extends Component {
             modalClass: "modal-dialog-centered modal-lg r-modal"
         };
 
-        //this.SetReviewWorkRowData = this.SetReviewWorkRowData.bind(this);
         this.EditReviewWorkConfirm = this.EditReviewWorkConfirm.bind(this);
         this.SuccesEditReviewWork = this.SuccesEditReviewWork.bind(this);
     }
-    // SetReviewWorkRowData = (row) => {
-    //     this.setState({
-    //         row: row
-    //     })
-    // }
-
     SuccesEditReviewWork(e) {
         const { ParentForm, SaveWorkInfo, lang, ReviewWorkConfirmList,ReviewWork_Info
         ,FetchGetReviewWorkInfo } = this.props;
@@ -57,7 +50,6 @@ class ReviewWorkModal extends Component {
         })
         SaveParams.data = obj;
         
-        
         SaveWorkInfo(SaveParams,this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
                 this.setState({
@@ -72,14 +64,20 @@ class ReviewWorkModal extends Component {
     }
 
     EditReviewWorkConfirm = () => {
-        const { ReviewWork_Info } = this.props;
-        if (ReviewWork_Info !== null && ReviewWork_Info !== undefined) {
-            this.setState({
-                EditReviewModal: !this.state.EditReviewModal
-            })
-        }
-        else
-            toast.warn(this.context.t("msg_No_Select_Row"));
+        const {  GetReviewWorkInfo } = this.props;
+        if (this.state.SelectedRow !== undefined) {
+            GetReviewWorkInfo(this.state.SelectedRow).then(data => {
+                if (data.status) {
+                    this.setState({
+                        EditReviewModal: !this.state.EditReviewModal
+                    })
+                }
+            });
+        } else
+        toast.warn(this.context.t("msg_No_Select_Row"));
+    }
+    SelectRow(row) {
+        this.setState({SelectedRow:row});
     }
 
 
@@ -101,8 +99,7 @@ class ReviewWorkModal extends Component {
 
         ];
         const { modal, peygir_id, ReviewWorkList_rows, ReviewWorkList_totalCount, ParentForm,
-            SuccesReviewWorkConfirm,GetReviewWorkInfo,ReviewWork_Info } = this.props;
-            console.log(ReviewWork_Info);
+            SuccesReviewWorkConfirm,ReviewWork_Info } = this.props;
         Params.peygir_id = peygir_id;
       
         return (
@@ -115,8 +112,8 @@ class ReviewWorkModal extends Component {
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                 rows={ReviewWorkList_rows} totalCount={ReviewWorkList_totalCount}
-                                UrlParams={Params}
-                                GetRowInfo={GetReviewWorkInfo} columnwidth={150}
+                                UrlParams={Params} 
+                                GetRowInfo={this.SelectRow.bind(this)} columnwidth={150}
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
                         </ModalBody>
@@ -127,7 +124,8 @@ class ReviewWorkModal extends Component {
                     </Modal>
                 </div>
                 {this.state.EditReviewModal &&
-                    <EditeReviewWorkModal modal={this.state.EditReviewModal} ParentForm={ParentForm}
+                    <EditeReviewWorkModal 
+                        modal={this.state.EditReviewModal} ParentForm={ParentForm}
                         toggle={this.EditReviewWorkConfirm.bind(this)} Params={Params} SaveParams={SaveParams}
                         rowData={ReviewWork_Info!==undefined?ReviewWork_Info:{}} SuccesEditReviewWork={this.SuccesEditReviewWork.bind(this)}
 
@@ -152,7 +150,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(WorkBasic_action.ReviewWorkConfirmList(Params));
     },
     GetReviewWorkInfo: (row) => {
-        dispatch(WorkBasic_action.GetReviewWorkInfo(row));
+       return dispatch(WorkBasic_action.GetReviewWorkInfo(row));
     },
     FetchGetReviewWorkInfo: (peygir_id) => {
         return dispatch(WorkBasic_action.FetchGetReviewWorkInfo(peygir_id))

@@ -4,6 +4,7 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { design_Actions } from "../../_actions";
 import PropTypes from "prop-types"
 import { GridComponent } from "../Config/GridComponent";
+import { toast } from 'react-toastify';
 
 var currencyColumns = [];
 var hiddenColumnNames = [];
@@ -34,13 +35,17 @@ class HideElementListModal extends Component {
         })
     }
     DeleteRow = () => {
-        const { FormId, Delete_HideElements_Template,GetHideElementsList } = this.props;
+        const { FormId, Delete_HideElements_Template, GetHideElementsList } = this.props;
         let row = this.state.row;
-        Delete_HideElements_Template(FormId, row.Id).then(data => {
-            if (data.status) {
-                GetHideElementsList(Params);
-            }
-        });
+        if (row !== undefined) {
+            Delete_HideElements_Template(FormId, row.Id).then(data => {
+                if (data.status) {
+                    GetHideElementsList(Params);
+                }
+            });
+        }
+        else
+            toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
     render() {
@@ -93,7 +98,7 @@ const mapDispatchToProps = dispatch => ({
     }
     ,
     Delete_HideElements_Template: (rowId, FormId) => {
-      return  dispatch(design_Actions.Delete_HideElements_Template(rowId, FormId))
+        return dispatch(design_Actions.Delete_HideElements_Template(rowId, FormId))
     }
 });
 HideElementListModal.contextTypes = {

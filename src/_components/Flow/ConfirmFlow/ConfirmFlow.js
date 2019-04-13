@@ -14,6 +14,7 @@ class ConfirmFlow extends Component {
     constructor(props) {
         super(props);
         const { flowResultSelectModal } = this.props;
+        console.log(flowResultSelectModal)
         this.state = {
             ...this.state,
             FlowResultSelectmodal: flowResultSelectModal === undefined || !flowResultSelectModal ? false : true,
@@ -24,22 +25,20 @@ class ConfirmFlow extends Component {
         this.CloseSelectReviewWork = this.CloseSelectReviewWork.bind(this);
     }
 
-  
+
     CloseSelectReviewWork = (e) => {
         this.setState({
             ReviewWorkModal: !this.state.ReviewWorkModal,
         });
     }
-
-
     SuccesSelectFlowResult = (row, e) => {
         if (undefined !== row) {
-            const { peygir_id, FinalFlowConfirmWork, RefreshParentForm,  Params } = this.props;
+            const { peygir_id, FinalFlowConfirmWork, RefreshParentForm, Params, FetchWorkInfo } = this.props;
             FinalConfirmParams["peygir_id"] = peygir_id;
             FinalConfirmParams["Results"] = [row.id];
-            FinalFlowConfirmWork(FinalConfirmParams,this.context.t("msg_Operation_Success")).then(data => {
-        if (data.status) {
-        this.setState({
+            FinalFlowConfirmWork(FinalConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
+                if (data.status) {
+                    this.setState({
                         FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
                     });
                     if (data.code === 2 && data.data !== null) {
@@ -47,16 +46,17 @@ class ConfirmFlow extends Component {
                             ReviewWorkModal: true,
                         });
                     }
+                    FetchWorkInfo(peygir_id);
                     RefreshParentForm(Params);
                 }
             });;
         }
         else
-        toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(this.context.t("msg_No_Select_Row"));
     }
     SuccesReviewWorkConfirm = () => {
-        const { peygir_id, ConfirmReviewWork,Params ,RefreshParentForm} = this.props;
-        ConfirmReviewWork(peygir_id,this.context.t("msg_Operation_Success")).then(data => {
+        const { peygir_id, ConfirmReviewWork, Params, RefreshParentForm } = this.props;
+        ConfirmReviewWork(peygir_id, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
                 this.setState({
                     ReviewWorkModal: false,
@@ -65,12 +65,12 @@ class ConfirmFlow extends Component {
             }
         });
     }
-    componentWillReceiveProps(nextProps){
-        if(nextProps.flowResultSelectModal!==this.props.flowResultSelectModal)
-            this.setState({FlowResultSelectmodal:nextProps.flowResultSelectModal === undefined || !nextProps.flowResultSelectModal ? false : true, });
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.flowResultSelectModal !== this.props.flowResultSelectModal)
+            this.setState({ FlowResultSelectmodal: nextProps.flowResultSelectModal === undefined || !nextProps.flowResultSelectModal ? false : true, });
     }
     render() {
-        const { peygir_id, ParentForm,CloseleSelectFlowResult } = this.props;
+        const { peygir_id, ParentForm, CloseleSelectFlowResult } = this.props;
         return (
             <div>
 
@@ -94,13 +94,13 @@ class ConfirmFlow extends Component {
 
 const mapDispatchToProps = dispatch => ({
 
-    FinalFlowConfirmWork: (Params,msg) => {
-        return dispatch(WorkActions_action.FinalFlowConfirmWork(Params,msg))
+    FinalFlowConfirmWork: (Params, msg) => {
+        return dispatch(WorkActions_action.FinalFlowConfirmWork(Params, msg))
     },
-    ConfirmReviewWork: (peygir_id,msg) => {
-        return dispatch(WorkActions_action.ConfirmReviewWork(peygir_id,msg))
+    ConfirmReviewWork: (peygir_id, msg) => {
+        return dispatch(WorkActions_action.ConfirmReviewWork(peygir_id, msg))
     },
-   
+
 
 
 
