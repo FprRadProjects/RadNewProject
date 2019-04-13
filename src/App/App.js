@@ -10,8 +10,8 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.props.setLanguage("fa");
-        const {_config}=this.props;
-        localStorage.setItem("BaseUrl", _config.BaseUrl);
+        const { _config } = this.props;
+        localStorage.setItem("_Config",JSON.stringify(_config));
     }
 
 
@@ -31,7 +31,7 @@ class App extends React.Component {
                         {LoginPage !== null && <Route path="/login" render={props => (<LoginPage />)} />}
                         {LoginPage !== null && <Route path="/" render={props => (<LoginPage />)} />}
                         {HomePage !== null && <PrivateRoute exact user={user} component={HomePage}
-                                                            path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
+                            path={history.location.pathname !== "/login" ? history.location.pathname : "/"}
                         />}
 
                     </Switch>

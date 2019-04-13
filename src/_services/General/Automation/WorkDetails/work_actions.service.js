@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { UserConfig } from '../../../Config.js'
-const BaseUrl = localStorage.getItem("BaseUrl");
+const _Config =JSON.parse(localStorage.getItem("_Config"));
 
 export const WorkActions_service = {
     RebuildWork,
@@ -20,7 +20,7 @@ function InsertIntoWorkMark(peygir_id) {
 
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
-        return axios.post(BaseUrl + "InsertIntoWorkMark", formData)
+        return axios.post(_Config.BaseUrl + "InsertIntoWorkMark", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -35,7 +35,7 @@ function DeleteFromWorkMark(peygir_id) {
 
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
-        return axios.post(BaseUrl + "DeleteFromWorkMark", formData)
+        return axios.post(_Config.BaseUrl + "DeleteFromWorkMark", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -50,7 +50,7 @@ function ConfirmReviewWork(peygir_id) {
 
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
-        return axios.post(BaseUrl + "ConfirmReviewWork", formData)
+        return axios.post(_Config.BaseUrl + "ConfirmReviewWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -62,7 +62,7 @@ function ConfirmReviewWork(peygir_id) {
 }
 function FinalFlowConfirmWork(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "FinalFlowConfirmWork", params)
+        return axios.post(_Config.BaseUrl + "FinalFlowConfirmWork", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -74,7 +74,7 @@ function FinalFlowConfirmWork(params) {
 }
 function InitConfirmWork(params) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "InitConfirmWork", params)
+        return axios.post(_Config.BaseUrl + "InitConfirmWork", params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -90,7 +90,7 @@ function RebuildWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "RebuildWork", formData)
+        return axios.post(_Config.BaseUrl + "RebuildWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -108,7 +108,7 @@ function SeenWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "SeenWork", formData)
+        return axios.post(_Config.BaseUrl + "SeenWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -121,7 +121,7 @@ function SeenWork(peygir_id) {
 
 function SaveWorkInfo(data) {
     if (UserConfig.GetToken() !== null) {
-        return axios.post(BaseUrl + "SaveWorkInfo", data)
+        return axios.post(_Config.BaseUrl + "SaveWorkInfo", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -141,7 +141,7 @@ function DeleteWork(peygir_id) {
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
 
-        return axios.post(BaseUrl + "DeleteWork", formData)
+        return axios.post(_Config.BaseUrl + "DeleteWork", formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

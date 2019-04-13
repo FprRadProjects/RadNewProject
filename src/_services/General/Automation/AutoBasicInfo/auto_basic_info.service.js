@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {UserConfig} from '../../../Config.js'
-const BaseUrl = localStorage.getItem("BaseUrl");
+const _Config =JSON.parse(localStorage.getItem("_Config"));
 
 export const AutoBasicInfo_service = {
     GetDefaultText,
@@ -16,7 +16,7 @@ function SayManagerOnWorkerWtype(worker_id,wt_id) {
         var formData = new FormData();
         formData.append('worker_id', worker_id);
         formData.append('wt_id', wt_id);
-        return axios.post(BaseUrl + "SayManagerOnWorkerWtype",formData)
+        return axios.post(_Config.BaseUrl + "SayManagerOnWorkerWtype",formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -32,7 +32,7 @@ function SelectManagerList(id_role,wt_id) {
         var formData = new FormData();
         formData.append('wt_id', wt_id);
         formData.append('id_role', id_role);
-        return axios.post(BaseUrl + "SelectManagerList",formData)
+        return axios.post(_Config.BaseUrl + "SelectManagerList",formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -49,7 +49,7 @@ function SelectWorkerList(id_role,wt_id) {
         var formData = new FormData();
         formData.append('wt_id', wt_id);
         formData.append('id_role', id_role);
-        return axios.post(BaseUrl + "SelectWorkerList",formData)
+        return axios.post(_Config.BaseUrl + "SelectWorkerList",formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -66,7 +66,7 @@ function SelectAshkhasList(id_taraf) {
 
         var formData = new FormData();
         formData.append('id_taraf', id_taraf);
-        return axios.post(BaseUrl + "SelectAshkhasList",formData)
+        return axios.post(_Config.BaseUrl + "SelectAshkhasList",formData)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
@@ -81,7 +81,7 @@ function SelectAshkhasList(id_taraf) {
 function GetDefaultText() {
     if (UserConfig.GetToken() !== null) {
 
-        return axios.post(BaseUrl + "GetDefaultText")
+        return axios.post(_Config.BaseUrl + "GetDefaultText")
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
