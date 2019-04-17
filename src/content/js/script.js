@@ -40,6 +40,19 @@ $(document).on('change', '#sidebar-toggle', function (e) {
     else
         $(".tab-content").show();
 });
+$(document).on('click', '.js-authority-toggle-btn', function (e) {
+    var $box = $(this).parent().prev(".modal-footer");
+    if($box.css('display') == 'none')
+    {
+        $box.show();
+        $(this).addClass("active");
+    }
+    else{
+        $box.hide();
+        $(this).removeClass("active");
+    }
+
+});
 $(document).on('click', '.dx-g-bs4-table-cell', function (e) {
     $(this).parent().parent().find(".table-active").removeClass("table-active");
     $(this).parent().addClass("table-active");
@@ -73,11 +86,10 @@ $(document).on('click', '.sidebar-menu li a', function (e) {
     }
     if (checkElement.is('.sidebar-submenu')) {
         e.preventDefault();
-       
+
     }
     //add n
-    if($this.attr('href') !== undefined) 
-    {
+    if ($this.attr('href') !== undefined) {
         $(".sidebar-toggle input").prop('checked', true);
         $(".page-body-wrapper").addClass("sidebar-close");
         $('.page-main-header .main-header-left').css({

@@ -25,9 +25,10 @@ class ComboSelectList extends Component {
       }
     render() { 
 
-        const {options,name } = this.props;
+        const {options,name ,classname} = this.props;
         return (
             <Select
+            className={classname}
             name={name}
         value={this.state.selectedOption}
         onChange={this.handleChange.bind(this)}

@@ -91,6 +91,21 @@ export const translations = {
         Description:"شرح",
         NoSelection:"بدون انتخاب",
         SelectedDate:"تاریخ انتخاب شده",
+        ReferralType:"نوع اقدام",
+        ReferralTo:"ارجاع به",
+        Roll:"پست",
+        ReferralDurationDate:"تاریخ مهلت اقدام",
+        ReferralDurationTime:"زمان مهلت اقدام",
+        ReferralDescription:"شرح اقدام",
+        ImportInformationFromLetter:"درج اطلاعات از نامه",
+        ImportAttachmentFromLetter:"درج پیوست از نامه",
+        SendSmsToUser:"ارسال پیامک به کاربر",
+        SendEmailToUser:"ارسال ایمیل به کاربر",
+        CreateCopy:"ایجاد رونوشت",
+        ReferralWork:"ارجاع کار",
+        CopyWorkForm:"کپی فرم کار",
+        NoWorkout:"بدون گردش",
+
         //---------------اقدام------------------شروع
         logout: 'خروج',
         Save: 'ذخیره',
@@ -112,6 +127,7 @@ export const translations = {
         Diagram: "دیاگرام",
         FollowUpDiagram: "دیاگرام عطف",
         WorkFlowSummary: "خلاصه گردش کار",
+        Referral: "ارجاع",
 
         //--------------اقدام------------------پایان
         //---------------پیام ها----------------شروع
@@ -151,6 +167,7 @@ export const translations = {
         frm_Insert_Internal_Letter:"ثبت نامه داخلی",
         frm_Insert_Draft_Letter_Issued:"ثبت پیش نویس نامه صادره",
         frm_Dashboard_Letters:"کارتابل نامه ها",
+        frm_Referral:"ارجاع",
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -245,6 +262,20 @@ export const translations = {
         Description:"Description",
         NoSelection:"No selection",
         SelectedDate:"Selected Date",
+        ReferralType:"Referral Type",
+        ReferralTo:"Referral To",
+        Roll:"Roll",
+        ReferralDurationDate:"Referral Duration Date",
+        ReferralDurationTime:"Referral Duration Time",
+        ReferralDescription:"Referral Description",
+        ImportInformationFromLetter:"Import information from letter",
+        ImportAttachmentFromLetter:"Import attachment from letter",
+        SendSmsToUser:"Send sms to user",
+        SendEmailToUser:"Send email to user",
+        CreateCopy:"Create copy",
+        ReferralWork:"Referral work",
+        CopyWorkForm:"Copy work form",
+        NoWorkout:"No workout",
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
@@ -266,6 +297,7 @@ export const translations = {
         Diagram: "Diagram",
         FollowUpDiagram: "Follow Up Diagram",
         WorkFlowSummary: "Work Flow Summary",
+        Referral: "Referral",
 
         //End-----------------Actions----------------
 
@@ -307,6 +339,8 @@ export const translations = {
         frm_Insert_Internal_Letter:"Insert Internal Letter",
         frm_Insert_Draft_Letter_Issued:"Insert Draft Letter Issued",
         frm_Dashboard_Letters:"Dashboard Letters",
+        frm_Referral:"Referral",
+
         //End-------------- FORM NAME --------------
 
     },

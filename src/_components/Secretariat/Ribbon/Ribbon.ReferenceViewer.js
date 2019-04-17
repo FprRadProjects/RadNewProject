@@ -16,6 +16,7 @@ import {
 import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 
 import { toast } from 'react-toastify';
+import { NewReferral } from '../RecordsPage/Referral.New';
 var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: {} };
 
 class RibbonReferenceViewer extends Component {
@@ -26,8 +27,9 @@ class RibbonReferenceViewer extends Component {
             ...this.state,
             ReferenceViewermodal: false,
             HideElementListmodal: false,
+            Referralmodal: false,
             backdrop: "static",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal"
+            modalClass: "modal-dialog-centered modal-xl r-modal"
         };
 
     }
@@ -55,6 +57,12 @@ class RibbonReferenceViewer extends Component {
     toggleReferenceViewer() {
         this.setState(prevState => ({
             ReferenceViewermodal: !prevState.ReferenceViewermodal
+        }));
+
+    }
+    toggleReferral() {
+        this.setState(prevState => ({
+            Referralmodal: !prevState.Referralmodal
         }));
 
     }
@@ -119,8 +127,8 @@ class RibbonReferenceViewer extends Component {
         clearSaveParams();
     }
     ConfirmationHandle = (e) => {
-        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params, 
-            clearSaveParams,RefreshParentForm, SaveParams } = this.props;
+        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params,
+            clearSaveParams, RefreshParentForm, SaveParams } = this.props;
         ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         ConfirmParams["Form"] = formname;
@@ -150,6 +158,12 @@ class RibbonReferenceViewer extends Component {
         });
         clearSaveParams();
     }
+    ReferralHandle() {
+        this.setState({
+            Referralmodal: true,
+        });
+    }
+
     rebuildHandle() {
         const { RebuildWork, WorkInfo, RefreshParentForm, FetchWorkInfo, Params } = this.props;
         RebuildWork(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
@@ -164,16 +178,16 @@ class RibbonReferenceViewer extends Component {
             HideElementListmodal: !prevState.HideElementListmodal
         }));
     }
-    
+
     CloseleSelectFlowResult = (e) => {
         this.setState({
             FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
         });
     }
-    
+
     render() {
-        const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements,EditedElements,RefreshParentForm ,ParentForm
-            ,FetchWorkInfo
+        const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements, EditedElements, RefreshParentForm, ParentForm
+            , FetchWorkInfo
         } = this.props;
         return (
             <div>
@@ -222,6 +236,22 @@ class RibbonReferenceViewer extends Component {
                                     </div>
                                 </div>
                             </div>
+                            <div className="tab-panel-group">
+                                <div className="tab-group-caption">عملیات</div>
+                                <div className="tab-group-content">
+                                    <div className="tab-content-segment">
+                                        <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
+                                            DeletedElements={DeletedElements}
+                                            Id="referral"
+                                            handleClick={this.ReferralHandle.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="Referral"
+                                        />
+
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -248,6 +278,12 @@ class RibbonReferenceViewer extends Component {
                                             ShortKey={ShortKeys[keyName]} Id="rebuild" />
                                     )
                                 }
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-rebuild") {
+                                    return (
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.rebuildHandle.bind(this)}
+                                            ShortKey={ShortKeys[keyName]} Id="rebuild" />
+                                    )
+                                }
                             })}
                         </ul>
                     </MenuProvider>
@@ -261,11 +297,17 @@ class RibbonReferenceViewer extends Component {
                     WorkInfo={WorkInfo}
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
-                          {this.state.FlowResultSelectmodal &&
-                                    <ConfirmFlow ParentForm={ParentForm}
-                                        flowResultSelectModal={this.state.FlowResultSelectmodal}
-                                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
-                                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} FetchWorkInfo={FetchWorkInfo}/>}
+                {this.state.FlowResultSelectmodal &&
+                    <ConfirmFlow ParentForm={ParentForm}
+                        flowResultSelectModal={this.state.FlowResultSelectmodal}
+                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
+                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} FetchWorkInfo={FetchWorkInfo} />}
+
+                {this.state.Referralmodal &&
+                    <NewReferral modal={this.state.Referralmodal}
+                    toggle={this.toggleReferral.bind(this)}
+                    FormId={FormInfo.fm_dabir_natije_erja.id} />
+                }
             </div>
         );
     }
@@ -311,8 +353,8 @@ function mapStateToProps(state) {
         lang,
         WorkInfo,
         ShortKeys: ShortKeys340,
-        DeletedElements:DeletedElements340,
-        EditedElements:EditedElements340
+        DeletedElements: DeletedElements340,
+        EditedElements: EditedElements340
     };
 }
 

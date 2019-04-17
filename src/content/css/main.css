@@ -34846,7 +34846,15 @@ i.icon.rebuild {
 i.icon.save {
     background-image: url(../images/Ribbon/save.svg);
 }
-
+i.icon.referral {
+    background-image: url(../images/Ribbon/referral.svg);
+}
+i.icon.attachments {
+    background-image: url(../images/Ribbon/attachments.svg);
+}
+i.icon.save-referral {
+    background-image: url(../images/Ribbon/save.svg);
+}
 .modal-form-action {
     display: flex;
     padding: 20px 0;
@@ -35117,4 +35125,107 @@ i.icon.save {
 
 .referral-result-modal {
     padding: 20px;
+}
+.referral-modal {
+    padding: 20px;
+}
+.r-referral-modal .modal-footer{
+    display:flex;
+    justify-content: flex-start;
+    border:none;
+    padding-top: 0;
+}
+.r-referral-modal .authority{
+    display:flex;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.r-referral-modal .modal-footer h4{
+    font-size: 14px;
+    text-align: right;
+}
+.r-referral-modal .modal-footer h4:before{
+    content:"";
+    position:relative;
+    display:inline-block;
+    width:8px;
+    height:8px;
+    background-color:#3E53FC;
+    margin:0 10px;
+}
+.r-referral-modal .modal-footer .card {
+    margin: 0;
+    box-shadow: none;
+}
+
+.r-referral-modal .modal-footer .card .card-header {
+    text-align: center;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    border-left: 1px solid #ddd;
+}
+
+
+.r-referral-modal .modal-footer .card-header i {
+    width: 45px;
+    height: 45px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+.r-referral-modal .modal-footer .card-header i.done-work {
+    background-image: url(../images/modal-filter/done-work-icon.svg);
+}
+
+.r-referral-modal .modal-footer .card .card-body{
+    padding: 10px;
+    text-align: center;
+}
+.rtl .r-referral-modal .modal-footer .card .card-body .radio label::before {
+    margin: 0 -5px;
+    border-width: 2px;
+    border-color: #39a2ff;
+    width: 13px;
+    height: 13px;
+    top: 3px;
+}
+
+
+.rtl .r-referral-modal .modal-footer .card .card-body .radio label::after {
+    margin: 0 -5px;
+    background-color: #39a2ff;
+    width: 5px;
+    height: 5px;
+    top: 7px;
+    right: 4px;
+}
+.rtl .r-referral-modal .modal-footer .card .card-body .radio input[type="radio"]:checked+label::before {
+    border-color: #d9d9d9;
+}
+.r-referral-modal .authority-toggle{
+    height:40px;
+    background-color:#999999;
+    border-radius: 0 0 15px 15px;
+    position: relative;
+
+}
+.r-referral-modal .authority-toggle button{
+    height:40px;
+    width: 40px;
+    border-radius: 50%;
+    border:none;
+    position: absolute;
+    left:50%;
+    transform:translate(-50%);
+    background: #fff;
+    box-shadow: 0 0 0 10px #dbdbdb;
+    top:-10px;
+
+}
+.r-referral-modal .authority-toggle button.active{
+    top:20px;
 }

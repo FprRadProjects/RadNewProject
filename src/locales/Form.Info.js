@@ -1360,7 +1360,12 @@ export const FormInfo =
         fm_dabir_eghdam: {
             "id": 310,
             "form_name": "اقدام",
-            "sys_name": "fm_dabir_eghdam"
+            "sys_name": "fm_dabir_eghdam",
+            "fa_module_name1": "دبیرخانه",
+            "fa_module_name2": "",
+            "en_form_name": "Referral",
+            "en_module_name1": "Secretariat",
+            "en_module_name2": "",
         },
         fm_dabir_atf_name: {
             "id": 311,
