@@ -595,8 +595,8 @@ export function renders(config) {
     nodeEnter
         .append('text')
         .attr('class', getDepartmentClass)
-        .attr('x', 34)
-        .attr('y', avatarWidth + nodePaddingY * 1.2)
+        .attr('x', namePos.x + WidthForTitle)
+        .attr('y', avatarWidth + nodePaddingY * 1.3)
         .attr('dy', '.9em')
         .style('cursor', 'pointer')
         .style('fill', titleColor)
@@ -604,6 +604,8 @@ export function renders(config) {
         .style('font-size', 8)
         .attr('text-anchor', 'middle')
         .text(helpers.getTextForDepartment)
+        .style("text-anchor", "middle")
+
 
     // Person's Link
     // const nodeLink = nodeEnter

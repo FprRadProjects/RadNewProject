@@ -28,17 +28,17 @@ const departmentAbbrMap = {
 }
 
 export   function getTextForDepartment(datum) {
-  if (!datum.WorkInfo.department) {
+  if (!datum.WorkInfo.worker) {
     return ''
   }
 
-  const { department } = datum.WorkInfo
+  const { worker } = datum.WorkInfo
 
-  if (departmentAbbrMap[department]) {
-    return departmentAbbrMap[department].toUpperCase()
+  if (departmentAbbrMap[worker]) {
+    return departmentAbbrMap[worker].toUpperCase()
   }
 
-  return datum.WorkInfo.department.substring(0, 3).toUpperCase()
+  return datum.WorkInfo.worker.substring(0, 3).toUpperCase()
 }
 
 export  function getCursorForNode(datum) {
