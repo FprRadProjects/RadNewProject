@@ -185,9 +185,19 @@ class OrgChart extends PureComponent {
     }
 
     componentDidMount() {
-        const {id, data, ...options} = this.props
 
-        this.init({id: `#${id}`, data, lineType: 'angle'})
+        const {id, data,currentId} = this.props
+
+
+        this.init({id: `#${id}`, data,  lineType: 'angle'})
+
+
+
+        setTimeout(() => {
+            document.getElementById(currentId).setAttribute('stroke', '#3C69F7');
+            document.getElementById(currentId).setAttribute('stroke-width', 5);
+        }, 100)
+
         // console.log(JSON.stringify(data, null, 4) )
         // setTimeout(()=>        this.init({id: `#${id}`, data, lineType: 'angle'}) ,5000)
 

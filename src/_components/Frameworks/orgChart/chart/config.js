@@ -6,7 +6,7 @@ const nodeWidth = 115
 const nodeHeight = 60
 
 const SquareWidth =100
-const SquareHeight = 60
+const SquareHeight = 65
 
 const nodeSpacing = 6
 const nodePaddingX = 16

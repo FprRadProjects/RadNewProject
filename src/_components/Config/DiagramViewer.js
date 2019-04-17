@@ -27,7 +27,7 @@ class DiagramViewer extends Component {
 
 
     render() {
-        const { modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm ,fetchData,WorkInfo_Diagram} = this.props;
+        const { modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm ,fetchData,WorkInfo_Diagram,SelectedRow} = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -45,7 +45,7 @@ class DiagramViewer extends Component {
                     <ModalHeader toggle={toggle}>دیاگرام</ModalHeader>
                     <ModalBody>
 
-                        <OrgChart data={WorkInfo_Diagram}/>
+                        <OrgChart data={WorkInfo_Diagram} currentId={SelectedRow.peygir_id}/>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="primary" onClick={this.toggleDiagram.bind(this)}></Button>
