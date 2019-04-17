@@ -1,4 +1,4 @@
-import {WorkAccess_service} from "../../../../_services";
+import {WorkAccess_service} from "../../../../_webservices";
 import {CommonConstant as Constant} from "../../../../_constants/";
 import {alertActions} from "../../../index";
 import { toast } from 'react-toastify';

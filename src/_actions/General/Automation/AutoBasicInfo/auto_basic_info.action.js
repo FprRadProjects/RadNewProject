@@ -1,4 +1,4 @@
-import { AutoBasicInfo_service, ProjectsInfo_service } from "../../../../_services";
+import { AutoBasicInfo_service, ProjectsInfo_service } from "../../../../_webservices";
 import { AutoBasicInfoConstant as constant } from "../../../../_constants";
 import { toast } from 'react-toastify';
 import {

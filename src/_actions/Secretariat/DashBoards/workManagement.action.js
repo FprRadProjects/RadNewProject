@@ -1,4 +1,4 @@
-import {Service_Dashboard} from "../../../_services";
+import {Service_Dashboard} from "../../../_webservices";
 import {DashBoardConstant} from "../../../_constants";
 import {loadingActions} from "../../../_actions";
 

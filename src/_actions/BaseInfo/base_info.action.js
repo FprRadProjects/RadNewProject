@@ -1,6 +1,6 @@
 import {BasicInfoConstant} from "../../_constants";
 import {alertActions, loadingActions, userActions} from "../index";
-import {BasicInfo_service} from "../../_services"
+import {BasicInfo_service} from "../../_webservices"
 import {history} from "../../_helpers";
 import { toast } from 'react-toastify';
 

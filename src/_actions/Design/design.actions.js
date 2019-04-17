@@ -1,5 +1,5 @@
 import {designConstant as constants} from '../../_constants';
-import {designService} from '../../_services'
+import {designService} from '../../_webservices'
 import {alertActions} from "../Alert";
 import {loadingActions} from "../Loading";
 import {history} from "../../_helpers";

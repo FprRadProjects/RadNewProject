@@ -1,4 +1,4 @@
-import { BasicInfo_service, WorkActions_service } from "../../../../_services";
+import { BasicInfo_service, WorkActions_service } from "../../../../_webservices";
 import {
     loadingActions, userActions
 } from "../../../index";

@@ -1,5 +1,5 @@
 import {mainpageConstant as constants} from '../../_constants';
-import {mainpageService} from '../../_services'
+import {mainpageService} from '../../_webservices'
 import {alertActions} from "../Alert";
 import {loadingActions} from "../Loading";
 import {history} from "../../_helpers";

@@ -1,4 +1,4 @@
-import { WorkBasic_service } from "../../../../_services";
+import { WorkBasic_service } from "../../../../_webservices";
 import { alertActions } from "../../../Alert";
 import { loadingActions } from "../../../Loading";
 import { AutoBasicInfoConstant,AutoWorkBasicConstant } from "../../../../_constants";

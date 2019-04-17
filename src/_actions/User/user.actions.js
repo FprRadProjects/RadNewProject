@@ -1,5 +1,5 @@
 import { userConstants } from '../../_constants';
-import { userService } from '../../_services';
+import { userService } from '../../_webservices';
 import { alertActions } from '..';
 import { toast } from 'react-toastify';
 import {

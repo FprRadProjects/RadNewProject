@@ -1,4 +1,4 @@
-import {ProjectsInfo_service} from "../../../_services";
+import {ProjectsInfo_service} from "../../../_webservices";
 import {alertActions} from "../../index";
 import { toast } from 'react-toastify';
 import {BasicInfoConstant, CommonContants, ProjectInfoConstant as constant} from "../../../_constants";
