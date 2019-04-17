@@ -51,7 +51,7 @@ class References extends Component {
         localStorage.setItem("MasterFormInfo", JSON.stringify( FormInfo.fm_dabir_kartabl_erjaat));
 
     }
-   
+
     toggleFilter() {
         this.setState(prevState => ({
             toggleFilter: !prevState.toggleFilter
@@ -137,7 +137,7 @@ class References extends Component {
                 <div className="col-sm-12">
                     <div className="r-main-box">
                         <div className="r-main-box__ribbon sticky-top">
-                            <RibbonReferences FetchData={FetchData.bind(this)} Params={Params}  
+                            <RibbonReferences FetchData={FetchData.bind(this)} Params={Params}
                             SelectedRow={this.state.SelectedRow}  />
                             <div className="r-main-box__filter">
                                 <Button color="" className="r-main-box__filter--btn"
@@ -157,7 +157,7 @@ class References extends Component {
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
                                           rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
-                                          UrlParams={Params} fetchData={FetchData.bind(this)} SelectRow={this.SelectRow.bind(this)} 
+                                          UrlParams={Params} fetchData={FetchData.bind(this)} SelectRow ={this.SelectRow.bind(this)}
                                           currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>

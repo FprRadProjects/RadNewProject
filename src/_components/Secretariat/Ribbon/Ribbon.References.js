@@ -8,6 +8,7 @@ import { RibbonButton, ShortKeyButton } from "../../Config";
 import { HideElementListModal } from "../../Basic";
 import {
     design_Actions,
+
     BasicInfo_action, WorkActions_action
     , WorkAccess_action, WorkBasic_action
 } from "../../../_actions";
@@ -45,28 +46,29 @@ class RibbonReferences extends Component {
                         ReferenceViewermodal: !this.state.ReferenceViewermodal
                     });
                 }
-               
+
             });
         } else
         toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
     OpenDiagramViewer() {
-        const { SelectedRow, SetLog, lang, SeenWork } = this.props;
-        if (SelectedRow !== undefined) {
-            let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
-            SetLog(formName);
-            SeenWork(SelectedRow.peygir_id);
-            this.setState({
-                DiagramModal: !this.state.DiagramModal
-            });
-        }
-        else
-            this.setState({
-                DiagramModal: !this.state.DiagramModal
-            });
-        toast.warn(this.context.t("msg_No_Select_Row"));
 
+
+        const { SelectedRow, SetLog, lang, SeenWork, GetWorkInfo,workDiagram } = this.props;
+        if (SelectedRow !== undefined) {
+            workDiagram(SelectedRow.peygir_id).then(data => {
+                let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
+                SetLog(formName);
+                SeenWork(SelectedRow.peygir_id);
+                this.setState({
+                    DiagramModal: !this.state.DiagramModal
+                });
+
+            });
+
+        }  else
+    toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
     toggleReferenceViewer() {
@@ -128,7 +130,12 @@ class RibbonReferences extends Component {
         }));
     }
     render() {
-        const { SelectedRow, FetchData, Params, ShortKeys, DeletedElements, EditedElements } = this.props;
+
+        const {  SelectedRow , FetchData, Params, ShortKeys, Design ,FetchDataDiagram} = this.props;
+        const { DeletedElements } = Design !== undefined ? Design : {};
+        const { EditedElements } = Design !== undefined ? Design : {};
+
+
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -446,8 +453,11 @@ class RibbonReferences extends Component {
 
                 </nav>
 
+
                 {this.state.DiagramModal && <DiagramViewer modal={this.state.DiagramModal}
-                    toggle={this.toggleDiagramViewer.bind(this)} />}
+                    toggle={this.toggleDiagramViewer.bind(this)}
+                                                           SelectedRow={SelectedRow}/>}
+
 
 
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
@@ -468,6 +478,10 @@ class RibbonReferences extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
+    workDiagram:(Params)=> {
+        return dispatch(WorkBasic_action.workDiagram(Params))
+    }
+    ,
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
@@ -498,6 +512,7 @@ RibbonReferences.contextTypes = {
 function mapStateToProps(state) {
     const { lang } = state.i18nState
     const { ShortKeys342 } = state.Design;
+
     const { DeletedElements342 } = state.Design !== undefined ? state.Design : {};
     const { EditedElements342 } = state.Design !== undefined ? state.Design : {};
     return {
@@ -505,6 +520,7 @@ function mapStateToProps(state) {
         ShortKeys: ShortKeys342,
         DeletedElements: DeletedElements342,
         EditedElements: EditedElements342
+
     };
 }
 

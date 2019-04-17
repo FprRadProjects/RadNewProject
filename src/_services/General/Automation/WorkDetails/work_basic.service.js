@@ -5,7 +5,8 @@ const _Config =JSON.parse(localStorage.getItem("_Config"));
 export const WorkBasic_service = {
     GetWorkInfo,
     FlowResultListOnWork,
-    ReviewWorkConfirmList
+    ReviewWorkConfirmList,
+    workDiagram
 };
 
 //Get "peygir_id" //Returns true-false
@@ -47,3 +48,20 @@ function ReviewWorkConfirmList(params) {
     }
     return Promise.reject('No')
 }
+
+function workDiagram(params) {
+
+    var formData = new FormData();
+    formData.append('peygir_id', params);
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(_Config.BaseUrl + "WorkDiagram", formData)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+
