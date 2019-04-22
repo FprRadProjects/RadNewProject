@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import {LoadScript} from '../LoadExternal';
-// import '../../../frameworks/stimulsoft/stimulsoft.viewer.office2013.whiteblue.css';
-// import radreporter from 'radreporter'
+import {LoadScript} from '../LoadExternal';
+import '../../../content/css/stimulsoft.viewer.office2013.whiteblue.css';
+
 
 class ReportView extends React.Component {
 
