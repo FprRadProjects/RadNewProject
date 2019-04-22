@@ -12,7 +12,7 @@ import PropTypes from "prop-types"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FormInfo } from "../../../locales";
 import { RibbonReferences } from '../Ribbon/Ribbon.References';
-
+import {ReportView} from '../../Frameworks/Stimulsoft/ReportView'
 var currencyColumns = [];
 var hiddenColumnNames = ['done', 'id_tel', 'olaviyat', 'cuser',
     'c_date', 'tarikh', 'fok', 'mtarikh', 'see_date', 'fok', 'c_time', 'wt_id',
@@ -133,6 +133,7 @@ class workManagement extends Component {
 
 
         return (
+
             <div className="row">
                 <div className="col-sm-12">
                     <div className="r-main-box">
