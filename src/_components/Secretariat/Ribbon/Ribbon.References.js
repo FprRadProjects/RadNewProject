@@ -91,6 +91,17 @@ class RibbonReferences extends Component {
     refreshClick() {
         const { FetchData, Params } = this.props;
         Params.mark = "0";
+        Params.page = 0;
+        Params.filter = [];
+        Params.pagesize = 0;
+        Params.seen = 2;
+        Params.done = 0;
+        Params.date = 0;
+        Params.worker = 0;
+        Params.direction = "desc";
+        Params.orderby = "tarikhaction";
+        Params.calendar = "";
+        Params.calendar = "";
         FetchData(Params);
     }
     setToMarkClick() {
@@ -122,6 +133,7 @@ class RibbonReferences extends Component {
     markViewerClick() {
         const { FetchData, Params } = this.props;
         Params.mark = "1";
+        Params.page = 0;
         FetchData(Params);
     }
     controlpanelClick() {
@@ -131,10 +143,8 @@ class RibbonReferences extends Component {
     }
     render() {
 
-        const { SelectedRow, FetchData, Params, ShortKeys, Design, FetchDataDiagram } = this.props;
-        const { DeletedElements } = Design !== undefined ? Design : {};
-        const { EditedElements } = Design !== undefined ? Design : {};
 
+        const {  SelectedRow , FetchData, Params, ShortKeys, DeletedElements, EditedElements} = this.props;
 
         return (
             <div>
