@@ -120,7 +120,7 @@ class NewReferral extends Component {
                                                         <div className="input-group my-2">
                                                             <div className="input-group-prepend">
                                                                 <Button color="primary"
-                                                                    onClick={this.OpenReferralTo.bind(this)}>{this.context.t("ReferralTo")}</Button>
+                                                                    onClick={this.OpenReferralTo.bind(this)}>...</Button>
                                                             </div>
                                                             <input type="text" autoComplete="off" className="form-control" />
                                                         </div>
