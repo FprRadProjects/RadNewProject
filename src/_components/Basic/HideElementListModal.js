@@ -6,6 +6,9 @@ import PropTypes from "prop-types"
 import { GridComponent } from "../Config/GridComponent";
 import { toast } from 'react-toastify';
 
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
 var currencyColumns = [];
 var hiddenColumnNames = [];
 var booleanColumns = ["IsPublic"];
@@ -38,10 +41,25 @@ class HideElementListModal extends Component {
         const { FormId, Delete_HideElements_Template, GetHideElementsList } = this.props;
         let row = this.state.row;
         if (row !== undefined) {
-            Delete_HideElements_Template(FormId, row.Id).then(data => {
-                if (data.status) {
-                    GetHideElementsList(Params);
-                }
+            confirmAlert({
+                title: 'بازگشت کنترل به صفحه',
+                message: 'آیا از بازگشت کنترل به صفحه اطمینان دارید؟',
+                buttons: [
+                    {
+                        label: 'بله',
+                        onClick: () => {
+                            Delete_HideElements_Template(FormId, row.Id).then(data => {
+                                if (data.status) {
+                                    GetHideElementsList(Params);
+                                }
+                            });
+                        }
+                    },
+                    {
+                        label: 'خیر',
+                        // onClick: () => alert('Click No')
+                    }
+                ]
             });
         }
         else

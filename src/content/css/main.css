@@ -29338,8 +29338,8 @@ body .page-wrapper .page-body-wrapper .page-sidebar.native-image-bg .sidebar-use
 }
 
 .rtl .page-wrapper .sidebar-close .page-sidebar {
-    -webkit-transform: translate(100%);
-    transform: translate(100%);
+    -webkit-transform: translate(500px);
+    transform: translate(500px);
 }
 
 @media only screen and (max-width: 1199px) {
@@ -35223,9 +35223,70 @@ i.icon.save-referral {
     transform:translate(-50%);
     background: #fff;
     box-shadow: 0 0 0 10px #dbdbdb;
-    top:-10px;
+    top:-20px;
+    cursor: pointer;
 
 }
 .r-referral-modal .authority-toggle button.active{
     top:20px;
+}
+.r-referral-modal .authority-toggle button:focus{
+    border:none;
+    outline: none;
+}
+.dropdown.ltr .dropdown-menu{
+    right:auto;
+    left:0;
+    
+}
+.r-main-box__controlpanel .dropdown-item{padding: .25rem .5rem;cursor: pointer;}
+.r-main-box__controlpanel .dropdown-item:focus,.r-main-box__controlpanel .dropdown-item:active{color: #fff;}
+
+.r-main-box__controlpanel--action + .dropdown-menu:before {
+    content: "";
+    height: 4px;
+    background-color: rgb(27, 37, 92);
+    bottom: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+.r-main-box__controlpanel--action + .dropdown-menu:after {
+    content: "";
+    width: 0;
+    height: 0;
+    border-color: transparent transparent rgb(27, 37, 92);
+    border-style: solid;
+    border-width: 0 8px 8px;
+    position: absolute;
+    bottom: 100%;
+    margin-bottom: 2px;
+    left: 1px;
+}
+.r-main-box__controlpanel--action:after{
+    display: none;
+}
+.r-modal .r-main-box__controlpanel--action + .dropdown-menu:before{
+    background-color: rgb(158, 158, 158);
+
+}
+.r-modal .r-main-box__controlpanel--action + .dropdown-menu:after{
+    border-bottom-color: rgb(158, 158, 158);
+}
+.r-main-box__controlpanel .dropdown-menu{
+    font-size: .8rem;
+    padding: 5px 0;
+    border-radius: 0;
+    border:0;
+    box-shadow: 0 2px 9px 0 hsla(0,0%,44.3%,.32);
+    margin-top: 10px;
+}
+.dx-g-bs4-toolbar .btn-outline-secondary{
+    color:#3d63f9;
+}
+.dx-g-bs4-toolbar .btn-outline-secondary:hover,
+.dx-g-bs4-toolbar .btn-outline-secondary:focus,
+.dx-g-bs4-toolbar .btn-outline-secondary:active{
+    background-color:#3d63f9!important;
+    color:#fff;
 }

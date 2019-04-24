@@ -105,6 +105,9 @@ export const translations = {
         ReferralWork:"ارجاع کار",
         CopyWorkForm:"کپی فرم کار",
         NoWorkout:"بدون گردش",
+        ReportsList:"لیست گزارشات",
+        LabelManagement:"مدیریت برچسب ها",
+        DeletedControlManagement:"مدیریت حذف کنترل ها",
 
         //---------------اقدام------------------شروع
         logout: 'خروج',
@@ -276,6 +279,10 @@ export const translations = {
         ReferralWork:"Referral work",
         CopyWorkForm:"Copy work form",
         NoWorkout:"No workout",
+        ReportsList:"Reports",
+        LabelManagement:"Label Management",
+        DeletedControlManagement:"Deleted Control Management",
+
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',

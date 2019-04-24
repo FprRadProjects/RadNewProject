@@ -36,19 +36,20 @@ $(document).on('click', '.ellipsis', function (e) {
 
 $(document).on('change', '#sidebar-toggle', function (e) {
     if ($(this).is(":checked"))
-        $(".tab-content").hide();
+        $(this).parent().parent().nextAll(".tab-content").hide();
     else
-        $(".tab-content").show();
+        $(this).parent().parent().nextAll(".tab-content").show();
 });
 $(document).on('click', '.js-authority-toggle-btn', function (e) {
     var $box = $(this).parent().prev(".modal-footer");
-    if($box.css('display') == 'none')
-    {
+    if ($box.css('display') == 'none') {
         $box.show();
+        $box.prev().removeClass("pb-3");
         $(this).addClass("active");
     }
-    else{
+    else {
         $box.hide();
+        $box.prev().addClass("pb-3");
         $(this).removeClass("active");
     }
 
@@ -99,7 +100,9 @@ $(document).on('click', '.sidebar-menu li a', function (e) {
     }
     //add n
 });
-
+$(document).on('click', '.dropdown-toggle', function () {
+    $(this).next('.dropdown-menu').toggleClass('show');
+});
 $(document).ready(function () {
     if ($(window).width() <= 991) {
         $(".sidebar-toggle input").prop('checked', true);
@@ -110,4 +113,5 @@ $(document).ready(function () {
             $(".page-sidebar").addClass("page-sidebar-open");
         }
     });
+
 });

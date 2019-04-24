@@ -49,13 +49,13 @@ class RibbonReferences extends Component {
 
             });
         } else
-        toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
     OpenDiagramViewer() {
 
 
-        const { SelectedRow, SetLog, lang, SeenWork, GetWorkInfo,workDiagram } = this.props;
+        const { SelectedRow, SetLog, lang, SeenWork, GetWorkInfo, workDiagram } = this.props;
         if (SelectedRow !== undefined) {
             workDiagram(SelectedRow.peygir_id).then(data => {
                 let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
@@ -67,8 +67,8 @@ class RibbonReferences extends Component {
 
             });
 
-        }  else
-    toast.warn(this.context.t("msg_No_Select_Row"));
+        } else
+            toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
     toggleReferenceViewer() {
@@ -131,7 +131,7 @@ class RibbonReferences extends Component {
     }
     render() {
 
-        const {  SelectedRow , FetchData, Params, ShortKeys, Design ,FetchDataDiagram} = this.props;
+        const { SelectedRow, FetchData, Params, ShortKeys, Design, FetchDataDiagram } = this.props;
         const { DeletedElements } = Design !== undefined ? Design : {};
         const { EditedElements } = Design !== undefined ? Design : {};
 
@@ -145,8 +145,18 @@ class RibbonReferences extends Component {
                     </label>
                 </div>
                 <div className="r-main-box__controlpanel">
-                    <a className="r-main-box__controlpanel--action"
-                        title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}></a>
+
+                    <div class="dropdown ltr">
+                        <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                        <div className="dropdown-menu">
+                              <a className="dropdown-item"
+                                title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
+                                <a className="dropdown-item"
+                                title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
+                                <a className="dropdown-item"
+                                title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("ReportsList")}</a>
+                        </div>
+                    </div>
                 </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
                     <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">{this.context.t("Operations")}</a></li>
@@ -407,43 +417,43 @@ class RibbonReferences extends Component {
                                 if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.OpenReferenceViewer.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="referral-result" />
+                                            ShortKey={ShortKeys[keyName]} Id="referral-result" tooltip={this.context.t("ReferralResult")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-refresh-information") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.refreshClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="refresh-information" />
+                                            ShortKey={ShortKeys[keyName]} Id="refresh-information" tooltip={this.context.t("RefreshInformation")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-marks") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.markViewerClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="marks" />
+                                            ShortKey={ShortKeys[keyName]} Id="marks" tooltip={this.context.t("Marks")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-remove-mark") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.deleteFromMarkClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="remove-mark" />
+                                            ShortKey={ShortKeys[keyName]} Id="remove-mark" tooltip={this.context.t("RemoveMark")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-marking") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.setToMarkClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="marking" />
+                                            ShortKey={ShortKeys[keyName]} Id="marking" tooltip={this.context.t("Marking")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-follow-up-diagram") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="follow-up-diagram" />
+                                            ShortKey={ShortKeys[keyName]} Id="follow-up-diagram" tooltip={this.context.t("FollowUpDiagram")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-diagram") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="diagram" />
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.OpenDiagramViewer.bind(this)}
+                                            ShortKey={ShortKeys[keyName]} Id="diagram" tooltip={this.context.t("Diagram")} />
                                     )
                                 }
                             })}
@@ -456,7 +466,7 @@ class RibbonReferences extends Component {
 
                 {this.state.DiagramModal && <DiagramViewer modal={this.state.DiagramModal}
                     toggle={this.toggleDiagramViewer.bind(this)}
-                                                           SelectedRow={SelectedRow}/>}
+                    SelectedRow={SelectedRow} />}
 
 
 
@@ -465,8 +475,6 @@ class RibbonReferences extends Component {
                     SelectedRow={SelectedRow}
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
-
-
 
                 {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
                     toggle={this.controlpanelClick.bind(this)}
@@ -478,7 +486,7 @@ class RibbonReferences extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-    workDiagram:(Params)=> {
+    workDiagram: (Params) => {
         return dispatch(WorkBasic_action.workDiagram(Params))
     }
     ,

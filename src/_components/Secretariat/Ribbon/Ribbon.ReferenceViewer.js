@@ -198,8 +198,18 @@ class RibbonReferenceViewer extends Component {
                     </label>
                 </div>
                 <div className="r-main-box__controlpanel">
-                    <a className="r-main-box__controlpanel--action"
-                        title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
+
+                <div class="dropdown ltr">
+                        <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                        <div className="dropdown-menu">
+                        <a className="dropdown-item"
+                                title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
+                                <a className="dropdown-item"
+                                title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
+                                <a className="dropdown-item"
+                                title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("ReportsList")}</a>
+                        </div>
+                    </div>
                 </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
                     <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">عملیات</a></li>
@@ -263,25 +273,25 @@ class RibbonReferenceViewer extends Component {
                                 if (ShortKeys[keyName].Element === "ShortKeyicon-confirmation") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.ConfirmationHandle.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="confirmation" />
+                                            ShortKey={ShortKeys[keyName]} Id="confirmation" tooltip={this.context.t("Confirmation")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-save") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.saveHandle.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="save" />
+                                            ShortKey={ShortKeys[keyName]} Id="save" tooltip={this.context.t("Save")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-rebuild") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.rebuildHandle.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="rebuild" />
+                                            ShortKey={ShortKeys[keyName]} Id="rebuild" tooltip={this.context.t("Rebuild")} />
                                     )
                                 }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-rebuild") {
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-referral") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.rebuildHandle.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="rebuild" />
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.ReferralHandle.bind(this)}
+                                            ShortKey={ShortKeys[keyName]} Id="referral" tooltip={this.context.t("Referral")} />
                                     )
                                 }
                             })}

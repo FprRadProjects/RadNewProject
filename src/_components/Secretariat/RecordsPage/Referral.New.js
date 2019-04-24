@@ -279,7 +279,7 @@ class NewReferral extends Component {
                         </div>
                     </ModalFooter>
                     <div className="authority-toggle">
-                        <button type="button" className="js-authority-toggle-btn"></button>
+                        <button type="button" className="js-authority-toggle-btn active"></button>
                     </div>
                 </Modal>
             </div >

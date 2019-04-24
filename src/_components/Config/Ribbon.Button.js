@@ -34,8 +34,9 @@ class RibbonButton extends Component {
                 ) && <a id={"lnk-" + Id} onClick={handleClick.bind(this)} Description={this.context.t(Text)}
                     formid={FormId}
                 >
-                        <i formid={FormId} className={"icon " + Id} id={"icon-" + Id} element={"lnk-" + Id} Description={this.context.t(Text)}></i>
-                        <span formid={FormId} id={"lbl-" + Id} element={"lnk-" + Id} Description={this.context.t(Text)}
+                        <i formid={FormId} className={"icon " + Id} id={"icon-" + Id} element={"lnk-" + Id} 
+                        Description={this.context.t(Text)} title={this.context.t(Text)}></i>
+                        <span formid={FormId} id={"lbl-" + Id} element={"lnk-" + Id}  Description={this.context.t(Text)}
                             erowid={(EditedElements === undefined || EditedElements["lbl-" + Id] === undefined) ?
                                 0 : EditedElements["lbl-" + Id].Id}
                             public={(EditedElements === undefined || EditedElements["lbl-" + Id] === undefined) ?
