@@ -3,7 +3,7 @@ import { SelectDefaultTextModal } from "../../Basic/";
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
-import { WorkActions_action, AutoBasicInfo_action, WorkBasic_action } from "../../../_actions";
+import { WorkActions_action, AutoBasicInfo_action } from "../../../_actions";
 import { ComboSelectList, CalendarDatePicker } from "../../Config";
 import { toast } from 'react-toastify';
 var thisSaveParams = { form: "", data: [] };

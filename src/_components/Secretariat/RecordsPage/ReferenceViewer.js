@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 import { SelectProjectModal } from "../../Project/";
 import { SelectDefaultTextModal } from "../../Basic/";
 
-import { Act_Reference,WorkAccess_action,WorkBasic_action, design_Actions, WorkActions_action } from "../../../_actions";
+import { Act_Reference, WorkAccess_action, WorkBasic_action, design_Actions, WorkActions_action } from "../../../_actions";
 import { FormInfo } from "../../../locales";
 import { toast } from 'react-toastify';
 import { RibbonReferenceViewer } from '../Ribbon/Ribbon.ReferenceViewer';
@@ -27,9 +27,9 @@ class ReferenceViewer extends Component {
             modalClass: "modal-dialog-centered modal-xl r-modal"
         };
         this.SuccessSelectProject = this.SuccessSelectProject.bind(this);
-    
+
     }
-  
+
     OpenSelectProject = () => {
         const { WorkInfo, showError } = this.props;
         WorkAccess_action.CanSetProjectOnWork(WorkInfo.peygir_id).then(
@@ -73,7 +73,8 @@ class ReferenceViewer extends Component {
     OpenSelectDefaultText = (e) => {
         const { name } = e.target;
         const { WorkInfo, showError } = this.props;
-        WorkAccess_action.CanSetInfoOnWork(WorkInfo.peygir_id).then(data => {
+        WorkAccess_action.CanSetInfoOnWork(WorkInfo.peygir_id)
+        .then(data => {
             if (data.status)
                 this.setState({
                     SubjectSelectmodal: !this.state.SubjectSelectmodal,
@@ -82,11 +83,9 @@ class ReferenceViewer extends Component {
             else {
                 toast.error(data.error)
             }
-        },
-            error => {
-                toast.error(error)
-            }
-        );
+        }, error => {
+            toast.error(error)
+        });
     }
     CloseSelectDefaultText = (e) => {
         this.setState({
@@ -115,13 +114,13 @@ class ReferenceViewer extends Component {
 
     }
 
-   
+
 
 
     changeHandle = (e) => {
         const { WorkInfo } = this.props;
         const { name, value } = e.target;
-        
+
         if (!WorkInfo.done)
             SaveParams.data[[name]] = { [name]: value };
 
@@ -129,10 +128,10 @@ class ReferenceViewer extends Component {
     clearSaveParams = (e) => {
         SaveParams = { form: "", data: [] };
     }
-    
+
 
     render() {
-        const { FetchData,modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm, Design } = this.props;
+        const { FetchData, modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm, Design } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -150,7 +149,7 @@ class ReferenceViewer extends Component {
                     <ModalHeader toggle={toggle}>{this.context.t("ReferralResult")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                        <RibbonReferenceViewer clearSaveParams={this.clearSaveParams.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} FetchData={FetchData.bind(this)} Params={Params} />
+                            <RibbonReferenceViewer clearSaveParams={this.clearSaveParams.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} FetchData={FetchData.bind(this)} Params={Params} />
                         </div>
 
                         {/*<Button color="success"
@@ -386,9 +385,9 @@ class ReferenceViewer extends Component {
                                         toggle={this.CloseSelectDefaultText.bind(this)}
                                         Successtoggle={this.SuccessSelectSubject.bind(this)}
                                         id_tel={WorkInfo.id_tel} />}
-                          
+
                             </div>}
-                            <style>{modalBackDrop}</style>
+                        <style>{modalBackDrop}</style>
                     </ModalBody>
                     {/* <ModalFooter>
                         <Button color="primary" className="ml-2"

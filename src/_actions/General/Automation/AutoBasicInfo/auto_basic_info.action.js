@@ -2,21 +2,40 @@ import { AutoBasicInfo_service, ProjectsInfo_service } from "../../../../_webser
 import { AutoBasicInfoConstant as constant } from "../../../../_constants";
 import { toast } from 'react-toastify';
 import {
-    loadingActions, userActions, common_Actions
-    , WorkBasic_action
-} from "../../../index";
-import { history } from "../../../../_helpers";
+    loadingActions, userActions} from "../../../index";
 
 export const AutoBasicInfo_action = {
     GetDefaultText,
     SelectAshkhasList,
     SelectWorkerList,
     SelectManagerList,
+    SelectWorkTypeList,
+    SelectPriorityList,
+    SelectRoleList,
     SayManagerOnWorkerWtype
 
 
 
 };
+
+function SelectRoleList() {
+    return dispatch => {
+        AutoBasicInfo_service.SelectRoleList()
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(SelectRoleListAddRows(data.data.rows));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
 
 
 function SayManagerOnWorkerWtype(worker_id, wt_id) {
@@ -40,6 +59,44 @@ function SayManagerOnWorkerWtype(worker_id, wt_id) {
     }
 }
 
+function SelectPriorityList() {
+    return dispatch => {
+        AutoBasicInfo_service.SelectPriorityList()
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(SelectPriorityListAddRows(data.data.rows));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
+
+
+function SelectWorkTypeList(Params) {
+    return dispatch => {
+        AutoBasicInfo_service.SelectWorkTypeList(Params)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(SelectWorkTypeListAddRows(data.data.rows));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
 
 function SelectManagerList(id_role, wt_id) {
     return dispatch => {
@@ -142,6 +199,16 @@ function SelectWorkerListAddRows(data) {
 
 function SelectAshkhasListAddRows(data) {
     return { type: constant.SELECT_ASHKHAS_LIST_SET_GRID_ROWS, data }
+}
+function SelectWorkTypeListAddRows(data) {
+    return { type: constant.SELECT_WORKTYPE_LIST_SET_GRID_ROWS, data }
+}
+
+function SelectPriorityListAddRows(data) {
+    return { type: constant.SELECT_PRIORITY_LIST_SET_GRID_ROWS, data }
+}
+function SelectRoleListAddRows(data) {
+    return { type: constant.SELECT_ROLE_LIST_SET_GRID_ROWS, data }
 }
 
 

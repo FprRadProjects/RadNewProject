@@ -7,9 +7,47 @@ export const AutoBasicInfo_service = {
     SelectAshkhasList,
     SelectWorkerList,
     SelectManagerList,
-    SayManagerOnWorkerWtype
+    SayManagerOnWorkerWtype,
+    SelectWorkTypeList,
+    SelectPriorityList,
+    SelectRoleList
 };
-
+function SelectRoleList() {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(_Config.BaseUrl + "SelectRoleList")
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+function SelectPriorityList() {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(_Config.BaseUrl + "SelectPriorityList")
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+function SelectWorkTypeList(Params) {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(_Config.BaseUrl + "SelectWorkTypeList",Params)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
 function SayManagerOnWorkerWtype(worker_id,wt_id) {
     if (UserConfig.GetToken() !== null) {
 

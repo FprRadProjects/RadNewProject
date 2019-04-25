@@ -41,6 +41,30 @@ export function Auto_BasicInfo(state = {}, action) {
             }),
             }
         }
+        case Constant.SELECT_WORKTYPE_LIST_SET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectWorkTypeList_rows:  Object.keys(action.data).map((item, index) => {
+                return  { value: action.data[item].id, label: action.data[item].wtype };
+            }),
+            }
+        }
+        case Constant.SELECT_PRIORITY_LIST_SET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectPriorityList_rows:  Object.keys(action.data).map((item, index) => {
+                return  { value: action.data[item].id, label: action.data[item].name };
+            }),
+            }
+        }
+        case Constant.SELECT_ROLE_LIST_SET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectRoleList_rows:  Object.keys(action.data).map((item, index) => {
+                return  { value: action.data[item].id_role, label: action.data[item].rolename };
+            }),
+            }
+        }
       
         
         default:

@@ -2,7 +2,9 @@ import {WorkAccess_service} from "../../../../_webservices";
 import {CommonConstant as Constant} from "../../../../_constants/";
 import {alertActions} from "../../../index";
 import { toast } from 'react-toastify';
-
+import {
+    loadingActions, userActions
+} from "../../../index";
 export const WorkAccess_action = {
     CheckAccess,
     CanSetInfoOnWork,
@@ -90,17 +92,24 @@ function CanAddWork(id_tel) {
 }
 
 
-function CanSubOnWork(peygir_id, id_tel) {
+function CanSubOnWork(peygir_id, id_tel,formname) {
     return dispatch => {
-
-        WorkAccess_service.CanSubOnWork(peygir_id, id_tel)
+        dispatch(loadingActions.ShowLoading());
+       return WorkAccess_service.CanSubOnWork(peygir_id, id_tel,formname)
             .then(
                 data => {
                     if (data.status) {
-                        dispatch(SUCCESS(data.status));
-                    } else {
-                        toast.error(data.error);
+                        dispatch(loadingActions.HideLoading());
                     }
+                    else if (data.code !== 0) {
+                        toast.error(data.error)
+                        dispatch(loadingActions.HideLoading());
+                    }
+                    else {
+                        userActions.logout();
+                        window.open('/',"_self");
+                    }
+                    return Promise.resolve(data)
                 },
                 error => {
                     toast.error(error);

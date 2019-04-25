@@ -86,13 +86,14 @@ function CanEditOnWork(peygir_id) {
 
 
 //Get "peygir_id" , "id_tel" , "type=raddf"//Returns true-false
-function CanSubOnWork(peygir_id , id_tel) {
+function CanSubOnWork(peygir_id , id_tel,formname) {
     if (UserConfig.GetToken() !== null) {
 
         var formData = new FormData();
         formData.append('peygir_id', peygir_id);
         formData.append('id_tel', id_tel);
         formData.append('type', 'raddf');
+        formData.append('formname', formname);
 
         return axios.post(_Config.BaseUrl + "CanAddOrSubOnWork", formData)
             .then(Response => {

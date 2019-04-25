@@ -171,6 +171,7 @@ export const translations = {
         frm_Insert_Draft_Letter_Issued:"ثبت پیش نویس نامه صادره",
         frm_Dashboard_Letters:"کارتابل نامه ها",
         frm_Referral:"ارجاع",
+        frm_SubWork:"کار فرعی",
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -347,6 +348,7 @@ export const translations = {
         frm_Insert_Draft_Letter_Issued:"Insert Draft Letter Issued",
         frm_Dashboard_Letters:"Dashboard Letters",
         frm_Referral:"Referral",
+        frm_SubWork:"Sub Work",
 
         //End-------------- FORM NAME --------------
 

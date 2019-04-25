@@ -11,7 +11,8 @@ import {
     Act_Reference,
     WorkBasic_action,
     design_Actions,
-    WorkActions_action
+    WorkActions_action,
+    WorkAccess_action
 } from "../../../_actions";
 import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 
@@ -159,9 +160,19 @@ class RibbonReferenceViewer extends Component {
         clearSaveParams();
     }
     ReferralHandle() {
-        this.setState({
-            Referralmodal: true,
-        });
+        const {  WorkInfo, CanSubOnWork } = this.props;
+        if (WorkInfo !== undefined) {
+            CanSubOnWork(WorkInfo.peygir_id, WorkInfo.id_tel,this.context.t("frm_SubWork")).then(data => {
+                if (data.status) {
+                    this.setState({
+                        Referralmodal: true,
+                    });
+                }
+            });
+        }
+        else
+            toast.warn(this.context.t("msg_No_Select_Row"));
+
     }
 
     rebuildHandle() {
@@ -199,14 +210,14 @@ class RibbonReferenceViewer extends Component {
                 </div>
                 <div className="r-main-box__controlpanel">
 
-                <div class="dropdown ltr">
+                    <div class="dropdown ltr">
                         <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                         <div className="dropdown-menu">
-                        <a className="dropdown-item"
+                            <a className="dropdown-item"
                                 title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
-                                <a className="dropdown-item"
+                            <a className="dropdown-item"
                                 title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
-                                <a className="dropdown-item"
+                            <a className="dropdown-item"
                                 title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("ReportsList")}</a>
                         </div>
                     </div>
@@ -315,8 +326,8 @@ class RibbonReferenceViewer extends Component {
 
                 {this.state.Referralmodal &&
                     <NewReferral modal={this.state.Referralmodal}
-                    toggle={this.toggleReferral.bind(this)}
-                    FormId={FormInfo.fm_dabir_natije_erja.id} />
+                        toggle={this.toggleReferral.bind(this)}
+                        FormId={FormInfo.fm_dabir_natije_erja.id} />
                 }
             </div>
         );
@@ -346,7 +357,11 @@ const mapDispatchToProps = dispatch => ({
 
     FetchWorkInfo: (peygir_id) => {
         dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
-    }
+    },
+    CanSubOnWork: (peygir_id,id_tel,formname) => {
+        return dispatch(WorkAccess_action.CanSubOnWork(peygir_id,id_tel,formname))
+    },
+    
 
 });
 RibbonReferenceViewer.contextTypes = {
