@@ -35333,3 +35333,7 @@ i.icon.save-referral {
 .custom-select__control--is-focused .custom-select__indicator{
     padding: 6px!important;
 }
+.ltr{
+    direction: ltr;
+    text-align:left;
+}

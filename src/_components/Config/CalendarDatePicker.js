@@ -47,6 +47,7 @@ class CalendarDatePicker extends Component {
             onChange={this.onChange('value')}
             margin="normal"
             style={{ width: '100%' }}
+            autoComplete="off"
           />
 
         </MuiThemeProvider>
