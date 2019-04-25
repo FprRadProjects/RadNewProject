@@ -11,6 +11,7 @@ import { FormInfo } from "../../../locales";
 import { toast } from 'react-toastify';
 import { RibbonNewReferral } from '../Ribbon/Ribbon.NewReferral';
 import { ComboSelectList, CalendarDatePicker } from "../../Config";
+import InputMask from 'react-input-mask';
 
 var SaveParams = { form: "", data: [] };
 
@@ -141,7 +142,7 @@ class NewReferral extends Component {
                                                 <div className="form-group row">
                                                     <label className="col-2 col-form-label">{this.context.t("ReferralDurationDate")}</label>
                                                     <div className="col-10">
-                                                        <CalendarDatePicker className="form-control my-2" id="acfas" fieldname="" CalendarChange={this.ReferralDurationDateChange.bind(this)} />
+                                                        <CalendarDatePicker className="form-control my-2 ltr" id="acfas" fieldname="" CalendarChange={this.ReferralDurationDateChange.bind(this)} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -149,7 +150,7 @@ class NewReferral extends Component {
                                                 <div className="form-group row">
                                                     <label className="col-2 col-form-label">{this.context.t("ReferralDurationTime")}</label>
                                                     <div className="col-10">
-                                                        <input type="text" autoComplete="off" className="form-control my-2" name=""
+                                                        <InputMask type="text" mask="99:99"  autoComplete="off" className="form-control my-2 ltr" name=""
 
                                                             onChange={this.ReferralDurationTimeHandle.bind(this)} />
                                                     </div>

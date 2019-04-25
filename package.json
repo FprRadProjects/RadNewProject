@@ -30,6 +30,7 @@
     "react-datepicker-persian": "^1.0.2",
     "react-dom": "^16.7.0",
     "react-files": "^2.4.8",
+    "react-input-mask": "^2.0.4",
     "react-loader-advanced": "^1.7.1",
     "react-persian-calendar": "^1.0.3",
     "react-persian-datepicker": "^3.0.2",

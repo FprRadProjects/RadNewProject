@@ -9,6 +9,7 @@ import { Act_Reference,WorkAccess_action,WorkBasic_action, design_Actions, WorkA
 import { FormInfo } from "../../../locales";
 import { toast } from 'react-toastify';
 import { RibbonReferenceViewer } from '../Ribbon/Ribbon.ReferenceViewer';
+import InputMask from 'react-input-mask';
 
 var SaveParams = { form: "", data: [] };
 
@@ -120,6 +121,7 @@ class ReferenceViewer extends Component {
     changeHandle = (e) => {
         const { WorkInfo } = this.props;
         const { name, value } = e.target;
+        
         if (!WorkInfo.done)
             SaveParams.data[[name]] = { [name]: value };
 
@@ -145,7 +147,7 @@ class ReferenceViewer extends Component {
             <div>
                 <Modal isOpen={modal} toggle={toggle} keyboard={false}
                     className={this.state.modalClass} backdrop={this.state.backdrop}>
-                    <ModalHeader toggle={toggle}>نتیجه ارجاع</ModalHeader>
+                    <ModalHeader toggle={toggle}>{this.context.t("ReferralResult")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
                         <RibbonReferenceViewer clearSaveParams={this.clearSaveParams.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} FetchData={FetchData.bind(this)} Params={Params} />
@@ -302,7 +304,7 @@ class ReferenceViewer extends Component {
                                                     <label className="col-4 col-form-label">{this.context.t("FileNumber")}</label>
                                                     <div className="col-8">
 
-                                                        <input type="text" autoComplete="off" className="form-control my-2" defaultValue={WorkInfo.shomare} name="shomare"
+                                                        <input type="text" autoComplete="off" className="form-control my-2 ltr" defaultValue={WorkInfo.shomare} name="shomare"
                                                             readOnly={WorkInfo.done ? true : false}
                                                             onChange={this.changeHandle.bind(this)} />
                                                     </div>
@@ -312,7 +314,7 @@ class ReferenceViewer extends Component {
                                                 <div className="form-group row">
                                                     <label className="col-4 col-form-label">{this.context.t("Code")}</label>
                                                     <div className="col-8">
-                                                        <input type="text" autoComplete="off" className="form-control my-2" onChange={this.changeHandle.bind(this)}
+                                                        <input type="text" autoComplete="off" className="form-control my-2 ltr" onChange={this.changeHandle.bind(this)}
                                                             readOnly={WorkInfo.done ? true : false}
                                                             defaultValue={WorkInfo.code} name="code" id="Code" />
                                                     </div>
@@ -322,7 +324,7 @@ class ReferenceViewer extends Component {
                                                 <div className="form-group row">
                                                     <label className="col-4 col-form-label">{this.context.t("Duration_Of_Work_Short")}</label>
                                                     <div className="col-8">
-                                                        <input type="text" autoComplete="off" className="form-control mb-2" name="modat_anjam_w" defaultValue={WorkInfo.modat_anjam_w}
+                                                        <InputMask type="text" autoComplete="off" mask="99999999" maskChar="" className="form-control mb-2 ltr" name="modat_anjam_w" value={WorkInfo.modat_anjam_w}
                                                             readOnly={WorkInfo.done ? true : false}
                                                             onChange={this.changeHandle.bind(this)} />
                                                     </div>
@@ -344,7 +346,6 @@ class ReferenceViewer extends Component {
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
