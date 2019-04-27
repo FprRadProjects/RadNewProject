@@ -108,7 +108,7 @@ class MultiSelectGridComponent extends React.PureComponent {
             filters: [],
             sorting: [],
             grouping: [],
-            pageSize: 10,
+            pageSize: Params.pageSize,
             pageSizes: [5, 10, 15],
             currencyColumns: currencyColumns,
             booleanColumns: booleanColumns,
@@ -269,7 +269,7 @@ class MultiSelectGridComponent extends React.PureComponent {
             pageSizes,
             filters,
             loading,
-            tableColumnExtensions,
+            pageSize,
             hiddenColumnNames,
             defaultColumnWidths,
             booleanColumns,
@@ -328,7 +328,7 @@ class MultiSelectGridComponent extends React.PureComponent {
                     <IntegratedFiltering />
                     <PagingState
                         defaultCurrentPage={0}
-                        defaultPageSize={8}
+                        defaultPageSize={pageSize}
                     />
                     <SelectionState
                         selection={selection}

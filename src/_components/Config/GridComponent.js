@@ -105,7 +105,7 @@ class GridComponent extends React.PureComponent {
             filters: [],
             sorting: [],
             grouping: [],
-            pageSize: 10,
+            pageSize: Params.pageSize,
             pageSizes: [5, 10, 15],
             currencyColumns: currencyColumns,
             booleanColumns: booleanColumns,
@@ -255,7 +255,8 @@ class GridComponent extends React.PureComponent {
             booleanColumns,
             columnOrder,
             booleanFilterOperations,
-            currencyFilterOperations
+            currencyFilterOperations,
+            pageSize
         } = this.state;
         if (this.props.rows !== undefined)
             rows = this.props.rows;
@@ -306,7 +307,7 @@ class GridComponent extends React.PureComponent {
                     <IntegratedFiltering />
                     <PagingState
                         defaultCurrentPage={0}
-                        defaultPageSize={8}
+                        defaultPageSize={pageSize}
                     />
                     <IntegratedPaging />
                     <Table rowComponent={this.TableRow}

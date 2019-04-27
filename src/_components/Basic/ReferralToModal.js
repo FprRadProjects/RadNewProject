@@ -27,14 +27,14 @@ class ReferralToModal extends Component {
             ...this.state,
             modal: false,
             SelectedWorkerRows: [],
-            modalClass: "modal-dialog-centered modal-xl r-modal r-referral-modal"
+            modalClass: "modal-dialog-centered modal-lg r-modal"
         };
 
     }
     componentDidMount() {
         const { SelectedWorkers } = this.props;
-        if(SelectedWorkers.length>0)
-        this.setState({ SelectedWorkerRows: SelectedWorkers })
+        if (SelectedWorkers.length > 0)
+            this.setState({ SelectedWorkerRows: SelectedWorkers })
 
     }
     SetReferralToRowData = (row) => {
@@ -117,39 +117,38 @@ class ReferralToModal extends Component {
         Params.id_role = id_roleSelected;
 
         return (
-            <div>
+            <Modal isOpen={modal}
+                className={this.state.modalClass}>
+                <ModalHeader>{this.context.t("ReferralTo")}</ModalHeader>
+                <ModalBody>
+                    <div className="referral-to-modal">
+                    <div className="row ">
+                        <div className="col-6 ">
+                            <Button color="primary" className="mb-2 mr-2" onClick={this.AddNewWorkers.bind(this, this.state.row)}>{this.context.t("Select")}</Button>{' '}
 
-                <div>
-                    <Modal isOpen={modal}
-
-                        className={this.state.modalClass}
-                    >
-                        <ModalHeader>{this.context.t("frm_Text_Defaults")}</ModalHeader>
-                        <ModalBody>
-                            <Button color="primary" onClick={this.AddNewWorkers.bind(this, this.state.row)}>{this.context.t("Select")}</Button>{' '}
                             <MultiSelectGridComponent columns={columns} booleanColumns={booleanColumns}
                                 rows={SelectWorkerGridList_rows} totalCount={0}
                                 UrlParams={Params} fetchData={SelectWorkerGridList.bind(this)}
-                                GetRowInfo={this.SetReferralToRowData} columnwidth={150}
+                                GetRowInfo={this.SetReferralToRowData} columnwidth={141}
                                 rowId="id_user"
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
+                        </div>
+                        <div className="col-6 ">
+                            <Button color="danger" className="mb-2 mr-2" onClick={this.DeleteOne.bind(this, this.state.addrow)}>{this.context.t("Delete")}</Button>
+                            <Button color="danger" className="mb-2 mr-2" onClick={this.DeleteAll.bind(this)}>{this.context.t("DeleteAll")}</Button>
+                            <Button color="secondary" className="mb-2 mr-2" onClick={ConfirmWorkers.bind(this, this.state.SelectedWorkerRows)}>{this.context.t("ConfirmAndClose")}</Button>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                 rows={this.state.SelectedWorkerRows} totalCount={0}
                                 UrlParams={Params}
-                                GetRowInfo={this.GetSelectedReferral.bind(this)} columnwidth={150}
+                                GetRowInfo={this.GetSelectedReferral.bind(this)} columnwidth={154}
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
-                        </ModalBody>
-                        <ModalFooter>
-                            <Button color="secondary" onClick={this.DeleteOne.bind(this, this.state.addrow)}>{this.context.t("Delete")}</Button>
-                            <Button color="secondary" onClick={this.DeleteAll.bind(this)}>{this.context.t("DeleteAll")}</Button>
-                            <Button color="secondary" onClick={ConfirmWorkers.bind(this, this.state.SelectedWorkerRows)}>{this.context.t("ConfirmAndClose")}</Button>
-                        </ModalFooter>
-                    </Modal>
-                </div>
-
-            </div>
+                        </div>
+                    </div>
+                    </div>
+                </ModalBody>
+            </Modal>
         );
     }
 }

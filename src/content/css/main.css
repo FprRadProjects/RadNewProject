@@ -33944,7 +33944,6 @@ body .page-wrapper .page-body-wrapper .page-sidebar.native-image-bg .sidebar-use
     background-image: url(../images/modal-filter/range-date-icon.svg);
 }
 
-
 .r-filter-modal__content .card-body {
     padding: 10px;
 }
@@ -34736,18 +34735,21 @@ i.icon {
     background-color: #3c72f5;
 }
 
-.r-main-box .dx-g-bs4-paging-panel {
-    background-color: transparent;
+.dx-g-bs4-paging-panel {
     display: flex;
     justify-content: space-around;
 }
 
-.r-main-box .dx-g-bs4-paging-panel div:nth-child(1) {
+.dx-g-bs4-paging-panel div:nth-child(1) {
     order: 4
 }
 
-.r-main-box .dx-g-bs4-paging-panel div:nth-child(2) {
+.dx-g-bs4-paging-panel div:nth-child(2) {
     order: 1
+}
+
+.r-main-box .dx-g-bs4-paging-panel {
+    background-color: transparent;
 }
 
 .dx-g-bs4-toolbar .popover {
@@ -34890,10 +34892,11 @@ i.icon.save-referral {
 .r-modal [class*=MuiFormControl-marginNormal-] {
     margin: .5rem 0!important;
 }
-.r-modal [class*=MuiInput-input-]{
+
+.r-modal [class*=MuiInput-input-] {
     border-radius: .25rem;
-    box-sizing:border-box;
-    background-color: #fff; 
+    box-sizing: border-box;
+    background-color: #fff;
 }
 
 .date-input-with-dialog-input-buttons {
@@ -35092,6 +35095,7 @@ i.icon.save-referral {
     background-image: url(../images/modal/referral-result/result.svg);
     background-size: 20px;
 }
+
 .r-modal .row-icon.clock {
     background-image: url(../images/modal/referral-result/clock.svg);
     background-size: 18px;
@@ -35161,14 +35165,13 @@ i.icon.save-referral {
     display: flex;
     justify-content: center;
     width: 100%;
-    
 }
 
 .r-referral-modal .modal-footer h4 {
     font-size: 14px;
     text-align: right;
     position: absolute;
-    top:0;
+    top: 0;
 }
 
 .r-referral-modal .modal-footer h4:before {
@@ -35329,40 +35332,43 @@ i.icon.save-referral {
     background-color: #3d63f9!important;
     color: #fff;
 }
-.custom-select__control{
-    border:0!important;
+
+.custom-select__control {
+    border: 0!important;
     min-height: 33px!important;
     max-height: 33px!important;
 }
-.custom-select__control--is-focused{
-    border:0!important;
+
+.custom-select__control--is-focused {
+    border: 0!important;
     outline: none!important;
     box-shadow: none!important
 }
-.custom-select__control--is-focused .custom-select__indicator{
+
+.custom-select__control--is-focused .custom-select__indicator {
     padding: 6px!important;
 }
-.ltr{
+
+.ltr {
     direction: ltr;
-    text-align:left;
+    text-align: left;
 }
-
-
 
 .r-referral-modal .authority i.import-authority {
     background-image: url(../images/modal/new-referral/import-authority.svg);
 }
+
 .r-referral-modal .authority i.send-authority {
     background-image: url(../images/modal/new-referral/send-authority.svg);
 }
+
 .r-referral-modal .authority i.referral-authority {
     background-image: url(../images/modal/new-referral/referral-authority.svg);
 }
+
 .r-referral-modal .authority i.workform-authority {
     background-image: url(../images/modal/new-referral/workform-authority.svg);
 }
-
-
 
 .rtl .r-referral-modal .modal-footer .card .card-body .checkbox label {
     margin: 3px;
@@ -35381,13 +35387,13 @@ i.icon.save-referral {
     border-radius: 0;
     box-shadow: none;
     outline: none;
-    border-color:#c8c4c3; 
+    border-color: #c8c4c3;
     transition: none;
 }
 
 .rtl .r-referral-modal .modal-footer .card .card-body .checkbox input[type="checkbox"]:checked+label::before {
     margin: 0 -11px;
-    content:"";
+    content: "";
     border: none;
     width: 18px;
     top: 0;
@@ -35396,24 +35402,36 @@ i.icon.save-referral {
     background-size: contain;
 }
 
-
 .r-referral-modal .modal-footer .card .card-body {
     display: flex;
     justify-content: center;
 }
+
 .r-referral-modal .modal-footer .col-3:nth-child(1) .card .card-body .checkbox-group {
     width: 125px;
-    
 }
+
 .r-referral-modal .modal-footer .col-3:nth-child(2) .card .card-body .checkbox-group {
     width: 127px;
-    
 }
+
 .r-referral-modal .modal-footer .col-3:nth-child(3) .card .card-body .checkbox-group {
     width: 95px;
-    
 }
+
 .r-referral-modal .modal-footer .col-3:nth-child(4) .card .card-body .checkbox-group {
     width: 84px;
-    
+}
+
+.referral-to-modal {
+    padding: 10px 20px 20px;
+    min-height: 540px;
+}
+
+.referral-to-modal .table-bordered {
+    border: 1px solid #ddd;
+}
+
+.referral-to-modal .dx-g-bs4-table-container{
+    min-height: 352px;
 }
