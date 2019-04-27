@@ -104,7 +104,6 @@ $(document).on('click', '.dropdown-toggle', function () {
     $(this).next('.dropdown-menu').toggleClass('show');
 });
 $(document).on('click', function (e) {
-    console.log(e)
     if (e.target.className !== "r-main-box__controlpanel--action dropdown-toggle")
         $(document).find('.dropdown-menu').removeClass('show');
 });
