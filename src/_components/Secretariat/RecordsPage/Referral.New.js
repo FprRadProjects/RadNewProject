@@ -46,9 +46,7 @@ class NewReferral extends Component {
         DefaultInfoParams.wt_id = val.value;
         GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
             if (data.status)
-                this.setState({
-                    SubjectSelectmodal: !this.state.SubjectSelectmodal,
-                });
+              {}
             else {
                 toast.error(data.error)
             }
