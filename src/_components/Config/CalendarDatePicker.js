@@ -28,7 +28,12 @@ class CalendarDatePicker extends Component {
       value: setDate,
     };
   }
-
+  componentWillReceiveProps(nextProps) {
+    // You don't have to do this check first, but it can help prevent an unneeded render
+    if (nextProps.setDate !== this.state.value) {
+      this.setState({ value: nextProps.setDate });
+    }
+  }
   onChange = name => event => {
     this.setState({
       value: event.target.formatted,
@@ -38,6 +43,7 @@ class CalendarDatePicker extends Component {
   }
 
   render() {
+    
     return (
       <JssProvider jss={jss} generateClassName={generateClassName}>
         <MuiThemeProvider theme={theme}>

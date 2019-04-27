@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { RadioGroup, Radio } from 'react-radio-group';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
-import { SelectProjectModal } from "../../Project/";
 import { SelectDefaultTextModal } from "../../Basic/";
+import InputMask from 'react-input-mask';
 
-import { Act_Reference, AutoBasicInfo_action, WorkBasic_action, design_Actions, WorkActions_action } from "../../../_actions";
-import { FormInfo } from "../../../locales";
+import {  AutoBasicInfo_action, WorkBasic_action, design_Actions } from "../../../_actions";
 import { toast } from 'react-toastify';
 import { RibbonNewReferral } from '../Ribbon/Ribbon.NewReferral';
 import { ComboSelectList, CalendarDatePicker } from "../../Config";
@@ -17,17 +15,12 @@ var thisSaveParams = { form: "", data: [] };
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
 var DefaultInfoParams = { form: "referrals", wt_id: 0, flow_id: 0, isInternal: 0 }
 
-var worktypeSelected = 0;
-var id_roleSelected = 0;
 class NewReferral extends Component {
     constructor(props) {
         super(props);
         this.state = {
             ...this.state,
             modal: false,
-            workTypeSelectedOption: {},
-            prioritySelectedOption: {},
-            rollSelectedOption: {},
             SelectedWorkers: [],
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-referral-modal"
@@ -39,19 +32,23 @@ class NewReferral extends Component {
         SelectWorkTypeList(workTypeParams);
     }
     onReferralTypechangeHandle = (e, val) => {
-        worktypeSelected = val.value;
+        this.setState({workTypeSelectedOption: val.value});
         this.setState({ SelectedWorkers: [] });
         this.refs.Workers.value = this.context.t("unselected");
         const { GetNewWorkDefaultInfo } = this.props;
         DefaultInfoParams.wt_id = val.value;
         GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
-            if (data.status)
-              {
-                this.refs.flow.checked =data.data.DefaultValue.flow;
-                this.refs.ronevesht.checked =data.data.DefaultValue.ronevesht;
-                this.refs.emailToWorker.checked =data.data.DefaultValue.web_emailtokarbar;
-                this.refs.smsToWorker.checked =data.data.DefaultValue.web_smstokarbar;
-              }
+            if (data.status) {
+                if (data.data.DefaultValue !== null) {
+                    this.refs.flow.checked = data.data.DefaultValue.flow;
+                    this.refs.ronevesht.checked = data.data.DefaultValue.ronevesht;
+                    this.refs.emailToWorker.checked = data.data.DefaultValue.web_emailtokarbar;
+                    this.refs.smsToWorker.checked = data.data.DefaultValue.web_smstokarbar;
+                    this.setState({ SelectedWorkers: [{ id_user: data.data.WorkerId, username: data.data.WorkerUserName, id_role: data.data.WorkerId_Role, rolename: data.data.WorkerRoleName }] });
+                    this.refs.Workers.value = this.state.SelectedWorkers[0].username;
+                    this.setState({ setDefaultDate: data.data.ActionDate });
+                }
+            }
             else {
                 toast.error(data.error)
             }
@@ -60,20 +57,16 @@ class NewReferral extends Component {
     onPrioritychangeHandle = (e, val) => {
 
     }
-    onRollchangeHandle = (e, val) => {
-        id_roleSelected = val.value;
-    }
     ReferralDurationDateChange = (value, name) => {
     }
     ReferralDurationTimeHandle() {
 
     }
     OpenReferralTo() {
-        if (worktypeSelected != 0) {
+        console.log(this.state.workTypeSelectedOption)
+        if (this.state.workTypeSelectedOption !== 0 && this.state.workTypeSelectedOption !==undefined) {
             this.setState(prevState => ({
                 ReferralTomodal: !prevState.ReferralTomodal,
-                worktypeSelected: worktypeSelected,
-                id_roleSelected: id_roleSelected
             }));
         }
         else
@@ -149,7 +142,7 @@ class NewReferral extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("ReferralType")}</label>
                                                 <div className="col-10">
                                                     {SelectWorkTypeList_rows !== undefined &&
-                                                        <ComboSelectList options={ReferralTypeList} classname="my-2" name="referral_type_id" onChange={this.onReferralTypechangeHandle.bind(this)} selectedOption={this.state.workTypeSelectedOption} />
+                                                        <ComboSelectList options={ReferralTypeList} classname="my-2" name="referral_type_id" onChange={this.onReferralTypechangeHandle.bind(this)}  />
                                                     }
                                                 </div>
                                             </div>
@@ -203,7 +196,7 @@ class NewReferral extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("ReferralDurationDate")}</label>
                                                 <div className="col-10">
-                                                    <CalendarDatePicker className="form-control my-2" id="acfas" fieldname="" CalendarChange={this.ReferralDurationDateChange.bind(this)} />
+                                                    <CalendarDatePicker className="form-control my-2  ltr" id="acfas" fieldname="" setDate={this.state.setDefaultDate} CalendarChange={this.ReferralDurationDateChange.bind(this)} />
                                                 </div>
                                             </div>
                                         </div>
@@ -211,9 +204,7 @@ class NewReferral extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("ReferralDurationTime")}</label>
                                                 <div className="col-10">
-                                                    <input type="text" autoComplete="off" className="form-control my-2" name=""
-
-                                                        onChange={this.ReferralDurationTimeHandle.bind(this)} />
+                                                    <InputMask type="text" autoComplete="off" className="form-control my-2  ltr" name="" mask="99:99"  onChange={this.ReferralDurationTimeHandle.bind(this)}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -236,7 +227,7 @@ class NewReferral extends Component {
                                                             <Button color="primary" name="tozihat"
                                                                 onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                         </div>
-                                                        <textarea type="text" className="form-control" rows="5"
+                                                        <textarea type="text" className="form-control" rows="4"
                                                             ref="DescriptionInput" name="tozihat"></textarea>
                                                     </div>
                                                 </div>
@@ -248,8 +239,7 @@ class NewReferral extends Component {
                             {this.state.ReferralTomodal &&
                                 <ReferralToModal modal={this.state.ReferralTomodal}
                                     ConfirmWorkers={this.ConfirmWorkers.bind(this)}
-                                    worktypeSelected={this.state.worktypeSelected}
-                                    id_roleSelected={this.state.id_roleSelected}
+                                    worktypeSelected={this.state.workTypeSelectedOption}
                                     SelectedWorkers={this.state.SelectedWorkers}
                                 />}
                             {this.state.SubjectSelectmodal &&
@@ -274,11 +264,11 @@ class NewReferral extends Component {
                                             <div className="card-body">
                                                 <div className="checkbox-group">
                                                     <div class="checkbox">
-                                                        <input id="import0" defaultChecked={true}  type="checkbox" />
+                                                        <input id="import0" defaultChecked={true} type="checkbox" />
                                                         <label htmlFor="import0">{this.context.t("ImportInformationFromLetter")}</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <input id="import1"  defaultChecked={true} type="checkbox" />
+                                                        <input id="import1" defaultChecked={true} type="checkbox" />
                                                         <label htmlFor="import1">{this.context.t("ImportAttachmentFromLetter")}</label>
                                                     </div>
                                                 </div>
@@ -298,7 +288,7 @@ class NewReferral extends Component {
                                                         <label htmlFor="workform0">{this.context.t("CopyWorkForm")}</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <input id="workform1"  defaultChecked={true}  ref="flow" type="checkbox" />
+                                                        <input id="workform1" defaultChecked={true} ref="flow" type="checkbox" />
                                                         <label htmlFor="workform1">{this.context.t("NoWorkFlow")}</label>
                                                     </div>
                                                 </div>
@@ -319,14 +309,14 @@ class NewReferral extends Component {
                                                         <label htmlFor="referral0">{this.context.t("CreateCopy")}</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <input id="referral1"  type="checkbox" />
+                                                        <input id="referral1" type="checkbox" />
                                                         <label htmlFor="referral1">{this.context.t("ReferralWork")}</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                   
+
                                     <div className="col-3">
                                         <div className="card ">
                                             <div className="card-header border-0">
@@ -336,7 +326,7 @@ class NewReferral extends Component {
                                             <div className="card-body">
                                                 <div className="checkbox-group">
                                                     <div class="checkbox">
-                                                        <input id="send0"  ref="smsToWorker" type="checkbox" />
+                                                        <input id="send0" ref="smsToWorker" type="checkbox" />
                                                         <label htmlFor="send0">{this.context.t("SendSmsToUser")}</label>
                                                     </div>
                                                     <div class="checkbox">
@@ -347,7 +337,7 @@ class NewReferral extends Component {
 
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>
                             </div>
                         </div>

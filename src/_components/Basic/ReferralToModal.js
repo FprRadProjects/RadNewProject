@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 var currencyColumns = [];
-var hiddenColumnNames = [];
+var hiddenColumnNames = ['id_user'];
 var booleanColumns = [];
 var Params = {
     "page": 0,
