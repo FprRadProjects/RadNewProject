@@ -10,8 +10,21 @@ export const AutoBasicInfo_service = {
     SayManagerOnWorkerWtype,
     SelectWorkTypeList,
     SelectPriorityList,
-    SelectRoleList
+    SelectRoleList,
+    GetNewWorkDefaultInfo
 };
+function GetNewWorkDefaultInfo(Params) {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(_Config.BaseUrl + "GetNewWorkDefaultInfo",Params)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
 function SelectRoleList() {
     if (UserConfig.GetToken() !== null) {
         return axios.post(_Config.BaseUrl + "SelectRoleList")

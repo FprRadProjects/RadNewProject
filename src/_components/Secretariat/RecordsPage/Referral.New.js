@@ -15,6 +15,8 @@ import { ReferralToModal } from '../../Basic';
 var thisSaveParams = { form: "", data: [] };
 
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
+var DefaultInfoParams = { form: "", wt_id: 0, flow_id: 0, isInternal: 0 }
+
 var worktypeSelected = 0;
 var id_roleSelected = 0;
 class NewReferral extends Component {
@@ -34,13 +36,23 @@ class NewReferral extends Component {
     componentDidMount() {
         const { SelectWorkTypeList, SelectPriorityList, SelectRoleList } = this.props;
         SelectPriorityList();
-        SelectRoleList();
         SelectWorkTypeList(workTypeParams);
     }
     onReferralTypechangeHandle = (e, val) => {
         worktypeSelected = val.value;
-        this.setState({SelectedWorkers:[]});
+        this.setState({ SelectedWorkers: [] });
         this.refs.Workers.value = this.context.t("unselected");
+        const { GetNewWorkDefaultInfo } = this.props;
+        DefaultInfoParams.wt_id = val.value;
+        GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
+            if (data.status)
+                this.setState({
+                    SubjectSelectmodal: !this.state.SubjectSelectmodal,
+                });
+            else {
+                toast.error(data.error)
+            }
+        });
     }
     onPrioritychangeHandle = (e, val) => {
 
@@ -68,11 +80,13 @@ class NewReferral extends Component {
         this.setState({
             ReferralTomodal: false
         });
-        this.setState({SelectedWorkers:Workers});
+        this.setState({ SelectedWorkers: Workers });
         if (Workers.length > 1)
-            this.refs.Workers.value =  Workers.length + " "+this.context.t("Items")+ " "+this.context.t("selected");
+            this.refs.Workers.value = Workers.length + " " + this.context.t("Items") + " " + this.context.t("selected");
         else if (Workers.length == 1)
             this.refs.Workers.value = Workers[0].username;
+        else
+            this.refs.Workers.value = this.context.t("unselected");
     }
     OpenSelectDefaultText = (e) => {
         const { name } = e.target;
@@ -98,13 +112,10 @@ class NewReferral extends Component {
     }
 
     render() {
-        const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows,
-            SelectRoleList_rows, WorkInfo } = this.props;
+        const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows, WorkInfo } = this.props;
         var None = [{ value: 0, label: this.context.t("NoSelection") }]
-        var RollList_rows = [{ value: 0, label: this.context.t("NoSelection") }];
         var ReferralTypeList = None.concat(SelectWorkTypeList_rows)
         var PriorityList = None.concat(SelectPriorityList_rows)
-        var RollList = None.concat(SelectRoleList_rows)
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -347,25 +358,9 @@ class NewReferral extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    FetchData: (Params) => {
-        dispatch(Act_Reference.FetchData(Params))
-    },
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
-    SaveWorkInfo: (SaveParams, msg) => {
-        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
-    },
-    RebuildWork: (Peygir_id, msg) => {
-        return dispatch(WorkActions_action.RebuildWork(Peygir_id, msg))
-    },
-    DeleteWork: (Peygir_id, msg) => {
-        dispatch(WorkActions_action.DeleteWork(Peygir_id))
-    },
-    InitConfirmWork: (Params, msg) => {
-        return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
-    },
-
     FetchWorkInfo: (peygir_id) => {
         dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
     },
@@ -377,9 +372,10 @@ const mapDispatchToProps = dispatch => ({
     },
     SelectRoleList: (Params) => {
         dispatch(AutoBasicInfo_action.SelectRoleList(Params))
+    },
+    GetNewWorkDefaultInfo: (Params) => {
+        return dispatch(AutoBasicInfo_action.GetNewWorkDefaultInfo(Params))
     }
-
-
 });
 NewReferral.contextTypes = {
     t: PropTypes.func.isRequired
@@ -391,7 +387,7 @@ function mapStateToProps(state) {
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
     const { Refresh_Form } = state.Common;
-    const { SelectWorkTypeList_rows, SelectPriorityList_rows, SelectRoleList_rows } = state.Auto_BasicInfo
+    const { SelectWorkTypeList_rows, SelectPriorityList_rows } = state.Auto_BasicInfo
 
     return {
         alert,
@@ -401,7 +397,6 @@ function mapStateToProps(state) {
         Refresh_Form,
         SelectWorkTypeList_rows,
         SelectPriorityList_rows,
-        SelectRoleList_rows
     };
 }
 

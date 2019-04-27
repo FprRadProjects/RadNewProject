@@ -52,22 +52,8 @@ class ReferralToModal extends Component {
     DeleteOne = (row) => {
         console.log(row)
         if (row !== undefined && row !== null) {
-            confirmAlert({
-                title: this.context.t("Delete"),
-                message: this.context.t("AreSureOperations"),
-                buttons: [
-                    {
-                        label: this.context.t("Yes"),
-                        onClick: () => {
-                            var SelectedWorkerRows = this.state.SelectedWorkerRows.filter(function (item) { return item.id_user != row.id_user });
-                            this.setState({ SelectedWorkerRows: SelectedWorkerRows });
-                        }
-                    },
-                    {
-                        label: this.context.t("No"),
-                    }
-                ]
-            });
+            var SelectedWorkerRows = this.state.SelectedWorkerRows.filter(function (item) { return item.id_user != row.id_user });
+            this.setState({ SelectedWorkerRows: SelectedWorkerRows });
         }
         else
             toast.warn(this.context.t("msg_No_Select_Row"));
@@ -122,30 +108,30 @@ class ReferralToModal extends Component {
                 <ModalHeader>{this.context.t("ReferralTo")}</ModalHeader>
                 <ModalBody>
                     <div className="referral-to-modal">
-                    <div className="row ">
-                        <div className="col-6 ">
-                            <Button color="primary" className="mb-2 mr-2" onClick={this.AddNewWorkers.bind(this, this.state.row)}>{this.context.t("Select")}</Button>{' '}
+                        <div className="row ">
+                            <div className="col-6 ">
+                                <Button color="primary" className="mb-2 mr-2" onClick={this.AddNewWorkers.bind(this, this.state.row)}>{this.context.t("Select")}</Button>{' '}
 
-                            <MultiSelectGridComponent columns={columns} booleanColumns={booleanColumns}
-                                rows={SelectWorkerGridList_rows} totalCount={0}
-                                UrlParams={Params} fetchData={SelectWorkerGridList.bind(this)}
-                                GetRowInfo={this.SetReferralToRowData} columnwidth={141}
-                                rowId="id_user"
-                                currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
-                            />
+                                <MultiSelectGridComponent columns={columns} booleanColumns={booleanColumns}
+                                    rows={SelectWorkerGridList_rows} totalCount={0}
+                                    UrlParams={Params} fetchData={SelectWorkerGridList.bind(this)}
+                                    GetRowInfo={this.SetReferralToRowData} columnwidth={141}
+                                    rowId="id_user"
+                                    currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                                />
+                            </div>
+                            <div className="col-6 ">
+                                <Button color="danger" className="mb-2 mr-2" onClick={this.DeleteOne.bind(this, this.state.addrow)}>{this.context.t("Delete")}</Button>
+                                <Button color="danger" className="mb-2 mr-2" onClick={this.DeleteAll.bind(this)}>{this.context.t("DeleteAll")}</Button>
+                                <Button color="secondary" className="mb-2 mr-2" onClick={ConfirmWorkers.bind(this, this.state.SelectedWorkerRows)}>{this.context.t("ConfirmAndClose")}</Button>
+                                <GridComponent columns={columns} booleanColumns={booleanColumns}
+                                    rows={this.state.SelectedWorkerRows} totalCount={0}
+                                    UrlParams={Params}
+                                    GetRowInfo={this.GetSelectedReferral.bind(this)} columnwidth={154}
+                                    currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                                />
+                            </div>
                         </div>
-                        <div className="col-6 ">
-                            <Button color="danger" className="mb-2 mr-2" onClick={this.DeleteOne.bind(this, this.state.addrow)}>{this.context.t("Delete")}</Button>
-                            <Button color="danger" className="mb-2 mr-2" onClick={this.DeleteAll.bind(this)}>{this.context.t("DeleteAll")}</Button>
-                            <Button color="secondary" className="mb-2 mr-2" onClick={ConfirmWorkers.bind(this, this.state.SelectedWorkerRows)}>{this.context.t("ConfirmAndClose")}</Button>
-                            <GridComponent columns={columns} booleanColumns={booleanColumns}
-                                rows={this.state.SelectedWorkerRows} totalCount={0}
-                                UrlParams={Params}
-                                GetRowInfo={this.GetSelectedReferral.bind(this)} columnwidth={154}
-                                currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
-                            />
-                        </div>
-                    </div>
                     </div>
                 </ModalBody>
             </Modal>

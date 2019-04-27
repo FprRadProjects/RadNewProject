@@ -72,7 +72,7 @@ class ReferenceViewer extends Component {
 
     OpenSelectDefaultText = (e) => {
         const { name } = e.target;
-        const { WorkInfo, showError } = this.props;
+        const { WorkInfo } = this.props;
         WorkAccess_action.CanSetInfoOnWork(WorkInfo.peygir_id)
         .then(data => {
             if (data.status)

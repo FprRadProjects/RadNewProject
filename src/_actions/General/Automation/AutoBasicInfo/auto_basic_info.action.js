@@ -13,11 +13,38 @@ export const AutoBasicInfo_action = {
     SelectWorkTypeList,
     SelectPriorityList,
     SelectRoleList,
-    SayManagerOnWorkerWtype
+    SayManagerOnWorkerWtype,
+    GetNewWorkDefaultInfo
 
 
 
 };
+
+function GetNewWorkDefaultInfo(Params) {
+    return dispatch => {
+        dispatch(loadingActions.ShowLoading());
+       return AutoBasicInfo_service.GetNewWorkDefaultInfo(Params)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(loadingActions.HideLoading());
+                    }
+                    else if (data.code !== 0) {
+                        toast.error(data.error)
+                        dispatch(loadingActions.HideLoading());
+                    }
+                    else {
+                        userActions.logout();
+                        window.open('/',"_self");
+                    }
+                    return Promise.resolve(data)
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
 
 function SelectRoleList() {
     return dispatch => {
@@ -37,7 +64,6 @@ function SelectRoleList() {
             );
     }
 }
-
 
 function SayManagerOnWorkerWtype(worker_id, wt_id) {
     return dispatch => {
