@@ -110,6 +110,7 @@ export const translations = {
         DeletedControlManagement:"مدیریت حذف کنترل ها",
         Count:"تعداد",
         Items:"مورد",
+        Authority:"اختیارات",
         //---------------تاییدیه------------------شروع
         Yes: 'بلی',
         No: 'خیر',
@@ -294,6 +295,8 @@ export const translations = {
         DeletedControlManagement:"Deleted Control Management",
         Count:"Count",
         Items:"Items",
+        Authority:"Authority",
+
         //Start---------------Confirm-----------------
         Yes: 'Yes',
         No: 'No',

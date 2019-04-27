@@ -261,7 +261,7 @@ class NewReferral extends Component {
                         <style>{modalBackDrop}</style>
                     </ModalBody>
                     <ModalFooter>
-                        <h4>اختیارات</h4>
+                        <h4>{this.context.t("Authority")}</h4>
                         <div className="row authority">
                             <div className="col-8">
                                 <div className="row">
@@ -287,7 +287,7 @@ class NewReferral extends Component {
                                     </div>
                                     <div className="col-3">
                                         <div className="card ">
-                                            <div className="card-header border-0">
+                                            <div className="card-header">
                                                 <i className="workform-authority">
                                                 </i>
                                             </div>
@@ -329,7 +329,7 @@ class NewReferral extends Component {
                                    
                                     <div className="col-3">
                                         <div className="card ">
-                                            <div className="card-header">
+                                            <div className="card-header border-0">
                                                 <i className="send-authority">
                                                 </i>
                                             </div>
@@ -353,7 +353,7 @@ class NewReferral extends Component {
                         </div>
                     </ModalFooter>
                     <div className="authority-toggle">
-                        <button type="button" className="js-authority-toggle-btn"></button>
+                        <button type="button" className="js-authority-toggle-btn active" title={this.context.t("Authority")}></button>
                     </div>
                 </Modal>
             </div >
