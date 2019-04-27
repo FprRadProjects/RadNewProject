@@ -158,16 +158,7 @@ class NewReferral extends Component {
                                 </div>
                                 <div className="col-11">
                                     <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Priority")}</label>
-                                                <div className="col-10">
-                                                    {SelectPriorityList_rows !== undefined &&
-                                                        <ComboSelectList options={PriorityList} name="priority_id" classname="my-2" onChange={this.onPrioritychangeHandle.bind(this)} selectedOption={this.state.prioritySelectedOption} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
+                                      
                                         <div className="col-6">
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("ReferralTo")}</label>
@@ -179,6 +170,16 @@ class NewReferral extends Component {
                                                         </div>
                                                         <input type="text" ref="Workers" autoComplete="off" className="form-control" readOnly={true} defaultValue={this.context.t("unselected")} />
                                                     </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="col-6">
+                                            <div className="form-group row">
+                                                <label className="col-2 col-form-label">{this.context.t("Priority")}</label>
+                                                <div className="col-10">
+                                                    {SelectPriorityList_rows !== undefined &&
+                                                        <ComboSelectList options={PriorityList} name="priority_id" classname="my-2" onChange={this.onPrioritychangeHandle.bind(this)} selectedOption={this.state.prioritySelectedOption} />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
