@@ -11,8 +11,9 @@ import { FormInfo } from "../../../locales";
 import { toast } from 'react-toastify';
 import { RibbonNewReferral } from '../Ribbon/Ribbon.NewReferral';
 import { ComboSelectList, CalendarDatePicker } from "../../Config";
+import { ReferralToModal } from '../../Basic';
+var thisSaveParams = { form: "", data: [] };
 
-var SaveParams = { form: "", data: [] };
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
 
 class NewReferral extends Component {
@@ -23,13 +24,13 @@ class NewReferral extends Component {
             modal: false,
             workTypeSelectedOption: {},
             prioritySelectedOption: {},
-            rollSelectedOption:{},
+            rollSelectedOption: {},
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-referral-modal"
         };
     }
     componentDidMount() {
-        const { SelectWorkTypeList,SelectPriorityList,SelectRoleList } = this.props;
+        const { SelectWorkTypeList, SelectPriorityList, SelectRoleList } = this.props;
         SelectPriorityList();
         SelectRoleList();
         SelectWorkTypeList(workTypeParams);
@@ -49,11 +50,36 @@ class NewReferral extends Component {
 
     }
     OpenReferralTo() {
+        this.setState(prevState => ({
+            ReferralTomodal: !prevState.ReferralTomodal
+        }));
+    }
+    OpenSelectDefaultText = (e) => {
+        const { name } = e.target;
+        this.setState({
+            SubjectSelectmodal: !this.state.SubjectSelectmodal,
+            type: name,
+        });
 
     }
+    SuccessSelectDescription = (row, e) => {
+        if (row !== undefined && row !== null) {
+            if (this.state.SubjectSelectmodal) {
+                this.refs.DescriptionInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                thisSaveParams.data["tozihat"] = { "tozihat": this.refs.DescriptionInput.value };
+            }
+            this.setState({
+                SubjectSelectmodal: !this.state.SubjectSelectmodal,
+                type: "",
+            });
+        }
+        else
+            toast.warn(this.context.t("msg_No_Select_Row"));
+    }
+  
     render() {
-        const {  modal, toggle,SelectWorkTypeList_rows,SelectPriorityList_rows,
-            SelectRoleList_rows} = this.props;
+        const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows,
+            SelectRoleList_rows, WorkInfo } = this.props;
         var None = [{ value: 0, label: this.context.t("NoSelection") }]
         var RollList_rows = [{ value: 0, label: this.context.t("NoSelection") }];
         var ReferralTypeList = None.concat(SelectWorkTypeList_rows)
@@ -180,19 +206,27 @@ class NewReferral extends Component {
                                             <div className="form-group row">
                                                 <label className="col-1 col-form-label">{this.context.t("ReferralDescription")}</label>
                                                 <div className="col-11">
+                                                    <div className="input-group-prepend align-self-stretch">
+                                                        <Button color="primary" name="tozihat"
+                                                            onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                    </div>
                                                     <textarea type="text" className="form-control my-2" rows="5"
-                                                        name="" ref=""></textarea>
+                                                       ref="DescriptionInput" name="tozihat"></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {/* {this.state.ReferralTomodal &&
-                                    <ReferralToModal modal={this.state.ReferralTomodal}
-                                        toggle={this.CloseReferralTo.bind(this)}
-                                        Successtoggle={this.SuccessReferralTo.bind(this)}
-                                    />} */}
+                            {this.state.ReferralTomodal &&
+                                <ReferralToModal modal={this.state.ReferralTomodal}
+                                    toggle={this.OpenReferralTo.bind(this)}
+                                />}
+                            {this.state.SubjectSelectmodal &&
+                                <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}
+                                    toggle={this.OpenSelectDefaultText.bind(this)}
+                                    Successtoggle={this.SuccessSelectDescription.bind(this)}
+                                    id_tel={WorkInfo.id_tel} />}
                         </div>
                         <style>{modalBackDrop}</style>
                     </ModalBody>
@@ -341,13 +375,15 @@ function mapStateToProps(state) {
     const { alert } = state;
     const { loading } = state.loading;
     const { lang } = state.i18nState
+    const { WorkInfo } = state.Auto_WorkBasic;
     const { Refresh_Form } = state.Common;
-    const { SelectWorkTypeList_rows,SelectPriorityList_rows,SelectRoleList_rows } = state.Auto_BasicInfo
+    const { SelectWorkTypeList_rows, SelectPriorityList_rows, SelectRoleList_rows } = state.Auto_BasicInfo
 
     return {
         alert,
         loading,
         lang,
+        WorkInfo,
         Refresh_Form,
         SelectWorkTypeList_rows,
         SelectPriorityList_rows,

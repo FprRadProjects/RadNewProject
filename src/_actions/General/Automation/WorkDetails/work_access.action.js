@@ -92,10 +92,10 @@ function CanAddWork(id_tel) {
 }
 
 
-function CanSubOnWork(peygir_id, id_tel,formname) {
-    return dispatch => {
+function CanSubOnWork(peygir_id, id_tel,formname,from) {
+return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return WorkAccess_service.CanSubOnWork(peygir_id, id_tel,formname)
+       return WorkAccess_service.CanSubOnWork(peygir_id, id_tel,formname,from)
             .then(
                 data => {
                     if (data.status) {

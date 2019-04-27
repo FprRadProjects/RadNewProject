@@ -81,13 +81,11 @@ function SelectManagerList(id_role,wt_id) {
     return Promise.reject('No')
 }
 
-function SelectWorkerList(id_role,wt_id) {
+function SelectWorkerList(Params) {
     if (UserConfig.GetToken() !== null) {
 
         var formData = new FormData();
-        formData.append('wt_id', wt_id);
-        formData.append('id_role', id_role);
-        return axios.post(_Config.BaseUrl + "SelectWorkerList",formData)
+        return axios.post(_Config.BaseUrl + "SelectWorkerList",Params)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

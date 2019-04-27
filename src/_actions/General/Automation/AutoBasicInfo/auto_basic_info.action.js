@@ -118,9 +118,9 @@ function SelectManagerList(id_role, wt_id) {
             );
     }
 }
-function SelectWorkerList(id_role, wt_id) {
+function SelectWorkerList(Params) {
     return dispatch => {
-        AutoBasicInfo_service.SelectWorkerList(id_role, wt_id)
+        AutoBasicInfo_service.SelectWorkerList(Params)
             .then(
                 data => {
                     if (data.status) {

@@ -162,7 +162,7 @@ class RibbonReferenceViewer extends Component {
     ReferralHandle() {
         const {  WorkInfo, CanSubOnWork } = this.props;
         if (WorkInfo !== undefined) {
-            CanSubOnWork(WorkInfo.peygir_id, WorkInfo.id_tel,this.context.t("frm_SubWork")).then(data => {
+            CanSubOnWork(WorkInfo.peygir_id, WorkInfo.id_tel,this.context.t("frm_Referral"),"referral").then(data => {
                 if (data.status) {
                     this.setState({
                         Referralmodal: true,
@@ -358,8 +358,8 @@ const mapDispatchToProps = dispatch => ({
     FetchWorkInfo: (peygir_id) => {
         dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
     },
-    CanSubOnWork: (peygir_id,id_tel,formname) => {
-        return dispatch(WorkAccess_action.CanSubOnWork(peygir_id,id_tel,formname))
+    CanSubOnWork: (peygir_id,id_tel,formname,from) => {
+        return dispatch(WorkAccess_action.CanSubOnWork(peygir_id,id_tel,formname,from))
     },
     
 

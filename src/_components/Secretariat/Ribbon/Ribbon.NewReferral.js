@@ -48,7 +48,7 @@ class RibbonNewReferral extends Component {
             HideElementListmodal: !prevState.HideElementListmodal
         }));
     }
-
+    
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements, EditedElements, RefreshParentForm, ParentForm
             , FetchWorkInfo

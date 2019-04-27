@@ -7,7 +7,15 @@ import { WorkActions_action, AutoBasicInfo_action } from "../../../_actions";
 import { ComboSelectList, CalendarDatePicker } from "../../Config";
 import { toast } from 'react-toastify';
 var thisSaveParams = { form: "", data: [] };
-
+var WorkerParams = {
+    "page": 0,
+    "pagesize": 10,
+    "id_role": 0,
+    "wt_id": 0,
+    "orderby": "id_user",
+    "direction": "desc",
+    "filter": []
+};
 class EditeReviewWorkModal extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +38,9 @@ class EditeReviewWorkModal extends Component {
 
     componentDidMount() {
         const { rowData, SelectWorkerList, SelectManagerList, SelectAshkhasList } = this.props;
-        SelectWorkerList(0, rowData.wt_id)
+        WorkerParams.wt_id=rowData.wt_id;
+        SelectWorkerList(WorkerParams);
+
         SelectManagerList(0, rowData.wt_id);
         SelectAshkhasList(rowData.id_tel);
         this.setState({ ashkhasSelectedOption: { value: rowData.ashkhas_id, label: rowData.ashkhasname } });
@@ -242,8 +252,8 @@ const mapDispatchToProps = dispatch => ({
         dispatch(WorkActions_action.ConfirmReviewWork(peygir_id))
     }, SelectManagerList: (id_role, wt_id) => {
         dispatch(AutoBasicInfo_action.SelectManagerList(id_role, wt_id))
-    }, SelectWorkerList: (id_role, wt_id) => {
-        dispatch(AutoBasicInfo_action.SelectWorkerList(id_role, wt_id))
+    }, SelectWorkerList: (Params) => {
+        dispatch(AutoBasicInfo_action.SelectWorkerList(Params))
     }, SelectAshkhasList: (id_taraf) => {
         dispatch(AutoBasicInfo_action.SelectAshkhasList(id_taraf))
     }, SayManagerOnWorkerWtype: (worker_id, wt_id) => {
