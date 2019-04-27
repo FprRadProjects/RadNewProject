@@ -47,7 +47,6 @@ class NewReferral extends Component {
         GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
             if (data.status)
               {
-                  console.log(data.data.DefaultValue)
                 this.refs.flow.checked =data.data.DefaultValue.flow;
                 this.refs.ronevesht.checked =data.data.DefaultValue.ronevesht;
                 this.refs.emailToWorker.checked =data.data.DefaultValue.web_emailtokarbar;
