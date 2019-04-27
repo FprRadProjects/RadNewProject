@@ -15,7 +15,7 @@ import { ReferralToModal } from '../../Basic';
 var thisSaveParams = { form: "", data: [] };
 
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
-var DefaultInfoParams = { form: "", wt_id: 0, flow_id: 0, isInternal: 0 }
+var DefaultInfoParams = { form: "referrals", wt_id: 0, flow_id: 0, isInternal: 0 }
 
 var worktypeSelected = 0;
 var id_roleSelected = 0;
@@ -46,7 +46,13 @@ class NewReferral extends Component {
         DefaultInfoParams.wt_id = val.value;
         GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
             if (data.status)
-              {}
+              {
+                  console.log(data.data.DefaultValue)
+                this.refs.flow.checked =data.data.DefaultValue.flow;
+                this.refs.ronevesht.checked =data.data.DefaultValue.ronevesht;
+                this.refs.emailToWorker.checked =data.data.DefaultValue.web_emailtokarbar;
+                this.refs.smsToWorker.checked =data.data.DefaultValue.web_smstokarbar;
+              }
             else {
                 toast.error(data.error)
             }
@@ -269,53 +275,12 @@ class NewReferral extends Component {
                                             <div className="card-body">
                                                 <div className="checkbox-group">
                                                     <div class="checkbox">
-                                                        <input id="import0" type="checkbox" />
+                                                        <input id="import0" defaultChecked={true}  type="checkbox" />
                                                         <label htmlFor="import0">{this.context.t("ImportInformationFromLetter")}</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <input id="import1" type="checkbox" />
+                                                        <input id="import1"  defaultChecked={true} type="checkbox" />
                                                         <label htmlFor="import1">{this.context.t("ImportAttachmentFromLetter")}</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-3">
-                                        <div className="card ">
-                                            <div className="card-header">
-                                                <i className="send-authority">
-                                                </i>
-                                            </div>
-                                            <div className="card-body">
-                                                <div className="checkbox-group">
-                                                    <div class="checkbox">
-                                                        <input id="send0" type="checkbox" />
-                                                        <label htmlFor="send0">{this.context.t("SendSmsToUser")}</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <input id="send1" type="checkbox" />
-                                                        <label htmlFor="send1">{this.context.t("SendEmailToUser")}</label>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-3">
-                                        <div className="card ">
-                                            <div className="card-header">
-                                                <i className="referral-authority">
-                                                </i>
-                                            </div>
-                                            <div className="card-body">
-                                                <div className="checkbox-group">
-                                                    <div class="checkbox">
-                                                        <input id="referral0" type="checkbox" />
-                                                        <label htmlFor="referral0">{this.context.t("CreateCopy")}</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <input id="referral1" type="checkbox" />
-                                                        <label htmlFor="referral1">{this.context.t("ReferralWork")}</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -334,14 +299,56 @@ class NewReferral extends Component {
                                                         <label htmlFor="workform0">{this.context.t("CopyWorkForm")}</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <input id="workform1" type="checkbox" />
-                                                        <label htmlFor="workform1">{this.context.t("NoWorkout")}</label>
+                                                        <input id="workform1"  defaultChecked={true}  ref="flow" type="checkbox" />
+                                                        <label htmlFor="workform1">{this.context.t("NoWorkFlow")}</label>
                                                     </div>
                                                 </div>
 
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="col-3">
+                                        <div className="card ">
+                                            <div className="card-header">
+                                                <i className="referral-authority">
+                                                </i>
+                                            </div>
+                                            <div className="card-body">
+                                                <div className="checkbox-group">
+                                                    <div class="checkbox">
+                                                        <input id="referral0" ref="ronevesht" type="checkbox" />
+                                                        <label htmlFor="referral0">{this.context.t("CreateCopy")}</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <input id="referral1"  type="checkbox" />
+                                                        <label htmlFor="referral1">{this.context.t("ReferralWork")}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                                    <div className="col-3">
+                                        <div className="card ">
+                                            <div className="card-header">
+                                                <i className="send-authority">
+                                                </i>
+                                            </div>
+                                            <div className="card-body">
+                                                <div className="checkbox-group">
+                                                    <div class="checkbox">
+                                                        <input id="send0"  ref="smsToWorker" type="checkbox" />
+                                                        <label htmlFor="send0">{this.context.t("SendSmsToUser")}</label>
+                                                    </div>
+                                                    <div class="checkbox">
+                                                        <input id="send1" ref="emailToWorker" type="checkbox" />
+                                                        <label htmlFor="send1">{this.context.t("SendEmailToUser")}</label>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div> 
                                 </div>
                             </div>
                         </div>
