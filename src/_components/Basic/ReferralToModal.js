@@ -31,7 +31,12 @@ class ReferralToModal extends Component {
         };
 
     }
+    componentDidMount() {
+        const { SelectedWorkers } = this.props;
+        if(SelectedWorkers.length>0)
+        this.setState({ SelectedWorkerRows: SelectedWorkers })
 
+    }
     SetReferralToRowData = (row) => {
         this.setState({
             row: row
@@ -78,9 +83,10 @@ class ReferralToModal extends Component {
             buttons: [
                 {
                     label: this.context.t("Yes"),
-                    onClick: () => { this.setState({ SelectedWorkerRows: [] });
-                    this.setState({ addrow: null });
-                }
+                    onClick: () => {
+                        this.setState({ SelectedWorkerRows: [] });
+                        this.setState({ addrow: null });
+                    }
                 },
                 {
                     label: this.context.t("No"),
@@ -114,7 +120,7 @@ class ReferralToModal extends Component {
             <div>
 
                 <div>
-                    <Modal isOpen={modal} 
+                    <Modal isOpen={modal}
 
                         className={this.state.modalClass}
                     >

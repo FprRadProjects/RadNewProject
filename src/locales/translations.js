@@ -108,6 +108,8 @@ export const translations = {
         ReportsList:"لیست گزارشات",
         LabelManagement:"مدیریت برچسب ها",
         DeletedControlManagement:"مدیریت حذف کنترل ها",
+        Count:"تعداد",
+        Items:"مورد",
         //---------------تاییدیه------------------شروع
         Yes: 'بلی',
         No: 'خیر',
@@ -290,7 +292,8 @@ export const translations = {
         ReportsList:"Reports",
         LabelManagement:"Label Management",
         DeletedControlManagement:"Deleted Control Management",
-
+        Count:"Count",
+        Items:"Items",
         //Start---------------Confirm-----------------
         Yes: 'Yes',
         No: 'No',

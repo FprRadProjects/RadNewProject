@@ -26,6 +26,7 @@ class NewReferral extends Component {
             workTypeSelectedOption: {},
             prioritySelectedOption: {},
             rollSelectedOption: {},
+            SelectedWorkers: [],
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-referral-modal"
         };
@@ -38,6 +39,8 @@ class NewReferral extends Component {
     }
     onReferralTypechangeHandle = (e, val) => {
         worktypeSelected = val.value;
+        this.setState({SelectedWorkers:[]});
+        this.refs.Workers.value = this.context.t("unselected");
     }
     onPrioritychangeHandle = (e, val) => {
 
@@ -60,6 +63,16 @@ class NewReferral extends Component {
         }
         else
             toast.error(this.context.t("msg_No_Select_ReferralType"));
+    }
+    ConfirmWorkers(Workers) {
+        this.setState({
+            ReferralTomodal: false
+        });
+        this.setState({SelectedWorkers:Workers});
+        if (Workers.length > 1)
+            this.refs.Workers.value =  Workers.length + " "+this.context.t("Items")+ " "+this.context.t("selected");
+        else if (Workers.length == 1)
+            this.refs.Workers.value = Workers[0].username;
     }
     OpenSelectDefaultText = (e) => {
         const { name } = e.target;
@@ -157,7 +170,7 @@ class NewReferral extends Component {
                                                             <Button color="primary"
                                                                 onClick={this.OpenReferralTo.bind(this)}>...</Button>
                                                         </div>
-                                                        <input type="text" autoComplete="off" className="form-control" readOnly={true} defaultValue="موردی انتخاب نشده است" />
+                                                        <input type="text" ref="Workers" autoComplete="off" className="form-control" readOnly={true} defaultValue={this.context.t("unselected")} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -220,9 +233,10 @@ class NewReferral extends Component {
                             </div>
                             {this.state.ReferralTomodal &&
                                 <ReferralToModal modal={this.state.ReferralTomodal}
-                                    toggle={this.OpenReferralTo.bind(this)}
+                                    ConfirmWorkers={this.ConfirmWorkers.bind(this)}
                                     worktypeSelected={this.state.worktypeSelected}
                                     id_roleSelected={this.state.id_roleSelected}
+                                    SelectedWorkers={this.state.SelectedWorkers}
                                 />}
                             {this.state.SubjectSelectmodal &&
                                 <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}
