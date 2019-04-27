@@ -42,11 +42,11 @@ class HideElementListModal extends Component {
         let row = this.state.row;
         if (row !== undefined) {
             confirmAlert({
-                title: 'بازگشت کنترل به صفحه',
-                message: 'آیا از بازگشت کنترل به صفحه اطمینان دارید؟',
+                title: this.context.t("Return_Control_To_Page"),
+                message: this.context.t("AreSureOperations"),
                 buttons: [
                     {
-                        label: 'بله',
+                        label:this.context.t("Yes"),
                         onClick: () => {
                             Delete_HideElements_Template(FormId, row.Id).then(data => {
                                 if (data.status) {
@@ -56,7 +56,7 @@ class HideElementListModal extends Component {
                         }
                     },
                     {
-                        label: 'خیر',
+                        label: this.context.t("No"),
                         // onClick: () => alert('Click No')
                     }
                 ]

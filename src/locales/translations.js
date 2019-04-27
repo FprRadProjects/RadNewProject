@@ -108,6 +108,11 @@ export const translations = {
         ReportsList:"لیست گزارشات",
         LabelManagement:"مدیریت برچسب ها",
         DeletedControlManagement:"مدیریت حذف کنترل ها",
+        //---------------تاییدیه------------------شروع
+        Yes: 'بلی',
+        No: 'خیر',
+        AreSureOperations:"آیا از انجام عملیات زیر اطمینان دارید؟",
+        //---------------تاییدیه------------------پایان
 
         //---------------اقدام------------------شروع
         logout: 'خروج',
@@ -117,6 +122,7 @@ export const translations = {
         ConfirmAndClose: 'تایید و بستن',
         Rebuild: 'بازسازی',
         Delete: 'حذف',
+        DeleteAll: 'حذف همه',
         Cancel: 'انصراف',
         EditLabel: 'ویرایش برچسب',
         DeleteControl: 'حذف کنترل',
@@ -131,7 +137,7 @@ export const translations = {
         FollowUpDiagram: "دیاگرام عطف",
         WorkFlowSummary: "خلاصه گردش کار",
         Referral: "ارجاع",
-
+        Return_Control_To_Page:"بازگشت کنترل به صفحه",
         //--------------اقدام------------------پایان
         //---------------پیام ها----------------شروع
         required_username: 'نام کاربری لازم به ورود است',
@@ -285,6 +291,11 @@ export const translations = {
         LabelManagement:"Label Management",
         DeletedControlManagement:"Deleted Control Management",
 
+        //Start---------------Confirm-----------------
+        Yes: 'Yes',
+        No: 'No',
+        AreSureOperations:"Are you sure of the following operations?",
+        //End-----------------Confirm----------------
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
@@ -293,6 +304,7 @@ export const translations = {
         ConfirmAndClose: 'Confirm And Close',
         Rebuild: 'Rebuild',
         Delete: 'Delete',
+        DeleteAll: 'Delete All',
         Cancel: 'Cancel',
         EditLabel: 'Edit Label',
         DeleteControl: 'Delete Control',
@@ -307,6 +319,7 @@ export const translations = {
         FollowUpDiagram: "Follow Up Diagram",
         WorkFlowSummary: "Work Flow Summary",
         Referral: "Referral",
+        Return_Control_To_Page:"Return control to page",
 
         //End-----------------Actions----------------
 
