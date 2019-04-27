@@ -33,6 +33,13 @@ export function Auto_BasicInfo(state = {}, action) {
                 }),
             }
         }
+        case Constant.SELECT_WORKER_GRIDLIST_SET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectWorkerGridList_rows:  action.data
+            }
+        }
+        
         case Constant.SELECT_ASHKHAS_LIST_SET_GRID_ROWS: {
             return {
                 ...state,

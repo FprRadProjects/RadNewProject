@@ -15,7 +15,8 @@ import { ReferralToModal } from '../../Basic';
 var thisSaveParams = { form: "", data: [] };
 
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
-
+var worktypeSelected = 0;
+var id_roleSelected = 0;
 class NewReferral extends Component {
     constructor(props) {
         super(props);
@@ -36,13 +37,13 @@ class NewReferral extends Component {
         SelectWorkTypeList(workTypeParams);
     }
     onReferralTypechangeHandle = (e, val) => {
-
+        worktypeSelected = val.value;
     }
     onPrioritychangeHandle = (e, val) => {
 
     }
     onRollchangeHandle = (e, val) => {
-
+        id_roleSelected = val.value;
     }
     ReferralDurationDateChange = (value, name) => {
     }
@@ -50,9 +51,15 @@ class NewReferral extends Component {
 
     }
     OpenReferralTo() {
-        this.setState(prevState => ({
-            ReferralTomodal: !prevState.ReferralTomodal
-        }));
+        if (worktypeSelected != 0) {
+            this.setState(prevState => ({
+                ReferralTomodal: !prevState.ReferralTomodal,
+                worktypeSelected: worktypeSelected,
+                id_roleSelected: id_roleSelected
+            }));
+        }
+        else
+            toast.error(this.context.t("msg_No_Select_ReferralType"));
     }
     OpenSelectDefaultText = (e) => {
         const { name } = e.target;
@@ -76,7 +83,7 @@ class NewReferral extends Component {
         else
             toast.warn(this.context.t("msg_No_Select_Row"));
     }
-  
+
     render() {
         const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows,
             SelectRoleList_rows, WorkInfo } = this.props;
@@ -211,7 +218,7 @@ class NewReferral extends Component {
                                                             onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                     </div>
                                                     <textarea type="text" className="form-control my-2" rows="5"
-                                                       ref="DescriptionInput" name="tozihat"></textarea>
+                                                        ref="DescriptionInput" name="tozihat"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -221,6 +228,8 @@ class NewReferral extends Component {
                             {this.state.ReferralTomodal &&
                                 <ReferralToModal modal={this.state.ReferralTomodal}
                                     toggle={this.OpenReferralTo.bind(this)}
+                                    worktypeSelected={this.state.worktypeSelected}
+                                    id_roleSelected={this.state.id_roleSelected}
                                 />}
                             {this.state.SubjectSelectmodal &&
                                 <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}

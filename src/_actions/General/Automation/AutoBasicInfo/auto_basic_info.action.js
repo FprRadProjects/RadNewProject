@@ -8,6 +8,7 @@ export const AutoBasicInfo_action = {
     GetDefaultText,
     SelectAshkhasList,
     SelectWorkerList,
+    SelectWorkerGridList,
     SelectManagerList,
     SelectWorkTypeList,
     SelectPriorityList,
@@ -118,6 +119,26 @@ function SelectManagerList(id_role, wt_id) {
             );
     }
 }
+
+function SelectWorkerGridList(Params) {
+    return dispatch => {
+        AutoBasicInfo_service.SelectWorkerList(Params)
+            .then(
+                data => {
+                    if (data.status) {
+
+                        dispatch(SelectWorkerGridListAddRows(data.data.rows));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
 function SelectWorkerList(Params) {
     return dispatch => {
         AutoBasicInfo_service.SelectWorkerList(Params)
@@ -196,6 +217,10 @@ function SelectManagerListAddRows(data) {
 function SelectWorkerListAddRows(data) {
     return { type: constant.SELECT_WORKER_LIST_SET_GRID_ROWS, data }
 }
+function SelectWorkerGridListAddRows(data) {
+    return { type: constant.SELECT_WORKER_GRIDLIST_SET_GRID_ROWS, data }
+}
+
 
 function SelectAshkhasListAddRows(data) {
     return { type: constant.SELECT_ASHKHAS_LIST_SET_GRID_ROWS, data }

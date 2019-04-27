@@ -33,16 +33,20 @@ class ReferralToModal extends Component {
             row:row
         })
     }
-    AddNewWorker=(row, e)=>{}
-    render() {  const columns = [
-        {name: 'id', title: this.context.t("RowId")},
-        {name: 'sharh', title: this.context.t("Description")},
+    AddNewWorker=(row, e)=>{
+        
+    }
+    render() {  
+        const columns = [
+        {name: 'id_user', title: this.context.t("RowId")},
+        {name: 'username', title: this.context.t("worker")},
 
     ];
-        const {modal, toggle, id_tel,GetDefaultText
-            ,ReferralTo_rows,ReferralTo_totalCount,Successtoggle} = this.props;
-        Params.Id_Taraf=id_tel;
-       
+        const {modal, toggle, id_roleSelected,SelectWorkerGridList,SelectWorkerGridList_rows,
+            worktypeSelected} = this.props;
+            Params.wt_id=worktypeSelected;
+            Params.id_role=id_roleSelected;
+            
         return (
             <div>
 
@@ -54,8 +58,8 @@ class ReferralToModal extends Component {
                         <ModalHeader>{this.context.t("frm_Text_Defaults")}</ModalHeader>
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
-                                           rows={ReferralTo_rows} totalCount={ReferralTo_totalCount}
-                                           UrlParams={Params} fetchData={GetDefaultText.bind(this)}
+                                           rows={SelectWorkerGridList_rows} totalCount={0}
+                                           UrlParams={Params} fetchData={SelectWorkerGridList.bind(this)}
                                            GetRowInfo={this.SetReferralToRowData} columnwidth={235}
                                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
@@ -73,8 +77,8 @@ class ReferralToModal extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    GetDefaultText: (Params) => {
-        dispatch(AutoBasicInfo_action.GetDefaultText(Params))
+    SelectWorkerGridList: (Params) => {
+        dispatch(AutoBasicInfo_action.SelectWorkerGridList(Params))
     }
 });
 ReferralToModal.contextTypes = {
@@ -86,14 +90,12 @@ function mapStateToProps(state) {
     const {alert} = state;
     const {loading} = state.loading;
     const {lang} = state.i18nState
-    const {ReferralTo_totalCount} = state.Auto_BasicInfo;
-    const {ReferralTo_rows} = state.Auto_BasicInfo
+    const {SelectWorkerGridList_rows} = state.Auto_BasicInfo
     return {
         alert,
         loading,
         lang,
-        ReferralTo_totalCount,
-        ReferralTo_rows,
+        SelectWorkerGridList_rows
     };
 }
 

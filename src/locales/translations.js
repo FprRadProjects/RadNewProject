@@ -141,6 +141,7 @@ export const translations = {
         msg_ActionDate_Not_Valid: 'تاریخ کار معتبر نمی باشد...',
         msg_Operation_Success: 'عملیات با موفقیت انجام شد....',
         msg_DontHave_Access: 'شما دسترسی دیدن جزییات این کار را ندارید....',
+        msg_No_Select_ReferralType:"نوع اقدام انتخاب نشده است",
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
         frm_System: 'سیستم',
@@ -317,6 +318,7 @@ export const translations = {
         msg_ActionDate_Not_Valid: 'Action Date Not Valid...',
         msg_Operation_Success: 'The Operation Was Successful....',
         msg_DontHave_Access: 'You Do Not Have Access To See Delaits of This....',
+        msg_No_Select_ReferralType:"Referral Type Not Selected.",
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',
