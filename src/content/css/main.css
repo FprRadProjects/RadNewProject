@@ -33944,6 +33944,7 @@ body .page-wrapper .page-body-wrapper .page-sidebar.native-image-bg .sidebar-use
     background-image: url(../images/modal-filter/range-date-icon.svg);
 }
 
+
 .r-filter-modal__content .card-body {
     padding: 10px;
 }
@@ -35091,6 +35092,10 @@ i.icon.save-referral {
     background-image: url(../images/modal/referral-result/result.svg);
     background-size: 20px;
 }
+.r-modal .row-icon.clock {
+    background-image: url(../images/modal/referral-result/clock.svg);
+    background-size: 18px;
+}
 
 .r-modal .input-group-prepend .btn {
     padding: 0.375rem 0.75rem;
@@ -35149,17 +35154,21 @@ i.icon.save-referral {
     justify-content: flex-start;
     border: none;
     padding-top: 0;
+    position: relative;
 }
 
 .r-referral-modal .authority {
     display: flex;
     justify-content: center;
     width: 100%;
+    
 }
 
 .r-referral-modal .modal-footer h4 {
     font-size: 14px;
     text-align: right;
+    position: absolute;
+    top:0;
 }
 
 .r-referral-modal .modal-footer h4:before {
@@ -35199,7 +35208,7 @@ i.icon.save-referral {
 
 .r-referral-modal .modal-footer .card .card-body {
     padding: 10px;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .rtl .r-referral-modal .modal-footer .card .card-body .radio label::before {
@@ -35336,4 +35345,75 @@ i.icon.save-referral {
 .ltr{
     direction: ltr;
     text-align:left;
+}
+
+
+
+.r-referral-modal .authority i.import-authority {
+    background-image: url(../images/modal/new-referral/import-authority.svg);
+}
+.r-referral-modal .authority i.send-authority {
+    background-image: url(../images/modal/new-referral/send-authority.svg);
+}
+.r-referral-modal .authority i.referral-authority {
+    background-image: url(../images/modal/new-referral/referral-authority.svg);
+}
+.r-referral-modal .authority i.workform-authority {
+    background-image: url(../images/modal/new-referral/workform-authority.svg);
+}
+
+
+
+.rtl .r-referral-modal .modal-footer .card .card-body .checkbox label {
+    margin: 3px;
+    padding-left: 0;
+    padding-right: 15px;
+    transition: none;
+}
+
+.rtl .r-referral-modal .modal-footer .card .card-body .checkbox label::before {
+    margin: 0 -8px;
+    width: 15px;
+    height: 15px;
+    top: 3px;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    border-color:#c8c4c3; 
+    transition: none;
+}
+
+.rtl .r-referral-modal .modal-footer .card .card-body .checkbox input[type="checkbox"]:checked+label::before {
+    margin: 0 -11px;
+    content:"";
+    border: none;
+    width: 18px;
+    top: 0;
+    height: 18px;
+    background-image: url(../images/modal/new-referral/check-square.svg);
+    background-size: contain;
+}
+
+
+.r-referral-modal .modal-footer .card .card-body {
+    display: flex;
+    justify-content: center;
+}
+.r-referral-modal .modal-footer .col-3:nth-child(1) .card .card-body .checkbox-group {
+    width: 125px;
+    
+}
+.r-referral-modal .modal-footer .col-3:nth-child(2) .card .card-body .checkbox-group {
+    width: 127px;
+    
+}
+.r-referral-modal .modal-footer .col-3:nth-child(3) .card .card-body .checkbox-group {
+    width: 95px;
+    
+}
+.r-referral-modal .modal-footer .col-3:nth-child(4) .card .card-body .checkbox-group {
+    width: 84px;
+    
 }

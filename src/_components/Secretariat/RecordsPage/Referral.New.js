@@ -127,16 +127,7 @@ class NewReferral extends Component {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Priority")}</label>
-                                                <div className="col-10">
-                                                    {SelectPriorityList_rows !== undefined &&
-                                                        <ComboSelectList options={PriorityList} name="priority_id" classname="my-2" onChange={this.onPrioritychangeHandle.bind(this)} selectedOption={this.state.prioritySelectedOption} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
 
                                 </div>
@@ -149,10 +140,10 @@ class NewReferral extends Component {
                                     <div className="row">
                                         <div className="col-6">
                                             <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Roll")}</label>
+                                                <label className="col-2 col-form-label">{this.context.t("Priority")}</label>
                                                 <div className="col-10">
-                                                    {SelectRoleList_rows !== undefined &&
-                                                        <ComboSelectList options={RollList} name="roll_id" classname="my-2" onChange={this.onRollchangeHandle.bind(this)} selectedOption={this.state.rollSelectedOption} />
+                                                    {SelectPriorityList_rows !== undefined &&
+                                                        <ComboSelectList options={PriorityList} name="priority_id" classname="my-2" onChange={this.onPrioritychangeHandle.bind(this)} selectedOption={this.state.prioritySelectedOption} />
                                                     }
                                                 </div>
                                             </div>
@@ -164,9 +155,9 @@ class NewReferral extends Component {
                                                     <div className="input-group my-2">
                                                         <div className="input-group-prepend">
                                                             <Button color="primary"
-                                                                onClick={this.OpenReferralTo.bind(this)}>{this.context.t("ReferralTo")}</Button>
+                                                                onClick={this.OpenReferralTo.bind(this)}>...</Button>
                                                         </div>
-                                                        <input type="text" autoComplete="off" className="form-control" />
+                                                        <input type="text" autoComplete="off" className="form-control" readOnly={true} defaultValue="موردی انتخاب نشده است" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -177,7 +168,7 @@ class NewReferral extends Component {
                             </div>
                             <div className="row bg-gray mg-b-5">
                                 <div className="col-1 d-flex">
-                                    <span className="row-icon flow"></span>
+                                    <span className="row-icon clock"></span>
                                 </div>
                                 <div className="col-11">
                                     <div className="row">
@@ -213,12 +204,14 @@ class NewReferral extends Component {
                                             <div className="form-group row">
                                                 <label className="col-1 col-form-label">{this.context.t("ReferralDescription")}</label>
                                                 <div className="col-11">
-                                                    <div className="input-group-prepend align-self-stretch">
-                                                        <Button color="primary" name="tozihat"
-                                                            onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                    <div className="input-group my-2">
+                                                        <div className="input-group-prepend align-self-stretch">
+                                                            <Button color="primary" name="tozihat"
+                                                                onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                        </div>
+                                                        <textarea type="text" className="form-control" rows="5"
+                                                            ref="DescriptionInput" name="tozihat"></textarea>
                                                     </div>
-                                                    <textarea type="text" className="form-control my-2" rows="5"
-                                                        ref="DescriptionInput" name="tozihat"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,84 +240,82 @@ class NewReferral extends Component {
                                     <div className="col-3">
                                         <div className="card ">
                                             <div className="card-header">
-                                                <i className="done-work">
+                                                <i className="import-authority">
                                                 </i>
                                             </div>
                                             <div className="card-body">
-                                                <RadioGroup
-                                                    name="import">
-                                                    <div className="radio">
-                                                        <Radio value="0" id="import0" />
+                                                <div className="checkbox-group">
+                                                    <div class="checkbox">
+                                                        <input id="import0" type="checkbox" />
                                                         <label htmlFor="import0">{this.context.t("ImportInformationFromLetter")}</label>
                                                     </div>
-                                                    <div className="radio">
-                                                        <Radio value="1" id="import1" />
+                                                    <div class="checkbox">
+                                                        <input id="import1" type="checkbox" />
                                                         <label htmlFor="import1">{this.context.t("ImportAttachmentFromLetter")}</label>
                                                     </div>
-                                                </RadioGroup>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-3">
                                         <div className="card ">
                                             <div className="card-header">
-                                                <i className="done-work">
+                                                <i className="send-authority">
                                                 </i>
                                             </div>
                                             <div className="card-body">
-                                                <RadioGroup
-                                                    name="send">
-                                                    <div className="radio">
-                                                        <Radio value="0" id="send0" />
+                                                <div className="checkbox-group">
+                                                    <div class="checkbox">
+                                                        <input id="send0" type="checkbox" />
                                                         <label htmlFor="send0">{this.context.t("SendSmsToUser")}</label>
                                                     </div>
-                                                    <div className="radio">
-                                                        <Radio value="1" id="send1" />
+                                                    <div class="checkbox">
+                                                        <input id="send1" type="checkbox" />
                                                         <label htmlFor="send1">{this.context.t("SendEmailToUser")}</label>
                                                     </div>
-                                                </RadioGroup>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-3">
                                         <div className="card ">
                                             <div className="card-header">
-                                                <i className="done-work">
+                                                <i className="referral-authority">
                                                 </i>
                                             </div>
                                             <div className="card-body">
-                                                <RadioGroup
-                                                    name="referral">
-                                                    <div className="radio">
-                                                        <Radio value="0" id="referral0" />
+                                                <div className="checkbox-group">
+                                                    <div class="checkbox">
+                                                        <input id="referral0" type="checkbox" />
                                                         <label htmlFor="referral0">{this.context.t("CreateCopy")}</label>
                                                     </div>
-                                                    <div className="radio">
-                                                        <Radio value="1" id="referral1" />
+                                                    <div class="checkbox">
+                                                        <input id="referral1" type="checkbox" />
                                                         <label htmlFor="referral1">{this.context.t("ReferralWork")}</label>
                                                     </div>
-                                                </RadioGroup>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-3">
                                         <div className="card ">
                                             <div className="card-header border-0">
-                                                <i className="done-work">
+                                                <i className="workform-authority">
                                                 </i>
                                             </div>
                                             <div className="card-body">
-                                                <RadioGroup
-                                                    name="workform">
-                                                    <div className="radio">
-                                                        <Radio value="0" id="workform0" />
+                                                <div className="checkbox-group">
+                                                    <div class="checkbox">
+                                                        <input id="workform0" type="checkbox" />
                                                         <label htmlFor="workform0">{this.context.t("CopyWorkForm")}</label>
                                                     </div>
-                                                    <div className="radio">
-                                                        <Radio value="1" id="workform1" />
+                                                    <div class="checkbox">
+                                                        <input id="workform1" type="checkbox" />
                                                         <label htmlFor="workform1">{this.context.t("NoWorkout")}</label>
                                                     </div>
-                                                </RadioGroup>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
