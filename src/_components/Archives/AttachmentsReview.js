@@ -50,7 +50,7 @@ class AttachmentsReview extends Component {
 
                 <div>
                     <Modal isOpen={modal} toggle={toggle} backdrop={this.state.backdrop} className={this.state.modalClass} >
-                        <ModalHeader>{this.context.t("frm_Attachment_Review")}</ModalHeader>
+                        <ModalHeader toggle={toggle}>{this.context.t("frm_Attachment_Review")}</ModalHeader>
                         <ModalBody>
                             <div className="attachment-container">
                                 <div className="row ">
