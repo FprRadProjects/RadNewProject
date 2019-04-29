@@ -28,14 +28,14 @@ class AttachmentsReview extends Component {
             ...this.state,
             backdrop: "static",
             modal: false,
-            modalClass: "modal-dialog-centered  r-modal"
+            modalClass: "modal-dialog-centered modal-lg r-modal r-attachment-modal"
         };
 
     }
 
 
     render() {
-        const { modal, toggle,peygir_id,parentPeygirId} = this.props;
+        const { modal, toggle, peygir_id, parentPeygirId } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -52,16 +52,63 @@ class AttachmentsReview extends Component {
                     <Modal isOpen={modal} toggle={toggle} backdrop={this.state.backdrop} className={this.state.modalClass} >
                         <ModalHeader>{this.context.t("frm_Attachment_Review")}</ModalHeader>
                         <ModalBody>
-                            <div><UploadFile peygir_id={peygir_id}></UploadFile></div>
-                            <div>
-                                شاخص آرشیو<br/>
-                                نام فایل<br/>
-                                فایل سرشاخه<br/>
-                                دکمه حذف<br/>
+                            <div className="attachment-container">
+                                <div className="row ">
+                                    <div className="col-6">
+                                        <div className="attachment-side">
+                                            <UploadFile peygir_id={peygir_id}></UploadFile>
+                                        </div>
+                                    </div>
+                                    <div className="col-6">
+                                        <div className="attachment-review">
+                                            <table className="table table-bordered table-striped text-center">
+                                                <thead>
+                                                    <tr>
+                                                        <th className="text-center">شاخص آرشیو</th>
+                                                        <th className="text-center">نام فایل</th>
+                                                        <th className="text-center">فایل سرشاخه</th>
+                                                        <th className="text-center"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>12345</td>
+                                                        <td>acsascascasc.png</td>
+                                                        <td>1961981</td>
+                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>12345</td>
+                                                        <td>acsascascasc.png</td>
+                                                        <td>1961981</td>
+                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>12345</td>
+                                                        <td>acsascascasc.png</td>
+                                                        <td>1961981</td>
+                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>12345</td>
+                                                        <td>acsascascasc.png</td>
+                                                        <td>1961981</td>
+                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>12345</td>
+                                                        <td>acsascascasc.png</td>
+                                                        <td>1961981</td>
+                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
+                                                    </tr>
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </ModalBody>
-                        <ModalFooter>
-                        </ModalFooter>
                     </Modal>
                     <style>{modalBackDrop}</style>
                 </div>
@@ -72,7 +119,7 @@ class AttachmentsReview extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-   
+
 });
 AttachmentsReview.contextTypes = {
     t: PropTypes.func.isRequired

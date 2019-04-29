@@ -35267,7 +35267,6 @@ i.icon.save-referral {
     top: 20px;
     background-image: url(../images/modal/referral-result/authority-toggle-close.svg);
     background-size: 15px;
-
 }
 
 .r-referral-modal .authority-toggle button:focus {
@@ -35441,6 +35440,47 @@ i.icon.save-referral {
     border: 1px solid #ddd;
 }
 
-.referral-to-modal .dx-g-bs4-table-container{
+.referral-to-modal .dx-g-bs4-table-container {
     min-height: 352px;
+}
+
+.r-attachment-modal .attachment-container {
+    padding: 20px;
+}
+
+.r-attachment-modal .attachment-container .attachment-side {
+    min-height: 506px;
+    border: 1px dashed #747474;
+}
+
+.e-upload {
+    border-width: 0 0 1px 0;
+    border-style: dashed;
+    border-color: #747474;
+}
+
+.r-attachment-modal .attachment-container .attachment-side .e-upload .e-upload-files {
+    min-height: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.r-attachment-modal .attachment-container .attachment-side .e-upload .e-upload-files .e-upload-file-list {
+    height: auto;
+}
+
+.r-attachment-modal .attachment-container .attachment-side .e-upload .e-file-delete-btn {
+    display: none!important;
+}
+
+.r-attachment-modal .attachment-container .attachment-review {
+    position: relative;
+    height: 506px;
+    overflow-y: auto;
+    display: block;
+}
+
+.r-attachment-modal .attachment-container .attachment-review .attachment-review-delete {
+    color: red;
+    font-size: 18px;
 }
