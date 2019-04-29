@@ -162,7 +162,7 @@ class RibbonReferenceViewer extends Component {
     ReferralHandle() {
         const {  WorkInfo, CanSubOnWork } = this.props;
         if (WorkInfo !== undefined) {
-            CanSubOnWork(WorkInfo.peygir_id, WorkInfo.id_tel,this.context.t("frm_Referral"),"referral").then(data => {
+            CanSubOnWork(WorkInfo.peygir_id, WorkInfo.id_tel,this.context.t("frm_New_Referral"),"referral").then(data => {
                 if (data.status) {
                     this.setState({
                         Referralmodal: true,

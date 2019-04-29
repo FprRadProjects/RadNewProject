@@ -4,7 +4,8 @@ import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton } from "../../Config";
-import { HideElementListModal,EditTextElementListModal } from "../../Basic";
+import { HideElementListModal, EditTextElementListModal } from "../../Basic";
+import {AttachmentsReview } from "../../Archives";
 import {
     design_Actions
 } from "../../../_actions";
@@ -15,7 +16,7 @@ class RibbonNewReferral extends Component {
         super(props);
         this.state = {
             ...this.state,
-            EditTextElementListmodal:false,
+            EditTextElementListmodal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal"
         };
@@ -27,12 +28,15 @@ class RibbonNewReferral extends Component {
     }
 
 
-   
-    
+
+
     attachmentsHandle() {
-        
+        this.setState({
+            AttachmentReviewmodal: !this.state.AttachmentReviewmodal
+        });
+
     }
-   
+
     controlpanelClick(e) {
         const { name } = e.target;
         if (name === "hide")
@@ -44,9 +48,9 @@ class RibbonNewReferral extends Component {
                 EditTextElementListmodal: !prevState.EditTextElementListmodal
             }));
     }
-    
+
     render() {
-        const { WorkInfo, saveReferralHandle, ShortKeys, DeletedElements, EditedElements} = this.props;
+        const { WorkInfo, saveReferralHandle, ShortKeys, DeletedElements, EditedElements } = this.props;
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -55,7 +59,7 @@ class RibbonNewReferral extends Component {
                         <span className="switch-state"></span>
                     </label>
                 </div>
-               
+
                 <div className="r-main-box__controlpanel">
 
                     <div class="dropdown ltr">
@@ -121,12 +125,16 @@ class RibbonNewReferral extends Component {
                     </MenuProvider>
                 </nav>
 
-               {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
+                {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
                     toggle={this.controlpanelClick.bind(this)}
                     FormId={FormInfo.fm_dabir_eghdam.id} />}
                 {this.state.EditTextElementListmodal && <EditTextElementListModal modal={this.state.EditTextElementListmodal}
                     toggle={this.controlpanelClick.bind(this)}
                     FormId={FormInfo.fm_dabir_eghdam.id} />}
+                {this.state.AttachmentReviewmodal &&
+                    <AttachmentsReview modal={this.state.AttachmentReviewmodal}
+                        toggle={this.attachmentsHandle.bind(this)}
+                        parentPeygirId={WorkInfo.peygir_id} peygir_id={0} />}
             </div>
         );
     }

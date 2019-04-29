@@ -183,8 +183,10 @@ export const translations = {
         frm_Insert_Internal_Letter:"ثبت نامه داخلی",
         frm_Insert_Draft_Letter_Issued:"ثبت پیش نویس نامه صادره",
         frm_Dashboard_Letters:"کارتابل نامه ها",
-        frm_Referral:"ارجاع",
+        frm_New_Referral:"ثبت ارجاع",
         frm_SubWork:"کار فرعی",
+        frm_Attachment_Review: 'بازنگری ضمائم',
+
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -375,8 +377,9 @@ export const translations = {
         frm_Insert_Internal_Letter:"Insert Internal Letter",
         frm_Insert_Draft_Letter_Issued:"Insert Draft Letter Issued",
         frm_Dashboard_Letters:"Dashboard Letters",
-        frm_Referral:"Referral",
+        frm_New_Referral:"New Referral",
         frm_SubWork:"Sub Work",
+        frm_Attachment_Review: 'Attachment Review',
 
         //End-------------- FORM NAME --------------
 

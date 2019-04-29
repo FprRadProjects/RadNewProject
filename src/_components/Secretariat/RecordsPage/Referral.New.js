@@ -240,7 +240,7 @@ class NewReferral extends Component {
             <div>
                 <Modal isOpen={modal} toggle={toggle} keyboard={false}
                     className={this.state.modalClass} backdrop={this.state.backdrop}>
-                    <ModalHeader toggle={toggle}>{this.context.t("Referral")}</ModalHeader>
+                    <ModalHeader toggle={toggle}>{this.context.t("frm_New_Referral")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
                             <RibbonNewReferral saveReferralHandle={this.saveReferralHandle.bind(this)} />
@@ -363,6 +363,7 @@ class NewReferral extends Component {
                                     toggle={this.OpenSelectDefaultText.bind(this)}
                                     Successtoggle={this.SuccessSelectDescription.bind(this)}
                                     id_tel={WorkInfo.id_tel} />}
+                                  
                         </div>
                         <style>{modalBackDrop}</style>
                     </ModalBody>
