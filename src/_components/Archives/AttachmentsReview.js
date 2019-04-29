@@ -54,7 +54,10 @@ class AttachmentsReview extends Component {
                         <ModalBody>
                             <div><UploadFile peygir_id={peygir_id}></UploadFile></div>
                             <div>
-                                dfgdfgdfg
+                                شاخص آرشیو<br/>
+                                نام فایل<br/>
+                                فایل سرشاخه<br/>
+                                دکمه حذف<br/>
                             </div>
                         </ModalBody>
                         <ModalFooter>
