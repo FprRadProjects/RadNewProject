@@ -20,7 +20,7 @@ var Params = {
     "direction": "desc",
     "filter": []
 };
-class HideElementListModal extends Component {
+class EditTextElementListModal extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,13 +32,13 @@ class HideElementListModal extends Component {
 
     }
 
-    SetSelectHideRowData = (row) => {
+    SetSelectEditTextRowData = (row) => {
         this.setState({
             row: row
         })
     }
     DeleteRow = () => {
-        const { FormId, Delete_HideElements_Template, GetHideElementsList } = this.props;
+        const { FormId, Delete_EditTextElements_Template, GetEditTextElementsList } = this.props;
         let row = this.state.row;
         if (row !== undefined) {
             confirmAlert({
@@ -48,9 +48,9 @@ class HideElementListModal extends Component {
                     {
                         label:this.context.t("Yes"),
                         onClick: () => {
-                            Delete_HideElements_Template(FormId, row.Id).then(data => {
+                            Delete_EditTextElements_Template(FormId, row.Id).then(data => {
                                 if (data.status) {
-                                    GetHideElementsList(Params);
+                                    GetEditTextElementsList(Params);
                                 }
                             });
                         }
@@ -69,10 +69,10 @@ class HideElementListModal extends Component {
     render() {
         const columns = [
             { name: 'Id', title: this.context.t("RowId") },
-            { name: 'Description', title: this.context.t("Description") },
+            { name: 'Title', title: this.context.t("Title") },
             { name: 'IsPublic', title: this.context.t("IsPublic") },
         ];
-        const { modal, toggle, GetHideElementsList, SelectHideElements_rows, FormId } = this.props;
+        const { modal, toggle, GetEditTextElementsList, SelectEditTextElements_rows, FormId } = this.props;
         Params.FormId = FormId;
         const modalBackDrop = `
         .modal-backdrop {
@@ -88,18 +88,18 @@ class HideElementListModal extends Component {
 
                 <div>
                     <Modal isOpen={modal} toggle={toggle} backdrop={this.state.backdrop} className={this.state.modalClass} >
-                        <ModalHeader>{this.context.t("frm_HideElements_Template")}</ModalHeader>
+                        <ModalHeader>{this.context.t("frm_EditTextElements_Template")}</ModalHeader>
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
-                                rows={SelectHideElements_rows} totalCount={0}
-                                UrlParams={Params} fetchData={GetHideElementsList.bind(this)}
-                                GetRowInfo={this.SetSelectHideRowData} columnwidth={155}
+                                rows={SelectEditTextElements_rows} totalCount={0}
+                                UrlParams={Params} fetchData={GetEditTextElementsList.bind(this)}
+                                GetRowInfo={this.SetSelectEditTextRowData} columnwidth={155}
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />
                         </ModalBody>
                         <ModalFooter>
                             <Button color="primary" onClick={this.DeleteRow.bind(this)}>{this.context.t("Delete")}</Button>{' '}
-                            <Button color="secondary"  name="hide" onClick={toggle}>{this.context.t("Cancel")}</Button>
+                            <Button color="secondary" name="edit" onClick={toggle}>{this.context.t("Cancel")}</Button>
                         </ModalFooter>
                     </Modal>
                     <style>{modalBackDrop}</style>
@@ -111,15 +111,15 @@ class HideElementListModal extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    GetHideElementsList: (Params) => {
-        dispatch(design_Actions.GetHideElementsList(Params))
+    GetEditTextElementsList: (Params) => {
+        dispatch(design_Actions.GetEditTextElementsList(Params))
     }
     ,
-    Delete_HideElements_Template: (rowId, FormId) => {
-        return dispatch(design_Actions.Delete_HideElements_Template(rowId, FormId))
+    Delete_EditTextElements_Template: (rowId, FormId) => {
+        return dispatch(design_Actions.Delete_EditTextElements_Template(rowId, FormId))
     }
 });
-HideElementListModal.contextTypes = {
+EditTextElementListModal.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
@@ -128,14 +128,14 @@ function mapStateToProps(state) {
     const { alert } = state;
     const { loading } = state.loading;
     const { lang } = state.i18nState
-    const { SelectHideElements_rows } = state.Design;
+    const { SelectEditTextElements_rows } = state.Design;
     return {
         alert,
         loading,
         lang,
-        SelectHideElements_rows,
+        SelectEditTextElements_rows,
     };
 }
 
-const connectedHideElementListModal = connect(mapStateToProps, mapDispatchToProps)(HideElementListModal);
-export { connectedHideElementListModal as HideElementListModal };
+const connectedEditTextElementListModal = connect(mapStateToProps, mapDispatchToProps)(EditTextElementListModal);
+export { connectedEditTextElementListModal as EditTextElementListModal };

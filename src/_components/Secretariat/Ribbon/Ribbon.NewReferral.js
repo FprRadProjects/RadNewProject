@@ -2,19 +2,12 @@ import React, { Component } from 'react';
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
-import { ReferenceViewer } from "../RecordsPage";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton } from "../../Config";
-import { HideElementListModal } from "../../Basic";
+import { HideElementListModal,EditTextElementListModal } from "../../Basic";
 import {
-    Act_Reference,
-    WorkBasic_action,
-    design_Actions,
-    WorkActions_action
+    design_Actions
 } from "../../../_actions";
-
-import { toast } from 'react-toastify';
 
 class RibbonNewReferral extends Component {
     constructor(props) {
@@ -22,6 +15,7 @@ class RibbonNewReferral extends Component {
         super(props);
         this.state = {
             ...this.state,
+            EditTextElementListmodal:false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal"
         };
@@ -39,10 +33,16 @@ class RibbonNewReferral extends Component {
         
     }
    
-    controlpanelClick() {
-        this.setState(prevState => ({
-            HideElementListmodal: !prevState.HideElementListmodal
-        }));
+    controlpanelClick(e) {
+        const { name } = e.target;
+        if (name === "hide")
+            this.setState(prevState => ({
+                HideElementListmodal: !prevState.HideElementListmodal
+            }));
+        else if (name === "edit")
+            this.setState(prevState => ({
+                EditTextElementListmodal: !prevState.EditTextElementListmodal
+            }));
     }
     
     render() {
@@ -55,9 +55,18 @@ class RibbonNewReferral extends Component {
                         <span className="switch-state"></span>
                     </label>
                 </div>
+               
                 <div className="r-main-box__controlpanel">
-                    <a className="r-main-box__controlpanel--action"
-                        title="جعبه ابزار" onClick={this.controlpanelClick.bind(this)}></a>
+
+                    <div class="dropdown ltr">
+                        <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                        <div className="dropdown-menu">
+                            <a className="dropdown-item"
+                                title={this.context.t("Toolbox")} name="hide" onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
+                            <a className="dropdown-item"
+                                title={this.context.t("Toolbox")} name="edit" onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
+                        </div>
+                    </div>
                 </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
                     <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">عملیات</a></li>
@@ -115,26 +124,9 @@ class RibbonNewReferral extends Component {
                {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
                     toggle={this.controlpanelClick.bind(this)}
                     FormId={FormInfo.fm_dabir_eghdam.id} />}
-                {/*  {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
-                    toggle={this.toggleReferenceViewer.bind(this)}
-                    WorkInfo={WorkInfo}
-                    Params={Params} RefreshParentForm={FetchData.bind(this)}
-                    ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
-                {this.state.FlowResultSelectmodal &&
-                    <ConfirmFlow ParentForm={ParentForm}
-                        flowResultSelectModal={this.state.FlowResultSelectmodal}
-                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
-                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} FetchWorkInfo={FetchWorkInfo} />}
-
-                {this.state.Referralmodal &&
-                    <Modal isOpen={this.state.Referralmodal} className={this.state.modalClass} >
-                        <ModalHeader>{this.context.t("frm_Referral")}</ModalHeader>
-                        <ModalBody>
-                            
-                        </ModalBody>
-                        
-                    </Modal>
-                } */}
+                {this.state.EditTextElementListmodal && <EditTextElementListModal modal={this.state.EditTextElementListmodal}
+                    toggle={this.controlpanelClick.bind(this)}
+                    FormId={FormInfo.fm_dabir_eghdam.id} />}
             </div>
         );
     }

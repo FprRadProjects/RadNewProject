@@ -8,15 +8,42 @@ import { toast } from 'react-toastify';
 
 export const design_Actions = {
     GetHideElementsList,
+    GetEditTextElementsList,
     GetTemplateForm,
     Set_EditText_TemplateForm,
     Set_Hide_TemplateForm,
     Set_ShortKey_TemplateForm,
     Delete_ShortKeyElements_Template,
-    Delete_HideElements_Template
+    Delete_HideElements_Template,
+    Delete_EditTextElements_Template
 };
 
 
+function GetEditTextElementsList(param) {
+    return dispatch => {
+        dispatch(loadingActions.ShowLoading());
+        designService.GetEditTextElementsList(param)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(successGetEditTextElements(data.data));
+                        dispatch(loadingActions.HideLoading());
+                    } else if (data.code !== 0) {
+                        toast.error(data.error);
+                        dispatch(loadingActions.HideLoading());
+                    } else
+                    {
+                        userActions.logout();
+                        window.open('/',"_self");
+                    }
+                },
+                error => {
+                    dispatch(alertActions.error(error));
+                    dispatch(loadingActions.HideLoading());
+                }
+            );
+    }
+}
 function GetHideElementsList(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
@@ -163,6 +190,31 @@ function Delete_ShortKeyElements_Template(FormId,RowId) {
     }
 }
 
+function Delete_EditTextElements_Template(FormId,RowId) {
+    return dispatch => {
+        dispatch(loadingActions.ShowLoading());
+       return designService.Delete_EditTextElements_Template(FormId,RowId)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(design_Actions.GetTemplateForm(FormId))
+                    } else if (data.code !== 0) {
+                        toast.error(data.error);
+                        dispatch(loadingActions.HideLoading());
+                    } else
+                    {
+                        userActions.logout();
+                        window.open('/',"_self");
+                    }
+                    return Promise.resolve(data)
+                },
+                error => {
+                    dispatch(alertActions.error(error));
+                    dispatch(loadingActions.HideLoading());
+                }
+            );
+    }
+}
 function Delete_HideElements_Template(FormId,RowId) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
@@ -194,6 +246,9 @@ function successGetTemplate(data) {
 }
 function successGetHideTemplate(data) {
     return {type: constants.DESIGN_SUCCESS_GET_HIDE_ELEMENTS_TEMPLATE, data};
+}
+function successGetEditTextElements(data) {
+    return {type: constants.DESIGN_SUCCESS_GET_EDIT_TEXT_ELEMENTS_TEMPLATE, data};
 }
 
 

@@ -111,6 +111,7 @@ export const translations = {
         Count:"تعداد",
         Items:"مورد",
         Authority:"اختیارات",
+        Title:"عنوان",
         //---------------تاییدیه------------------شروع
         Yes: 'بلی',
         No: 'خیر',
@@ -175,6 +176,7 @@ export const translations = {
         frm_Review_Confirm_Work: 'بازنگری تایید کار',
         frm_Edit_Review_Confirm_Work: 'ویرایش بازنگری تایید کار',
         frm_HideElements_Template: 'مدیریت کنترل های حذف شده',
+        frm_EditTextElements_Template: 'مدیریت برچسب های ویرایش شده',
         frm_Secretariat_Defaults:"پیش فرض های دبیرخانه",
         frm_Insert_Incoming_Letter:"ثبت نامه وارده",
         frm_Insert_Letter_Issuedr:"ثبت نامه صادره",
@@ -297,6 +299,7 @@ export const translations = {
         Count:"Count",
         Items:"Items",
         Authority:"Authority",
+        Title:"Title",
 
         //Start---------------Confirm-----------------
         Yes: 'Yes',
@@ -364,6 +367,7 @@ export const translations = {
         frm_Review_Confirm_Work: 'Review Confirm Work',
         frm_Edit_Review_Confirm_Work: 'Edit Review Confirm Work',
         frm_HideElements_Template: 'Manage Deleted Controls',
+        frm_EditTextElements_Template: 'Manage Edited label Controls',
         frm_Secretariat_Defaults:"Secretariat Defaults",
         frm_Insert_Incoming_Letter:"Insert Incoming Letter",
         frm_Insert_Letter_Issuedr:"Insert Letter Issuedr",

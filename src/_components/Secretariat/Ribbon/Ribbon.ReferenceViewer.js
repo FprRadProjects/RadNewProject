@@ -3,10 +3,9 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { ReferenceViewer } from "../RecordsPage";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton } from "../../Config";
-import { HideElementListModal } from "../../Basic";
+import { HideElementListModal,EditTextElementListModal } from "../../Basic";
 import {
     Act_Reference,
     WorkBasic_action,
@@ -28,6 +27,7 @@ class RibbonReferenceViewer extends Component {
             ...this.state,
             ReferenceViewermodal: false,
             HideElementListmodal: false,
+            EditTextElementListmodal:false,
             Referralmodal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal"
@@ -184,10 +184,16 @@ class RibbonReferenceViewer extends Component {
             }
         });
     }
-    controlpanelClick() {
-        this.setState(prevState => ({
-            HideElementListmodal: !prevState.HideElementListmodal
-        }));
+    controlpanelClick(e) {
+        const { name } = e.target;
+        if (name === "hide")
+            this.setState(prevState => ({
+                HideElementListmodal: !prevState.HideElementListmodal
+            }));
+        else if (name === "edit")
+            this.setState(prevState => ({
+                EditTextElementListmodal: !prevState.EditTextElementListmodal
+            }));
     }
 
     CloseleSelectFlowResult = (e) => {
@@ -209,16 +215,13 @@ class RibbonReferenceViewer extends Component {
                     </label>
                 </div>
                 <div className="r-main-box__controlpanel">
-
                     <div class="dropdown ltr">
                         <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
                         <div className="dropdown-menu">
                             <a className="dropdown-item"
-                                title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
+                                title={this.context.t("Toolbox")} name="hide" onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
                             <a className="dropdown-item"
-                                title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
-                            <a className="dropdown-item"
-                                title={this.context.t("Toolbox")} onClick={this.controlpanelClick.bind(this)}>{this.context.t("ReportsList")}</a>
+                                title={this.context.t("Toolbox")} name="edit" onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
                         </div>
                     </div>
                 </div>
@@ -311,6 +314,10 @@ class RibbonReferenceViewer extends Component {
                 </nav>
 
                 {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
+                    toggle={this.controlpanelClick.bind(this)}
+                    FormId={FormInfo.fm_dabir_natije_erja.id} />}
+                    
+                {this.state.EditTextElementListmodal && <EditTextElementListModal modal={this.state.EditTextElementListmodal}
                     toggle={this.controlpanelClick.bind(this)}
                     FormId={FormInfo.fm_dabir_natije_erja.id} />}
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}

@@ -6,14 +6,28 @@ const _Config =JSON.parse(localStorage.getItem("_Config"));
 export const designService = {
     GetTemplateForm,
     GetHideElementsList,
+    GetEditTextElementsList,
     Set_EditText_TemplateForm,
     Set_Hide_TemplateForm,
     Set_ShortKey_TemplateForm,
     Delete_ShortKeyElements_Template,
-    Delete_HideElements_Template
+    Delete_HideElements_Template,
+    Delete_EditTextElements_Template
 };
 
 
+function GetEditTextElementsList(param) {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(_Config.BaseUrl + "GetEditTextElementsList", param)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
 function GetHideElementsList(param) {
     if (UserConfig.GetToken() !== null) {
         return axios.post(_Config.BaseUrl + "GetHideElementsList", param)
@@ -105,6 +119,22 @@ function Delete_HideElements_Template(FormId, RowId) {
     data.append("RowId", RowId);
     if (UserConfig.GetToken() !== null) {
         return axios.post(_Config.BaseUrl + "Delete_HideElements_Template", data)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
+
+function Delete_EditTextElements_Template(FormId, RowId) {
+    let data = new FormData();
+    data.append("FormId", FormId);
+    data.append("RowId", RowId);
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(_Config.BaseUrl + "Delete_EditTextElements_Template", data)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })
