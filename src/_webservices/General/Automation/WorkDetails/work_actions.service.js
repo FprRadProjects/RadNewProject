@@ -11,10 +11,22 @@ export const WorkActions_service = {
     FinalFlowConfirmWork,
     ConfirmReviewWork,
     DeleteFromWorkMark,
-    InsertIntoWorkMark
-
+    InsertIntoWorkMark,
+    InsertNewWorkInfo
 };
 
+function InsertNewWorkInfo(Params) {
+    if (UserConfig.GetToken() !== null) {
+        return axios.post(_Config.BaseUrl + "InsertNewWorkInfo", Params)
+            .then(Response => {
+                return Promise.resolve(Response.data)
+            })
+            .catch((error) => {
+                return Promise.reject(error.message)
+            })
+    }
+    return Promise.reject('No')
+}
 function InsertIntoWorkMark(peygir_id) {
     if (UserConfig.GetToken() !== null) {
 

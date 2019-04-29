@@ -5,12 +5,25 @@ import PropTypes from "prop-types"
 import { SelectDefaultTextModal } from "../../Basic/";
 import InputMask from 'react-input-mask';
 
-import {  AutoBasicInfo_action, WorkBasic_action, design_Actions } from "../../../_actions";
+import { AutoBasicInfo_action, WorkActions_action } from "../../../_actions";
 import { toast } from 'react-toastify';
 import { RibbonNewReferral } from '../Ribbon/Ribbon.NewReferral';
 import { ComboSelectList, CalendarDatePicker } from "../../Config";
 import { ReferralToModal } from '../../Basic';
-var thisSaveParams = { form: "", data: [] };
+var thisSaveParams = {
+    form: "",
+    type: "sub",
+    data: [],
+    workers: [],
+    attachFromParent: 1,
+    infoFromParent: 1,
+    replication: "",
+    emailToWorker: 0,
+    emailToAudience: 0,
+    smsToWorker: 0,
+    smsToAudience: 0
+
+};
 
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
 var DefaultInfoParams = { form: "referrals", wt_id: 0, flow_id: 0, isInternal: 0 }
@@ -31,40 +44,56 @@ class NewReferral extends Component {
         SelectPriorityList();
         SelectWorkTypeList(workTypeParams);
     }
-    onReferralTypechangeHandle = (e, val) => {
-        this.setState({workTypeSelectedOption: val.value});
-        this.setState({ SelectedWorkers: [] });
-        this.refs.Workers.value = this.context.t("unselected");
-        const { GetNewWorkDefaultInfo } = this.props;
-        DefaultInfoParams.wt_id = val.value;
-        GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
-            if (data.status) {
-                if (data.data.DefaultValue !== null) {
-                    this.refs.flow.checked = data.data.DefaultValue.flow;
-                    this.refs.ronevesht.checked = data.data.DefaultValue.ronevesht;
-                    this.refs.emailToWorker.checked = data.data.DefaultValue.web_emailtokarbar;
-                    this.refs.smsToWorker.checked = data.data.DefaultValue.web_smstokarbar;
-                    this.setState({ SelectedWorkers: [{ id_user: data.data.WorkerId, username: data.data.WorkerUserName, id_role: data.data.WorkerId_Role, rolename: data.data.WorkerRoleName }] });
-                    this.refs.Workers.value = this.state.SelectedWorkers[0].username;
-                    this.setState({ setDefaultDate: data.data.ActionDate });
+    CalendarChange = (value, name) => {
+        thisSaveParams.data[[name]] = { [name]: value }
+    }
+    changeHandle = (e, val) => {
+        if (val !== undefined) {
+            const { name } = e;
+            if (val.value !== 0) {
+                if (name === "wt_id") {
+                    this.setState({ workTypeSelectedOption: val.value });
+                    this.setState({ SelectedWorkers: [] });
+                    this.refs.Workers.value = this.context.t("unselected");
+                    const { GetNewWorkDefaultInfo } = this.props;
+                    DefaultInfoParams.wt_id = val.value;
+                    thisSaveParams.data["sadere_ref"] = { "sadere_ref": val.value }
+                    GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
+                        if (data.status) {
+                            if (data.data.DefaultValue !== null) {
+                                this.refs.flow.checked = data.data.DefaultValue.flow;
+                                thisSaveParams.data["flow_id"] = { "flow_id": null };
+                                thisSaveParams.data["erja"] = { "erja": data.data.DefaultValue.flow ? 1 : 0 };
+                                this.refs.ronevesht.checked = data.data.DefaultValue.ronevesht;
+                                this.refs.emailToWorker.checked = data.data.DefaultValue.web_emailtokarbar;
+                                this.refs.smsToWorker.checked = data.data.DefaultValue.web_smstokarbar;
+                                thisSaveParams["emailToWorker"] = data.data.DefaultValue.web_emailtokarbar ? 1 : 0;
+                                thisSaveParams["smsToWorker"] = data.data.DefaultValue.web_smstokarbar ? 1 : 0;
+                                if (data.data.WorkerId !== undefined && data.data.WorkerId !== 0) {
+                                    this.setState({ SelectedWorkers: [{ id_user: data.data.WorkerId, username: data.data.WorkerUserName, id_role: data.data.WorkerId_Role, rolename: data.data.WorkerRoleName }] });
+                                    this.refs.Workers.value = this.state.SelectedWorkers[0].username;
+                                    thisSaveParams.workers = [{ worker: data.data.WorkerId, manager: 0 }];
+                                }
+                                this.setState({ setDefaultDate: data.data.ActionDate });
+                            }
+                        }
+                        else {
+                            toast.error(data.error)
+                        }
+                    });
                 }
-            }
-            else {
-                toast.error(data.error)
-            }
-        });
-    }
-    onPrioritychangeHandle = (e, val) => {
+                thisSaveParams.data[[name]] = { [name]: val.value }
 
-    }
-    ReferralDurationDateChange = (value, name) => {
-    }
-    ReferralDurationTimeHandle() {
-
+            } else
+                thisSaveParams.data[[name]] = { [name]: null }
+        }
+        else {
+            const { name, value } = e.target;
+            thisSaveParams.data[[name]] = { [name]: value };
+        }
     }
     OpenReferralTo() {
-        console.log(this.state.workTypeSelectedOption)
-        if (this.state.workTypeSelectedOption !== 0 && this.state.workTypeSelectedOption !==undefined) {
+        if (this.state.workTypeSelectedOption !== 0 && this.state.workTypeSelectedOption !== undefined) {
             this.setState(prevState => ({
                 ReferralTomodal: !prevState.ReferralTomodal,
             }));
@@ -83,6 +112,10 @@ class NewReferral extends Component {
             this.refs.Workers.value = Workers[0].username;
         else
             this.refs.Workers.value = this.context.t("unselected");
+        var newWorkers = Object.keys(Workers).map((item, index) => {
+            return { worker: Workers[item].id_user, manager: 0 };
+        })
+        thisSaveParams.workers = newWorkers;
     }
     OpenSelectDefaultText = (e) => {
         const { name } = e.target;
@@ -106,6 +139,88 @@ class NewReferral extends Component {
         else
             toast.warn(this.context.t("msg_No_Select_Row"));
     }
+    checkBoxChangeHandler = (e) => {
+        const { WorkInfo } = this.props;
+        const { name, checked } = e.target;
+        const value = checked ? 1 : 0;
+        if (name === "withoutFlow") {
+            thisSaveParams.data["flow_id"] = { "flow_id": null };
+            thisSaveParams.data["erja"] = { "erja": value };
+        }
+        else if (name === "emailToWorker")
+            thisSaveParams["emailToWorker"] = value;
+        else if (name === "smsToWorker")
+            thisSaveParams["smsToWorker"] = value;
+        else if (name === "attachFromParent")
+            thisSaveParams["attachFromParent"] = value;
+        else if (name === "infoFromParent")
+            thisSaveParams["infoFromParent"] = value;
+        else if (name === "cpy_form_kar")
+            if (checked) thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": WorkInfo.showtree_id };
+            else thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
+
+    }
+    saveReferralHandle = () => {
+        const { WorkInfo, lang, FormInfo, toggle, RefreshParentForm, Params, InsertNewWorkInfo } = this.props;
+        var formname = lang == "fa" ? FormInfo.form_name : FormInfo.en_form_name;
+       
+        if (thisSaveParams.data["wt_id"] === undefined)
+        {
+            toast.error(this.context.t("msg_No_Select_ReferralType"));
+            return false;
+        }
+        if (thisSaveParams.data["wt_id"].wt_id.length < 10)
+        {
+            toast.error(this.context.t("msg_No_Select_ReferralType"));
+            return false;
+        }
+        if (thisSaveParams.workers.length==0) {
+            toast.error(this.context.t("msg_No_Select_ReferralWorkers"));
+            return false;
+        }
+        if (thisSaveParams.data["tarikhaction"] === undefined)
+        {
+            toast.error(this.context.t("msg_ActionDate_Not_Valid"));
+            return false;
+        }
+        if (thisSaveParams.data["tarikhaction"].tarikhaction.length < 10)
+        {
+            toast.error(this.context.t("msg_ActionDate_Not_Valid"));
+            return false;
+        }
+        thisSaveParams.data["p_id"] = { "p_id": WorkInfo.peygir_id };
+        thisSaveParams.data["id_tel"] = { "id_tel": WorkInfo.id_tel };
+        thisSaveParams.data["showtree_id"] = { "showtree_id": WorkInfo.showtree_id };
+        thisSaveParams.data["arshiv_id"] = { "arshiv_id": WorkInfo.showtree_id };
+        thisSaveParams.form = formname;
+        let obj = [];
+        Object.keys(thisSaveParams.data).map((item, index) => {
+            return obj[index++] = thisSaveParams.data[item];
+        })
+        thisSaveParams.data = obj;
+        console.log(thisSaveParams)
+
+        InsertNewWorkInfo(thisSaveParams, this.context.t("msg_Operation_Success")).then(data => {
+            if (data.status) {
+                RefreshParentForm(Params);
+                toggle();
+            }
+        });
+        thisSaveParams = {
+            form: "",
+            type: "sub",
+            data: [],
+            workers: [],
+            attachFromParent: 1,
+            infoFromParent: 1,
+            replication: "",
+            emailToWorker: 0,
+            emailToAudience: 0,
+            smsToWorker: 0,
+            smsToAudience: 0
+        };
+    }
+
 
     render() {
         const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows, WorkInfo } = this.props;
@@ -128,7 +243,7 @@ class NewReferral extends Component {
                     <ModalHeader toggle={toggle}>{this.context.t("Referral")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonNewReferral />
+                            <RibbonNewReferral saveReferralHandle={this.saveReferralHandle.bind(this)} />
                         </div>
                         <div className="referral-modal">
                             <div className="row bg-gray mg-b-5">
@@ -142,7 +257,7 @@ class NewReferral extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("ReferralType")}</label>
                                                 <div className="col-10">
                                                     {SelectWorkTypeList_rows !== undefined &&
-                                                        <ComboSelectList options={ReferralTypeList} classname="my-2" name="referral_type_id" onChange={this.onReferralTypechangeHandle.bind(this)}  />
+                                                        <ComboSelectList options={ReferralTypeList} classname="my-2" name="wt_id" onChange={this.changeHandle.bind(this)} />
                                                     }
                                                 </div>
                                             </div>
@@ -158,7 +273,7 @@ class NewReferral extends Component {
                                 </div>
                                 <div className="col-11">
                                     <div className="row">
-                                      
+
                                         <div className="col-6">
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("ReferralTo")}</label>
@@ -178,7 +293,7 @@ class NewReferral extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("Priority")}</label>
                                                 <div className="col-10">
                                                     {SelectPriorityList_rows !== undefined &&
-                                                        <ComboSelectList options={PriorityList} name="priority_id" classname="my-2" onChange={this.onPrioritychangeHandle.bind(this)} selectedOption={this.state.prioritySelectedOption} />
+                                                        <ComboSelectList options={PriorityList} name="olaviyat_id" classname="my-2" onChange={this.changeHandle.bind(this)} selectedOption={this.state.prioritySelectedOption} />
                                                     }
                                                 </div>
                                             </div>
@@ -197,7 +312,7 @@ class NewReferral extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("ReferralDurationDate")}</label>
                                                 <div className="col-10">
-                                                    <CalendarDatePicker className="form-control my-2  ltr" id="acfas" fieldname="" setDate={this.state.setDefaultDate} CalendarChange={this.ReferralDurationDateChange.bind(this)} />
+                                                    <CalendarDatePicker fieldname="tarikhaction" className="form-control my-2  ltr" id="acfas" setDate={this.state.setDefaultDate} CalendarChange={this.CalendarChange.bind(this)} />
                                                 </div>
                                             </div>
                                         </div>
@@ -205,7 +320,7 @@ class NewReferral extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("ReferralDurationTime")}</label>
                                                 <div className="col-10">
-                                                    <InputMask type="text" autoComplete="off" className="form-control my-2  ltr" name="" mask="99:99"  onChange={this.ReferralDurationTimeHandle.bind(this)}/>
+                                                    <InputMask type="text" name="deadtime" autoComplete="off" className="form-control my-2  ltr" mask="99:99" onChange={this.changeHandle.bind(this)} />
                                                 </div>
                                             </div>
                                         </div>
@@ -265,11 +380,11 @@ class NewReferral extends Component {
                                             <div className="card-body">
                                                 <div className="checkbox-group">
                                                     <div class="checkbox">
-                                                        <input id="import0" defaultChecked={true} type="checkbox" />
+                                                        <input id="import0" defaultChecked={true} type="checkbox" name="infoFromParent" onChange={this.checkBoxChangeHandler.bind(this)} />
                                                         <label htmlFor="import0">{this.context.t("ImportInformationFromLetter")}</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <input id="import1" defaultChecked={true} type="checkbox" />
+                                                        <input id="import1" defaultChecked={true} type="checkbox" onChange={this.checkBoxChangeHandler.bind(this)} name="attachFromParent" />
                                                         <label htmlFor="import1">{this.context.t("ImportAttachmentFromLetter")}</label>
                                                     </div>
                                                 </div>
@@ -285,11 +400,11 @@ class NewReferral extends Component {
                                             <div className="card-body">
                                                 <div className="checkbox-group">
                                                     <div class="checkbox">
-                                                        <input id="workform0" type="checkbox" />
+                                                        <input id="workform0" name="cpy_form_kar" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" />
                                                         <label htmlFor="workform0">{this.context.t("CopyWorkForm")}</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <input id="workform1" defaultChecked={true} ref="flow" type="checkbox" />
+                                                        <input id="workform1" name="withoutFlow" onChange={this.checkBoxChangeHandler.bind(this)} defaultChecked={true} ref="flow" type="checkbox" />
                                                         <label htmlFor="workform1">{this.context.t("NoWorkFlow")}</label>
                                                     </div>
                                                 </div>
@@ -327,11 +442,11 @@ class NewReferral extends Component {
                                             <div className="card-body">
                                                 <div className="checkbox-group">
                                                     <div class="checkbox">
-                                                        <input id="send0" ref="smsToWorker" type="checkbox" />
+                                                        <input id="send0" ref="smsToWorker" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="smsToWorker" />
                                                         <label htmlFor="send0">{this.context.t("SendSmsToUser")}</label>
                                                     </div>
                                                     <div class="checkbox">
-                                                        <input id="send1" ref="emailToWorker" type="checkbox" />
+                                                        <input id="send1" ref="emailToWorker" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="emailToWorker" />
                                                         <label htmlFor="send1">{this.context.t("SendEmailToUser")}</label>
                                                     </div>
                                                 </div>
@@ -353,12 +468,7 @@ class NewReferral extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    GetTemplateForm: (Params) => {
-        dispatch(design_Actions.GetTemplateForm(Params))
-    },
-    FetchWorkInfo: (peygir_id) => {
-        dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
-    },
+
     SelectWorkTypeList: (Params) => {
         dispatch(AutoBasicInfo_action.SelectWorkTypeList(Params))
     },
@@ -370,6 +480,9 @@ const mapDispatchToProps = dispatch => ({
     },
     GetNewWorkDefaultInfo: (Params) => {
         return dispatch(AutoBasicInfo_action.GetNewWorkDefaultInfo(Params))
+    },
+    InsertNewWorkInfo: (Params, msg) => {
+        return dispatch(WorkActions_action.InsertNewWorkInfo(Params, msg))
     }
 });
 NewReferral.contextTypes = {
@@ -381,7 +494,6 @@ function mapStateToProps(state) {
     const { loading } = state.loading;
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
-    const { Refresh_Form } = state.Common;
     const { SelectWorkTypeList_rows, SelectPriorityList_rows } = state.Auto_BasicInfo
 
     return {
@@ -389,7 +501,6 @@ function mapStateToProps(state) {
         loading,
         lang,
         WorkInfo,
-        Refresh_Form,
         SelectWorkTypeList_rows,
         SelectPriorityList_rows,
     };

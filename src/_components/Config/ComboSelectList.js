@@ -23,11 +23,15 @@ class ComboSelectList extends Component {
         this.setState({ selectedOption });
         onChange(e,selectedOption);
       }
+      InputChangeHandler=(event)=>{
+       return event.replace(/\ی/g, "ي");
+      }
     render() { 
 
         const {options,name ,classname} = this.props;
         return (
             <Select
+            onInputChange={this.InputChangeHandler.bind(this)}
             className={classname}
             name={name}
         value={this.state.selectedOption}

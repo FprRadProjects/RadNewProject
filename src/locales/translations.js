@@ -151,6 +151,7 @@ export const translations = {
         msg_Operation_Success: 'عملیات با موفقیت انجام شد....',
         msg_DontHave_Access: 'شما دسترسی دیدن جزییات این کار را ندارید....',
         msg_No_Select_ReferralType:"نوع اقدام انتخاب نشده است",
+        msg_No_Select_ReferralWorkers:"ارجاع به انتخاب نشده است",
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
         frm_System: 'سیستم',
@@ -338,6 +339,8 @@ export const translations = {
         msg_Operation_Success: 'The Operation Was Successful....',
         msg_DontHave_Access: 'You Do Not Have Access To See Delaits of This....',
         msg_No_Select_ReferralType:"Referral Type Not Selected.",
+        msg_No_Select_ReferralWorkers:"Referral Workers Not Selected.",
+
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',

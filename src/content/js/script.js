@@ -40,6 +40,18 @@ $(document).on('change', '#sidebar-toggle', function (e) {
     else
         $(this).parent().parent().nextAll(".tab-content").show();
 });
+document.addEventListener('keyup', function (event) {
+    try {
+        var newVal = event.target.value.replace(/\ی/g, "ي");
+        event.target.value = newVal;
+    }
+    catch (err) { }
+    return true
+});
+// $(document).on('keyup', 'input', function (e) {
+//     $(this).val($(this).val().replace("ی", "ي"));
+// });
+
 $(document).on('click', '.js-authority-toggle-btn', function (e) {
     var $box = $(this).parent().prev(".modal-footer");
     if ($box.css('display') == 'none') {

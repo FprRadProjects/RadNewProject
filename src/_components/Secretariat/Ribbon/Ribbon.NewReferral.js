@@ -15,7 +15,6 @@ import {
 } from "../../../_actions";
 
 import { toast } from 'react-toastify';
-var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: {} };
 
 class RibbonNewReferral extends Component {
     constructor(props) {
@@ -35,10 +34,7 @@ class RibbonNewReferral extends Component {
 
 
    
-    saveReferralHandle = (msg) => {
-      
-    }
-
+    
     attachmentsHandle() {
         
     }
@@ -50,9 +46,7 @@ class RibbonNewReferral extends Component {
     }
     
     render() {
-        const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements, EditedElements, RefreshParentForm, ParentForm
-            , FetchWorkInfo
-        } = this.props;
+        const { WorkInfo, saveReferralHandle, ShortKeys, DeletedElements, EditedElements} = this.props;
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -86,7 +80,7 @@ class RibbonNewReferral extends Component {
                                         <RibbonButton FormId={FormInfo.fm_dabir_eghdam.id}
                                             DeletedElements={DeletedElements}
                                             Id="save-referral"
-                                            handleClick={this.saveReferralHandle.bind(this)}
+                                            handleClick={saveReferralHandle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="Save"
                                         />
@@ -109,7 +103,7 @@ class RibbonNewReferral extends Component {
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-save-referral") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_eghdam.id} key={index} handleClick={this.saveReferralHandle.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_eghdam.id} key={index} handleClick={saveReferralHandle.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="save-referral" />
                                     )
                                 }
@@ -148,28 +142,10 @@ class RibbonNewReferral extends Component {
 
 
 const mapDispatchToProps = dispatch => ({
-    FetchData: (Params) => {
-        dispatch(Act_Reference.FetchData(Params))
-    },
+
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
-    SaveWorkInfo: (SaveParams, msg) => {
-        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
-    },
-    RebuildWork: (Peygir_id, msg) => {
-        return dispatch(WorkActions_action.RebuildWork(Peygir_id, msg))
-    },
-    DeleteWork: (Peygir_id, msg) => {
-        dispatch(WorkActions_action.DeleteWork(Peygir_id))
-    },
-    InitConfirmWork: (Params, msg) => {
-        return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
-    },
-
-    FetchWorkInfo: (peygir_id) => {
-        dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
-    }
 
 });
 RibbonNewReferral.contextTypes = {

@@ -178,9 +178,13 @@ class MultiSelectGridComponent extends React.PureComponent {
     }
 
     changeFilters(filters) {
+        var newFilters = Object.keys(filters).map((item, index) => {
+            return { columnName: filters[item].columnName, operation:  filters[item].operation,
+                value:  filters[item].value.replace(/\ی/g, "ي") };
+        })
         this.setState({
             // loading: true,
-            filters,
+            filters:newFilters,
         });
     }
     changeColumnWidths(columnWidths) {

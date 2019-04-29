@@ -327,7 +327,10 @@ class RibbonReferenceViewer extends Component {
                 {this.state.Referralmodal &&
                     <NewReferral modal={this.state.Referralmodal}
                         toggle={this.toggleReferral.bind(this)}
-                        FormId={FormInfo.fm_dabir_natije_erja.id} />
+                        FormInfo={FormInfo.fm_dabir_natije_erja}
+                        RefreshParentForm={RefreshParentForm}
+                        Params={Params}
+                        />
                 }
             </div>
         );

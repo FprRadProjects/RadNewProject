@@ -19,13 +19,40 @@ export const WorkActions_action = {
     reviewWorkAddTotalCount,
     DeleteFromWorkMark,
     InsertIntoWorkMark,
-
+    InsertNewWorkInfo
 };
 function DeleteFromWorkMark(peygir_id,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
         return WorkActions_service.DeleteFromWorkMark(peygir_id)
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(loadingActions.HideLoading());
+                        toast.success(msg);
+                    }
+                    else if (data.code !== 0) {
+                        toast.error(data.error)
+                        dispatch(loadingActions.HideLoading());
+                    }
+                    else {
+                        userActions.logout();
+                        window.open('/',"_self");
+                    }
+                    return Promise.resolve(data)
+                },
+                error => {
+                    toast.error(error)
+                }
+            );
+    }
+}
+function InsertNewWorkInfo(Params,msg) {
+
+    return dispatch => {
+        dispatch(loadingActions.ShowLoading());
+        return WorkActions_service.InsertNewWorkInfo(Params)
             .then(
                 data => {
                     if (data.status) {
