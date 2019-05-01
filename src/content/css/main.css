@@ -34893,7 +34893,7 @@ i.icon.submit-referral {
     margin: .5rem 0!important;
 }
 
-.r-modal [class*=MuiInput-input-],.jss13 {
+.r-modal [class*=MuiInput-input-],.date-input-with-dialog-input {
     border-radius: .25rem !important;
     box-sizing: border-box !important;
     font-size: 12px !important;
@@ -34916,7 +34916,7 @@ i.icon.submit-referral {
     background-color: white;
 }
 
-[class*=MuiInput-input],.jss13 {
+[class*=MuiInput-input],.date-input-with-dialog-input {
     padding: .375rem .75rem!important;
 }
 
