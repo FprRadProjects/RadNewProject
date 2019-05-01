@@ -1,0 +1,10 @@
+
+export const ArchiveBasicConstant = {
+    GET_ATTACHMENT_ON_WORK_ROW_DATA_SUCCESS:"GET_ATTACHMENT_ON_WORK_ROW_DATA_SUCCESS",
+};
+
+
+
+
+
+

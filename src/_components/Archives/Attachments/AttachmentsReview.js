@@ -1,39 +1,68 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
-import { design_Actions } from "../../_actions";
 import PropTypes from "prop-types"
-import { GridComponent } from "../Config/GridComponent";
 import { toast } from 'react-toastify';
+import { ArchiveActions_action } from "../../../_actions";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import UploadFile from './UploadFile';
 
-var currencyColumns = [];
-var hiddenColumnNames = [];
-var booleanColumns = ["IsPublic"];
-var Params = {
-    "page": 0,
-    "pagesize": 10,
-    "FormId": "0",
-    "orderby": "id",
-    "direction": "desc",
-    "filter": []
-};
 class AttachmentsReview extends Component {
     constructor(props) {
         super(props);
+        const { AttachmentList } = this.props;
         this.state = {
             ...this.state,
             backdrop: "static",
             modal: false,
+            FinalAttachmentList: AttachmentList,
             modalClass: "modal-dialog-centered modal-lg r-modal r-attachment-modal"
         };
 
     }
 
+    EditAttachment = (newArchive) => {
+        this.setState({
+            FinalAttachmentList: [...this.state.FinalAttachmentList, newArchive]
+        });
+        const { ChangeAttachments } = this.props;
+        ChangeAttachments(this.state.FinalAttachmentList);
 
+    }
+    deleteHandler = (archive) => {
+        confirmAlert({
+            title: this.context.t("Delete"),
+            message: this.context.t("AreSureOperations"),
+            buttons: [
+                {
+                    label: this.context.t("Yes"),
+                    onClick: () => {
+                        const { ArchiveRemoveFullFile } = this.props;
+                        if (!archive.fromParent)
+                            ArchiveRemoveFullFile(archive.archiveId).then(data => {
+                                if (data.status) {
+                                    var SelectedArchiveRows = this.state.FinalAttachmentList.filter(function (item) { return item.archiveId != archive.archiveId });
+                                    this.setState({ FinalAttachmentList: SelectedArchiveRows });
+                                    const { ChangeAttachments } = this.props;
+                                    ChangeAttachments(SelectedArchiveRows);
+                                }
+                            });
+                        else {
+                            var SelectedArchiveRows = this.state.FinalAttachmentList.filter(function (item) { return item.archiveId != archive.archiveId });
+                            this.setState({ FinalAttachmentList: SelectedArchiveRows });
+                            const { ChangeAttachments } = this.props;
+                            ChangeAttachments(SelectedArchiveRows);
+                        }
+                    }
+                },
+                {
+                    label: this.context.t("No"),
+                }
+            ]
+        });
+    }
     render() {
         const { modal, toggle, peygir_id, parentPeygirId } = this.props;
         const modalBackDrop = `
@@ -56,7 +85,7 @@ class AttachmentsReview extends Component {
                                 <div className="row ">
                                     <div className="col-6">
                                         <div className="attachment-side">
-                                            <UploadFile peygir_id={peygir_id}></UploadFile>
+                                            <UploadFile peygir_id={peygir_id} EditAttachment={this.EditAttachment.bind(this)}></UploadFile>
                                         </div>
                                     </div>
                                     <div className="col-6">
@@ -71,40 +100,20 @@ class AttachmentsReview extends Component {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>12345</td>
-                                                        <td>acsascascasc.png</td>
-                                                        <td>1961981</td>
-                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>12345</td>
-                                                        <td>acsascascasc.png</td>
-                                                        <td>1961981</td>
-                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>12345</td>
-                                                        <td>acsascascasc.png</td>
-                                                        <td>1961981</td>
-                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>12345</td>
-                                                        <td>acsascascasc.png</td>
-                                                        <td>1961981</td>
-                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>12345</td>
-                                                        <td>acsascascasc.png</td>
-                                                        <td>1961981</td>
-                                                        <td><i className="fa fa-trash attachment-review-delete"></i></td>
-                                                    </tr>
-                                                   
+
+                                                    {this.state.FinalAttachmentList !== undefined && Object.keys(this.state.FinalAttachmentList).map((keyName, index) => {
+                                                        return <tr>
+                                                            <td>{this.state.FinalAttachmentList[keyName].archiveId}</td>
+                                                            <td>{this.state.FinalAttachmentList[keyName].fileName}</td>
+                                                            <td><input disabled={true} type="checkbox" checked={this.state.FinalAttachmentList[keyName].fromParent ? "checked" : ""}></input></td>
+                                                            <td><i className="fa fa-trash attachment-review-delete" onClick={this.deleteHandler.bind(this, this.state.FinalAttachmentList[keyName])}></i></td>
+                                                        </tr>
+                                                    })}
+
                                                 </tbody>
                                             </table>
                                         </div>
+                                        <Button color="secondary" className="mb-2 mr-2" onClick={toggle}>{this.context.t("ConfirmAndClose")}</Button>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +128,9 @@ class AttachmentsReview extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-
+    ArchiveRemoveFullFile: (Id) => {
+        return dispatch(ArchiveActions_action.ArchiveRemoveFullFile(Id));
+    }
 });
 AttachmentsReview.contextTypes = {
     t: PropTypes.func.isRequired

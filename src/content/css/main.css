@@ -34858,7 +34858,7 @@ i.icon.attachments {
     background-image: url(../images/Ribbon/attachments.svg);
 }
 
-i.icon.save-referral {
+i.icon.submit-referral {
     background-image: url(../images/Ribbon/save.svg);
 }
 
@@ -35424,13 +35424,8 @@ i.icon.save-referral {
 }
 
 .r-referral-modal .modal-footer .col-3:nth-child(3) .card .card-body .checkbox-group {
-    width: 95px;
-}
-
-.r-referral-modal .modal-footer .col-3:nth-child(2) .card .card-body .checkbox-group {
     width: 101px;
 }
-
 .referral-to-modal {
     padding: 10px 20px 20px;
     min-height: 540px;

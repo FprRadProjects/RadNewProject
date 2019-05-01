@@ -5,9 +5,8 @@ import { FormInfo } from "../../../locales";
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton } from "../../Config";
 import { HideElementListModal, EditTextElementListModal } from "../../Basic";
-import {AttachmentsReview } from "../../Archives";
 import {
-    design_Actions
+    design_Actions,
 } from "../../../_actions";
 
 class RibbonNewReferral extends Component {
@@ -27,15 +26,9 @@ class RibbonNewReferral extends Component {
         GetTemplateForm(FormInfo.fm_dabir_eghdam.id);
     }
 
+    
 
-
-
-    attachmentsHandle() {
-        this.setState({
-            AttachmentReviewmodal: !this.state.AttachmentReviewmodal
-        });
-
-    }
+ 
 
     controlpanelClick(e) {
         const { name } = e.target;
@@ -50,7 +43,8 @@ class RibbonNewReferral extends Component {
     }
 
     render() {
-        const { WorkInfo, saveReferralHandle, ShortKeys, DeletedElements, EditedElements } = this.props;
+        const {  saveReferralHandle, ShortKeys, DeletedElements, EditedElements,attachmentsToggle } = this.props;
+       
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -86,16 +80,16 @@ class RibbonNewReferral extends Component {
                                         <RibbonButton FormId={FormInfo.fm_dabir_eghdam.id}
                                             DeletedElements={DeletedElements}
                                             Id="attachments"
-                                            handleClick={this.attachmentsHandle.bind(this)}
+                                            handleClick={attachmentsToggle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="Attachments"
                                         />
                                         <RibbonButton FormId={FormInfo.fm_dabir_eghdam.id}
                                             DeletedElements={DeletedElements}
-                                            Id="save-referral"
+                                            Id="submit-referral"
                                             handleClick={saveReferralHandle.bind(this)}
                                             EditedElements={EditedElements}
-                                            Text="Save"
+                                            Text="Submit"
                                         />
                                     </div>
                                 </div>
@@ -110,14 +104,14 @@ class RibbonNewReferral extends Component {
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
                                 if (ShortKeys[keyName].Element === "ShortKeyicon-attachments") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_eghdam.id} key={index} handleClick={this.attachmentsHandle.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_eghdam.id} key={index} handleClick={attachmentsToggle.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="attachments" />
                                     )
                                 }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-save-referral") {
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-submit-referral") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_eghdam.id} key={index} handleClick={saveReferralHandle.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="save-referral" />
+                                            ShortKey={ShortKeys[keyName]} Id="submit-referral" />
                                     )
                                 }
                             })}
@@ -131,10 +125,7 @@ class RibbonNewReferral extends Component {
                 {this.state.EditTextElementListmodal && <EditTextElementListModal modal={this.state.EditTextElementListmodal}
                     toggle={this.controlpanelClick.bind(this)}
                     FormId={FormInfo.fm_dabir_eghdam.id} />}
-                {this.state.AttachmentReviewmodal &&
-                    <AttachmentsReview modal={this.state.AttachmentReviewmodal}
-                        toggle={this.attachmentsHandle.bind(this)}
-                        parentPeygirId={WorkInfo.peygir_id} peygir_id={0} />}
+              
             </div>
         );
     }
@@ -163,7 +154,7 @@ function mapStateToProps(state) {
         WorkInfo,
         ShortKeys: ShortKeys310,
         DeletedElements: DeletedElements310,
-        EditedElements: EditedElements310
+        EditedElements: EditedElements310,
     };
 }
 

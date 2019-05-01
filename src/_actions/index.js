@@ -7,3 +7,4 @@ export * from './MainPage';
 export  * from './General'
 export * from './Projects'
 export * from './BaseInfo'
+export * from './Archives'

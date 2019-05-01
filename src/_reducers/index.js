@@ -11,6 +11,7 @@ import { MainPage } from './MainPage';
 import { loading } from './Loading';
 import {i18nState} from 'redux-i18n'
 import { BasicInfo } from './BaseInfo';
+import { ArchiveAction,ArchiveBasic } from './Archives';
 
 const rootReducer = combineReducers({
     alert,
@@ -26,7 +27,9 @@ const rootReducer = combineReducers({
     Auto_BasicInfo,
     Auto_WorkAction,
     Auto_WorkBasic,
-    Diagram
+    Diagram,
+    ArchiveAction,
+    ArchiveBasic
 });
 
 export default rootReducer;

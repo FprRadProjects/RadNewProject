@@ -50,7 +50,6 @@ class ReferralToModal extends Component {
 
     }
     DeleteOne = (row) => {
-        console.log(row)
         if (row !== undefined && row !== null) {
             var SelectedWorkerRows = this.state.SelectedWorkerRows.filter(function (item) { return item.id_user != row.id_user });
             this.setState({ SelectedWorkerRows: SelectedWorkerRows });

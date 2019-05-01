@@ -1,7 +1,7 @@
 import { WorkBasic_service } from "../../../../_webservices";
 import { alertActions } from "../../../Alert";
 import { loadingActions } from "../../../Loading";
-import { AutoBasicInfoConstant,AutoWorkBasicConstant } from "../../../../_constants";
+import { AutoWorkBasicConstant } from "../../../../_constants";
 import { WorkActions_action } from "../../../../_actions";
 import { toast } from 'react-toastify';
 

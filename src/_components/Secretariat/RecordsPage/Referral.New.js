@@ -4,12 +4,17 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { SelectDefaultTextModal } from "../../Basic/";
 import InputMask from 'react-input-mask';
+import { AttachmentsReview } from "../../Archives";
 
-import { AutoBasicInfo_action, WorkActions_action } from "../../../_actions";
+import {
+    AutoBasicInfo_action,
+    ArchiveBasic_action, WorkActions_action
+} from "../../../_actions";
 import { toast } from 'react-toastify';
 import { RibbonNewReferral } from '../Ribbon/Ribbon.NewReferral';
 import { ComboSelectList, CalendarDatePicker } from "../../Config";
 import { ReferralToModal } from '../../Basic';
+var finalSaveParams = {}
 var thisSaveParams = {
     form: "",
     type: "sub",
@@ -21,12 +26,17 @@ var thisSaveParams = {
     emailToWorker: 0,
     emailToAudience: 0,
     smsToWorker: 0,
-    smsToAudience: 0
+    smsToAudience: 0,
+    archivesList: []
 
 };
-
+var AttachmentParams = {
+    "peygir_id": 0,
+    "type": "List"
+};
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
 var DefaultInfoParams = { form: "referrals", wt_id: 0, flow_id: 0, isInternal: 0 }
+
 
 class NewReferral extends Component {
     constructor(props) {
@@ -35,14 +45,33 @@ class NewReferral extends Component {
             ...this.state,
             modal: false,
             SelectedWorkers: [],
+            AttachmentList: [],
+            workTypeSelectedOption: {},
+            prioritySelectedOption: {},
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-referral-modal"
         };
     }
+
     componentDidMount() {
-        const { SelectWorkTypeList, SelectPriorityList, SelectRoleList } = this.props;
+        const { WorkInfo, SelectWorkTypeList, SelectPriorityList, GetAttachmentsByWorkIdlist } = this.props;
         SelectPriorityList();
         SelectWorkTypeList(workTypeParams);
+        AttachmentParams.peygir_id = WorkInfo.peygir_id;
+        GetAttachmentsByWorkIdlist(AttachmentParams).then(
+            data => {
+                if (data.status) {
+                    const { AttachmentOnWork } = this.props;
+                    if (AttachmentOnWork !== undefined)
+                        this.setState({
+                            AttachmentList: Object.keys(AttachmentOnWork).map((item, index) => {
+                                return { archiveId: AttachmentOnWork[item].id, fromParent: true, fileName: AttachmentOnWork[item].filename };
+                            })
+                        });
+                } else {
+                    toast.error(data.error)
+                }
+            });
     }
     CalendarChange = (value, name) => {
         thisSaveParams.data[[name]] = { [name]: value }
@@ -82,6 +111,7 @@ class NewReferral extends Component {
                         }
                     });
                 }
+
                 thisSaveParams.data[[name]] = { [name]: val.value }
 
             } else
@@ -140,7 +170,7 @@ class NewReferral extends Component {
             toast.warn(this.context.t("msg_No_Select_Row"));
     }
     checkBoxChangeHandler = (e) => {
-        const { WorkInfo } = this.props;
+        const { WorkInfo, AttachmentOnWork } = this.props;
         const { name, checked } = e.target;
         const value = checked ? 1 : 0;
         if (name === "withoutFlow") {
@@ -151,8 +181,24 @@ class NewReferral extends Component {
             thisSaveParams["emailToWorker"] = value;
         else if (name === "smsToWorker")
             thisSaveParams["smsToWorker"] = value;
-        else if (name === "attachFromParent")
+        else if (name === "attachFromParent") {
             thisSaveParams["attachFromParent"] = value;
+            if (value === 1) {
+                let SelectedArchiveRows =this.state.AttachmentList.filter(function (item) { return !item.fromParent });
+                this.setState({
+                    AttachmentList: [...Object.keys(AttachmentOnWork).map((item, index) => {
+                        return { archiveId: AttachmentOnWork[item].id, fromParent: true, fileName: AttachmentOnWork[item].filename };
+                    }), ...SelectedArchiveRows]
+                });
+            }
+            else {
+                let SelectedArchiveRows =this.state.AttachmentList.filter(function (item) { return !item.fromParent });
+                this.setState({
+                    AttachmentList: SelectedArchiveRows
+                });
+            }
+        }
+
         else if (name === "infoFromParent")
             thisSaveParams["infoFromParent"] = value;
         else if (name === "cpy_form_kar")
@@ -163,28 +209,25 @@ class NewReferral extends Component {
     saveReferralHandle = () => {
         const { WorkInfo, lang, FormInfo, toggle, RefreshParentForm, Params, InsertNewWorkInfo } = this.props;
         var formname = lang == "fa" ? FormInfo.form_name : FormInfo.en_form_name;
-       
-        if (thisSaveParams.data["wt_id"] === undefined)
-        {
+
+
+        if (thisSaveParams.data["wt_id"] === undefined) {
             toast.error(this.context.t("msg_No_Select_ReferralType"));
             return false;
         }
-        if (thisSaveParams.data["wt_id"].wt_id.length < 10)
-        {
+        if (thisSaveParams.data["wt_id"].wt_id.length < 10) {
             toast.error(this.context.t("msg_No_Select_ReferralType"));
             return false;
         }
-        if (thisSaveParams.workers.length==0) {
+        if (thisSaveParams.workers.length == 0) {
             toast.error(this.context.t("msg_No_Select_ReferralWorkers"));
             return false;
         }
-        if (thisSaveParams.data["tarikhaction"] === undefined)
-        {
+        if (thisSaveParams.data["tarikhaction"] === undefined) {
             toast.error(this.context.t("msg_ActionDate_Not_Valid"));
             return false;
         }
-        if (thisSaveParams.data["tarikhaction"].tarikhaction.length < 10)
-        {
+        if (thisSaveParams.data["tarikhaction"].tarikhaction.length < 10) {
             toast.error(this.context.t("msg_ActionDate_Not_Valid"));
             return false;
         }
@@ -193,40 +236,52 @@ class NewReferral extends Component {
         thisSaveParams.data["showtree_id"] = { "showtree_id": WorkInfo.showtree_id };
         thisSaveParams.data["arshiv_id"] = { "arshiv_id": WorkInfo.showtree_id };
         thisSaveParams.form = formname;
-        let obj = [];
-        Object.keys(thisSaveParams.data).map((item, index) => {
-            return obj[index++] = thisSaveParams.data[item];
-        })
-        thisSaveParams.data = obj;
-        console.log(thisSaveParams)
 
-        InsertNewWorkInfo(thisSaveParams, this.context.t("msg_Operation_Success")).then(data => {
+        thisSaveParams.archivesListy = this.state.AttachmentList;
+        finalSaveParams = Object.assign({}, thisSaveParams);
+        let obj = [];
+        Object.keys(finalSaveParams.data).map((item, index) => {
+            return obj[index++] = finalSaveParams.data[item];
+        })
+        finalSaveParams.data = obj;
+        console.log(finalSaveParams)
+        InsertNewWorkInfo(finalSaveParams, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
                 RefreshParentForm(Params);
                 toggle();
+                thisSaveParams = {
+                    form: "",
+                    type: "sub",
+                    data: [],
+                    workers: [],
+                    attachFromParent: 1,
+                    infoFromParent: 1,
+                    replication: "",
+                    emailToWorker: 0,
+                    emailToAudience: 0,
+                    smsToWorker: 0,
+                    smsToAudience: 0,
+                    archivesList: []
+                }; finalSaveParams = {};
             }
         });
-        thisSaveParams = {
-            form: "",
-            type: "sub",
-            data: [],
-            workers: [],
-            attachFromParent: 1,
-            infoFromParent: 1,
-            replication: "",
-            emailToWorker: 0,
-            emailToAudience: 0,
-            smsToWorker: 0,
-            smsToAudience: 0
-        };
-    }
 
+    }
+    attachmentsToggle() {
+        this.setState({
+            AttachmentReviewmodal: !this.state.AttachmentReviewmodal
+        });
+
+    }
+    ChangeAttachments(NewAttchments) {
+        this.setState({ AttachmentList: NewAttchments });
+    }
 
     render() {
         const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows, WorkInfo } = this.props;
         var None = [{ value: 0, label: this.context.t("NoSelection") }]
         var ReferralTypeList = None.concat(SelectWorkTypeList_rows)
-        var PriorityList = None.concat(SelectPriorityList_rows)
+        var PriorityList = None.concat(SelectPriorityList_rows);
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -243,7 +298,7 @@ class NewReferral extends Component {
                     <ModalHeader toggle={toggle}>{this.context.t("frm_New_Referral")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonNewReferral saveReferralHandle={this.saveReferralHandle.bind(this)} />
+                            <RibbonNewReferral saveReferralHandle={this.saveReferralHandle.bind(this)} attachmentsToggle={this.attachmentsToggle.bind(this)} />
                         </div>
                         <div className="referral-modal">
                             <div className="row bg-gray mg-b-5">
@@ -293,7 +348,7 @@ class NewReferral extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("Priority")}</label>
                                                 <div className="col-10">
                                                     {SelectPriorityList_rows !== undefined &&
-                                                        <ComboSelectList options={PriorityList} name="olaviyat_id" classname="my-2" onChange={this.changeHandle.bind(this)} selectedOption={this.state.prioritySelectedOption} />
+                                                        <ComboSelectList options={PriorityList} name="olaviyat_id" classname="my-2" onChange={this.changeHandle.bind(this)} />
                                                     }
                                                 </div>
                                             </div>
@@ -363,16 +418,21 @@ class NewReferral extends Component {
                                     toggle={this.OpenSelectDefaultText.bind(this)}
                                     Successtoggle={this.SuccessSelectDescription.bind(this)}
                                     id_tel={WorkInfo.id_tel} />}
-                                  
+                            {this.state.AttachmentReviewmodal &&
+                                <AttachmentsReview modal={this.state.AttachmentReviewmodal}
+                                    AttachmentList={this.state.AttachmentList}
+                                    ChangeAttachments={this.ChangeAttachments.bind(this)}
+                                    toggle={this.attachmentsToggle.bind(this)}
+                                    parentPeygirId={WorkInfo.peygir_id} peygir_id={0} />}
                         </div>
                         <style>{modalBackDrop}</style>
                     </ModalBody>
                     <ModalFooter>
                         <h4>{this.context.t("Authority")}</h4>
                         <div className="row authority">
-                            <div className="col-8">
+                            <div className="col-7">
                                 <div className="row">
-                                    <div className="col-3">
+                                    <div className="col-4">
                                         <div className="card ">
                                             <div className="card-header">
                                                 <i className="import-authority">
@@ -392,7 +452,7 @@ class NewReferral extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-3">
+                                    <div className="col-4">
                                         <div className="card ">
                                             <div className="card-header">
                                                 <i className="workform-authority">
@@ -413,28 +473,7 @@ class NewReferral extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-3">
-                                        <div className="card ">
-                                            <div className="card-header">
-                                                <i className="referral-authority">
-                                                </i>
-                                            </div>
-                                            <div className="card-body">
-                                                <div className="checkbox-group">
-                                                    <div class="checkbox">
-                                                        <input id="referral0" ref="ronevesht" type="checkbox" />
-                                                        <label htmlFor="referral0">{this.context.t("CreateCopy")}</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <input id="referral1" type="checkbox" />
-                                                        <label htmlFor="referral1">{this.context.t("ReferralWork")}</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div className="col-3">
+                                    <div className="col-4">
                                         <div className="card ">
                                             <div className="card-header border-0">
                                                 <i className="send-authority">
@@ -484,7 +523,10 @@ const mapDispatchToProps = dispatch => ({
     },
     InsertNewWorkInfo: (Params, msg) => {
         return dispatch(WorkActions_action.InsertNewWorkInfo(Params, msg))
-    }
+    },
+    GetAttachmentsByWorkIdlist: (Params) => {
+        return dispatch(ArchiveBasic_action.GetAttachmentsByWorkIdlist(Params));
+    },
 });
 NewReferral.contextTypes = {
     t: PropTypes.func.isRequired
@@ -496,6 +538,7 @@ function mapStateToProps(state) {
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
     const { SelectWorkTypeList_rows, SelectPriorityList_rows } = state.Auto_BasicInfo
+    const { AttachmentOnWork } = state.ArchiveBasic
 
     return {
         alert,
@@ -504,6 +547,7 @@ function mapStateToProps(state) {
         WorkInfo,
         SelectWorkTypeList_rows,
         SelectPriorityList_rows,
+        AttachmentOnWork
     };
 }
 

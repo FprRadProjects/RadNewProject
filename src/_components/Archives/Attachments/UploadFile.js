@@ -3,11 +3,8 @@ import { L10n } from '@syncfusion/ej2-base';
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-react-inputs/styles/material.css";
 import { UploaderComponent } from '@syncfusion/ej2-react-inputs';
-// import Select from "./Select";
 
-
-
-var archiveIds = [];
+var newArchive = {};
 class UploadFile extends Component {
   constructor(props) {
     super(props);
@@ -16,35 +13,41 @@ class UploadFile extends Component {
       clear: "حذف همه فایل ها",
       upload: "آپلود فایلها"
     };
-    this.asyncSettings = {
+const _Config =JSON.parse(localStorage.getItem("_Config"));
+this.asyncSettings = {
       chunkSize: 10000000,
-      saveUrl: 'http://192.168.1.54:2535/AddChunkAttachment',
+      saveUrl: _Config.BaseUrl +'/AddChunkAttachment',
       removeUrl: 'http://192.168.1.54:2535/RemoveFile'
     };
   }
 
 
   addHeaders(args) {
-    const { peygir_id } = this.props;
+  
+const _user =JSON.parse(localStorage.getItem("user"));
+const _lang =localStorage.getItem("lang");
+  const { peygir_id } = this.props;
     args.customFormData = [{ 'peygir_id': peygir_id }, { 'From': 'AddFile' }];
-    args.currentRequest.setRequestHeader("Authorization", "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyTmFtZSI6Itix2KfYryIsIlBhc3NXb3JkIjoiLz8iLCJpYXQiOiIyMDE5LTA0LTI4VDA2OjEyOjMxLjcwMzM1NTlaIn0.sE_x_wS_ol9VfGJxKW5GoHdUO6Ae4lf9Bt2O0vTygZg")
-    args.currentRequest.setRequestHeader("lang", "fa");
+    args.currentRequest.setRequestHeader("Authorization", _user.Authorization)
+    args.currentRequest.setRequestHeader("lang", _lang);
   }
   onSuccess(args) {
-    var archiveId = { archiveId: JSON.parse(args.response.Data).data.ArchiveId, type: "new" }
-    archiveIds.push(archiveId);
-    console.log(archiveIds)
+    const { EditAttachment } = this.props;
+    var archiveId = JSON.parse(args.response.Data).data.archiveId;
+    var fileName = JSON.parse(args.response.Data).data.fileName;
+    newArchive={ archiveId: archiveId, fromParent:false,fileName:fileName };
+    EditAttachment(newArchive);
   }
-  onChunkSuccess(args) {
-    console.log(JSON.parse(args.response.Data))
-  }
+
   onChunkUploading(args) {
+    const _user =JSON.parse(localStorage.getItem("user"));
+    const _lang =localStorage.getItem("lang");
     if (args.currentChunkIndex !== 0) {
       const { peygir_id } = this.props;
       args.customFormData = [{ 'peygir_id': peygir_id }, { 'From': 'AddFile' }];
       args.customFormData = [{ 'From': 'AddFile' }];
-      args.currentRequest.setRequestHeader("Authorization", "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyTmFtZSI6Itix2KfYryIsIlBhc3NXb3JkIjoiLz8iLCJpYXQiOiIyMDE5LTA0LTI4VDA2OjEyOjMxLjcwMzM1NTlaIn0.sE_x_wS_ol9VfGJxKW5GoHdUO6Ae4lf9Bt2O0vTygZg")
-      args.currentRequest.setRequestHeader("lang", "fa");
+      args.currentRequest.setRequestHeader("Authorization", _user.Authorization)
+      args.currentRequest.setRequestHeader("lang", _lang);
     }
   }
 

@@ -8,3 +8,4 @@ export * from './MainPage';
 export * from './General'
 export * from './Projects'
 export * from './BasicInfo'
+export * from './Archives'

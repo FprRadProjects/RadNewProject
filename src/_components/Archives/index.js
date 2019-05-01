@@ -1,3 +1,2 @@
 
-export * from './UploadFile';
-export * from './AttachmentsReview';
+export * from './Attachments';

@@ -121,6 +121,7 @@ export const translations = {
         //---------------اقدام------------------شروع
         logout: 'خروج',
         Save: 'ذخیره',
+        Submit:"ثبت",
         Edit: 'ویرایش',
         SaveAndClose: 'ذخیره و بستن',
         ConfirmAndClose: 'تایید و بستن',
@@ -311,6 +312,7 @@ export const translations = {
         //Start---------------Actions-----------------
         logout: 'Logout',
         Save: 'Save',
+        Submit:"Submit",
         Edit: 'Edit',
         SaveAndClose: 'Save And Close',
         ConfirmAndClose: 'Confirm And Close',

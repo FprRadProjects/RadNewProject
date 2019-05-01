@@ -1,24 +1,8 @@
 import React, { Component } from 'react';
-import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { JalaliField } from 'material-ui-hichestan-datetimepicker';
-import { create } from 'jss';
-import rtl from 'jss-rtl';
-import JssProvider from 'react-jss/lib/JssProvider';
-import { createGenerateClassName, jssPreset } from '@material-ui/core/styles';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-const theme = createMuiTheme({
-  direction: "rtl",
-  typography: {
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      'Nahid',
-    ].join(','),
-  },
-});
+import { MuiThemeProvider } from '@material-ui/core/styles';
 
-const generateClassName = createGenerateClassName();
-const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 class CalendarDatePicker extends Component {
 
   constructor(props) {
@@ -29,7 +13,6 @@ class CalendarDatePicker extends Component {
     };
   }
   componentWillReceiveProps(nextProps) {
-    // You don't have to do this check first, but it can help prevent an unneeded render
     if (nextProps.setDate !== this.state.value) {
       this.setState({ value: nextProps.setDate });
     }
@@ -45,8 +28,7 @@ class CalendarDatePicker extends Component {
   render() {
     
     return (
-      <JssProvider jss={jss} generateClassName={generateClassName}>
-        <MuiThemeProvider theme={theme}>
+        <MuiThemeProvider >
           <JalaliField
             id="standard-name"
             value={this.state.value}
@@ -57,7 +39,6 @@ class CalendarDatePicker extends Component {
           />
 
         </MuiThemeProvider>
-      </JssProvider>
     );
   }
 }
