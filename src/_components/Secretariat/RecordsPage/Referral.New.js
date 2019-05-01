@@ -430,7 +430,7 @@ class NewReferral extends Component {
                     <ModalFooter>
                         <h4>{this.context.t("Authority")}</h4>
                         <div className="row authority">
-                            <div className="col-7">
+                            <div className="col-6">
                                 <div className="row">
                                     <div className="col-4">
                                         <div className="card ">

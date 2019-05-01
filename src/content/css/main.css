@@ -34879,21 +34879,21 @@ i.icon.submit-referral {
     border-radius: .25rem;
 }
 
-[class*=MuiFormControl-] * {
+[class*=MuiFormControl-] * ,.date-input-with-dialog-main *{
     font-family: IRANSans_Fa!important;
     font-size: 13px;
 }
 
-[class*=MuiInput-underline]:before, [class*=MuiInput-underline]:after {
+[class*=MuiInput-underline]:before, [class*=MuiInput-underline]:after,.jss5:before,.jss5:after {
     display: none;
     content: none;
 }
 
-.r-modal [class*=MuiFormControl-marginNormal-] {
+.r-modal [class*=MuiFormControl-marginNormal-],.jss2 {
     margin: .5rem 0!important;
 }
 
-.r-modal [class*=MuiInput-input-] {
+.r-modal [class*=MuiInput-input-],.jss13 {
     border-radius: .25rem;
     box-sizing: border-box;
     background-color: #fff;
@@ -34915,7 +34915,7 @@ i.icon.submit-referral {
     background-color: white;
 }
 
-[class*=MuiInput-input] {
+[class*=MuiInput-input],.jss13 {
     padding: .375rem .75rem!important;
 }
 
@@ -35415,16 +35415,16 @@ i.icon.submit-referral {
     justify-content: center;
 }
 
-.r-referral-modal .modal-footer .col-3:nth-child(1) .card .card-body .checkbox-group {
+.r-referral-modal .modal-footer .col-4:nth-child(1) .card .card-body .checkbox-group {
     width: 125px;
 }
 
-.r-referral-modal .modal-footer .col-3:nth-child(4) .card .card-body .checkbox-group {
-    width: 127px;
+.r-referral-modal .modal-footer .col-4:nth-child(2) .card .card-body .checkbox-group {
+    width: 101px;
 }
 
-.r-referral-modal .modal-footer .col-3:nth-child(3) .card .card-body .checkbox-group {
-    width: 101px;
+.r-referral-modal .modal-footer .col-4:nth-child(3) .card .card-body .checkbox-group {
+    width: 127px;
 }
 .referral-to-modal {
     padding: 10px 20px 20px;
