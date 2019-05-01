@@ -10,7 +10,7 @@ body {
     background-position: bottom left,top right;
     background-repeat: no-repeat,no-repeat;
     background-size: 600px,650px; */
-    font-size: 13px;
+    font-size: 12px;
     font-family: IRANSans_Fa;
     color: #333333;
     height: 100%;
@@ -34894,9 +34894,10 @@ i.icon.submit-referral {
 }
 
 .r-modal [class*=MuiInput-input-],.jss13 {
-    border-radius: .25rem;
-    box-sizing: border-box;
-    background-color: #fff;
+    border-radius: .25rem !important;
+    box-sizing: border-box !important;
+    font-size: 12px !important;
+    background-color: #fff !important;
 }
 
 .date-input-with-dialog-input-buttons {
@@ -35033,7 +35034,7 @@ i.icon.submit-referral {
 .r-modal .col-form-label {
     color: #808080;
     font-weight: 300;
-    font-size: 13px;
+    font-size: 12px;
     display: flex;
     align-items: center;
     padding: 0;
@@ -35416,15 +35417,15 @@ i.icon.submit-referral {
 }
 
 .r-referral-modal .modal-footer .col-4:nth-child(1) .card .card-body .checkbox-group {
-    width: 125px;
+    width: 115px;
 }
 
 .r-referral-modal .modal-footer .col-4:nth-child(2) .card .card-body .checkbox-group {
-    width: 101px;
+    width: 95px;
 }
 
 .r-referral-modal .modal-footer .col-4:nth-child(3) .card .card-body .checkbox-group {
-    width: 127px;
+    width: 119px;
 }
 .referral-to-modal {
     padding: 10px 20px 20px;

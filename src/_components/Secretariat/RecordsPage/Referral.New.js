@@ -93,7 +93,6 @@ class NewReferral extends Component {
                                 this.refs.flow.checked = data.data.DefaultValue.flow;
                                 thisSaveParams.data["flow_id"] = { "flow_id": null };
                                 thisSaveParams.data["erja"] = { "erja": data.data.DefaultValue.flow ? 1 : 0 };
-                                this.refs.ronevesht.checked = data.data.DefaultValue.ronevesht;
                                 this.refs.emailToWorker.checked = data.data.DefaultValue.web_emailtokarbar;
                                 this.refs.smsToWorker.checked = data.data.DefaultValue.web_smstokarbar;
                                 thisSaveParams["emailToWorker"] = data.data.DefaultValue.web_emailtokarbar ? 1 : 0;
