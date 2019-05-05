@@ -157,8 +157,11 @@ class GridComponent extends React.PureComponent {
     }
     changeFilters(filters) {
         var newFilters = Object.keys(filters).map((item, index) => {
-            return { columnName: filters[item].columnName, operation:  filters[item].operation,
-                value:  filters[item].value.replace(/\ی/g, "ي") };
+            return { 
+                columnName: filters[item].columnName,
+                value: filters[item].value.replace("ی", "ي"),
+                operation: filters[item].operation
+            };
         })
         this.setState({
             filters:newFilters

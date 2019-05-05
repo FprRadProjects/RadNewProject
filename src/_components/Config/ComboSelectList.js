@@ -24,7 +24,7 @@ class ComboSelectList extends Component {
         onChange(e,selectedOption);
       }
       InputChangeHandler=(event)=>{
-       return event.replace(/\ی/g, "ي");
+       return event.replace("ی", "ي");
       }
     render() { 
 

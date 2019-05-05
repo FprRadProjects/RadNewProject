@@ -17,8 +17,7 @@ class FullCalendar extends Component {
         const{Events,lang}=  nextProps;
         const events = Events==undefined?events:Events.AllEvent;
         $(calendar).fullCalendar('removeEventSources');
-        $(calendar) .fullCalendar( 'addEventSource', events )
-
+        $(calendar).fullCalendar( 'addEventSource', events )
 
     }
 

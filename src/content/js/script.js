@@ -42,7 +42,7 @@ $(document).on('change', '#sidebar-toggle', function (e) {
 });
 document.addEventListener('keyup', function (event) {
     try {
-        var newVal = event.target.value.replace(/\ی/g, "ي");
+        var newVal = event.target.value.replace("ی", "ي");
         event.target.value = newVal;
     }
     catch (err) { }

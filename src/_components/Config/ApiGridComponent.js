@@ -157,8 +157,9 @@ class ApiGridComponent extends React.PureComponent {
     changeFilters(filters) {
         var newFilters = Object.keys(filters).map((item, index) => {
             return {
-                columnName: filters[item].columnName, operation: filters[item].operation,
-                value: filters[item].value.replace(/\ی/g, "ي")
+                columnName: filters[item].columnName,
+                value: filters[item].value.replace("ی", "ي"),
+                operation: filters[item].operation
             };
         })
         this.setState({
@@ -240,6 +241,7 @@ class ApiGridComponent extends React.PureComponent {
             pageSize,
             pageSizes,
             currentPage,
+            filters,
             tableColumnExtensions,
             hiddenColumnNames,
             defaultColumnWidths,
@@ -300,6 +302,7 @@ class ApiGridComponent extends React.PureComponent {
                     />
                     {pageSize === 0 && <IntegratedPaging />}
                     <FilteringState
+                        filters={filters}
                         onFiltersChange={this.changeFilters}
                     />
                     <Table rowComponent={this.TableRow}

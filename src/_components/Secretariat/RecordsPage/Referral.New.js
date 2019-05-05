@@ -46,8 +46,7 @@ class NewReferral extends Component {
             modal: false,
             SelectedWorkers: [],
             AttachmentList: [],
-            workTypeSelectedOption: {},
-            prioritySelectedOption: {},
+            workTypeSelectedOption: 0,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-referral-modal"
         };
