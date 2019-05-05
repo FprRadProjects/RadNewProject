@@ -1529,6 +1529,11 @@ export const FormInfo =
             "sys_name": "fm_pub_rep_gallary"
         },
         fm_pub_sabt_kar: {
+            "fa_module_name1": "اتوماسیون",
+            "fa_module_name2": "",
+            "en_form_name": "New Work",
+            "en_module_name1": "Automation",
+            "en_module_name2": "",
             "id": 344,
             "form_name": "ثبت کار",
             "sys_name": "fm_pub_sabt_kar"

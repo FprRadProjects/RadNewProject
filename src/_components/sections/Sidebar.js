@@ -5,18 +5,40 @@ import { userActions } from '../../_actions/User';
 import { history } from "../../_helpers";
 import PropTypes from "prop-types"
 import { connect } from 'react-redux';
+import { NewWork } from '../Secretariat/RecordsPage/Work.New';
 
 class Sidebar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...this.state,
+            NewWorkModal: false,
+        };
+    }
 
     handleLogout = (event) => {
         userActions.logout();
     }
+    handleNewWork = (event) => {
+        userActions.logout();
+    }
+    OpenNewWork() {
+        this.setState({
+            NewWorkModal: !this.state.NewWorkModal
+        })
+    }
 
+    toggleNewWork() {
+        this.setState(prevState => ({
+            NewWorkModal: !prevState.NewWorkModal
+        }));
+
+    }
     render() {
         const { auth: isAuthenticated, users, lang } = this.props;
         return (
             // <div >
-            <div className="page-sidebar custom-scrollbar">
+            <div className="page-sidebar custom-scrollbar" >
                 <ul className="sidebar-menu">
                     <li>
                         <a className="sidebar-header">
@@ -104,9 +126,9 @@ class Sidebar extends Component {
                                 </a>
                             </li>
                             <li>
-                                <a >
+                                <a onClick={this.OpenNewWork.bind(this)}>
                                     <i className="icon-system"></i>
-                                    <span>ثبت کار</span>
+                                    <span>{this.context.t("frm_New_Work")}</span>
                                 </a>
                             </li>
                             <NavItem activeOnlyWhenExact={true} to="/">
@@ -246,7 +268,11 @@ class Sidebar extends Component {
                         </p>
                     </div>
                 </div>
-            </div>
+
+                {this.state.NewWorkModal && <NewWork modal={this.state.NewWorkModal}
+                    toggle={this.toggleNewWork.bind(this)} />
+                }
+            </div >
 
 
 

@@ -34861,6 +34861,54 @@ i.icon.attachments {
 i.icon.submit-referral {
     background-image: url(../images/Ribbon/save.svg);
 }
+i.icon.new-work {
+    background-image: url(../images/Ribbon/new-work.svg);
+}
+
+i.icon.create-work {
+    background-image: url(../images/Ribbon/create-work.svg);
+}
+
+i.icon.follow {
+    background-image: url(../images/Ribbon/follow.svg);
+}
+
+i.icon.time-spent {
+    background-image: url(../images/Ribbon/time-spent.svg);
+}
+i.icon.edit {
+    background-image: url(../images/Ribbon/edit.svg);
+}
+i.icon.call-work {
+    background-image: url(../images/Ribbon/call-work.svg);
+}
+i.icon.work-view {
+    background-image: url(../images/Ribbon/work-view.svg);
+}
+i.icon.work-info-view {
+    background-image: url(../images/Ribbon/work-info-view.svg);
+}
+i.icon.work-form {
+    background-image: url(../images/Ribbon/work-form.svg);
+}
+i.icon.custom-work-form {
+    background-image: url(../images/Ribbon/custom-work-form.svg);
+}
+i.icon.financial-form {
+    background-image: url(../images/Ribbon/financial-form.svg);
+}
+i.icon.process-form-builder {
+    background-image: url(../images/Ribbon/process-form-builder.svg);
+}
+i.icon.external-replication {
+    background-image: url(../images/Ribbon/external-replication.svg);
+}
+i.icon.internal-replication {
+    background-image: url(../images/Ribbon/internal-replication.svg);
+}
+
+
+
 
 .modal-form-action {
     display: flex;
@@ -35154,7 +35202,7 @@ i.icon.submit-referral {
     padding: 20px;
 }
 
-.r-referral-modal .modal-footer {
+.r-modal .modal-footer {
     display: flex;
     justify-content: flex-start;
     border: none;
@@ -35162,20 +35210,20 @@ i.icon.submit-referral {
     position: relative;
 }
 
-.r-referral-modal .authority {
+.authority {
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-.r-referral-modal .modal-footer h4 {
+.r-modal .modal-footer h4 {
     font-size: 14px;
     text-align: right;
     position: absolute;
     top: 0;
 }
 
-.r-referral-modal .modal-footer h4:before {
+.r-modal .modal-footer h4:before {
     content: "";
     position: relative;
     display: inline-block;
@@ -35185,12 +35233,12 @@ i.icon.submit-referral {
     margin: 0 10px;
 }
 
-.r-referral-modal .modal-footer .card {
+.r-modal .modal-footer .card {
     margin: 0;
     box-shadow: none;
 }
 
-.r-referral-modal .modal-footer .card .card-header {
+.r-modal .modal-footer .card .card-header {
     text-align: center;
     padding: 0;
     border: none;
@@ -35198,7 +35246,7 @@ i.icon.submit-referral {
     border-left: 1px solid #ddd;
 }
 
-.r-referral-modal .modal-footer .card-header i {
+.r-modal .modal-footer .card-header i {
     width: 45px;
     height: 45px;
     background-position: center center;
@@ -35206,16 +35254,16 @@ i.icon.submit-referral {
     display: inline-block;
 }
 
-.r-referral-modal .modal-footer .card-header i.done-work {
+.r-modal .modal-footer .card-header i.done-work {
     background-image: url(../images/modal-filter/done-work-icon.svg);
 }
 
-.r-referral-modal .modal-footer .card .card-body {
+.r-modal .modal-footer .card .card-body {
     padding: 10px;
     /* text-align: center; */
 }
 
-.rtl .r-referral-modal .modal-footer .card .card-body .radio label::before {
+.rtl .r-modal .modal-footer .card .card-body .radio label::before {
     margin: 0 -5px;
     border-width: 2px;
     border-color: #39a2ff;
@@ -35224,7 +35272,7 @@ i.icon.submit-referral {
     top: 3px;
 }
 
-.rtl .r-referral-modal .modal-footer .card .card-body .radio label::after {
+.rtl .r-modal .modal-footer .card .card-body .radio label::after {
     margin: 0 -5px;
     background-color: #39a2ff;
     width: 5px;
@@ -35233,18 +35281,18 @@ i.icon.submit-referral {
     right: 4px;
 }
 
-.rtl .r-referral-modal .modal-footer .card .card-body .radio input[type="radio"]:checked+label::before {
+.rtl .r-modal .modal-footer .card .card-body .radio input[type="radio"]:checked+label::before {
     border-color: #d9d9d9;
 }
 
-.r-referral-modal .authority-toggle {
+.authority-toggle {
     height: 40px;
     background-color: #999999;
     border-radius: 0 0 15px 15px;
     position: relative;
 }
 
-.r-referral-modal .authority-toggle button {
+.authority-toggle button {
     height: 45px;
     width: 45px;
     border-radius: 50%;
@@ -35262,7 +35310,7 @@ i.icon.submit-referral {
     background-size: 30px;
 }
 
-.r-referral-modal .authority-toggle button.active {
+.authority-toggle button.active {
     height: 40px;
     width: 40px;
     top: 20px;
@@ -35270,7 +35318,7 @@ i.icon.submit-referral {
     background-size: 15px;
 }
 
-.r-referral-modal .authority-toggle button:focus {
+.authority-toggle button:focus {
     border: none;
     outline: none;
 }
@@ -35344,8 +35392,8 @@ i.icon.submit-referral {
 
 .custom-select__control {
     border: 0!important;
-    min-height: 33px!important;
-    max-height: 33px!important;
+    min-height: 35px!important;
+    max-height: 35px!important;
 }
 
 .custom-select__control--is-focused {
@@ -35355,7 +35403,7 @@ i.icon.submit-referral {
 }
 
 .custom-select__control--is-focused .custom-select__indicator {
-    padding: 6px!important;
+    padding: 8px!important;
 }
 
 .ltr {
@@ -35363,30 +35411,33 @@ i.icon.submit-referral {
     text-align: left;
 }
 
-.r-referral-modal .authority i.import-authority {
+.authority i.import-authority {
     background-image: url(../images/modal/new-referral/import-authority.svg);
 }
 
-.r-referral-modal .authority i.send-authority {
+.authority i.send-authority {
     background-image: url(../images/modal/new-referral/send-authority.svg);
 }
 
-.r-referral-modal .authority i.referral-authority {
+.authority i.referral-authority {
     background-image: url(../images/modal/new-referral/referral-authority.svg);
 }
 
-.r-referral-modal .authority i.workform-authority {
+ .authority i.workform-authority {
     background-image: url(../images/modal/new-referral/workform-authority.svg);
 }
+.authority i.attach-authority {
+    background-image: url(../images/modal/new-referral/attach-authority.svg);
+}
 
-.rtl .r-referral-modal .modal-footer .card .card-body .checkbox label {
+.rtl .r-modal .checkbox label {
     margin: 3px;
     padding-left: 0;
     padding-right: 15px;
     transition: none;
 }
 
-.rtl .r-referral-modal .modal-footer .card .card-body .checkbox label::before {
+.rtl .r-modal  .checkbox label::before {
     margin: 0 -8px;
     width: 15px;
     height: 15px;
@@ -35400,7 +35451,7 @@ i.icon.submit-referral {
     transition: none;
 }
 
-.rtl .r-referral-modal .modal-footer .card .card-body .checkbox input[type="checkbox"]:checked+label::before {
+.rtl .r-modal .checkbox input[type="checkbox"]:checked+label::before {
     margin: 0 -11px;
     content: "";
     border: none;
@@ -35409,9 +35460,10 @@ i.icon.submit-referral {
     height: 18px;
     background-image: url(../images/modal/new-referral/check-square.svg);
     background-size: contain;
+    background-color: transparent;
 }
 
-.r-referral-modal .modal-footer .card .card-body {
+.r-modal .modal-footer .card .card-body {
     display: flex;
     justify-content: center;
 }
@@ -35426,6 +35478,18 @@ i.icon.submit-referral {
 
 .r-referral-modal .modal-footer .col-4:nth-child(3) .card .card-body .checkbox-group {
     width: 119px;
+}
+
+.r-newwork-modal .modal-footer .col-4:nth-child(1) .card .card-body .checkbox-group {
+    width: 95px;
+}
+
+.r-newwork-modal .modal-footer .col-4:nth-child(2) .card .card-body .checkbox-group {
+    width: 78px;
+}
+
+.r-newwork-modal .modal-footer .col-4:nth-child(3) .card .card-body .checkbox-group {
+    width: 137px;
 }
 .referral-to-modal {
     padding: 10px 20px 20px;
@@ -35479,4 +35543,31 @@ i.icon.submit-referral {
 .r-attachment-modal .attachment-container .attachment-review .attachment-review-delete {
     color: red;
     font-size: 18px;
+}
+
+
+.wd-100{
+    width:100px!important;
+}
+.input-group .custom-select--is-rtl{
+    flex: 1;
+}
+.input-group .custom-select__control{
+    border-radius:0!important;
+}
+.flex-0{
+    flex:0!important;
+}
+.bd-l-1{
+    border-left:1px solid hsl(0,0%,80%)!important;
+}
+*::placeholder{
+    font-size: 12px;
+}
+.text-space-nowrap{
+    white-space: nowrap;
+}
+
+.custom-select__indicator-separator{
+    display:none;
 }

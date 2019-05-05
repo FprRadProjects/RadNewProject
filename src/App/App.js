@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import "bootstrap-v4-rtl/dist/css/bootstrap.min.css"
+import "bootstrap-v4-rtl"
 import { history } from '../_helpers/index';
 import { PrivateRoute } from '../_components/index';
 import { setLanguage } from "redux-i18n"
