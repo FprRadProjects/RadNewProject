@@ -264,7 +264,7 @@ class NewWork extends Component {
                                                         <ComboSelectList options={WorkGroupList} name="wg_id" onChange={this.changeHandle.bind(this)} />
                                                         {/* } */}
                                                         <div className="input-group-append pl-5 pt-2 text-space-nowrap">
-                                                            <div class="checkbox">
+                                                            <div className="checkbox">
                                                                 <input id="formbuilder0" ref="hasFormBuilder" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="hasFormBuilder" />
                                                                 <label htmlFor="formbuilder0" className="m-0">{this.context.t("HasFormBuilder")}</label>
                                                             </div>
@@ -563,11 +563,11 @@ class NewWork extends Component {
                                             </div>
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <div class="checkbox">
+                                                    <div className="checkbox">
                                                         <input id="workform0" name="cpy_form_kar" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" />
                                                         <label htmlFor="workform0">{this.context.t("CopyWorkForm")}</label>
                                                     </div>
-                                                    <div class="checkbox">
+                                                    <div className="checkbox">
                                                         <input id="workform1" name="withoutFlow" onChange={this.checkBoxChangeHandler.bind(this)} defaultChecked={true} ref="flow" type="checkbox" />
                                                         <label htmlFor="workform1">{this.context.t("NoWorkFlow")}</label>
                                                     </div>
@@ -585,11 +585,11 @@ class NewWork extends Component {
                                             </div>
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <div class="checkbox">
+                                                    <div className="checkbox">
                                                         <input id="attach0" defaultChecked={true} type="checkbox" name="allowAttachment" onChange={this.checkBoxChangeHandler.bind(this)} />
                                                         <label htmlFor="attach0">{this.context.t("AllowAttachment")}</label>
                                                     </div>
-                                                    <div class="checkbox">
+                                                    <div className="checkbox">
                                                         <input id="attach1" defaultChecked={true} type="checkbox" onChange={this.checkBoxChangeHandler.bind(this)} name="lockedAttachment" />
                                                         <label htmlFor="attach1">{this.context.t("LockedAttachment")}</label>
                                                     </div>
@@ -605,20 +605,20 @@ class NewWork extends Component {
                                             </div>
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <div class="checkbox">
+                                                    <div className="checkbox">
                                                         <input id="send0" ref="emailToWorker" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="emailToWorker" />
                                                         <label htmlFor="send0">{this.context.t("SendEmailToUser")}</label>
                                                     </div>
-                                                    <div class="checkbox">
+                                                    <div className="checkbox">
                                                         <input id="send1" ref="emailToAudience" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="emailToAudience" />
                                                         <label htmlFor="send1">{this.context.t("SendSmsToAudience")}</label>
                                                     </div>
-                                                    <div class="checkbox">
+                                                    <div className="checkbox">
                                                         <input id="send2" ref="smsToWorker" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="smsToWorker" />
                                                         <label htmlFor="send2">{this.context.t("SendSmsToUser")}</label>
                                                     </div>
                                                    
-                                                    <div class="checkbox">
+                                                    <div className="checkbox">
                                                         <input id="send3" ref="smsToAudience" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="smsToAudience" />
                                                         <label htmlFor="send3">{this.context.t("SendSmsToAudience")}</label>
                                                     </div>

@@ -5,7 +5,7 @@ import { userActions } from '../../_actions/User';
 import { history } from "../../_helpers";
 import PropTypes from "prop-types"
 import { connect } from 'react-redux';
-import { NewWork } from '../Secretariat/RecordsPage/Work.New';
+import { NewWork } from '../Automation/RecordForms/Work.New';
 
 class Sidebar extends Component {
     constructor(props) {
