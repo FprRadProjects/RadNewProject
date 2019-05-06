@@ -10,7 +10,7 @@ export const ProjectsInfo_action = {
 
 function GetSelectProject(params) {
     return dispatch => {
-        paramsService.callservice(params,"paramsService")
+        paramsService.callservice(params,"GetSelectProject")
             .then(
                 data => {
                     if (data.status) {

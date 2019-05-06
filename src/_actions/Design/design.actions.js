@@ -66,10 +66,12 @@ function GetHideElementsList(param) {
             );
     }
 }
-function GetTemplateForm(param) {
+function GetTemplateForm(FormId) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        paramsService.callservice(param,"GetTemplateForm")
+        let Params = new FormData();
+        Params.append("FormId", FormId);
+        paramsService.callservice(Params,"GetTemplateForm")
             .then(
                 data => {
                     if (data.status) {
@@ -94,7 +96,7 @@ function GetTemplateForm(param) {
 function Set_EditText_TemplateForm(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        paramsService.callservice(param,"Set_EditText_TemplateForm")
+        paramsService.callservice(param,"Set_EditTextElements_Template")
             .then(
                 data => {
                     if (data.status) {
@@ -116,7 +118,7 @@ function Set_EditText_TemplateForm(param) {
 }
 function Set_Hide_TemplateForm(param) {
     return dispatch => {
-        paramsService.callservice(param,"Set_Hide_TemplateForm")
+        paramsService.callservice(param,"Set_HideElements_Template")
             .then(
                 data => {
                     if (data.status) {
@@ -137,7 +139,7 @@ function Set_Hide_TemplateForm(param) {
 function Set_ShortKey_TemplateForm(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        paramsService.callservice(param,"Set_ShortKey_TemplateForm")
+        paramsService.callservice(param,"Set_ShortKeyElements_Template")
             .then(
                 data => {
                     if (data.status) {
