@@ -1,17 +1,15 @@
 import axios from 'axios'
-import {UserConfig} from '../../Config.js'
+import {UserConfig} from './Config.js'
 const _Config =JSON.parse(localStorage.getItem("_Config"));
 
-export const ProjectsInfo_service = {
-    GetSelectProject
+export const emptyservice = {
+    callservice
 };
 
-//Get "peygir_id" //Returns true-false
-function GetSelectProject(params) {
+function callservice(service) {
     if (UserConfig.GetToken() !== null) {
 
-
-        return axios.post(_Config.BaseUrl + "GetSelectProject", params)
+        return axios.post(_Config.BaseUrl + service)
             .then(Response => {
                 return Promise.resolve(Response.data)
             })

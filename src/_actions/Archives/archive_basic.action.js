@@ -1,7 +1,7 @@
-import { ArchiveBasic_service } from "../../_webservices";
 import { loadingActions } from "../Loading";
 import { toast } from 'react-toastify';
 import { ArchiveBasicConstant } from "../../_constants";
+import {  paramsService,emptyservice } from "../../_webservices";
 
 export const ArchiveBasic_action = {
     GetAttachmentsByWorkIdlist,
@@ -9,7 +9,7 @@ export const ArchiveBasic_action = {
 function GetAttachmentsByWorkIdlist(Params) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        return ArchiveBasic_service.GetAttachmentsByWorkId(Params)
+        return paramsService.callservice(Params,"GetAttachmentsByWorkId")
             .then(
                 data => {
                     if (data.status) {

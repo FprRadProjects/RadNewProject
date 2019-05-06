@@ -1,6 +1,6 @@
-import {Service_Dashboard} from "../../../_webservices";
 import {DashBoardConstant} from "../../../_constants";
 import {loadingActions} from "../../../_actions";
+import { paramsService, emptyservice } from "../../../_webservices";
 
 import { toast } from 'react-toastify';
 
@@ -15,7 +15,7 @@ function FetchDataTree(params,reload,Tree) {
 
     return dispatch => {
 
-         Service_Dashboard.FetchDataTree(params).then(
+        paramsService.callservice(params,"WorkDashboard").then(
             data => {
                 if(reload){
                 dispatch(AddRowsReload())

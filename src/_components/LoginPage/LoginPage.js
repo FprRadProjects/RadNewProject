@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { userActions } from '../../_actions/User';
+import "bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css"
 import '../../content/css/login.css'
 import logo from '../../content/images/login/rad.png';
 import PropTypes from "prop-types"

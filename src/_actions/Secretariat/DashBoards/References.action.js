@@ -1,8 +1,7 @@
-import {Service_Dashboard} from "../../../_webservices";
 import {DashBoardConstant} from "../../../_constants";
-import {alertActions, loadingActions, ProjectsInfo_action} from "../../../_actions";
-import {history} from "../../../_helpers";
+import { loadingActions} from "../../../_actions";
 import {userActions} from '../../../_actions';
+import { paramsService, emptyservice } from "../../../_webservices";
 
 import { toast } from 'react-toastify';
 
@@ -19,7 +18,7 @@ function FetchData(params) {
     return dispatch => {
         // dispatch(loadingActions.ShowLoading());
         dispatch(loadingActions.ShowGridLoading());
-        Service_Dashboard.FetchData(params)
+        paramsService.callservice(params,"WorkDashboard")
             .then(
                 data => {
                     if (data.status) {
@@ -53,7 +52,7 @@ function FetchDataTree(params,reload,Tree) {
 
     return dispatch => {
 
-        return  Service_Dashboard.FetchDataTree(params).then(
+        return  paramsService.callservice(params,"WorkDashboard").then(
             data => {
                 if(reload){
                 dispatch(AddRowsReload())

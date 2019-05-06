@@ -1,8 +1,8 @@
-import { AutoBasicInfo_service, ProjectsInfo_service } from "../../../../_webservices";
 import { AutoBasicInfoConstant as constant } from "../../../../_constants";
 import { toast } from 'react-toastify';
 import {
     loadingActions, userActions} from "../../../index";
+    import { paramsService, emptyservice } from "../../../../_webservices";
 
 export const AutoBasicInfo_action = {
     GetDefaultText,
@@ -23,7 +23,7 @@ export const AutoBasicInfo_action = {
 function GetNewWorkDefaultInfo(Params) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return AutoBasicInfo_service.GetNewWorkDefaultInfo(Params)
+       return paramsService.callservice(Params,"GetNewWorkDefaultInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -48,7 +48,7 @@ function GetNewWorkDefaultInfo(Params) {
 
 function SelectRoleList() {
     return dispatch => {
-        AutoBasicInfo_service.SelectRoleList()
+        emptyservice.callservice("SelectRoleList")
             .then(
                 data => {
                     if (data.status) {
@@ -67,7 +67,11 @@ function SelectRoleList() {
 
 function SayManagerOnWorkerWtype(worker_id, wt_id) {
     return dispatch => {
-        return AutoBasicInfo_service.SayManagerOnWorkerWtype(worker_id, wt_id)
+        
+        var Params = new FormData();
+        Params.append('worker_id', worker_id);
+        Params.append('wt_id', wt_id);
+        return paramsService.callservice(Params,"SayManagerOnWorkerWtype")
             .then(
                 data => {
                     if (!data.status && data.code !== 0) {
@@ -88,7 +92,7 @@ function SayManagerOnWorkerWtype(worker_id, wt_id) {
 
 function SelectPriorityList() {
     return dispatch => {
-        AutoBasicInfo_service.SelectPriorityList()
+        emptyservice.callservice("SelectPriorityList")
             .then(
                 data => {
                     if (data.status) {
@@ -108,7 +112,7 @@ function SelectPriorityList() {
 
 function SelectWorkTypeList(Params) {
     return dispatch => {
-        AutoBasicInfo_service.SelectWorkTypeList(Params)
+        paramsService.callservice(Params,"SelectWorkTypeList")
             .then(
                 data => {
                     if (data.status) {
@@ -128,7 +132,10 @@ function SelectWorkTypeList(Params) {
 function SelectManagerList(id_role, wt_id) {
     return dispatch => {
 
-        AutoBasicInfo_service.SelectManagerList(id_role, wt_id)
+        var Params = new FormData();
+        Params.append('wt_id', wt_id);
+        Params.append('id_role', id_role);
+        paramsService.callservice(Params,"SelectManagerList")
             .then(
                 data => {
                     if (data.status) {
@@ -148,7 +155,7 @@ function SelectManagerList(id_role, wt_id) {
 
 function SelectWorkerGridList(Params) {
     return dispatch => {
-        AutoBasicInfo_service.SelectWorkerList(Params)
+        paramsService.callservice(Params,"SelectWorkerList")
             .then(
                 data => {
                     if (data.status) {
@@ -167,7 +174,7 @@ function SelectWorkerGridList(Params) {
 }
 function SelectWorkerList(Params) {
     return dispatch => {
-        AutoBasicInfo_service.SelectWorkerList(Params)
+        paramsService.callservice(Params,"SelectWorkerList")
             .then(
                 data => {
                     if (data.status) {
@@ -188,7 +195,10 @@ function SelectWorkerList(Params) {
 
 function SelectAshkhasList(id_taraf) {
     return dispatch => {
-        AutoBasicInfo_service.SelectAshkhasList(id_taraf)
+        
+        var Params = new FormData();
+        Params.append('id_taraf', id_taraf);
+        paramsService.callservice(Params,"SelectAshkhasList")
             .then(
                 data => {
                     if (data.status)
@@ -207,7 +217,7 @@ function SelectAshkhasList(id_taraf) {
 
 function GetDefaultText() {
     return dispatch => {
-        AutoBasicInfo_service.GetDefaultText()
+        emptyservice.callservice("GetDefaultText")
             .then(
                 data => {
                     if (data.status) {

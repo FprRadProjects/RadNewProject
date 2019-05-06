@@ -1,10 +1,10 @@
-import {WorkAccess_service} from "../../../../_webservices";
 import {CommonConstant as Constant} from "../../../../_constants/";
-import {alertActions} from "../../../index";
 import { toast } from 'react-toastify';
 import {
     loadingActions, userActions
 } from "../../../index";
+import { paramsService, emptyservice } from "../../../../_webservices";
+
 export const WorkAccess_action = {
     CheckAccess,
     CanSetInfoOnWork,
@@ -17,7 +17,9 @@ export const WorkAccess_action = {
 
 function CheckAccess(peygir_id) {
     return dispatch => {
-        return  WorkAccess_service.CheckAccess(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        return  paramsService.callservice(Params,"CheckAccess")
             .then(
                 data => {
                     if (data.status) {
@@ -36,7 +38,10 @@ function CheckAccess(peygir_id) {
 
 
 function CanSetInfoOnWork(peygir_id) {
-    return  WorkAccess_service.CanSetInfoOnWork(peygir_id).then(Response => {
+    
+    var Params = new FormData();
+    Params.append('peygir_id', peygir_id);
+    return  paramsService.callservice(Params,"CanSetInfoOnWork").then(Response => {
             return Promise.resolve(Response)
         })
             .catch((error) => {
@@ -45,7 +50,9 @@ function CanSetInfoOnWork(peygir_id) {
 }
 
 function CanSetProjectOnWork(peygir_id) {
-    return WorkAccess_service.CanSetProjectOnWork(peygir_id).then(Response => {
+    var Params = new FormData();
+    Params.append('peygir_id', peygir_id);
+    return paramsService.callservice(peygir_id,"CanSetProjectOnWork").then(Response => {
         return Promise.resolve(Response)
     })
         .catch((error) => {
@@ -56,7 +63,9 @@ function CanSetProjectOnWork(peygir_id) {
 
 function CanEditOnWork(peygir_id) {
     return dispatch => {
-        WorkAccess_service.CanEditOnWork(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        paramsService.callservice(Params,"CanEditOnWork")
             .then(
                 data => {
                     if (data.status) {
@@ -75,7 +84,11 @@ function CanEditOnWork(peygir_id) {
 
 function CanAddWork(id_tel) {
     return dispatch => {
-        WorkAccess_service.CanAddWork(id_tel)
+        var Params = new FormData();
+        Params.append('id_tel', id_tel);
+        Params.append('type', 'radd');
+
+        paramsService.callservice(Params,"CanAddOrSubOnWork")
             .then(
                 data => {
                     if (data.status) {
@@ -95,7 +108,13 @@ function CanAddWork(id_tel) {
 function CanSubOnWork(peygir_id, id_tel,formname,from) {
 return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return WorkAccess_service.CanSubOnWork(peygir_id, id_tel,formname,from)
+        
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        Params.append('id_tel', id_tel);
+        Params.append('type', from);
+        Params.append('formname', formname);
+       return paramsService.callservice(Params,"CanAddOrSubOnWork")
             .then(
                 data => {
                     if (data.status) {

@@ -1,10 +1,10 @@
-import { BasicInfo_service, WorkActions_service } from "../../../../_webservices";
 import {
     loadingActions, userActions
 } from "../../../index";
 import { history } from "../../../../_helpers";
 import { toast } from 'react-toastify';
 import { AutoWorkBasicConstant } from "../../../../_constants";
+import { paramsService, emptyservice } from "../../../../_webservices";
 
 
 export const WorkActions_action = {
@@ -25,7 +25,9 @@ function DeleteFromWorkMark(peygir_id,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        return WorkActions_service.DeleteFromWorkMark(peygir_id)
+        var params = new FormData();
+        params.append('peygir_id', peygir_id);
+        return paramsService.callservice(params,"DeleteFromWorkMark")
             .then(
                 data => {
                     if (data.status) {
@@ -52,7 +54,7 @@ function InsertNewWorkInfo(Params,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        return WorkActions_service.InsertNewWorkInfo(Params)
+        return paramsService.callservice(Params,"InsertNewWorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -79,7 +81,9 @@ function InsertIntoWorkMark(peygir_id,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        return WorkActions_service.InsertIntoWorkMark(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        return paramsService.callservice(Params,"InsertIntoWorkMark")
             .then(
                 data => {
                     if (data.status) {
@@ -106,7 +110,9 @@ function ConfirmReviewWork(peygir_id,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return WorkActions_service.ConfirmReviewWork(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+       return paramsService.callservice(Params,"ConfirmReviewWork")
             .then(
                 data => {
                     if (!data.status) {
@@ -133,7 +139,7 @@ function ConfirmReviewWork(peygir_id,msg) {
 function FinalFlowConfirmWork(Params,msg) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return WorkActions_service.FinalFlowConfirmWork(Params)
+       return paramsService.callservice(Params,"FinalFlowConfirmWork")
             .then(
                 data => {
                     if (data.status) {
@@ -166,7 +172,7 @@ function FinalFlowConfirmWork(Params,msg) {
 function InitConfirmWork(Params,msg) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return WorkActions_service.InitConfirmWork(Params)
+       return paramsService.callservice(Params,"InitConfirmWork")
             .then(
                 data => {
                     if (data.status) {
@@ -200,7 +206,9 @@ function RebuildWork(peygir_id,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        return WorkActions_service.RebuildWork(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        return paramsService.callservice(Params,"RebuildWork")
             .then(
                 data => {
                     if (data.status) {
@@ -226,7 +234,9 @@ function RebuildWork(peygir_id,msg) {
 
 function SeenWork(peygir_id) {
     return dispatch => {
-        WorkActions_service.SeenWork(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        paramsService.callservice(Params,"SeenWork")
             .then(
                 data => {
                     if (!data.status && data.code !== 0) {
@@ -247,7 +257,7 @@ function SaveWorkInfo(params,msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        return WorkActions_service.SaveWorkInfo(params)
+        return paramsService.callservice(params,"SaveWorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -276,7 +286,9 @@ function SaveWorkInfo(params,msg) {
 function DeleteWork(peygir_id,msg) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        WorkActions_service.DeleteWork(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        paramsService.callservice(Params,"DeleteWork")
             .then(
                 data => {
                     if (data.status) {

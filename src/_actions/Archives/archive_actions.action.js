@@ -1,4 +1,4 @@
-import {  ArchiveActions_service } from "../../_webservices";
+import {  paramsService,emptyservice } from "../../_webservices";
 import {
     loadingActions, userActions
 } from "../index";
@@ -11,7 +11,9 @@ export const ArchiveActions_action = {
 function ArchiveRemoveFullFile(Id) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        return ArchiveActions_service.ArchiveRemoveFullFile(Id)
+        var Params = new FormData();
+        Params.append('Id', Id);
+        return paramsService.callservice(Params,"ArchiveRemoveFullFile")
             .then(
                 data => {
                     if (data.status) {

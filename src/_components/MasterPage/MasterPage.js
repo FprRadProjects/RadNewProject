@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import "bootstrap-v4-rtl"
 import { connect } from 'react-redux';
 import { userActions } from '../../_actions/User';
 import { Header } from "../sections/Header";

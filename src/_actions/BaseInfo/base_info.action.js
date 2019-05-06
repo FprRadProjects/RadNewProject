@@ -1,8 +1,7 @@
 import {BasicInfoConstant} from "../../_constants";
-import {alertActions, loadingActions, userActions} from "../index";
-import {BasicInfo_service} from "../../_webservices"
-import {history} from "../../_helpers";
+import { loadingActions, userActions} from "../index";
 import { toast } from 'react-toastify';
+import {  paramsService,emptyservice } from "../../_webservices";
 
 export const BasicInfo_action = {
     GetCompanyInfo,
@@ -22,7 +21,10 @@ function GetSelectedFormId(FormId) {
 }
 function SetLog(Form) {
     return dispatch => {
-        BasicInfo_service.SetLog(Form)
+        
+        let Params = new FormData();
+        Params.append("Form", Form);
+        paramsService.callservice(Params,"SetLog")
             .then(
                 data => {
                     if (!data.status && data.code !== 0) {
@@ -44,7 +46,7 @@ function SetLog(Form) {
 function UserAccessForm(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        BasicInfo_service.UserAccessForm(param)
+        paramsService.callservice(param,"UserAccessForm")
             .then(
                 data => {
                     if (data.status) {
@@ -71,7 +73,7 @@ function GetCompanyInfo(login) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
         if (localStorage.getItem("CompanyInfo") === null || !login) {
-            BasicInfo_service.GetCompanyInfo()
+            emptyservice.callservice("GetCompanyInfo")
                 .then(
                     data => {
                         if (data.status) {

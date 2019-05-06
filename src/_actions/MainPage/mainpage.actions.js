@@ -1,10 +1,8 @@
 import {mainpageConstant as constants} from '../../_constants';
-import {mainpageService} from '../../_webservices'
-import {alertActions} from "../Alert";
 import {loadingActions} from "../Loading";
-import {history} from "../../_helpers";
 import {userActions} from '../../_actions';
 import { toast } from 'react-toastify';
+import { paramsService, emptyservice } from "../../_webservices";
 
 export const mainpageActions = {
     GetCounts,
@@ -15,7 +13,7 @@ export const mainpageActions = {
 function GetCounts(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        mainpageService.GetCounts(param)
+        paramsService.callservice(param,"GetMainPageCounts")
             .then(
                 data => {
                     if (data.status) {
@@ -42,7 +40,7 @@ function GetCounts(param) {
 function GetEvents(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        mainpageService.GetEvents(param)
+        paramsService.callservice(param,"GetMainPageEvents")
             .then(
                 data => {
                     if (data.status) {

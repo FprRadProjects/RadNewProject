@@ -1,7 +1,6 @@
-import {ProjectsInfo_service} from "../../../_webservices";
-import {alertActions} from "../../index";
 import { toast } from 'react-toastify';
-import {BasicInfoConstant, CommonContants, ProjectInfoConstant as constant} from "../../../_constants";
+import { ProjectInfoConstant as constant} from "../../../_constants";
+import { paramsService, emptyservice } from "../../../_webservices";
 
 export const ProjectsInfo_action = {
     GetSelectProject,
@@ -11,7 +10,7 @@ export const ProjectsInfo_action = {
 
 function GetSelectProject(params) {
     return dispatch => {
-        ProjectsInfo_service.GetSelectProject(params)
+        paramsService.callservice(params,"paramsService")
             .then(
                 data => {
                     if (data.status) {

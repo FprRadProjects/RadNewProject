@@ -1,10 +1,9 @@
-import {designConstant as constants} from '../../_constants';
-import {designService} from '../../_webservices'
-import {alertActions} from "../Alert";
-import {loadingActions} from "../Loading";
-import {history} from "../../_helpers";
-import {userActions} from '../../_actions';
+import { designConstant as constants } from '../../_constants';
+import { alertActions } from "../Alert";
+import { loadingActions } from "../Loading";
+import { userActions } from '../../_actions';
 import { toast } from 'react-toastify';
+import { paramsService, emptyservice } from "../../_webservices";
 
 export const design_Actions = {
     GetHideElementsList,
@@ -22,7 +21,7 @@ export const design_Actions = {
 function GetEditTextElementsList(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        designService.GetEditTextElementsList(param)
+        paramsService.callservice(param, "GetEditTextElementsList")
             .then(
                 data => {
                     if (data.status) {
@@ -31,10 +30,9 @@ function GetEditTextElementsList(param) {
                     } else if (data.code !== 0) {
                         toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
-                    } else
-                    {
+                    } else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                 },
                 error => {
@@ -47,7 +45,7 @@ function GetEditTextElementsList(param) {
 function GetHideElementsList(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        designService.GetHideElementsList(param)
+        paramsService.callservice(param,"GetHideElementsList")
             .then(
                 data => {
                     if (data.status) {
@@ -56,10 +54,9 @@ function GetHideElementsList(param) {
                     } else if (data.code !== 0) {
                         toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
-                    } else
-                    {
+                    } else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                 },
                 error => {
@@ -72,7 +69,7 @@ function GetHideElementsList(param) {
 function GetTemplateForm(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        designService.GetTemplateForm(param)
+        paramsService.callservice(param,"GetTemplateForm")
             .then(
                 data => {
                     if (data.status) {
@@ -81,10 +78,9 @@ function GetTemplateForm(param) {
                     } else if (data.code !== 0) {
                         toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
-                    } else
-                    {
+                    } else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                 },
                 error => {
@@ -98,7 +94,7 @@ function GetTemplateForm(param) {
 function Set_EditText_TemplateForm(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        designService.Set_EditText_TemplateForm(param)
+        paramsService.callservice(param,"Set_EditText_TemplateForm")
             .then(
                 data => {
                     if (data.status) {
@@ -106,10 +102,9 @@ function Set_EditText_TemplateForm(param) {
                     } else if (data.code !== 0) {
                         toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
-                    } else
-                    {
+                    } else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                 },
                 error => {
@@ -121,17 +116,16 @@ function Set_EditText_TemplateForm(param) {
 }
 function Set_Hide_TemplateForm(param) {
     return dispatch => {
-        designService.Set_Hide_TemplateForm(param)
+        paramsService.callservice(param,"Set_Hide_TemplateForm")
             .then(
                 data => {
                     if (data.status) {
                         dispatch(design_Actions.GetTemplateForm(param.FormId))
                     } else if (data.code !== 0) {
                         toast.error(data.error);
-                    } else
-                    {
+                    } else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                 },
                 error => {
@@ -143,7 +137,7 @@ function Set_Hide_TemplateForm(param) {
 function Set_ShortKey_TemplateForm(param) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        designService.Set_ShortKey_TemplateForm(param)
+        paramsService.callservice(param,"Set_ShortKey_TemplateForm")
             .then(
                 data => {
                     if (data.status) {
@@ -151,10 +145,9 @@ function Set_ShortKey_TemplateForm(param) {
                     } else if (data.code !== 0) {
                         toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
-                    } else
-                    {
+                    } else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                 },
                 error => {
@@ -165,10 +158,14 @@ function Set_ShortKey_TemplateForm(param) {
     }
 }
 
-function Delete_ShortKeyElements_Template(FormId,RowId) {
+function Delete_ShortKeyElements_Template(FormId, RowId) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        designService.Delete_ShortKeyElements_Template(FormId,RowId)
+
+        let Params = new FormData();
+        Params.append("FormId", FormId);
+        Params.append("RowId", RowId);
+        paramsService.callservice(Params,"Delete_ShortKeyElements_Template")
             .then(
                 data => {
                     if (data.status) {
@@ -176,10 +173,9 @@ function Delete_ShortKeyElements_Template(FormId,RowId) {
                     } else if (data.code !== 0) {
                         toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
-                    } else
-                    {
+                    } else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                 },
                 error => {
@@ -190,10 +186,13 @@ function Delete_ShortKeyElements_Template(FormId,RowId) {
     }
 }
 
-function Delete_EditTextElements_Template(FormId,RowId) {
+function Delete_EditTextElements_Template(FormId, RowId) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return designService.Delete_EditTextElements_Template(FormId,RowId)
+        let Params = new FormData();
+        Params.append("FormId", FormId);
+        Params.append("RowId", RowId);
+        return paramsService.callservice(Params,"Delete_EditTextElements_Template")
             .then(
                 data => {
                     if (data.status) {
@@ -201,10 +200,9 @@ function Delete_EditTextElements_Template(FormId,RowId) {
                     } else if (data.code !== 0) {
                         toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
-                    } else
-                    {
+                    } else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                     return Promise.resolve(data)
                 },
@@ -215,10 +213,13 @@ function Delete_EditTextElements_Template(FormId,RowId) {
             );
     }
 }
-function Delete_HideElements_Template(FormId,RowId) {
+function Delete_HideElements_Template(FormId, RowId) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return designService.Delete_HideElements_Template(FormId,RowId)
+        let Params = new FormData();
+        Params.append("FormId", FormId);
+        Params.append("RowId", RowId);
+        return paramsService.callservice(Params,"Delete_HideElements_Template")
             .then(
                 data => {
                     if (data.status) {
@@ -226,10 +227,9 @@ function Delete_HideElements_Template(FormId,RowId) {
                     } else if (data.code !== 0) {
                         toast.error(data.error);
                         dispatch(loadingActions.HideLoading());
-                    } else
-                    {
+                    } else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                     return Promise.resolve(data)
                 },
@@ -242,13 +242,13 @@ function Delete_HideElements_Template(FormId,RowId) {
 }
 
 function successGetTemplate(data) {
-    return {type: constants.DESIGN_SUCCESS_GET_TEMPLATE, data};
+    return { type: constants.DESIGN_SUCCESS_GET_TEMPLATE, data };
 }
 function successGetHideTemplate(data) {
-    return {type: constants.DESIGN_SUCCESS_GET_HIDE_ELEMENTS_TEMPLATE, data};
+    return { type: constants.DESIGN_SUCCESS_GET_HIDE_ELEMENTS_TEMPLATE, data };
 }
 function successGetEditTextElements(data) {
-    return {type: constants.DESIGN_SUCCESS_GET_EDIT_TEXT_ELEMENTS_TEMPLATE, data};
+    return { type: constants.DESIGN_SUCCESS_GET_EDIT_TEXT_ELEMENTS_TEMPLATE, data };
 }
 
 

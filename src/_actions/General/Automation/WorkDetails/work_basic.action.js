@@ -1,9 +1,8 @@
-import { WorkBasic_service } from "../../../../_webservices";
-import { alertActions } from "../../../Alert";
 import { loadingActions } from "../../../Loading";
 import { AutoWorkBasicConstant } from "../../../../_constants";
 import { WorkActions_action } from "../../../../_actions";
 import { toast } from 'react-toastify';
+import { paramsService, emptyservice } from "../../../../_webservices";
 
 export const WorkBasic_action = {
     GetWorkInfo,
@@ -20,7 +19,9 @@ export const WorkBasic_action = {
 function GetReviewWorkInfo(row) {
     const peygir_id = row.peygir_id;
     return dispatch => {
-        return   WorkBasic_service.GetWorkInfo(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        return   paramsService.callservice(Params,"WorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -39,7 +40,9 @@ function GetReviewWorkInfo(row) {
 }
 function FetchGetReviewWorkInfo(peygir_id) {
     return dispatch => {
-        WorkBasic_service.GetWorkInfo(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        paramsService.callservice(Params,"WorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -59,7 +62,9 @@ function GetWorkInfo(row) {
     const peygir_id = row.peygir_id;
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        return  WorkBasic_service.GetWorkInfo(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        return  paramsService.callservice(Params,"WorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -80,7 +85,9 @@ function GetWorkInfo(row) {
 }
 function FetchWorkInfo(peygir_id) {
     return dispatch => {
-        WorkBasic_service.GetWorkInfo(peygir_id)
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+        paramsService.callservice(Params,"WorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -98,7 +105,7 @@ function FetchWorkInfo(peygir_id) {
 }
 function FlowResultListOnWork(params) {
     return dispatch => {
-        WorkBasic_service.FlowResultListOnWork(params)
+        paramsService.callservice(params,"FlowResultListOnWork")
             .then(
                 data => {
                     if (data.status) {
@@ -117,7 +124,7 @@ function FlowResultListOnWork(params) {
 }
 function ReviewWorkConfirmList(params) {
     return dispatch => {
-        WorkBasic_service.ReviewWorkConfirmList(params)
+        paramsService.callservice(params,"ReviewWorkConfirmList")
             .then(
                 data => {
                     if (data.status) {
@@ -137,7 +144,7 @@ function ReviewWorkConfirmList(params) {
 
 function workDiagram(params){
     return dispatch => {
-      return  WorkBasic_service.workDiagram(params)
+      return  paramsService.callservice(params,"WorkDiagram")
             .then(
                 data => {
                     if (data.status) {
