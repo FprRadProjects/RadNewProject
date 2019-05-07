@@ -137,12 +137,12 @@ class ApiGridComponent extends React.PureComponent {
         if (nextProps.UrlParams !== this.props.UrlParams) {
             Params = nextProps.UrlParams;
         }
-      }
+    }
     changeColumnOrder(newOrder) {
-        this.setState({ 
+        this.setState({
             columnOrder: newOrder,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
-         });
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
+        });
     }
 
     componentDidMount() {
@@ -161,7 +161,7 @@ class ApiGridComponent extends React.PureComponent {
     changeSorting(sorting) {
         this.setState({
             sorting,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
     }
 
@@ -176,21 +176,21 @@ class ApiGridComponent extends React.PureComponent {
         this.setState({
             // loading: true,
             filters: newFilters,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
     }
 
     changeGroup(grouping) {
         this.setState({
             grouping,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
     }
 
     changeCurrentPage(currentPage) {
         this.setState({
             currentPage,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
 
         });
     }
@@ -198,10 +198,10 @@ class ApiGridComponent extends React.PureComponent {
 
     changePageSize(pageSize) {
         this.setState({
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
         const { currentPage: stateCurrentPage } = this.state;
-        const  totalCount=this.props.totalCount!==undefined?this.props.totalCount:0;
+        const totalCount = this.props.totalCount !== undefined ? this.props.totalCount : 0;
         const totalPages = Math.ceil(totalCount / pageSize);
         const currentPage = Math.min(stateCurrentPage, totalPages - 1);
         this.setState({
@@ -255,7 +255,6 @@ class ApiGridComponent extends React.PureComponent {
         var columns = [];
         const {
             currencyColumns,
-            totalSummaryItems,
             sorting,
             pageSize,
             pageSizes,
@@ -286,7 +285,18 @@ class ApiGridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
-
+        
+        //add navid
+        const tableHeaderMessages = {
+            sortingHint: this.context.t("SortingHint"),
+        };
+        const pagingPanelMessages = {
+            rowsPerPage: this.context.t("RowsPerPage"),
+            info: this.context.t("Count") + " {from} " + this.context.t("Of") + " {to} " + "({count} " + this.context.t("Items") + ")",
+        };
+        const columnChooserMessages = {
+            showColumnChooser: this.context.t("ShowColumnChooser"),
+        };
 
 
         return (
@@ -319,7 +329,7 @@ class ApiGridComponent extends React.PureComponent {
                         pageSize={pageSize === 0 ? 10 : pageSize}
                         onPageSizeChange={this.changePageSize}
                     />
-                     <CustomPaging 
+                    <CustomPaging
                         totalCount={totalCount}
                     />
                     {pageSize === 0 && <IntegratedPaging />}
@@ -331,15 +341,15 @@ class ApiGridComponent extends React.PureComponent {
                         columnExtensions={tableColumnExtensions}
                         messages={tableMessages}
                     />
-                     <TableColumnResizing
+                    <TableColumnResizing
                         defaultColumnWidths={defaultColumnWidths}
                     /><TableColumnReordering
-                    order={columnOrder}
-                    onOrderChange={this.changeColumnOrder}
-                />
-                    <TableHeaderRow showSortingControls />
+                        order={columnOrder}
+                        onOrderChange={this.changeColumnOrder}
+                    />
+                    <TableHeaderRow showSortingControls messages={tableHeaderMessages} />
 
-                    
+
                     <TableGroupRow />
                     <TableColumnVisibility
                         hiddenColumnNames={hiddenColumnNames}
@@ -349,13 +359,14 @@ class ApiGridComponent extends React.PureComponent {
                         messages={filterMessages}
                     />
                     <Toolbar />
-                    <ColumnChooser />
+                    <ColumnChooser messages={columnChooserMessages} />
                     <GroupingPanel showGroupingControls={true} showSortingControls LocalizationMessages
                         messages={groupingPanelMessages} />
-                        <PagingPanel
+                    <PagingPanel
                         pageSizes={pageSizes}
+                        messages={pagingPanelMessages}
                     />
- </Grid>
+                </Grid>
                 {this.props.gridloading && <Loading />}
             </div>
         );

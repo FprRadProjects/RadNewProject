@@ -126,7 +126,7 @@ class Sidebar extends Component {
                                 </a>
                             </li>
                             <li>
-                                <a onClick={this.OpenNewWork.bind(this)}>
+                                <a href="#!" onClick={this.OpenNewWork.bind(this)}>
                                     <i className="icon-system"></i>
                                     <span>{this.context.t("frm_New_Work")}</span>
                                 </a>

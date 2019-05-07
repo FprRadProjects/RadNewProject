@@ -280,6 +280,17 @@ class GridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
+        //add navid
+        const tableHeaderMessages = {
+            sortingHint: this.context.t("SortingHint"),
+        };
+        const pagingPanelMessages = {
+            rowsPerPage: this.context.t("RowsPerPage"),
+            info: this.context.t("Count") + " {from} " + this.context.t("Of") + " {to} " + "({count} " + this.context.t("Items") + ")",
+        };
+        const columnChooserMessages = {
+            showColumnChooser: this.context.t("ShowColumnChooser"),
+        };
         return (
             <div>
                 <Grid
@@ -327,10 +338,11 @@ class GridComponent extends React.PureComponent {
                         defaultColumnWidths={defaultColumnWidths}
                     />
 
-                    <TableHeaderRow showSortingControls />
+                    <TableHeaderRow showSortingControls messages={tableHeaderMessages} />
 
                     <PagingPanel
                         pageSizes={pageSizes}
+                        messages={pagingPanelMessages}
                     />
                     <TableGroupRow />
                     <TableColumnVisibility
@@ -341,7 +353,7 @@ class GridComponent extends React.PureComponent {
                         messages={filterMessages}
                     />
                     <Toolbar />
-                    <ColumnChooser />
+                    <ColumnChooser messages={columnChooserMessages} />
                     <GroupingPanel showGroupingControls={true} showSortingControls LocalizationMessages
                         messages={groupingPanelMessages} />
                 </Grid>
