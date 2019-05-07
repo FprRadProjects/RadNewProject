@@ -5,7 +5,7 @@ import {AutoBasicInfo_action} from "../../_actions";
 import PropTypes from "prop-types"
 import {ApiModalGridComponent} from "../Config/ApiModalGridComponent";
 var currencyColumns = [];
-var hiddenColumnNames = ['tel1','fax','add1','email','www','mokh_mob','vaziyat',];
+var hiddenColumnNames = ['tel1','fax','add1','email','www','mokh_mob','vaziyat','mokhatab_id'];
 var booleanColumns = [];
 var FileAudienceParams = {
     "page": 0,
@@ -47,6 +47,7 @@ class SelectFileAudienceList extends Component {
         {name: 'vaziyat', title: this.context.t("Status")},
         {name: 'mokh_mob', title: this.context.t("AudienceMobile")},
         {name: 'mokh_tel', title: this.context.t("AudienceTel")},
+        {name: 'mokhatab_id', title: this.context.t("AudienceID")},
 
     ];
  
