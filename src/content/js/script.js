@@ -70,6 +70,11 @@ $(document).on('click', '.dx-g-bs4-table-cell', function (e) {
     $(this).parent().parent().find(".table-active").removeClass("table-active");
     $(this).parent().addClass("table-active");
 });
+$(document).on('click', '[class*=MuiTableCell-body]', function (e) {
+    $(this).parent().parent().find(".table-active").removeClass("table-active");
+    $(this).parent().addClass("table-active");
+});
+
 $(document).on('click', '.sidebar-menu li a', function (e) {
     var $this = $(this);
     var checkElement = $this.next();
@@ -120,6 +125,12 @@ $(document).on('click', function (e) {
         $(document).find('.dropdown-menu').removeClass('show');
 });
 $(document).ready(function () {
+    // $("span:contains('Rows per page')").text("تعداد سطر در هر صفحه:");
+    // var $text = $("span:contains('of')");
+    // var newtext = $text.text().replace('of', 'از');
+    // $text.text(newtext);
+
+
     if ($(window).width() <= 991) {
         $(".sidebar-toggle input").prop('checked', true);
         $(".page-body-wrapper").addClass("sidebar-close");

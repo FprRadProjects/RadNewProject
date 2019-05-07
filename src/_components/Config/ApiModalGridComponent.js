@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
 import 'bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css';
 import {
-    SummaryState,
     PagingState,
     SortingState,
     CustomPaging,
@@ -11,8 +10,7 @@ import {
     IntegratedGrouping,
     IntegratedPaging,
     FilteringState,
-    DataTypeProvider,
-    IntegratedSummary
+    DataTypeProvider
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
@@ -27,8 +25,7 @@ import {
     TableColumnVisibility,
     TableColumnReordering,
     TableColumnResizing,
-    TableFilterRow,
-    TableSummaryRow
+    TableFilterRow
 } from '@devexpress/dx-react-grid-material-ui';
 
 import '@material-ui/icons/ChevronLeft'
@@ -117,10 +114,7 @@ class ApiModalGridComponent extends React.PureComponent {
             booleanFilterOperations: ['boolean'],
             currencyFilterOperations: ['equals'],
             columnOrder: [],
-            defaultColumnWidths: defaultColumnWidths,
-            totalSummaryItems: [
-                { columnName: 'peygir_id', type: 'count' },
-              ],
+            defaultColumnWidths: defaultColumnWidths
         };
         this.changeSorting = this.changeSorting.bind(this);
         this.changeCurrentPage = this.changeCurrentPage.bind(this);
@@ -140,12 +134,12 @@ class ApiModalGridComponent extends React.PureComponent {
         if (nextProps.UrlParams !== this.props.UrlParams) {
             Params = nextProps.UrlParams;
         }
-      }
+    }
     changeColumnOrder(newOrder) {
-        this.setState({ 
+        this.setState({
             columnOrder: newOrder,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
-         });
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
+        });
     }
 
     componentDidMount() {
@@ -164,7 +158,7 @@ class ApiModalGridComponent extends React.PureComponent {
     changeSorting(sorting) {
         this.setState({
             sorting,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
     }
 
@@ -179,21 +173,21 @@ class ApiModalGridComponent extends React.PureComponent {
         this.setState({
             // loading: true,
             filters: newFilters,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
     }
 
     changeGroup(grouping) {
         this.setState({
             grouping,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
     }
 
     changeCurrentPage(currentPage) {
         this.setState({
             currentPage,
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
 
         });
     }
@@ -201,10 +195,10 @@ class ApiModalGridComponent extends React.PureComponent {
 
     changePageSize(pageSize) {
         this.setState({
-            totalCount: this.props.totalCount!==undefined?this.props.totalCount:0,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
         const { currentPage: stateCurrentPage } = this.state;
-        const  totalCount=this.props.totalCount!==undefined?this.props.totalCount:0;
+        const totalCount = this.props.totalCount !== undefined ? this.props.totalCount : 0;
         const totalPages = Math.ceil(totalCount / pageSize);
         const currentPage = Math.min(stateCurrentPage, totalPages - 1);
         this.setState({
@@ -258,7 +252,6 @@ class ApiModalGridComponent extends React.PureComponent {
         var columns = [];
         const {
             currencyColumns,
-            totalSummaryItems,
             sorting,
             pageSize,
             pageSizes,
@@ -289,7 +282,17 @@ class ApiModalGridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
-
+        //add navid
+        const tableHeaderMessages = {
+            sortingHint: this.context.t("SortingHint"),
+        };
+        const pagingPanelMessages = {
+            rowsPerPage: this.context.t("RowsPerPage"),
+            info: this.context.t("Count") + " {from} " + this.context.t("Of") + " {to} " + "({count} " + this.context.t("Items") + ")",
+        };
+        const columnChooserMessages = {
+            showColumnChooser: this.context.t("ShowColumnChooser"),
+        };
 
 
         return (
@@ -315,10 +318,7 @@ class ApiModalGridComponent extends React.PureComponent {
                         columnGroupingEnabled={true}
                     />
                     <IntegratedGrouping />
-                     <SummaryState
-                        totalItems={totalSummaryItems}
-                    />
-                    <IntegratedSummary />
+
                     <PagingState
                         currentPage={currentPage}
                         onCurrentPageChange={this.changeCurrentPage}
@@ -341,15 +341,14 @@ class ApiModalGridComponent extends React.PureComponent {
                     /> <TableColumnResizing
                         defaultColumnWidths={defaultColumnWidths}
                     />
-                    <TableHeaderRow showSortingControls />
+                    <TableHeaderRow showSortingControls messages={tableHeaderMessages} />
 
-                    <CustomPaging 
+                    <CustomPaging
                         totalCount={totalCount}
                     /> <PagingPanel
                         pageSizes={pageSizes}
                     />
                     <TableGroupRow />
-                    <TableSummaryRow />
                     <TableColumnVisibility
                         hiddenColumnNames={hiddenColumnNames}
                         onHiddenColumnNamesChange={this.hiddenColumnNamesChange}
@@ -358,10 +357,10 @@ class ApiModalGridComponent extends React.PureComponent {
                         messages={filterMessages}
                     />
                     <Toolbar />
-                    <ColumnChooser />
+                    <ColumnChooser  messages={columnChooserMessages}/>
                     <GroupingPanel showGroupingControls={true} showSortingControls LocalizationMessages
                         messages={groupingPanelMessages} />
- </Grid>
+                </Grid>
                 {this.props.gridloading && <Loading />}
             </div>
         );
