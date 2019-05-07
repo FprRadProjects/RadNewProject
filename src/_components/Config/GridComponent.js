@@ -2,7 +2,6 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
 
-import 'bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css';
 import {
     PagingState,
     SortingState,
@@ -28,8 +27,9 @@ import {
     TableColumnReordering,
     TableColumnResizing,
     TableFilterRow
-} from '@devexpress/dx-react-grid-bootstrap4';
-import 'open-iconic/font/css/open-iconic-bootstrap.min.css'
+} from '@devexpress/dx-react-grid-material-ui';
+
+import '@material-ui/icons/ChevronLeft'
 
 
 import { Loading } from '../../theme-sources/bootstrap4/components/loading';
@@ -138,11 +138,11 @@ class GridComponent extends React.PureComponent {
 
     componentDidMount() {
         this.loadData();
-        const classList = ReactDOM.findDOMNode(this).querySelector('.flex-column').classList;
-        classList.add('rtl');
-        classList.add('table-bordered');
-        classList.add('table-striped');
-        classList.add('table-condensed');
+        // const classList = ReactDOM.findDOMNode(this).querySelector('.flex-column').classList;
+        // classList.add('rtl');
+        // classList.add('table-bordered');
+        // classList.add('table-striped');
+        // classList.add('table-condensed');
     }
 
     componentDidUpdate() {

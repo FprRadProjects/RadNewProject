@@ -53,8 +53,7 @@ export function Auto_BasicInfo(state = {}, action) {
                 ...state,
                 SelectWorkTypeList_rows:  Object.keys(action.data).map((item, index) => {
                 return  { value: action.data[item].id, label: action.data[item].wtype };
-            }),
-            }
+            })}
         }
         case Constant.SELECT_PRIORITY_LIST_SET_GRID_ROWS: {
             return {
@@ -69,10 +68,37 @@ export function Auto_BasicInfo(state = {}, action) {
                 ...state,
                 SelectRoleList_rows:  Object.keys(action.data).map((item, index) => {
                 return  { value: action.data[item].id_role, label: action.data[item].rolename };
-            }),
+            })
+            }
+        }  
+        case Constant.SELECT_FLOW_LIST_SET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectWorkFlowList_rows:  Object.keys(action.data).map((item, index) => {
+                return  { value: action.data[item].id, label: action.data[item].flow };
+            })
+            }
+        }   case Constant.SELECT_WORKGROUP_LIST_SET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectWorkGroupList_rows:  Object.keys(action.data).map((item, index) => {
+                return  { value: action.data[item].id, label: action.data[item].wtgr };
+            })
             }
         }
-      
+        case Constant.FILEAUDIENCE_GET_GRID_TOTAL_COUNT: {
+            return {
+                ...state,
+                SelectFileAudience_totalCount:  action.data
+            }
+        }
+
+        case Constant.FILEAUDIENCE_GET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectFileAudience_rows: action.data
+            }
+        }
         
         default:
             return state;

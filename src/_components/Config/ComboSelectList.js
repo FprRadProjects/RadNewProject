@@ -28,9 +28,9 @@ class ComboSelectList extends Component {
       }
     render() { 
 
-        const {options,name ,classname} = this.props;
+        const {options,name ,classname,isDisabled} = this.props;
         return (
-            <Select
+            <Select isDisabled={isDisabled}
             onInputChange={this.InputChangeHandler.bind(this)}
             className={classname}
             name={name}

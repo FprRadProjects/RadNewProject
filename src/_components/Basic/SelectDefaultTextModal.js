@@ -11,7 +11,6 @@ var booleanColumns = [];
 var Params = {
     "page": 0,
     "pagesize": 10,
-    "Id_Taraf": "0",
     "orderby": "id",
     "direction": "desc",
     "filter": []
@@ -39,7 +38,6 @@ class SelectDefaultTextModal extends Component {
     ];
         const {modal, toggle, id_tel,GetDefaultText
             ,SelectDefaultText_rows,SelectDefaultText_totalCount,Successtoggle} = this.props;
-        Params.Id_Taraf=id_tel;
        
         return (
             <div>

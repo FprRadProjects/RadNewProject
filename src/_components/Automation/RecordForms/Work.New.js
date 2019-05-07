@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
-import { SelectDefaultTextModal } from "../../Basic";
 import InputMask from 'react-input-mask';
 import { AttachmentsReview } from "../../Archives";
+import { SelectDefaultTextModal,SelectFileAudienceList } from "../../Basic/";
 
 import {
     AutoBasicInfo_action,
@@ -34,6 +34,16 @@ var AttachmentParams = {
     "peygir_id": 0,
     "type": "List"
 };
+
+var WorkerParams = {
+    "page": 0,
+    "pagesize": 10,
+    "id_role": 0,
+    "wt_id": 0,
+    "orderby": "id_user",
+    "direction": "desc",
+    "filter": []
+};
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
 var DefaultInfoParams = { form: "referrals", wt_id: 0, flow_id: 0, isInternal: 0 }
 
@@ -46,16 +56,22 @@ class NewWork extends Component {
             modal: false,
             SelectedWorkers: [],
             AttachmentList: [],
-            workTypeSelectedOption: {},
-            prioritySelectedOption: {},
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-newwork-modal"
         };
     }
 
     componentDidMount() {
-        const { WorkInfo, SelectWorkTypeList, SelectPriorityList, GetAttachmentsByWorkIdlist } = this.props;
+        const { SelectWorkTypeList, SelectPriorityList, SelectFlowList,
+            SelectWorkGroupList, SelectRoleList, SelectWorkerList
+            , SelectManagerList } = this.props;
         SelectPriorityList();
+        SelectFlowList();
+        SelectWorkGroupList();
+        SelectRoleList();
+        SelectRoleList();
+        SelectManagerList(0, 0);
+        SelectWorkerList(WorkerParams);
         SelectWorkTypeList(workTypeParams);
 
     }
@@ -65,43 +81,69 @@ class NewWork extends Component {
     changeHandle = (e, val) => {
         if (val !== undefined) {
             const { name } = e;
+
+            const { SelectWorkTypeList, SelectWorkerList, SelectManagerList } = this.props;
             if (val.value !== 0) {
-                if (name === "wt_id") {
-                    this.setState({ workTypeSelectedOption: val.value });
-                    this.setState({ SelectedWorkers: [] });
-                    this.refs.Workers.value = this.context.t("unselected");
-                    const { GetNewWorkDefaultInfo } = this.props;
-                    DefaultInfoParams.wt_id = val.value;
-                    thisSaveParams.data["sadere_ref"] = { "sadere_ref": val.value }
-                    GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
-                        if (data.status) {
-                            if (data.data.DefaultValue !== null) {
-                                this.refs.flow.checked = data.data.DefaultValue.flow;
-                                thisSaveParams.data["flow_id"] = { "flow_id": null };
-                                thisSaveParams.data["erja"] = { "erja": data.data.DefaultValue.flow ? 1 : 0 };
-                                this.refs.ronevesht.checked = data.data.DefaultValue.ronevesht;
-                                this.refs.emailToWorker.checked = data.data.DefaultValue.web_emailtokarbar;
-                                this.refs.smsToWorker.checked = data.data.DefaultValue.web_smstokarbar;
-                                thisSaveParams["emailToWorker"] = data.data.DefaultValue.web_emailtokarbar ? 1 : 0;
-                                thisSaveParams["smsToWorker"] = data.data.DefaultValue.web_smstokarbar ? 1 : 0;
-                                if (data.data.WorkerId !== undefined && data.data.WorkerId !== 0) {
-                                    this.setState({ SelectedWorkers: [{ id_user: data.data.WorkerId, username: data.data.WorkerUserName, id_role: data.data.WorkerId_Role, rolename: data.data.WorkerRoleName }] });
-                                    this.refs.Workers.value = this.state.SelectedWorkers[0].username;
-                                    thisSaveParams.workers = [{ worker: data.data.WorkerId, manager: 0 }];
-                                }
-                                this.setState({ setDefaultDate: data.data.ActionDate });
-                            }
-                        }
-                        else {
-                            toast.error(data.error)
-                        }
-                    });
+                if (name === "flow_id") {
+                    workTypeParams.FlowId = val.value;
+                    this.setState({workgroup_id_disabled: true});
+                    SelectWorkTypeList(workTypeParams);
+                    this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+                }
+                else if (name === "workgroup_id") {
+                    workTypeParams.WorkGroupId = val.value;
+                    this.setState({flow_id_disabled: true});
+                    SelectWorkTypeList(workTypeParams);
+                    this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+                }
+                else if (name === "wt_id") {
+                    // this.setState({ workTypeSelectedOption: val.value });
+                    // this.setState({ SelectedWorkers: [] });
+                    // const { GetNewWorkDefaultInfo } = this.props;
+                    // DefaultInfoParams.wt_id = val.value;
+                    // thisSaveParams.data["sadere_ref"] = { "sadere_ref": val.value }
+                    // GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
+                    //     if (data.status) {
+                    //         if (data.data.DefaultValue !== null) {
+                    //             this.refs.flow.checked = data.data.DefaultValue.flow;
+                    //             thisSaveParams.data["flow_id"] = { "flow_id": null };
+                    //             thisSaveParams.data["erja"] = { "erja": data.data.DefaultValue.flow ? 1 : 0 };
+                    //             this.refs.ronevesht.checked = data.data.DefaultValue.ronevesht;
+                    //             this.refs.emailToWorker.checked = data.data.DefaultValue.web_emailtokarbar;
+                    //             this.refs.smsToWorker.checked = data.data.DefaultValue.web_smstokarbar;
+                    //             thisSaveParams["emailToWorker"] = data.data.DefaultValue.web_emailtokarbar ? 1 : 0;
+                    //             thisSaveParams["smsToWorker"] = data.data.DefaultValue.web_smstokarbar ? 1 : 0;
+                    //             if (data.data.WorkerId !== undefined && data.data.WorkerId !== 0) {
+                    //                 this.setState({ SelectedWorkers: [{ id_user: data.data.WorkerId, username: data.data.WorkerUserName, id_role: data.data.WorkerId_Role, rolename: data.data.WorkerRoleName }] });
+                    //                 this.refs.Workers.value = this.state.SelectedWorkers[0].username;
+                    //                 thisSaveParams.workers = [{ worker: data.data.WorkerId, manager: 0 }];
+                    //             }
+                    //             this.setState({ setDefaultDate: data.data.ActionDate });
+                    //         }
+                    //     }
+                    //     else {
+                    //         toast.error(data.error)
+                    //     }
+                    // });
                 }
 
                 thisSaveParams.data[[name]] = { [name]: val.value }
 
-            } else
+            } else {
+                if (name === "flow_id") {
+                    workTypeParams.FlowId = 0;
+                    this.setState({workgroup_id_disabled: false});
+                    SelectWorkTypeList(workTypeParams);
+                    this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+                }
+                else if (name === "workgroup_id") {
+                    workTypeParams.WorkGroupId = 0;
+                    this.setState({flow_id_disabled: false});
+                    SelectWorkTypeList(workTypeParams);
+                    this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+                }
                 thisSaveParams.data[[name]] = { [name]: null }
+            }
         }
         else {
             const { name, value } = e.target;
@@ -141,22 +183,9 @@ class NewWork extends Component {
         });
 
     }
-    SuccessSelectDescription = (row, e) => {
-        if (row !== undefined && row !== null) {
-            if (this.state.SubjectSelectmodal) {
-                this.refs.DescriptionInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                thisSaveParams.data["tozihat"] = { "tozihat": this.refs.DescriptionInput.value };
-            }
-            this.setState({
-                SubjectSelectmodal: !this.state.SubjectSelectmodal,
-                type: "",
-            });
-        }
-        else
-            toast.warn(this.context.t("msg_No_Select_Row"));
-    }
+
     checkBoxChangeHandler = (e) => {
-        const { WorkInfo, AttachmentOnWork } = this.props;
+        const { WorkInfo, AttachmentOnWork,SelectWorkTypeList } = this.props;
         const { name, checked } = e.target;
         const value = checked ? 1 : 0;
         if (name === "withoutFlow") {
@@ -187,16 +216,56 @@ class NewWork extends Component {
 
         else if (name === "infoFromParent")
             thisSaveParams["infoFromParent"] = value;
-        else if (name === "cpy_form_kar")
+        else if (name === "cpy_form_kar") {
             if (checked) thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": WorkInfo.showtree_id };
             else thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
+        }
+        else if (name === "hasformsaz") {
+            workTypeParams.HasFormGen = value;
+            SelectWorkTypeList(workTypeParams);
+            this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+        }
+    }
+    CloseSelectDefaultText = (e) => {
+        this.setState({
+            SubjectSelectmodal: !this.state.SubjectSelectmodal,
+        });
+    }
+
+    SuccessSelectSubject = (row, e) => {
+        if (row !== undefined && row !== null) {
+            if (this.state.SubjectSelectmodal)
+                if (this.state.type === "subject") {
+                    this.refs.SubjectInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    thisSaveParams.data["mozo"] = { "mozo": this.refs.SubjectInput.value };
+                } else if (this.state.type === "result") {
+                    this.refs.ResultTextArea.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    thisSaveParams.data["natije"] = { "natije": this.refs.ResultTextArea.value };
+                }
+                else {
+                    this.refs.DescriptionTextArea.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    thisSaveParams.data["tozihat"] = { "tozihat": this.refs.DescriptionTextArea.value };
+                }
+            this.setState({
+                SubjectSelectmodal: !this.state.SubjectSelectmodal,
+                type: "",
+            });
+        }
+        else
+            toast.warn(this.context.t("msg_No_Select_Row"));
 
     }
     saveWorkHandle = () => {
 
     }
-    OpenSelectFile = () => {
-
+    ToggleSelectFileAudience = () => {
+        this.setState({
+            SelectFileAudiencemodal: !this.state.SelectFileAudiencemodal,
+        });
+    }
+    SelectFileAudienceRow(row) {
+        this.setState({SelectedFileAudienceRow:row});
+        console.log(row)
     }
     OpenProject = () => {
 
@@ -205,20 +274,19 @@ class NewWork extends Component {
 
     }
     render() {
-        const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows, WorkInfo,
-            SelectWorkFlowList_rows, SelectWorkGroupList_rows, SelectProjectList_rows,
-            SelectUserRollList_rows, SelectAdminRollList_rows, SelectUserFullNameList_rows,
-            SelectAdminFullNameList_rows } = this.props;
+        const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows,
+            SelectWorkFlowList_rows, SelectWorkGroupList_rows, SelectRoleList_rows,
+            SelectProjectList_rows, SelectWorkerList_rows,
+            SelectManagerList_rows } = this.props;
         var None = [{ value: 0, label: this.context.t("NoSelection") }]
-        var PriorityList = None;
-        var WorkFlowList = None;
-        var WorkGroupList = None;
-        var WorkTypeList = None;
+        var PriorityList = None.concat(SelectPriorityList_rows);
+        var WorkFlowList = None.concat(SelectWorkFlowList_rows);
+        var WorkGroupList = None.concat(SelectWorkGroupList_rows);
+        var WorkTypeList = None.concat(SelectWorkTypeList_rows);
+        var UserRollList = None.concat(SelectRoleList_rows);
+        var WorkerList = None.concat(SelectWorkerList_rows);
+        var ManagerList = None.concat(SelectManagerList_rows);
         var ProjectList = None;
-        var UserRollList = None;
-        var AdminRollList = None;
-        var UserFullNameList = None;
-        var AdminFullNameList = None;
 
         const modalBackDrop = `
         .modal-backdrop {
@@ -249,9 +317,9 @@ class NewWork extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("WorkFlow")}</label>
                                                 <div className="col-10">
-                                                    {/* {SelectWorkFlowList_rows !== undefined && */}
-                                                    <ComboSelectList options={WorkFlowList} classname="mt-2 mb-1" name="wf_id" onChange={this.changeHandle.bind(this)} />
-                                                    {/* } */}
+                                                    {SelectWorkFlowList_rows !== undefined &&
+                                                        <ComboSelectList isDisabled={this.state.flow_id_disabled} options={WorkFlowList} classname="mt-2 mb-1" name="flow_id" ref="flow_id" onChange={this.changeHandle.bind(this)} />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -260,12 +328,12 @@ class NewWork extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("WorkGroup")}</label>
                                                 <div className="col-10">
                                                     <div className="input-group mt-2 mb-1">
-                                                        {/* {SelectWorkGroupList_rows !== undefined && */}
-                                                        <ComboSelectList options={WorkGroupList} name="wg_id" onChange={this.changeHandle.bind(this)} />
-                                                        {/* } */}
+                                                        {SelectWorkGroupList_rows !== undefined &&
+                                                            <ComboSelectList  isDisabled={this.state.workgroup_id_disabled}  options={WorkGroupList}  name="workgroup_id" ref="workgroup_id" onChange={this.changeHandle.bind(this)} />
+                                                        }
                                                         <div className="input-group-append pl-5 pt-2 text-space-nowrap">
                                                             <div className="checkbox">
-                                                                <input id="formbuilder0" ref="hasFormBuilder" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="hasFormBuilder" />
+                                                                <input id="formbuilder0" ref="hasFormBuilder" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="hasformsaz" />
                                                                 <label htmlFor="formbuilder0" className="m-0">{this.context.t("HasFormBuilder")}</label>
                                                             </div>
                                                         </div>
@@ -280,9 +348,9 @@ class NewWork extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("WorkType")}</label>
                                                 <div className="col-10">
-                                                    {/* {SelectWorkTypeList_rows !== undefined && */}
-                                                    <ComboSelectList options={WorkTypeList} name="wt_id" classname="mt-1 mb-2" onChange={this.changeHandle.bind(this)} />
-                                                    {/* } */}
+                                                    {SelectWorkTypeList_rows !== undefined &&
+                                                        <ComboSelectList options={WorkTypeList} name="wt_id" classname="mt-1 mb-2" onChange={this.changeHandle.bind(this)} selectedOption={this.state.workTypeSelectedOption}/>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -303,9 +371,9 @@ class NewWork extends Component {
                                                     <div className="input-group mt-2 mb-1">
                                                         <div className="input-group-prepend">
                                                             <Button color="primary"
-                                                                onClick={this.OpenSelectFile.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                                onClick={this.ToggleSelectFileAudience.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                         </div>
-                                                        <input type="text" autoComplete="off" className="form-control" onChange={this.changeHandle.bind(this)} name="file_id" />
+                                                        <input type="text" autoComplete="off" className="form-control" onChange={this.changeHandle.bind(this)} name="id_tel" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -315,7 +383,7 @@ class NewWork extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("Audience")}</label>
                                                 <div className="col-10">
                                                     <input type="text" autoComplete="off" className="form-control mt-2 mb-1" readOnly={true} disabled={true}
-                                                        name="audience_id" id="audience_id" />
+                                                        name="audience_id" id="ashkhas_id" />
                                                 </div>
                                             </div>
                                         </div>
@@ -333,7 +401,7 @@ class NewWork extends Component {
                                                         </div>
                                                         <input type="text" autoComplete="off" className="form-control wd-100 flex-0 bd-l-1" name="project_code_id" placeholder="کد پروژه" />
                                                         {/* {SelectProjectList_rows !== undefined && */}
-                                                        <ComboSelectList options={ProjectList} name="p_id" onChange={this.changeHandle.bind(this)} />
+                                                        <ComboSelectList options={ProjectList} name="p_type_id" onChange={this.changeHandle.bind(this)} />
                                                         {/* } */}
                                                         <div className="input-group-append">
                                                             <Button color="primary">{this.context.t("Delete")}</Button>
@@ -351,7 +419,7 @@ class NewWork extends Component {
                                                             <Button color="primary"
                                                                 onClick={this.OpenFollowing.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                         </div>
-                                                        <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true} name="peyro_id" />
+                                                        <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true} name="atf_id" />
                                                         <div className="input-group-append">
                                                             <Button color="primary">{this.context.t("Delete")}</Button>
                                                         </div>
@@ -372,7 +440,7 @@ class NewWork extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("ActionDate")}</label>
                                                 <div className="col-10">
-                                                    <CalendarDatePicker fieldname="actiondate" className="form-control my-2  ltr" id="actiondate" setDate={this.state.setDefaultActionDate} CalendarChange={this.CalendarChange.bind(this)} />
+                                                    <CalendarDatePicker fieldname="tarikhaction" className="form-control my-2  ltr" id="actiondate" setDate={this.state.setDefaultActionDate} CalendarChange={this.CalendarChange.bind(this)} />
                                                 </div>
                                             </div>
                                         </div>
@@ -380,7 +448,7 @@ class NewWork extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("DeadTime")}</label>
                                                 <div className="col-10">
-                                                    <InputMask type="text" name="actiontime" autoComplete="off" className="form-control my-2  ltr" mask="99:99" onChange={this.changeHandle.bind(this)} />
+                                                    <InputMask type="text" name="deadtime" autoComplete="off" className="form-control my-2  ltr" mask="99:99" onChange={this.changeHandle.bind(this)} />
                                                 </div>
                                             </div>
                                         </div>
@@ -398,9 +466,9 @@ class NewWork extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("Roll")}</label>
                                                 <div className="col-10">
-                                                    {/* {SelectUserRollList_rows !== undefined && */}
-                                                    <ComboSelectList options={UserRollList} classname="mt-2 mb-1" name="user_roll_id" onChange={this.changeHandle.bind(this)} />
-                                                    {/* } */}
+                                                    {SelectRoleList_rows !== undefined &&
+                                                        <ComboSelectList options={UserRollList} classname="mt-2 mb-1" name="user_role_id" onChange={this.changeHandle.bind(this)} />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -408,9 +476,10 @@ class NewWork extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("UserFullName")}</label>
                                                 <div className="col-10">
-                                                    {/* {SelectUserFullNameList_rows !== undefined && */}
-                                                    <ComboSelectList options={UserFullNameList} classname="mt-2 mb-1" name="user_fullname_id" onChange={this.changeHandle.bind(this)} />
-                                                    {/* } */}
+
+                                                    {SelectWorkerList_rows !== undefined &&
+                                                        <ComboSelectList options={WorkerList} classname="mt-2 mb-1" name="worker_id" onChange={this.changeHandle.bind(this)} />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -421,9 +490,9 @@ class NewWork extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("Roll")}</label>
                                                 <div className="col-10">
-                                                    {/* {SelectAdminRollList_rows !== undefined && */}
-                                                    <ComboSelectList options={AdminRollList} classname="mt-1 mb-2" name="admin_roll_id" onChange={this.changeHandle.bind(this)} />
-                                                    {/* } */}
+                                                    {SelectRoleList_rows !== undefined &&
+                                                        <ComboSelectList options={UserRollList} classname="mt-2 mb-1" name="manager_role_id" onChange={this.changeHandle.bind(this)} />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -431,9 +500,10 @@ class NewWork extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("AdminFullName")}</label>
                                                 <div className="col-10">
-                                                    {/* {SelectAdminFullNameList_rows !== undefined && */}
-                                                    <ComboSelectList options={AdminFullNameList} classname="mt-1 mb-2" name="admin_fullname_id" onChange={this.changeHandle.bind(this)} />
-                                                    {/* } */}
+
+                                                    {SelectManagerList_rows !== undefined &&
+                                                        <ComboSelectList options={ManagerList} classname="mt-1 mb-2" name="defmodir_id" onChange={this.changeHandle.bind(this)} />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -479,9 +549,9 @@ class NewWork extends Component {
                                             <div className="form-group row">
                                                 <label className="col-2 col-form-label">{this.context.t("Priority")}</label>
                                                 <div className="col-10">
-                                                    {/* {SelectPriorityList_rows !== undefined && */}
-                                                    <ComboSelectList options={PriorityList} name="olaviyat_id" classname="mt-1 mb-2" onChange={this.changeHandle.bind(this)} />
-                                                    {/* } */}
+                                                    {SelectPriorityList_rows !== undefined &&
+                                                        <ComboSelectList options={PriorityList} name="olaviyat_id" classname="mt-1 mb-2" onChange={this.changeHandle.bind(this)} />
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
@@ -512,12 +582,12 @@ class NewWork extends Component {
                                                 <div className="col-11">
                                                     <div className="input-group mt-2 mb-1">
                                                         <div className="input-group-prepend align-self-stretch">
-                                                            <Button color="primary" name="result"
+                                                            <Button color="primary" name="description"
                                                                 onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
 
                                                         </div>
                                                         <textarea type="text" className="form-control" rows="3"
-                                                            name="natije" ref="DescriptionTextArea"
+                                                            name="tozihat" ref="DescriptionTextArea"
                                                             onChange={this.changeHandle.bind(this)}></textarea>
                                                     </div>
                                                 </div>
@@ -617,7 +687,7 @@ class NewWork extends Component {
                                                         <input id="send2" ref="smsToWorker" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="smsToWorker" />
                                                         <label htmlFor="send2">{this.context.t("SendSmsToUser")}</label>
                                                     </div>
-                                                   
+
                                                     <div className="checkbox">
                                                         <input id="send3" ref="smsToAudience" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="smsToAudience" />
                                                         <label htmlFor="send3">{this.context.t("SendSmsToAudience")}</label>
@@ -636,6 +706,16 @@ class NewWork extends Component {
                         <button type="button" className="js-authority-toggle-btn active" title={this.context.t("Authority")}></button>
                     </div>
                 </Modal>
+                {this.state.SubjectSelectmodal &&
+                    <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}
+                        toggle={this.CloseSelectDefaultText.bind(this)}
+                        Successtoggle={this.SuccessSelectSubject.bind(this)}
+                    />}
+                    {this.state.SelectFileAudiencemodal &&
+                        <SelectFileAudienceList modal={this.state.SelectFileAudiencemodal}
+                            toggle={this.ToggleSelectFileAudience.bind(this)}
+                            Successtoggle={this.SelectFileAudienceRow.bind(this)}
+                        />}
             </div >
         );
     }
@@ -649,11 +729,23 @@ const mapDispatchToProps = dispatch => ({
     SelectPriorityList: (Params) => {
         dispatch(AutoBasicInfo_action.SelectPriorityList(Params))
     },
-    SelectRoleList: (Params) => {
-        dispatch(AutoBasicInfo_action.SelectRoleList(Params))
+    SelectRoleList: () => {
+        dispatch(AutoBasicInfo_action.SelectRoleList())
     },
-    GetNewWorkDefaultInfo: (Params) => {
-        return dispatch(AutoBasicInfo_action.GetNewWorkDefaultInfo(Params))
+    SelectFlowList: () => {
+        dispatch(AutoBasicInfo_action.SelectFlowList())
+    },
+    SelectWorkGroupList: () => {
+        dispatch(AutoBasicInfo_action.SelectWorkGroupList())
+    },
+    SelectWorkGroupList: () => {
+        dispatch(AutoBasicInfo_action.SelectWorkGroupList())
+    },
+    SelectWorkerList: (Params) => {
+        return dispatch(AutoBasicInfo_action.SelectWorkerList(Params))
+    },
+    SelectManagerList: (wt_id, id_role) => {
+        return dispatch(AutoBasicInfo_action.SelectManagerList(wt_id, id_role))
     },
     InsertNewWorkInfo: (Params, msg) => {
         return dispatch(WorkActions_action.InsertNewWorkInfo(Params, msg))
@@ -671,7 +763,9 @@ function mapStateToProps(state) {
     const { loading } = state.loading;
     const { lang } = state.i18nState
     const { WorkInfo } = state.Auto_WorkBasic;
-    const { SelectWorkTypeList_rows, SelectPriorityList_rows } = state.Auto_BasicInfo
+    const { SelectWorkTypeList_rows, SelectPriorityList_rows, SelectWorkFlowList_rows,
+        SelectWorkGroupList_rows, SelectRoleList_rows, SelectWorkerList_rows,
+        SelectManagerList_rows } = state.Auto_BasicInfo
     const { AttachmentOnWork } = state.ArchiveBasic
 
     return {
@@ -681,7 +775,12 @@ function mapStateToProps(state) {
         WorkInfo,
         SelectWorkTypeList_rows,
         SelectPriorityList_rows,
-        AttachmentOnWork
+        AttachmentOnWork,
+        SelectWorkFlowList_rows,
+        SelectWorkGroupList_rows,
+        SelectRoleList_rows,
+        SelectManagerList_rows,
+        SelectWorkerList_rows
     };
 }
 

@@ -12,13 +12,50 @@ export const AutoBasicInfo_action = {
     SelectManagerList,
     SelectWorkTypeList,
     SelectPriorityList,
+    SelectFlowList,
+    SelectWorkGroupList,
     SelectRoleList,
     SayManagerOnWorkerWtype,
-    GetNewWorkDefaultInfo
+    GetNewWorkDefaultInfo,
+    SelectFileAudienceList
 
 
 
 };
+
+function SelectFileAudienceList(params) {
+
+    return dispatch => {
+        // dispatch(loadingActions.ShowLoading());
+        dispatch(loadingActions.ShowGridLoading());
+        paramsService.callservice(params,"SelectFileAudienceList")
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(SelectFileAudienceListAddTotalCount(data.data.totalcount));
+                        dispatch(SelectFileAudienceListAddRows(data.data.rows));
+                        dispatch(loadingActions.HideGridLoading());
+                    }
+                    else if (data.code !== 0) {
+                        toast.error(data.error);
+                        dispatch(loadingActions.HideGridLoading());
+                    }
+                    else {
+
+                        userActions.logout();
+                        window.open('/',"_self");
+                    }
+                },
+                error => {
+                    toast.error(error);
+                    dispatch(loadingActions.HideGridLoading());
+                }
+            );
+
+
+    }
+
+}
 
 function GetNewWorkDefaultInfo(Params) {
     return dispatch => {
@@ -53,6 +90,46 @@ function SelectRoleList() {
                 data => {
                     if (data.status) {
                         dispatch(SelectRoleListAddRows(data.data.rows));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
+
+
+function SelectFlowList() {
+    return dispatch => {
+        emptyservice.callservice("SelectFlowList")
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(SelectFlowListAddRows(data.data.rows));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
+
+
+function SelectWorkGroupList() {
+    return dispatch => {
+        emptyservice.callservice("SelectWorkGroupList")
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(SelectWorkGroupListAddRows(data.data.rows));
                     }
                     else {
                         toast.error(data.error);
@@ -270,6 +347,16 @@ function SelectPriorityListAddRows(data) {
 }
 function SelectRoleListAddRows(data) {
     return { type: constant.SELECT_ROLE_LIST_SET_GRID_ROWS, data }
+}function SelectFlowListAddRows(data) {
+    return { type: constant.SELECT_FLOW_LIST_SET_GRID_ROWS, data }
+}
+function SelectWorkGroupListAddRows(data) {
+    return { type: constant.SELECT_WORKGROUP_LIST_SET_GRID_ROWS, data }
+}
+function SelectFileAudienceListAddTotalCount(data) {
+    return {type: constant.FILEAUDIENCE_GET_GRID_TOTAL_COUNT, data}
 }
 
-
+function SelectFileAudienceListAddRows(data) {
+    return {type: constant.FILEAUDIENCE_GET_GRID_ROWS, data}
+}
