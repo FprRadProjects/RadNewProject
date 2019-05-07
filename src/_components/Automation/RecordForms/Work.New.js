@@ -4,7 +4,8 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import InputMask from 'react-input-mask';
 import { AttachmentsReview } from "../../Archives";
-import { SelectDefaultTextModal,SelectFileAudienceList } from "../../Basic/";
+import { SelectDefaultTextModal, SelectFileAudienceList } from "../../Basic/";
+import { SelectProjectModal } from "../../Project/";
 
 import {
     AutoBasicInfo_action,
@@ -56,6 +57,10 @@ class NewWork extends Component {
             modal: false,
             SelectedWorkers: [],
             AttachmentList: [],
+            SelectedAudienceId: 0,
+            SelectedFileId: 0,
+            manager_role_id: 0,
+            user_role_id: 0,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-newwork-modal"
         };
@@ -86,18 +91,21 @@ class NewWork extends Component {
             if (val.value !== 0) {
                 if (name === "flow_id") {
                     workTypeParams.FlowId = val.value;
-                    this.setState({workgroup_id_disabled: true});
+                    this.setState({ workgroup_id_disabled: true });
                     SelectWorkTypeList(workTypeParams);
-                    this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+                    this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
                 }
                 else if (name === "workgroup_id") {
                     workTypeParams.WorkGroupId = val.value;
-                    this.setState({flow_id_disabled: true});
+                    this.setState({ flow_id_disabled: true });
                     SelectWorkTypeList(workTypeParams);
-                    this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+                    this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
                 }
                 else if (name === "wt_id") {
-                    // this.setState({ workTypeSelectedOption: val.value });
+                    WorkerParams.wt_id = val.value;
+                    SelectWorkerList(WorkerParams);
+                    //SelectManagerList(this.state.manager_role_id, WorkerParams.wt_id);
+                    //   this.setState({ workTypeSelectedOption: val.value });
                     // this.setState({ SelectedWorkers: [] });
                     // const { GetNewWorkDefaultInfo } = this.props;
                     // DefaultInfoParams.wt_id = val.value;
@@ -130,17 +138,26 @@ class NewWork extends Component {
                 thisSaveParams.data[[name]] = { [name]: val.value }
 
             } else {
+                if (name === "wt_id") {
+                    WorkerParams.wt_id =0;
+                    SelectWorkerList(WorkerParams);
+                    //SelectManagerList(this.state.manager_role_id, 0);
+                }
                 if (name === "flow_id") {
                     workTypeParams.FlowId = 0;
-                    this.setState({workgroup_id_disabled: false});
+                    this.setState({ workgroup_id_disabled: false });
                     SelectWorkTypeList(workTypeParams);
-                    this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+                    this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+                    this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+                    this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
                 }
                 else if (name === "workgroup_id") {
+                    this.setState({ flow_id_disabled: false });
                     workTypeParams.WorkGroupId = 0;
-                    this.setState({flow_id_disabled: false});
                     SelectWorkTypeList(workTypeParams);
-                    this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+                    this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+                    this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+                    this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
                 }
                 thisSaveParams.data[[name]] = { [name]: null }
             }
@@ -185,7 +202,7 @@ class NewWork extends Component {
     }
 
     checkBoxChangeHandler = (e) => {
-        const { WorkInfo, AttachmentOnWork,SelectWorkTypeList } = this.props;
+        const { WorkInfo, AttachmentOnWork, SelectWorkTypeList } = this.props;
         const { name, checked } = e.target;
         const value = checked ? 1 : 0;
         if (name === "withoutFlow") {
@@ -223,7 +240,9 @@ class NewWork extends Component {
         else if (name === "hasformsaz") {
             workTypeParams.HasFormGen = value;
             SelectWorkTypeList(workTypeParams);
-            this.setState({workTypeSelectedOption:{ value: 0, label: this.context.t("NoSelection") }});
+            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
         }
     }
     CloseSelectDefaultText = (e) => {
@@ -264,11 +283,65 @@ class NewWork extends Component {
         });
     }
     SelectFileAudienceRow(row) {
-        this.setState({SelectedFileAudienceRow:row});
-        console.log(row)
-    }
-    OpenProject = () => {
+        this.refs.fileInfo.value = row.name + " - " + row.coname;
+        this.refs.Audience.value = row.mokhatab_name;
+        this.setState({ SelectedFileId: row.id_taraf });
+        this.setState({ SelectedAudienceId: row.mokhatab_id });
+        this.setState({
+            SelectFileAudiencemodal: !this.state.SelectFileAudiencemodal,
+        });
+        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+        this.refs.project_code.value = "";
 
+    }
+    ToggleSelectProject = () => {
+        if (this.state.SelectedFileId !== 0)
+            this.setState({
+                ProjectSelectmodal: !this.state.ProjectSelectmodal,
+            });
+        else
+            toast.warn(this.context.t("msg_No_Select_File_Audience"));
+    }
+    deleteProject = () => {
+        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+        this.refs.project_code.value = "";
+    }
+    SuccessSelectProject(row, e) {
+        if (row !== undefined && row !== null) {
+            if (this.state.ProjectSelectmodal) {
+                let Ptype = row !== undefined ? row.ptype !== undefined ? row.ptype : "" : "";
+                let PtypeId = row !== undefined ? row.id !== undefined ? row.id : "" : "";
+                let Code = row !== undefined ? row.code !== undefined ? row.code : "" : "";
+                this.setState({ ProjectSelectedOption: { value: PtypeId, label: Ptype } });
+                this.refs.project_code.value = Code;
+            }
+            thisSaveParams.data["p_type_id"] = { "p_type_id": row.id };
+            this.setState({
+                ProjectSelectmodal: !this.state.ProjectSelectmodal,
+            });
+        }
+        else
+            toast.warn(this.context.t("msg_No_Select_Row"));
+
+    }
+    changeRoleHandle = (e, val) => {
+        const { SelectWorkerList, SelectManagerList } = this.props;
+        if (val !== undefined) {
+            const { name } = e;
+            if (name === "user_role_id") {
+                WorkerParams.id_role = val.value;
+                SelectWorkerList(WorkerParams);
+                this.setState({
+                    user_role_id: val.value,
+                });
+            }
+            else if (name === "manager_role_id") {
+                SelectManagerList(val.value, 0);
+                this.setState({
+                    manager_role_id: val.value,
+                });
+            }
+        }
     }
     OpenFollowing = () => {
 
@@ -329,7 +402,7 @@ class NewWork extends Component {
                                                 <div className="col-10">
                                                     <div className="input-group mt-2 mb-1">
                                                         {SelectWorkGroupList_rows !== undefined &&
-                                                            <ComboSelectList  isDisabled={this.state.workgroup_id_disabled}  options={WorkGroupList}  name="workgroup_id" ref="workgroup_id" onChange={this.changeHandle.bind(this)} />
+                                                            <ComboSelectList isDisabled={this.state.workgroup_id_disabled} options={WorkGroupList} name="workgroup_id" ref="workgroup_id" onChange={this.changeHandle.bind(this)} />
                                                         }
                                                         <div className="input-group-append pl-5 pt-2 text-space-nowrap">
                                                             <div className="checkbox">
@@ -349,7 +422,7 @@ class NewWork extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("WorkType")}</label>
                                                 <div className="col-10">
                                                     {SelectWorkTypeList_rows !== undefined &&
-                                                        <ComboSelectList options={WorkTypeList} name="wt_id" classname="mt-1 mb-2" onChange={this.changeHandle.bind(this)} selectedOption={this.state.workTypeSelectedOption}/>
+                                                        <ComboSelectList options={WorkTypeList} name="wt_id" classname="mt-1 mb-2" onChange={this.changeHandle.bind(this)} selectedOption={this.state.workTypeSelectedOption} />
                                                     }
                                                 </div>
                                             </div>
@@ -373,7 +446,7 @@ class NewWork extends Component {
                                                             <Button color="primary"
                                                                 onClick={this.ToggleSelectFileAudience.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                         </div>
-                                                        <input type="text" autoComplete="off" className="form-control" onChange={this.changeHandle.bind(this)} name="id_tel" />
+                                                        <input type="text" autoComplete="off" className="form-control" onChange={this.changeHandle.bind(this)} name="id_tel" ref="fileInfo" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -383,7 +456,7 @@ class NewWork extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("Audience")}</label>
                                                 <div className="col-10">
                                                     <input type="text" autoComplete="off" className="form-control mt-2 mb-1" readOnly={true} disabled={true}
-                                                        name="audience_id" id="ashkhas_id" />
+                                                        name="audience_id" id="ashkhas_id" ref="Audience" />
                                                 </div>
                                             </div>
                                         </div>
@@ -397,14 +470,14 @@ class NewWork extends Component {
                                                     <div className="input-group mt-1 mb-2">
                                                         <div className="input-group-prepend">
                                                             <Button color="primary"
-                                                                onClick={this.OpenProject.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                                onClick={this.ToggleSelectProject.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                         </div>
-                                                        <input type="text" autoComplete="off" className="form-control wd-100 flex-0 bd-l-1" name="project_code_id" placeholder="کد پروژه" />
+                                                        <input type="text" autoComplete="off" className="form-control wd-100 flex-0 bd-l-1" name="project_code" ref="project_code" placeholder="کد پروژه" />
                                                         {/* {SelectProjectList_rows !== undefined && */}
-                                                        <ComboSelectList options={ProjectList} name="p_type_id" onChange={this.changeHandle.bind(this)} />
+                                                        <ComboSelectList options={ProjectList} ref="p_type_id" name="p_type_id" onChange={this.changeHandle.bind(this)} selectedOption={this.state.ProjectSelectedOption} />
                                                         {/* } */}
                                                         <div className="input-group-append">
-                                                            <Button color="primary">{this.context.t("Delete")}</Button>
+                                                            <Button color="primary" onClick={this.deleteProject.bind(this)}>{this.context.t("Delete")}</Button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -467,7 +540,7 @@ class NewWork extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("Roll")}</label>
                                                 <div className="col-10">
                                                     {SelectRoleList_rows !== undefined &&
-                                                        <ComboSelectList options={UserRollList} classname="mt-2 mb-1" name="user_role_id" onChange={this.changeHandle.bind(this)} />
+                                                        <ComboSelectList options={UserRollList} classname="mt-2 mb-1" name="user_role_id" onChange={this.changeRoleHandle.bind(this)} />
                                                     }
                                                 </div>
                                             </div>
@@ -478,7 +551,7 @@ class NewWork extends Component {
                                                 <div className="col-10">
 
                                                     {SelectWorkerList_rows !== undefined &&
-                                                        <ComboSelectList options={WorkerList} classname="mt-2 mb-1" name="worker_id" onChange={this.changeHandle.bind(this)} />
+                                                        <ComboSelectList options={WorkerList} classname="mt-2 mb-1" name="worker_id" onChange={this.changeHandle.bind(this)} selectedOption={this.state.workerSelectedOption} />
                                                     }
                                                 </div>
                                             </div>
@@ -491,7 +564,7 @@ class NewWork extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("Roll")}</label>
                                                 <div className="col-10">
                                                     {SelectRoleList_rows !== undefined &&
-                                                        <ComboSelectList options={UserRollList} classname="mt-2 mb-1" name="manager_role_id" onChange={this.changeHandle.bind(this)} />
+                                                        <ComboSelectList options={UserRollList} classname="mt-2 mb-1" name="manager_role_id" onChange={this.changeRoleHandle.bind(this)} />
                                                     }
                                                 </div>
                                             </div>
@@ -502,7 +575,7 @@ class NewWork extends Component {
                                                 <div className="col-10">
 
                                                     {SelectManagerList_rows !== undefined &&
-                                                        <ComboSelectList options={ManagerList} classname="mt-1 mb-2" name="defmodir_id" onChange={this.changeHandle.bind(this)} />
+                                                        <ComboSelectList options={ManagerList} classname="mt-1 mb-2" name="defmodir_id" onChange={this.changeHandle.bind(this)} selectedOption={this.state.managerSelectedOption} />
                                                     }
                                                 </div>
                                             </div>
@@ -711,11 +784,18 @@ class NewWork extends Component {
                         toggle={this.CloseSelectDefaultText.bind(this)}
                         Successtoggle={this.SuccessSelectSubject.bind(this)}
                     />}
-                    {this.state.SelectFileAudiencemodal &&
-                        <SelectFileAudienceList modal={this.state.SelectFileAudiencemodal}
-                            toggle={this.ToggleSelectFileAudience.bind(this)}
-                            Successtoggle={this.SelectFileAudienceRow.bind(this)}
-                        />}
+                {this.state.SelectFileAudiencemodal &&
+                    <SelectFileAudienceList modal={this.state.SelectFileAudiencemodal}
+                        toggle={this.ToggleSelectFileAudience.bind(this)}
+                        Successtoggle={this.SelectFileAudienceRow.bind(this)}
+                    />}
+
+                {this.state.ProjectSelectmodal &&
+                    <SelectProjectModal modal={this.state.ProjectSelectmodal}
+                        toggle={this.ToggleSelectProject.bind(this)}
+                        Successtoggle={this.SuccessSelectProject.bind(this)}
+                        id_tel={this.state.SelectedFileId}
+                    />}
             </div >
         );
     }

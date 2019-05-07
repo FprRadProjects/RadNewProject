@@ -196,6 +196,8 @@ export const translations = {
         msg_DontHave_Access: 'شما دسترسی دیدن جزییات این کار را ندارید....',
         msg_No_Select_ReferralType:"نوع اقدام انتخاب نشده است",
         msg_No_Select_ReferralWorkers:"ارجاع به انتخاب نشده است",
+        msg_No_Select_File_Audience:"طرف حساب - مخاطب انتخاب نشده است.",
+
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
         frm_System: 'سیستم',
@@ -430,6 +432,7 @@ export const translations = {
         msg_DontHave_Access: 'You Do Not Have Access To See Delaits of This....',
         msg_No_Select_ReferralType:"Referral Type Not Selected.",
         msg_No_Select_ReferralWorkers:"Referral Workers Not Selected.",
+        msg_No_Select_File_Audience:"File - Audience Not Selected.",
 
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------

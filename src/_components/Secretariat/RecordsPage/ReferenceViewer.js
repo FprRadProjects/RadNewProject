@@ -32,8 +32,6 @@ class ReferenceViewer extends Component {
 
     OpenSelectProject = () => {
         const { WorkInfo, showError } = this.props;
-        console.log(WorkInfo.peygir_id)
-
         WorkAccess_action.CanSetProjectOnWork(WorkInfo.peygir_id).then(
             data => {
                 if (data.status) {
