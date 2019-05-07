@@ -347,6 +347,7 @@ class ApiModalGridComponent extends React.PureComponent {
                         totalCount={totalCount}
                     /> <PagingPanel
                         pageSizes={pageSizes}
+                        messages={pagingPanelMessages}
                     />
                     <TableGroupRow />
                     <TableColumnVisibility
