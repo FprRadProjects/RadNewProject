@@ -96,11 +96,10 @@ class ReferralToModal extends Component {
             { name: 'rolename', title: this.context.t("Roll") },
 
         ];
-        const { modal, ConfirmWorkers, id_roleSelected, SelectWorkerGridList, SelectWorkerGridList_rows,
+        const { modal, ConfirmWorkers,  SelectWorkerGridList, SelectWorkerGridList_rows,
             worktypeSelected } = this.props;
         Params.wt_id = worktypeSelected;
-        Params.id_role = id_roleSelected;
-
+        console.log(Params)
         return (
             <Modal isOpen={modal}
                 className={this.state.modalClass}>

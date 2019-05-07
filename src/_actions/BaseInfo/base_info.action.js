@@ -72,8 +72,8 @@ function UserAccessForm(param) {
 function GetCompanyInfo(login) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        if (localStorage.getItem("CompanyInfo") === null || !login) {
-            emptyservice.callservice("GetCompanyInfo")
+    if (localStorage.getItem("CompanyInfo") === null || localStorage.getItem("CompanyInfo") === undefined || !login) {
+            emptyservice.callNoTokenservice("GetCompanyInfo")
                 .then(
                     data => {
                         if (data.status) {
