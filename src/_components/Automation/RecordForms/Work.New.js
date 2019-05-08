@@ -489,14 +489,14 @@ class NewWork extends Component {
                                                         <div className="input-group-prepend">
                                                             <Button color="primary"
                                                                 onClick={this.ToggleSelectProject.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                            {/* <Button className="rounded-0" color="danger" onClick={this.deleteProject.bind(this)}>{this.context.t("Delete")}</Button> */}
                                                         </div>
                                                         <input type="text" autoComplete="off" className="form-control wd-100 flex-0 bd-l-1" readOnly={true} disabled={true} name="project_code" ref="project_code" placeholder="کد پروژه" />
                                                         {SelectProjectComboList_rows !== undefined &&
                                                             <ComboSelectList options={ProjectList} ref="p_type_id" name="p_type_id" onChange={this.changeHandle.bind(this)} selectedOption={this.state.ProjectSelectedOption} />
                                                         }
-                                                        <div className="input-group-append">
-                                                            <Button color="primary" onClick={this.deleteProject.bind(this)}>{this.context.t("Delete")}</Button>
-                                                        </div>
+                                                        {/* <div className="input-group-append">
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                             </div>
@@ -509,11 +509,11 @@ class NewWork extends Component {
                                                         <div className="input-group-prepend">
                                                             <Button color="primary"
                                                                 onClick={this.OpenFollowing.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                            <Button className="rounded-0" color="danger">{this.context.t("Delete")}</Button>
                                                         </div>
                                                         <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true} name="atf_id" />
-                                                        <div className="input-group-append">
-                                                            <Button color="primary">{this.context.t("Delete")}</Button>
-                                                        </div>
+                                                        {/* <div className="input-group-append">
+                                                        </div> */}
                                                     </div>
                                                 </div>
                                             </div>

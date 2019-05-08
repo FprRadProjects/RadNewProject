@@ -35668,7 +35668,7 @@ i.icon.internal-replication {
     transform: rotateY(180deg) translateX(-25px);
 }
 .custom-select__control--is-disabled{
-    background-color: #e9ecef;
+    background-color: #e9ecef!important;
 }
 [class*=MuiTableCell-body]{
     font-size:12px!important;
