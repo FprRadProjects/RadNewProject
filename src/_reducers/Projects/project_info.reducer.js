@@ -17,7 +17,15 @@ export function projects(state = {}, action) {
                 SelectProject_GridRowData:{}
             }
         }
-       
+        case Constant.SELECT_PROJECT_LIST_SET_COMBO_ROWS: {
+            return {
+                ...state,
+                SelectProjectComboList_rows:   Object.keys(action.data).map((item, index) => {
+                    return  { value: action.data[item].id, label: action.data[item].ptype };
+                }),
+            }
+        }
+        
         default:
             return state;
     }

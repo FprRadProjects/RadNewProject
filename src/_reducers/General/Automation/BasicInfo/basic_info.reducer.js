@@ -17,7 +17,7 @@ export function Auto_BasicInfo(state = {}, action) {
                 SelectDefaultText_GridRowData:{}
             }
         }
-        case Constant.SELECT_MANAGER_LIST_SET_GRID_ROWS: {
+        case Constant.SELECT_MANAGER_LIST_SET_COMBO_ROWS: {
             return {
                 ...state,
                 SelectManagerList_rows:   Object.keys(action.data).map((item, index) => {
@@ -25,7 +25,7 @@ export function Auto_BasicInfo(state = {}, action) {
                 }),
             }
         }
-        case Constant.SELECT_WORKER_LIST_SET_GRID_ROWS: {
+        case Constant.SELECT_WORKER_LIST_SET_COMBO_ROWS: {
             return {
                 ...state,
                 SelectWorkerList_rows:  Object.keys(action.data).map((item, index) => {
@@ -40,7 +40,7 @@ export function Auto_BasicInfo(state = {}, action) {
             }
         }
         
-        case Constant.SELECT_ASHKHAS_LIST_SET_GRID_ROWS: {
+        case Constant.SELECT_ASHKHAS_LIST_SET_COMBO_ROWS: {
             return {
                 ...state,
                 SelectAshkhasList_rows:  Object.keys(action.data).map((item, index) => {
@@ -48,14 +48,14 @@ export function Auto_BasicInfo(state = {}, action) {
             }),
             }
         }
-        case Constant.SELECT_WORKTYPE_LIST_SET_GRID_ROWS: {
+        case Constant.SELECT_WORKTYPE_LIST_SET_COMBO_ROWS: {
             return {
                 ...state,
                 SelectWorkTypeList_rows:  Object.keys(action.data).map((item, index) => {
                 return  { value: action.data[item].id, label: action.data[item].wtype };
             })}
         }
-        case Constant.SELECT_PRIORITY_LIST_SET_GRID_ROWS: {
+        case Constant.SELECT_PRIORITY_LIST_SET_COMBO_ROWS: {
             return {
                 ...state,
                 SelectPriorityList_rows:  Object.keys(action.data).map((item, index) => {
@@ -63,7 +63,7 @@ export function Auto_BasicInfo(state = {}, action) {
             }),
             }
         }
-        case Constant.SELECT_ROLE_LIST_SET_GRID_ROWS: {
+        case Constant.SELECT_ROLE_LIST_SET_COMBO_ROWS: {
             return {
                 ...state,
                 SelectRoleList_rows:  Object.keys(action.data).map((item, index) => {
@@ -71,14 +71,14 @@ export function Auto_BasicInfo(state = {}, action) {
             })
             }
         }  
-        case Constant.SELECT_FLOW_LIST_SET_GRID_ROWS: {
+        case Constant.SELECT_FLOW_LIST_SET_COMBO_ROWS: {
             return {
                 ...state,
                 SelectWorkFlowList_rows:  Object.keys(action.data).map((item, index) => {
                 return  { value: action.data[item].id, label: action.data[item].flow };
             })
             }
-        }   case Constant.SELECT_WORKGROUP_LIST_SET_GRID_ROWS: {
+        }   case Constant.SELECT_WORKGROUP_LIST_SET_COMBO_ROWS: {
             return {
                 ...state,
                 SelectWorkGroupList_rows:  Object.keys(action.data).map((item, index) => {

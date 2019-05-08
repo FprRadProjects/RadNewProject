@@ -4,7 +4,6 @@ import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {ProjectsInfo_action} from "../../_actions";
 import PropTypes from "prop-types"
 import {GridComponent} from "../Config/GridComponent";
-import {ApiGridComponent} from "../Config/ApiGridComponent";
 
 var currencyColumns = [];
 var hiddenColumnNames = [];

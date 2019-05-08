@@ -105,7 +105,7 @@ class GridComponent extends React.PureComponent {
             filters: [],
             sorting: [],
             grouping: [],
-            pageSize: Params.pageSize,
+            pageSize: 10,
             pageSizes: [5, 10, 15],
             currencyColumns: currencyColumns,
             booleanColumns: booleanColumns,

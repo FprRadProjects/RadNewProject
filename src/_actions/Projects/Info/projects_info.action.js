@@ -4,10 +4,27 @@ import { paramsService, emptyservice } from "../../../_webservices";
 
 export const ProjectsInfo_action = {
     GetSelectProject,
+    GetSelectComboProject,
 };
 
-
-
+function GetSelectComboProject(params) {
+    return dispatch => {
+        paramsService.callservice(params,"GetSelectProject")
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(SelectComboProjectAddRows(data.data.rows));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
 function GetSelectProject(params) {
     return dispatch => {
         paramsService.callservice(params,"GetSelectProject")
@@ -15,8 +32,8 @@ function GetSelectProject(params) {
                 data => {
                     if (data.status) {
 
-                        dispatch(AddTotalCount(data.data.totalcount));
-                        dispatch(AddRows(data.data.rows));
+                        dispatch(SelectGridProjectAddTotalCount(data.data.totalcount));
+                        dispatch(SelectGridProjectAddRows(data.data.rows));
                     }
                     else {
                         toast.error(data.error);
@@ -31,12 +48,13 @@ function GetSelectProject(params) {
 
 
 
-function AddTotalCount(data) {
+function SelectGridProjectAddTotalCount(data) {
     return {type: constant.PROJECT_ET_GRID_TOTAL_COUNT, data}
 }
-
-function AddRows(data) {
+function SelectGridProjectAddRows(data) {
     return {type: constant.PROJECT_SET_GRID_ROWS, data}
+}function SelectComboProjectAddRows(data) {
+    return {type: constant.SELECT_PROJECT_LIST_SET_COMBO_ROWS, data}
 }
 
 

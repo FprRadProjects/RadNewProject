@@ -324,11 +324,11 @@ function DefaultTextAddRows(data) {
 }
 
 function SelectManagerListAddRows(data) {
-    return { type: constant.SELECT_MANAGER_LIST_SET_GRID_ROWS, data }
+    return { type: constant.SELECT_MANAGER_LIST_SET_COMBO_ROWS, data }
 }
 
 function SelectWorkerListAddRows(data) {
-    return { type: constant.SELECT_WORKER_LIST_SET_GRID_ROWS, data }
+    return { type: constant.SELECT_WORKER_LIST_SET_COMBO_ROWS, data }
 }
 function SelectWorkerGridListAddRows(data) {
     return { type: constant.SELECT_WORKER_GRIDLIST_SET_GRID_ROWS, data }
@@ -336,22 +336,22 @@ function SelectWorkerGridListAddRows(data) {
 
 
 function SelectAshkhasListAddRows(data) {
-    return { type: constant.SELECT_ASHKHAS_LIST_SET_GRID_ROWS, data }
+    return { type: constant.SELECT_ASHKHAS_LIST_SET_COMBO_ROWS, data }
 }
 function SelectWorkTypeListAddRows(data) {
-    return { type: constant.SELECT_WORKTYPE_LIST_SET_GRID_ROWS, data }
+    return { type: constant.SELECT_WORKTYPE_LIST_SET_COMBO_ROWS, data }
 }
 
 function SelectPriorityListAddRows(data) {
-    return { type: constant.SELECT_PRIORITY_LIST_SET_GRID_ROWS, data }
+    return { type: constant.SELECT_PRIORITY_LIST_SET_COMBO_ROWS, data }
 }
 function SelectRoleListAddRows(data) {
-    return { type: constant.SELECT_ROLE_LIST_SET_GRID_ROWS, data }
+    return { type: constant.SELECT_ROLE_LIST_SET_COMBO_ROWS, data }
 }function SelectFlowListAddRows(data) {
-    return { type: constant.SELECT_FLOW_LIST_SET_GRID_ROWS, data }
+    return { type: constant.SELECT_FLOW_LIST_SET_COMBO_ROWS, data }
 }
 function SelectWorkGroupListAddRows(data) {
-    return { type: constant.SELECT_WORKGROUP_LIST_SET_GRID_ROWS, data }
+    return { type: constant.SELECT_WORKGROUP_LIST_SET_COMBO_ROWS, data }
 }
 function SelectFileAudienceListAddTotalCount(data) {
     return {type: constant.FILEAUDIENCE_GET_GRID_TOTAL_COUNT, data}
