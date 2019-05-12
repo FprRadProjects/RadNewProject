@@ -5,7 +5,7 @@ import { FormInfo } from "../../../locales";
 import { ReferenceViewer } from "../RecordsPage";
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton } from "../../Config";
-import { HideElementListModal,EditTextElementListModal } from "../../Basic";
+import { HideElementListModal, EditTextElementListModal } from "../../Basic";
 import {
     design_Actions,
 
@@ -59,13 +59,14 @@ class RibbonReferences extends Component {
         const { SelectedRow, SetLog, lang, SeenWork, GetWorkInfo, workDiagram } = this.props;
         if (SelectedRow !== undefined) {
             workDiagram(SelectedRow.peygir_id).then(data => {
-                let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
-                SetLog(formName);
-                SeenWork(SelectedRow.peygir_id);
-                this.setState({
-                    DiagramModal: !this.state.DiagramModal
-                });
-
+                if (data.status) {
+                    let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
+                    SetLog(formName);
+                    SeenWork(SelectedRow.peygir_id);
+                    this.setState({
+                        DiagramModal: !this.state.DiagramModal
+                    });
+                }
             });
 
         } else

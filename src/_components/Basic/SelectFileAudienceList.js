@@ -7,12 +7,13 @@ import {ApiModalGridComponent} from "../Config/ApiModalGridComponent";
 var currencyColumns = [];
 var hiddenColumnNames = ['tel1','fax','add1','email','www','mokh_mob','vaziyat','mokhatab_id'];
 var booleanColumns = [];
-var FileAudienceParams = {
+var FileAudienceGridParams = {
     "page": 0,
     "pagesize": 10,
     "orderby": "id_taraf",
     "direction": "desc",
-    "filter": []
+    "filter": [],
+    "filtertype": " AND "
 };
 
 class SelectFileAudienceList extends Component {
@@ -66,7 +67,7 @@ class SelectFileAudienceList extends Component {
                         <ModalBody>
                         <ApiModalGridComponent columns={columns} booleanColumns={booleanColumns}
                                           rows={SelectFileAudience_rows} totalCount={SelectFileAudience_totalCount} columnwidth={135}
-                                          UrlParams={FileAudienceParams} fetchData={GetSelectFileAudienceList.bind(this)} SelectRow ={this.SetSelectFileAudienceRowData.bind(this)}
+                                          UrlParams={FileAudienceGridParams} fetchData={GetSelectFileAudienceList.bind(this)} SelectRow ={this.SetSelectFileAudienceRowData.bind(this)}
                                           currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                         </ModalBody>

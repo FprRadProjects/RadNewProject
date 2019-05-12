@@ -213,10 +213,6 @@ class NewReferral extends Component {
             toast.error(this.context.t("msg_No_Select_ReferralType"));
             return false;
         }
-        if (thisSaveParams.data["wt_id"].wt_id.length < 10) {
-            toast.error(this.context.t("msg_No_Select_ReferralType"));
-            return false;
-        }
         if (thisSaveParams.workers.length == 0) {
             toast.error(this.context.t("msg_No_Select_ReferralWorkers"));
             return false;
@@ -242,7 +238,6 @@ class NewReferral extends Component {
             return obj[index++] = finalSaveParams.data[item];
         })
         finalSaveParams.data = obj;
-        console.log(finalSaveParams)
         InsertNewWorkInfo(finalSaveParams, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
                 RefreshParentForm(Params);

@@ -86,7 +86,7 @@ class RibbonNewWork extends Component {
                                         <RibbonButton FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             Id="create-work"
-                                            handleClick={this.handleClick.bind(this)}
+                                            handleClick={saveWorkHandle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="CreateWork"
                                         />
@@ -157,7 +157,7 @@ class RibbonNewWork extends Component {
                                         <RibbonButton FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             Id="attachments"
-                                            handleClick={this.handleClick.bind(this)}
+                                            handleClick={attachmentsToggle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="Attachments"
                                         />
@@ -245,7 +245,7 @@ class RibbonNewWork extends Component {
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-create-work") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_pub_sabt_kar.id} key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_pub_sabt_kar.id} key={index} handleClick={saveWorkHandle.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="create-work" />
                                     )
                                 }
@@ -294,8 +294,8 @@ class RibbonNewWork extends Component {
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-attachments") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_pub_sabt_kar.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="attachments" />
+                                        <ShortKeyButton FormId={FormInfo.fm_pub_sabt_kar.id} key={index} handleClick={attachmentsToggle.bind(this)}
+                                        ShortKey={ShortKeys[keyName]} Id="attachments" />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-work-form") {

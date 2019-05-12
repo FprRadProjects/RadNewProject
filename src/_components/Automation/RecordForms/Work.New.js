@@ -4,8 +4,9 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import InputMask from 'react-input-mask';
 import { AttachmentsReview } from "../../Archives";
-import { SelectDefaultTextModal, SelectFileAudienceList } from "../../Basic/";
+import { SelectDefaultTextModal, SelectFileAudienceList, SelectFollowerList } from "../../Basic/";
 import { SelectProjectModal } from "../../Project/";
+import { FormInfo } from "../../../locales";
 
 import {
     AutoBasicInfo_action,
@@ -14,16 +15,17 @@ import {
 } from "../../../_actions";
 import { toast } from 'react-toastify';
 import { RibbonNewWork } from '../Ribbon/Ribbon.NewWork';
-import { ComboSelectList, CalendarDatePicker } from "../../Config";
-import { ReferralToModal } from '../../Basic';
+import { ComboSelectList, CalendarDatePicker, ApiComboMultiSelectList } from "../../Config";
 var finalSaveParams = {}
+// var fileShowField = ["id_taraf", "name", "coname", "mokhatab_name", "mokhatab_id"];
 var thisSaveParams = {
     form: "",
-    type: "sub",
+    type: "new",
     data: [],
     workers: [],
-    attachFromParent: 1,
-    infoFromParent: 1,
+    peygir_id: 0,
+    attachFromParent: 0,
+    infoFromParent: 0,
     replication: "",
     emailToWorker: 0,
     emailToAudience: 0,
@@ -31,10 +33,6 @@ var thisSaveParams = {
     smsToAudience: 0,
     archivesList: []
 
-};
-var AttachmentParams = {
-    "peygir_id": 0,
-    "type": "List"
 };
 var projectParams = {
     "Id_Taraf": 0
@@ -46,13 +44,6 @@ var WorkerParams = {
     "id_role": 0,
     "wt_id": 0,
     "orderby": "id_user",
-    "direction": "desc",
-    "filter": []
-};
-var FileAudienceParams = {
-    "page": 0,
-    "pagesize": 10,
-    "orderby": "id_taraf",
     "direction": "desc",
     "filter": []
 };
@@ -78,9 +69,44 @@ class NewWork extends Component {
     }
 
     componentDidMount() {
+         finalSaveParams = {}
+         thisSaveParams = {
+            form: "",
+            type: "new",
+            data: [],
+            workers: [],
+            peygir_id: 0,
+            attachFromParent: 0,
+            infoFromParent: 0,
+            replication: "",
+            emailToWorker: 0,
+            emailToAudience: 0,
+            smsToWorker: 0,
+            smsToAudience: 0,
+            archivesList: []
+        
+        };
+         projectParams = {
+            "Id_Taraf": 0
+        };
+        
+         WorkerParams = {
+            "page": 0,
+            "pagesize": 10,
+            "id_role": 0,
+            "wt_id": 0,
+            "orderby": "id_user",
+            "direction": "desc",
+            "filter": []
+        };
+         workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
+         DefaultInfoParams = { form: "referrals", wt_id: 0, flow_id: 0, isInternal: 0 }
+        
+        
+
         const { SelectWorkTypeList, SelectPriorityList, SelectFlowList,
             SelectWorkGroupList, SelectRoleList, SelectWorkerList
-            , SelectManagerList, GetSelectComboProject,GetSelectFileAudienceList } = this.props;
+            , SelectManagerList, GetSelectComboProject, GetSelectFileAudienceList } = this.props;
         SelectPriorityList();
         SelectFlowList();
         SelectWorkGroupList();
@@ -89,8 +115,6 @@ class NewWork extends Component {
         SelectManagerList(0, 0);
         SelectWorkerList(WorkerParams);
         SelectWorkTypeList(workTypeParams);
-        GetSelectComboProject(projectParams);
-        GetSelectFileAudienceList(FileAudienceParams);
     }
     CalendarChange = (value, name) => {
         thisSaveParams.data[[name]] = { [name]: value }
@@ -98,71 +122,127 @@ class NewWork extends Component {
     changeHandle = (e, val) => {
         if (val !== undefined) {
             const { name } = e;
-
-            const { SelectWorkTypeList, SelectWorkerList } = this.props;
-            if (val.value !== 0) {
-                if (name === "flow_id") {
-                    workTypeParams.FlowId = val.value;
-                    this.setState({ workgroup_id_disabled: true });
-                    SelectWorkTypeList(workTypeParams);
-                    this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                }
-                else if (name === "workgroup_id") {
-                    workTypeParams.WorkGroupId = val.value;
-                    this.setState({ flow_id_disabled: true });
-                    SelectWorkTypeList(workTypeParams);
-                    this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                }
-                else if (name === "wt_id") {
-                    this.reloadWorkType(val.value);
-
-                }
-                thisSaveParams.data[[name]] = { [name]: val.value }
-
-            } else {
-                if (name === "wt_id") {
-                    WorkerParams.wt_id = 0;
-                    SelectWorkerList(WorkerParams);
-                    //SelectManagerList(this.state.manager_role_id, 0);
-                }
-                if (name === "flow_id") {
-                    workTypeParams.FlowId = 0;
-                    this.setState({ workgroup_id_disabled: false });
-                    SelectWorkTypeList(workTypeParams);
-                    this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                    this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                    this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                }
-                else if (name === "workgroup_id") {
-                    this.setState({ flow_id_disabled: false });
-                    workTypeParams.WorkGroupId = 0;
-                    SelectWorkTypeList(workTypeParams);
-                    this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                    this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                    this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                }
-                thisSaveParams.data[[name]] = { [name]: null }
+            if (name === "flow_id")
+                this.flowChange(val.value);
+            else if (name === "workgroup_id")
+                this.workgroupChange(val.value);
+            else if (name === "wt_id")
+                this.reloadWorkType(val.value);
+            else if (name === "worker_id") {
+                thisSaveParams.workers[0].worker = val.value;
+                const { SayManagerOnWorkerWtype } = this.props;
+                SayManagerOnWorkerWtype(val.value, WorkerParams.wt_id).then(data => {
+                    if (data.status) {
+                        this.setState({ managerSelectedOption: { value: data.data.managerId, label: data.data.managerUName } });
+                        thisSaveParams.workers[0].manager = data.data.managerId;
+                    }
+                });
             }
+            else if (name === "defmodir_id" ) {
+                thisSaveParams.workers[0].manager = val.value;
+            }    
+            else if (name === "p_type_id" && val.value === 0) {
+                this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+                thisSaveParams.data["p_type_id"] = { "p_type_id": null };
+                this.refs.project_code.value = "";
+            }
+            console.log(val.value)
+            console.log(name)
+            if (name !== "worker_id" && name !== "defmodir_id")
+                thisSaveParams.data[[name]] = { [name]: val.value === 0 ? null : val.value }
         }
         else {
             const { name, value } = e.target;
             thisSaveParams.data[[name]] = { [name]: value };
         }
     }
+    workgroupChange = (workgroup_id) => {
+        const { SelectWorkTypeList } = this.props;
+        if (workgroup_id !== 0) {
+            workTypeParams.WorkGroupId = workgroup_id;
+            this.setState({ flow_id_disabled: true });
+            SelectWorkTypeList(workTypeParams);
+            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+        }
+        else {
+            this.setState({ flow_id_disabled: false });
+            workTypeParams.WorkGroupId = 0;
+            SelectWorkTypeList(workTypeParams);
+            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+        }
+    }
+    flowChange = (flowId) => {
+        const { SelectWorkTypeList, FirstWorkOnFlow } = this.props;
+        if (flowId !== 0) {
+            workTypeParams.FlowId = flowId;
+            thisSaveParams.data["erja"] = { "erja": 1 };
+            thisSaveParams.data["flow_id"] = { "flow_id": flowId };
+            DefaultInfoParams.flow_id = flowId;
+            this.setState({ workgroup_id_disabled: true });
+            SelectWorkTypeList(workTypeParams).then(Response1 => {
+                if (Response1.status) {
+                    FirstWorkOnFlow(flowId).then(Response2 => {
+                        if (Response2.status) {
+                            const found = Response1.data.rows.some(el => el.id === Response2.data.workTypeId);
+                            if (Response2.data.workTypeId !== 0 && found) {
+                                this.setState({ workTypeSelectedOption: { value: Response2.data.workTypeId, label: Response2.data.workType } });
+                                workTypeParams.FlowId = flowId;
+                                this.reloadWorkType(Response2.data.workTypeId);
+                            } else {
+                                this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+                                this.refs.flow.checked = false;
+                            }
+                        }
+                    });
+                }
+            });
+        }
+        else {
+            thisSaveParams.data["flow_id"] = { "flow_id": null };
+            workTypeParams.FlowId = 0;
+            DefaultInfoParams.flow_id = 0;
+            this.setState({ workgroup_id_disabled: false });
+            SelectWorkTypeList(workTypeParams);
+            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.refs.flow.checked = true;
+            thisSaveParams.data["erja"] = { "erja": 1 };
+        }
+    }
     reloadWorkType = (selectedWtId) => {
         const { SelectWorkTypeList, SelectWorkerList } = this.props;
+        if (selectedWtId == 0) {
+            WorkerParams.wt_id = 0;
+            thisSaveParams.data["wt_id"] = { "wt_id": null };
+        }
+        else
+            thisSaveParams.data["wt_id"] = { "wt_id": selectedWtId };
         WorkerParams.wt_id = selectedWtId;
         SelectWorkerList(WorkerParams);
         thisSaveParams.data["sadere_ref"] = { "sadere_ref": selectedWtId }
         const { GetNewWorkDefaultInfo } = this.props;
         DefaultInfoParams.wt_id = selectedWtId;
+        thisSaveParams.data["p_id"] = { "p_id": 0 };
+        thisSaveParams.data["showtree_id"] = { "showtree_id": 0 };
+        thisSaveParams.data["arshiv_id"] = { "arshiv_id": 0 };
+        thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
+
+        this.refs.Follower.value = "";
+        thisSaveParams.data["p_id"] = { "p_id": 0 };
+        this.setState({ SelectedFollowerId: 0 });
+        this.setState({ SelectedShowtreeFollowerId: 0 });
+
         GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
             if (data.status) {
                 if (data.data.DefaultValue !== null) {
-                    this.refs.flow.checked = data.data.DefaultValue.flow;
-                    thisSaveParams.data["flow_id"] = { "flow_id": null };
-                    thisSaveParams.data["erja"] = { "erja": data.data.DefaultValue.flow ? 1 : 0 };
-
+                    if (workTypeParams.FlowId === 0 || workTypeParams.FlowId === undefined || workTypeParams.FlowId === null) {
+                        this.refs.flow.checked = data.data.DefaultValue.flow;
+                        thisSaveParams.data["flow_id"] = { "flow_id": null };
+                        thisSaveParams.data["erja"] = { "erja": data.data.DefaultValue.flow ? 1 : 0 };
+                    }
                     this.refs.alowatt.checked = data.data.DefaultValue.alowatt;
                     thisSaveParams["alowatt"] = data.data.DefaultValue.alowatt ? 1 : 0;
 
@@ -183,11 +263,14 @@ class NewWork extends Component {
                     thisSaveParams.workers = [{ worker: data.data.WorkerId, manager: data.data.ManagerId }];
                     if (data.data.FileInfo !== null) {
                         if (data.data.FileInfo.id !== 0) {
-                            this.setState({ FileAudienceSelectedOption: { value: data.data.FileInfo.id, label: data.data.FileInfo.coname } });
+                            thisSaveParams.data["id_tel"] = { "id_tel": data.data.FileInfo.id };
                             this.setState({ SelectedFileId: data.data.FileInfo.id });
+                            thisSaveParams.data["ashkhas_id"] = { "ashkhas_id": null };
+                            this.refs.fileInfo.value = data.data.FileInfo.coname;
                             if (data.data.FileInfo.ptype_id !== null || data.data.FileInfo.ptype_id !== 0) {
                                 this.setState({ ProjectSelectedOption: { value: data.data.FileInfo.ptype_id, label: data.data.FileInfo.ptype } });
                                 this.refs.project_code.value = data.data.FileInfo.ptypecode;
+                                thisSaveParams.data["p_type_id"] = { "p_type_id": data.data.FileInfo.ptype_id };
                             }
                             projectParams.Id_Taraf = data.data.FileInfo.id
                             const { GetSelectComboProject } = this.props;
@@ -213,7 +296,7 @@ class NewWork extends Component {
     }
 
     checkBoxChangeHandler = (e) => {
-        const { WorkInfo, AttachmentOnWork, SelectWorkTypeList } = this.props;
+        const { SelectWorkTypeList } = this.props;
         const { name, checked } = e.target;
         const value = checked ? 1 : 0;
         if (name === "withoutFlow") {
@@ -224,29 +307,17 @@ class NewWork extends Component {
             thisSaveParams["emailToWorker"] = value;
         else if (name === "smsToWorker")
             thisSaveParams["smsToWorker"] = value;
-        else if (name === "attachFromParent") {
-            thisSaveParams["attachFromParent"] = value;
-            if (value === 1) {
-                let SelectedArchiveRows = this.state.AttachmentList.filter(function (item) { return !item.fromParent });
-                this.setState({
-                    AttachmentList: [...Object.keys(AttachmentOnWork).map((item, index) => {
-                        return { archiveId: AttachmentOnWork[item].id, fromParent: true, fileName: AttachmentOnWork[item].filename };
-                    }), ...SelectedArchiveRows]
-                });
-            }
-            else {
-                let SelectedArchiveRows = this.state.AttachmentList.filter(function (item) { return !item.fromParent });
-                this.setState({
-                    AttachmentList: SelectedArchiveRows
-                });
-            }
-        }
+        else if (name === "emailToAudience")
+            thisSaveParams["emailToAudience"] = value;
+        else if (name === "smsToAudience")
+            thisSaveParams["smsToAudience"] = value;
 
-        else if (name === "infoFromParent")
-            thisSaveParams["infoFromParent"] = value;
         else if (name === "cpy_form_kar") {
-            if (checked) thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": WorkInfo.showtree_id };
-            else thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
+            if (checked && this.state.SelectedShowtreeFollowerId !== undefined && this.state.SelectedShowtreeFollowerId !== 0)
+                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": this.state.SelectedShowtreeFollowerId };
+            else
+                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
+            // this.setState({ "cpy_form_kar": checked });
         }
         else if (name === "hasformsaz") {
             workTypeParams.HasFormGen = value;
@@ -286,7 +357,66 @@ class NewWork extends Component {
 
     }
     saveWorkHandle = () => {
+        const { lang, toggle, InsertNewWorkInfo } = this.props;
+        var formname = lang == "fa" ? FormInfo.fm_pub_sabt_kar.form_name : FormInfo.fm_pub_sabt_kar.en_form_name;
 
+        if (thisSaveParams.data["wt_id"] === undefined) {
+            toast.error(this.context.t("msg_No_Select_WorkType"));
+            return false;
+        }
+        if (thisSaveParams.workers.length == 0) {
+            toast.error(this.context.t("msg_No_Select_Worker"));
+            return false;
+        }
+        if (thisSaveParams.workers[0].worker_id ===undefined || thisSaveParams.workers[0].worker_id ==0) {
+            toast.error(this.context.t("msg_No_Select_Worker"));
+            return false;
+        } 
+        if (thisSaveParams.workers[0].manager_id ===undefined || thisSaveParams.workers[0].manager_id ==0) {
+            toast.error(this.context.t("msg_No_Select_Manager"));
+            return false;
+        }
+        if (thisSaveParams.data["tarikhaction"] === undefined) {
+            toast.error(this.context.t("msg_ActionDate_Not_Valid"));
+            return false;
+        }
+        if (thisSaveParams.data["tarikhaction"].tarikhaction.length < 10) {
+            toast.error(this.context.t("msg_ActionDate_Not_Valid"));
+            return false;
+        }
+        thisSaveParams.form = formname;
+
+        thisSaveParams.archivesList = this.state.AttachmentList;
+        finalSaveParams = Object.assign({}, thisSaveParams);
+        let obj = [];
+        Object.keys(finalSaveParams.data).map((item, index) => {
+            return obj[index++] = finalSaveParams.data[item];
+        })
+        finalSaveParams.data = obj;
+        console.log(finalSaveParams)
+        return false;
+        if (finalSaveParams.peygir_id === 0) {
+            InsertNewWorkInfo(finalSaveParams, this.context.t("msg_Operation_Success")).then(data => {
+                if (data.status) {
+                    thisSaveParams.peygir_id = data.data.peygir_id0;
+                    console.log(thisSaveParams)
+                }
+            });
+        }
+        else if (finalSaveParams.peygir_id !== 0) {
+            console.log(thisSaveParams)
+            console.log(finalSaveParams)
+            //update
+        }
+    }
+    attachmentsToggle() {
+        this.setState({
+            AttachmentReviewmodal: !this.state.AttachmentReviewmodal
+        });
+
+    }
+    ChangeAttachments(NewAttchments) {
+        this.setState({ AttachmentList: NewAttchments });
     }
     ToggleSelectFileAudience = () => {
         this.setState({
@@ -295,11 +425,12 @@ class NewWork extends Component {
     }
     SelectFileAudienceRow(row) {
         const { GetSelectComboProject } = this.props;
-        this.setState({ FileAudienceSelectedOption: { value: row.mokhatab_id, label: row.coname + " - " + row.name } });
         this.refs.fileInfo.value = row.coname + " - " + row.name;
         this.refs.Audience.value = row.mokhatab_name;
         this.setState({ SelectedFileId: row.id_taraf });
         this.setState({ SelectedAudienceId: row.mokhatab_id });
+        thisSaveParams.data["id_tel"] = { "id_tel": row.id_taraf };
+        thisSaveParams.data["ashkhas_id"] = { "ashkhas_id": row.mokhatab_id };
         this.setState({
             SelectFileAudiencemodal: !this.state.SelectFileAudiencemodal,
         });
@@ -307,7 +438,43 @@ class NewWork extends Component {
         this.refs.project_code.value = "";
         projectParams.Id_Taraf = row.id_taraf;
         GetSelectComboProject(projectParams);
+        this.refs.Follower.value = "";
+        thisSaveParams.data["p_id"] = { "p_id": 0 };
+        this.setState({ SelectedFollowerId: 0 });
+        this.setState({ SelectedShowtreeFollowerId: 0 });
 
+    }
+
+    ToggleSelectFollower = () => {
+
+        if (this.state.SelectedFileId !== 0)
+            this.setState({
+                SelectFollowermodal: !this.state.SelectFollowermodal,
+            });
+        else
+            toast.warn(this.context.t("msg_No_Select_File_Audience"));
+    }
+    SelectFollowerRow(row) {
+        if ((row.flow_id === null || row.flow_id == 0) && row.flow_id !== undefined) {
+            this.refs.Follower.value = row.peygir_id + " - " + row.wtype + " - " + this.context.t("Serial") + " : " + row.nos_id;
+            thisSaveParams.data["p_id"] = { "p_id": row.peygir_id };
+            this.setState({ SelectedFollowerId: row.peygir_id });
+            this.setState({ SelectedShowtreeFollowerId: row.showtree_id });
+            if (this.refs.cpy_form_kar.checked)
+                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": row.showtree_id };
+            else
+                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
+            this.setState({
+                SelectFollowermodal: !this.state.SelectFollowermodal,
+            });
+        }
+        else
+            toast.error(this.context.t("msg_No_Select_Is_In_Flow"));
+    }
+    deleteFollower = () => {
+        this.refs.Follower.value = "";
+        thisSaveParams.data["p_id"] = { "p_id": 0 };
+        this.setState({ SelectedFollowerId: 0 });
     }
     ToggleSelectProject = () => {
         if (this.state.SelectedFileId !== 0)
@@ -317,10 +484,7 @@ class NewWork extends Component {
         else
             toast.warn(this.context.t("msg_No_Select_File_Audience"));
     }
-    deleteProject = () => {
-        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-        this.refs.project_code.value = "";
-    }
+
     SuccessSelectProject(row, e) {
         if (row !== undefined && row !== null) {
             if (this.state.ProjectSelectmodal) {
@@ -360,14 +524,15 @@ class NewWork extends Component {
             }
         }
     }
-    OpenFollowing = () => {
-
+    deleteProject = () => {
+        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+        this.refs.project_code.value = "";
     }
     render() {
         const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows,
             SelectWorkFlowList_rows, SelectWorkGroupList_rows, SelectRoleList_rows,
-            SelectProjectComboList_rows, SelectWorkerList_rows,
-            SelectManagerList_rows } = this.props;
+            SelectProjectComboList_rows, SelectWorkerList_rows, SelectFileAudience_rows,
+            SelectManagerList_rows, GetSelectFileAudienceList } = this.props;
         var None = [{ value: 0, label: this.context.t("NoSelection") }]
         var PriorityList = None.concat(SelectPriorityList_rows);
         var WorkFlowList = None.concat(SelectWorkFlowList_rows);
@@ -377,7 +542,7 @@ class NewWork extends Component {
         var WorkerList = None.concat(SelectWorkerList_rows);
         var ManagerList = None.concat(SelectManagerList_rows);
         var ProjectList = None.concat(SelectProjectComboList_rows);
-        var FileList = None;
+        var FileList = None.concat(SelectFileAudience_rows);
 
         const modalBackDrop = `
         .modal-backdrop {
@@ -395,7 +560,7 @@ class NewWork extends Component {
                     <ModalHeader toggle={toggle}>{this.context.t("frm_New_Work")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonNewWork saveWorkHandle={this.saveWorkHandle.bind(this)} />
+                            <RibbonNewWork saveWorkHandle={this.saveWorkHandle.bind(this)} attachmentsToggle={this.attachmentsToggle.bind(this)} />
                         </div>
                         <div className="referral-modal">
                             <div className="row bg-gray mg-b-5">
@@ -464,7 +629,15 @@ class NewWork extends Component {
                                                             <Button color="primary"
                                                                 onClick={this.ToggleSelectFileAudience.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                         </div>
-                                                        <ComboSelectList options={FileList} ref="fileInfo" name="id_tel" onChange={this.changeHandle.bind(this)} selectedOption={this.state.FileAudienceSelectedOption} />
+                                                        <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true}
+                                                            name="id_tel" id="id_tel" ref="fileInfo" />
+
+                                                        {/* {SelectFileAudience_rows !== undefined &&
+                                                     <ApiComboMultiSelectList keyField="mokhatab_id" showField={fileShowField} options={FileList} ref="fileInfo" 
+                                                     fetchData={GetSelectFileAudienceList.bind(this)} Params={FileAudienceParams}
+                                                      name="id_tel" onChange={this.changeHandle.bind(this)} 
+                                                      selectedOption={this.state.FileAudienceSelectedOption} />
+                                                     } */}
                                                     </div>
                                                 </div>
                                             </div>
@@ -491,12 +664,15 @@ class NewWork extends Component {
                                                                 onClick={this.ToggleSelectProject.bind(this)}>{this.context.t("SelectPopup")}</Button>
                                                             {/* <Button className="rounded-0" color="danger" onClick={this.deleteProject.bind(this)}>{this.context.t("Delete")}</Button> */}
                                                         </div>
-                                                        <input type="text" autoComplete="off" className="form-control wd-100 flex-0 bd-l-1" readOnly={true} disabled={true} name="project_code" ref="project_code" placeholder="کد پروژه" />
+                                                        <input type="text" autoComplete="off" className="form-control wd-100 flex-0 bd-l-1" readOnly={true} disabled={true} name="project_code" ref="project_code" placeholder={this.context.t("ProjectCode")} />
                                                         {SelectProjectComboList_rows !== undefined &&
                                                             <ComboSelectList options={ProjectList} ref="p_type_id" name="p_type_id" onChange={this.changeHandle.bind(this)} selectedOption={this.state.ProjectSelectedOption} />
                                                         }
-                                                        {/* <div className="input-group-append">
-                                                        </div> */}
+                                                        {
+                                                            SelectProjectComboList_rows == undefined &&
+                                                            <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true} name="p_type_id"
+                                                                name="p_type_id" id="p_type_id" ref="Project" placeholder={this.context.t("Project")} />
+                                                        }
                                                     </div>
                                                 </div>
                                             </div>
@@ -508,10 +684,11 @@ class NewWork extends Component {
                                                     <div className="input-group mt-1 mb-2">
                                                         <div className="input-group-prepend">
                                                             <Button color="primary"
-                                                                onClick={this.OpenFollowing.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                                                            <Button className="rounded-0" color="danger">{this.context.t("Delete")}</Button>
+                                                                onClick={this.ToggleSelectFollower.bind(this)}>{this.context.t("SelectPopup")}</Button>
+                                                            <Button className="rounded-0" color="danger" onClick={this.deleteFollower.bind(this)}>{this.context.t("Delete")}</Button>
                                                         </div>
-                                                        <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true} name="atf_id" />
+                                                        <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true} name="atf_id"
+                                                            name="p_id" id="atf_id" ref="Follower" />
                                                         {/* <div className="input-group-append">
                                                         </div> */}
                                                     </div>
@@ -725,7 +902,7 @@ class NewWork extends Component {
                                             <div className="card-body">
                                                 <div className="checkbox-group">
                                                     <div className="checkbox">
-                                                        <input id="workform0" name="cpy_form_kar" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" />
+                                                        <input id="workform0" name="cpy_form_kar" ref="cpy_form_kar" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" />
                                                         <label htmlFor="workform0">{this.context.t("CopyWorkForm")}</label>
                                                     </div>
                                                     <div className="checkbox">
@@ -808,6 +985,18 @@ class NewWork extends Component {
                         Successtoggle={this.SelectFileAudienceRow.bind(this)}
                     />}
 
+                {this.state.SelectFollowermodal &&
+                    <SelectFollowerList modal={this.state.SelectFollowermodal}
+                        toggle={this.ToggleSelectFollower.bind(this)}
+                        Successtoggle={this.SelectFollowerRow.bind(this)}
+                        id_tel={this.state.SelectedFileId}
+                    />}
+                {this.state.AttachmentReviewmodal &&
+                    <AttachmentsReview modal={this.state.AttachmentReviewmodal}
+                        AttachmentList={this.state.AttachmentList}
+                        ChangeAttachments={this.ChangeAttachments.bind(this)}
+                        toggle={this.attachmentsToggle.bind(this)}
+                        parentPeygirId={0} peygir_id={0} />}
                 {this.state.ProjectSelectmodal &&
                     <SelectProjectModal modal={this.state.ProjectSelectmodal}
                         toggle={this.ToggleSelectProject.bind(this)}
@@ -822,7 +1011,10 @@ class NewWork extends Component {
 const mapDispatchToProps = dispatch => ({
 
     SelectWorkTypeList: (Params) => {
-        dispatch(AutoBasicInfo_action.SelectWorkTypeList(Params))
+        return dispatch(AutoBasicInfo_action.SelectWorkTypeList(Params))
+    },
+    FirstWorkOnFlow: (Params) => {
+        return dispatch(AutoBasicInfo_action.FirstWorkOnFlow(Params))
     },
     SelectPriorityList: (Params) => {
         dispatch(AutoBasicInfo_action.SelectPriorityList(Params))
@@ -855,10 +1047,12 @@ const mapDispatchToProps = dispatch => ({
     },
     GetSelectComboProject: (Params) => {
         dispatch(ProjectsInfo_action.GetSelectComboProject(Params))
-    },  
+    },
     GetSelectFileAudienceList: (Params) => {
-        dispatch(AutoBasicInfo_action.SelectFileAudienceList(Params))
-    }
+        return dispatch(AutoBasicInfo_action.SelectFileAudienceList(Params))
+    }, SayManagerOnWorkerWtype: (worker_id, wt_id) => {
+        return dispatch(AutoBasicInfo_action.SayManagerOnWorkerWtype(worker_id, wt_id))
+    },
 });
 NewWork.contextTypes = {
     t: PropTypes.func.isRequired
@@ -871,7 +1065,7 @@ function mapStateToProps(state) {
     const { WorkInfo } = state.Auto_WorkBasic;
     const { SelectWorkTypeList_rows, SelectPriorityList_rows, SelectWorkFlowList_rows,
         SelectWorkGroupList_rows, SelectRoleList_rows, SelectWorkerList_rows,
-        SelectManagerList_rows,SelectFileAudience_totalCount,
+        SelectManagerList_rows, SelectFileAudience_totalCount,
         SelectFileAudience_rows } = state.Auto_BasicInfo
     const { AttachmentOnWork } = state.ArchiveBasic
     const { SelectProjectComboList_rows } = state.projects

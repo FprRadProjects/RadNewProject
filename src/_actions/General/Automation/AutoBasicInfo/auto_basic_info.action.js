@@ -17,18 +17,69 @@ export const AutoBasicInfo_action = {
     SelectRoleList,
     SayManagerOnWorkerWtype,
     GetNewWorkDefaultInfo,
-    SelectFileAudienceList
+    SelectFileAudienceList,
+    SelectFollowerList,
+    FirstWorkOnFlow
 
 
 
 };
 
+function FirstWorkOnFlow(FlowId) {
+    return dispatch => {
+        
+        var Params = new FormData();
+        Params.append('FlowId', FlowId);
+        return  paramsService.callservice(Params,"FirstWorkOnFlow")
+            .then(
+                data => {
+                    return Promise.resolve(data)
+                },
+                error => {
+                    toast.error(error);
+                }
+            );
+    }
+}
+function SelectFollowerList(params) {
+
+    return dispatch => {
+        dispatch(loadingActions.ShowGridLoading());
+        return  paramsService.callservice(params,"SelectFollowerList")
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(SelectFollowerListAddTotalCount(data.data.totalcount));
+                        dispatch(SelectFollowerListAddRows(data.data.rows));
+                        dispatch(loadingActions.HideGridLoading());
+                    }
+                    else if (data.code !== 0) {
+                        toast.error(data.error);
+                        dispatch(loadingActions.HideGridLoading());
+                    }
+                    else {
+
+                        userActions.logout();
+                        window.open('/',"_self");
+                    }
+                    return Promise.resolve(data)
+                },
+                error => {
+                    toast.error(error);
+                    dispatch(loadingActions.HideGridLoading());
+                }
+            );
+
+
+    }
+
+}
 function SelectFileAudienceList(params) {
 
     return dispatch => {
         // dispatch(loadingActions.ShowLoading());
         dispatch(loadingActions.ShowGridLoading());
-        paramsService.callservice(params,"SelectFileAudienceList")
+        return  paramsService.callservice(params,"SelectFileAudienceList")
             .then(
                 data => {
                     if (data.status) {
@@ -45,6 +96,7 @@ function SelectFileAudienceList(params) {
                         userActions.logout();
                         window.open('/',"_self");
                     }
+                    return Promise.resolve(data)
                 },
                 error => {
                     toast.error(error);
@@ -189,15 +241,21 @@ function SelectPriorityList() {
 
 function SelectWorkTypeList(Params) {
     return dispatch => {
-        paramsService.callservice(Params,"SelectWorkTypeList")
+        return  paramsService.callservice(Params,"SelectWorkTypeList")
             .then(
                 data => {
                     if (data.status) {
                         dispatch(SelectWorkTypeListAddRows(data.data.rows));
                     }
-                    else {
-                        toast.error(data.error);
+                    else if (data.code !== 0) {
+                        toast.error(data.error)
                     }
+                    else {
+                        userActions.logout();
+                        window.open('/',"_self");
+                    }
+                    return Promise.resolve(data)
+
                 },
                 error => {
                     toast.error(error);
@@ -359,4 +417,11 @@ function SelectFileAudienceListAddTotalCount(data) {
 
 function SelectFileAudienceListAddRows(data) {
     return {type: constant.FILEAUDIENCE_GET_GRID_ROWS, data}
+} 
+function SelectFollowerListAddTotalCount(data) {
+    return {type: constant.FOLLOWERLIST_GET_GRID_TOTAL_COUNT, data}
 }
+
+function SelectFollowerListAddRows(data) {
+    return {type: constant.FOLLOWERLIST_GET_GRID_ROWS, data}
+}  

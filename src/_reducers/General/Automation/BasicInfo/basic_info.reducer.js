@@ -99,6 +99,19 @@ export function Auto_BasicInfo(state = {}, action) {
                 SelectFileAudience_rows: action.data
             }
         }
+        case Constant.FOLLOWERLIST_GET_GRID_TOTAL_COUNT: {
+            return {
+                ...state,
+                SelectFollowerList_totalCount:  action.data
+            }
+        }
+        case Constant.FOLLOWERLIST_GET_GRID_ROWS: {
+            return {
+                ...state,
+                SelectFollowerList_rows: action.data
+            }
+        }
+         
         
         default:
             return state;

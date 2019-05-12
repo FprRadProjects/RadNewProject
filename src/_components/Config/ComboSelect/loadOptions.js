@@ -1,15 +1,16 @@
-import { connect } from "react-redux"
 
-const options = [];
-for (let i = 0; i < 100; ++i) {
-    options.push({
-        value: i + 1,
-        label: `آیتم شماره ${i + 1}`
-    });
-}
 
-const loadOptions = async (search, prevOptions) => {
-    console.log(prevOptions[prevOptions.length-1])
+const loadOptions = async (search, prevOptions,Params,fetchData,options) => {
+    console.log(Params)
+    console.log("1111111111111111111111111111")
+    console.log(fetchData)
+    console.log("222222222222222222222222222222")
+    console.log(prevOptions)
+    console.log("33333333333333333333333333333")
+    console.log(options)
+    console.log("444444444444444444444444444")
+    Params.pagesize=40;
+    fetchData(Params);
     let filteredOptions;
     if (!search) {
         filteredOptions = options;
@@ -34,19 +35,5 @@ const loadOptions = async (search, prevOptions) => {
 };
 
 
-loadOptions.contextTypes = {
-    t: PropTypes.func.isRequired
-}
 
-
-function mapStateToProps(state) {
-    const {SelectFileAudience_totalCount,SelectFileAudience_rows} = state.Auto_BasicInfo;
-    const {SelectFileAudience_rows} = state.Auto_BasicInfo
-    return {
-        SelectFileAudience_totalCount,
-        SelectFileAudience_rows,
-    };
-}
-
-const connectedloadOptions = connect(mapStateToProps, mapDispatchToProps)(loadOptions);
-export { connectedloadOptions as loadOptions };
+export default loadOptions;

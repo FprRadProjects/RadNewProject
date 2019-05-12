@@ -40,6 +40,7 @@ class OrgChart extends PureComponent {
 
 
     init(options) {
+        try{
         // Merge options with the default config
         const config = {
             ...defaultConfig,
@@ -92,7 +93,6 @@ class OrgChart extends PureComponent {
             config.tree = d3.layout
                 .tree()
                 .nodeSize([nodeWidth + nodeSpacing, nodeHeight + nodeSpacing])
-
             if (treeData.children === undefined) {
                 treeData.children = treeData._children
                 treeData._children = null
@@ -181,7 +181,7 @@ class OrgChart extends PureComponent {
 
             // Update DOM root height
             d3.select(id).style('height', elemHeight + margin.top + margin.bottom)
-
+        }catch(err){}
     }
 
     componentDidMount() {
@@ -194,8 +194,10 @@ class OrgChart extends PureComponent {
 
 
         setTimeout(() => {
+            try{
             document.getElementById(currentId).setAttribute('stroke', '#3C69F7');
             document.getElementById(currentId).setAttribute('stroke-width', 5);
+            }catch(err){}
         }, 100)
 
         // console.log(JSON.stringify(data, null, 4) )

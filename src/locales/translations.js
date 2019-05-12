@@ -157,6 +157,7 @@ export const translations = {
         State:"استان",
         AudienceMobile:"تلفن همراه مخاطب",
         AudienceTel:"تلفن مخاطب",
+        Signatory:"امضا کننده",
         
         //---------------تاییدیه------------------شروع
         Yes: 'بلی',
@@ -199,8 +200,12 @@ export const translations = {
         msg_Operation_Success: 'عملیات با موفقیت انجام شد....',
         msg_DontHave_Access: 'شما دسترسی دیدن جزییات این کار را ندارید....',
         msg_No_Select_ReferralType:"نوع اقدام انتخاب نشده است",
+        msg_No_Select_WorkType:"نوع کار انتخاب نشده است",
         msg_No_Select_ReferralWorkers:"ارجاع به انتخاب نشده است",
         msg_No_Select_File_Audience:"طرف حساب - مخاطب انتخاب نشده است.",
+        msg_No_Select_Is_In_Flow:"سطر انتخابی دارای فرآیند می باشد.",
+        msg_No_Select_Worker:"کاربر انتخاب نشده است",
+        msg_No_Select_Manager:"مدیر انتخاب نشده است",
 
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
@@ -237,7 +242,7 @@ export const translations = {
         frm_Attachment_Review: 'بازنگری ضمائم',
         frm_New_Work: 'ثبت کار',
         frm_File_Audience: 'طرف حساب - مخاطب',
-
+        frm_Follower_list: 'انتخاب پیرو',
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -396,6 +401,7 @@ export const translations = {
         State:"State",
         AudienceMobile:"Audience Mobile",
         AudienceTel:"Audience Tel",
+        Signatory:"Signatory",
         
         //Start---------------Confirm-----------------
         Yes: 'Yes',
@@ -439,8 +445,10 @@ export const translations = {
         msg_Operation_Success: 'The Operation Was Successful....',
         msg_DontHave_Access: 'You Do Not Have Access To See Delaits of This....',
         msg_No_Select_ReferralType:"Referral Type Not Selected.",
+        msg_No_Select_WorkType:"Work Type Not Selected.",
         msg_No_Select_ReferralWorkers:"Referral Workers Not Selected.",
         msg_No_Select_File_Audience:"File - Audience Not Selected.",
+        msg_No_Select_Is_In_Flow:"The Selected Row Has Flow",
 
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
@@ -477,6 +485,7 @@ export const translations = {
         frm_SubWork:"Sub Work",
         frm_Attachment_Review: 'Attachment Review',
         frm_File_Audience: 'File Audience',
+        frm_Follower_list: 'Follower',
 
         //End-------------- FORM NAME --------------
 
