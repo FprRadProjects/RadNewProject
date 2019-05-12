@@ -35797,11 +35797,7 @@ th[class*=MuiTableCell-root] {
 }
 
 .r-automation-modal .modal-header, .r-automation-modal .r-modal .modal-header {
-    background: #008f44;
-    background: -moz-linear-gradient(left, #008f44 0%, #009345 100%);
-    background: -webkit-linear-gradient(left, #008f44 0%, #009345 100%);
-    background: linear-gradient(to right, #008f44 0%, #009345 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008f44', endColorstr='#009345', GradientType=1);
+    background: #009345;
 }
 
 .r-automation-modal .switch-state:before {
@@ -35888,4 +35884,8 @@ th[class*=MuiTableCell-root] {
     background-size: contain;
     color: #fff!important;
     z-index: 3;
+}
+
+.r-modal .r-main-box__ribbon .nav-tabs{
+min-height: 32px;
 }
