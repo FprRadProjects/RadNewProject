@@ -64,7 +64,7 @@ class NewWork extends Component {
             manager_role_id: 0,
             user_role_id: 0,
             backdrop: "static",
-            modalClass: "modal-dialog-centered modal-xl r-modal r-newwork-modal"
+            modalClass: "modal-dialog-centered modal-xl r-modal r-automation-modal r-newwork-modal"
         };
     }
 
@@ -759,7 +759,7 @@ class NewWork extends Component {
                                                 <label className="col-2 col-form-label">{this.context.t("Roll")}</label>
                                                 <div className="col-10">
                                                     {SelectRoleList_rows !== undefined &&
-                                                        <ComboSelectList options={UserRollList} classname="mt-2 mb-1" name="manager_role_id" onChange={this.changeRoleHandle.bind(this)} />
+                                                        <ComboSelectList options={UserRollList} classname="mt-1 mb-2" name="manager_role_id" onChange={this.changeRoleHandle.bind(this)} />
                                                     }
                                                 </div>
                                             </div>
