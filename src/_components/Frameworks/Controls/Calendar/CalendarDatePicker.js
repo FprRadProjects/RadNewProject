@@ -21,15 +21,15 @@ class CalendarDatePicker extends Component {
     this.setState({
       value: event.target.formatted,
     });
-    const { CalendarChange, fieldname } = this.props;
+    const { CalendarChange, fieldname,disabled } = this.props;
     CalendarChange(event.target.formatted, fieldname);
   }
 
   render() {
-    
+    const { formid } = this.props;
     return (
         <MuiThemeProvider >
-          <JalaliField
+          <JalaliField  formid={formid}
             id="standard-name"
             value={this.state.value}
             onChange={this.onChange('value')}

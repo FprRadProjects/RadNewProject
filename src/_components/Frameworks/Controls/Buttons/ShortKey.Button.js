@@ -7,7 +7,7 @@ class ShortKeyButton extends Component {
         return (
             <li key={Key}>
                 <a>
-                    <i onClick={handleClick.bind(this)} formid={FormId}
+                    <i onClick={handleClick.bind(this)} formid={FormId} isshortkey="false"
                         id={ShortKey.Element} rowid={ShortKey.Id + ""}
                         className={"icon " + Id} title={tooltip} data-toggle="tooltip" ></i>
                 </a>

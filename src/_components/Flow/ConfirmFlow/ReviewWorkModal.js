@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
-import { GridComponent } from "../../Config/GridComponent";
+import { GridComponent } from "../../Frameworks";
 import { WorkActions_action, WorkBasic_action } from "../../../_actions";
 import { EditeReviewWorkModal } from '../../Flow/ConfirmFlow/EditeReviewWorkModal';
 import { toast } from 'react-toastify';

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
+import 'bootstrap-v4-rtl/dist/css/bootstrap-rtl.min.css';
 import {
     PagingState,
     SortingState,
@@ -9,7 +10,7 @@ import {
     IntegratedGrouping,
     IntegratedPaging,
     FilteringState,
-    DataTypeProvider,
+    DataTypeProvider
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
@@ -24,12 +25,12 @@ import {
     TableColumnVisibility,
     TableColumnReordering,
     TableColumnResizing,
-    TableFilterRow,
+    TableFilterRow
 } from '@devexpress/dx-react-grid-material-ui';
 
 import '@material-ui/icons/ChevronLeft'
-import { Loading } from '../../theme-sources/bootstrap4/components/loading';
-import { CurrencyTypeProvider } from '../../theme-sources/bootstrap4/components/currency-type-provider';
+import { Loading } from '../../../../theme-sources/bootstrap4/components/loading';
+import { CurrencyTypeProvider } from '../../../../theme-sources/bootstrap4/components/currency-type-provider';
 import connect from "react-redux/es/connect/connect";
 
 var Params = {};
@@ -67,7 +68,7 @@ const BooleanEditor = ({ value, onValueChange }) => (
     </select>
 );
 
-class ApiGridComponent extends React.PureComponent {
+class ApiModalGridComponent extends React.PureComponent {
 
     ChangeStyle = (restProps) => {
 
@@ -96,10 +97,6 @@ class ApiGridComponent extends React.PureComponent {
         Object.keys(columns).map((item, index) => {
             return defaultColumnWidths[index++] = { columnName: columns[item].name, width: columnwidth };
         })
-        let columnOrder = [];
-        Object.keys(columns).map((item, index) => {
-            return columnOrder[index++] = columns[item].name;
-        })
         this.state = {
             rows: [],
             totalCount: 0,
@@ -116,8 +113,8 @@ class ApiGridComponent extends React.PureComponent {
             columnWidths: [],
             booleanFilterOperations: ['boolean'],
             currencyFilterOperations: ['equals'],
-            columnOrder: columnOrder,
-            defaultColumnWidths: defaultColumnWidths,
+            columnOrder: [],
+            defaultColumnWidths: defaultColumnWidths
         };
         this.changeSorting = this.changeSorting.bind(this);
         this.changeCurrentPage = this.changeCurrentPage.bind(this);
@@ -285,7 +282,6 @@ class ApiGridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
-        
         //add navid
         const tableHeaderMessages = {
             sortingHint: this.context.t("SortingHint"),
@@ -322,15 +318,13 @@ class ApiGridComponent extends React.PureComponent {
                         columnGroupingEnabled={true}
                     />
                     <IntegratedGrouping />
+
                     <PagingState
                         currentPage={currentPage}
                         onCurrentPageChange={this.changeCurrentPage}
                         defaultCurrentPage={0}
                         pageSize={pageSize === 0 ? 10 : pageSize}
                         onPageSizeChange={this.changePageSize}
-                    />
-                    <CustomPaging
-                        totalCount={totalCount}
                     />
                     {pageSize === 0 && <IntegratedPaging />}
                     <FilteringState
@@ -341,15 +335,20 @@ class ApiGridComponent extends React.PureComponent {
                         columnExtensions={tableColumnExtensions}
                         messages={tableMessages}
                     />
-                    <TableColumnResizing
-                        defaultColumnWidths={defaultColumnWidths}
-                    /><TableColumnReordering
+                    <TableColumnReordering
                         order={columnOrder}
                         onOrderChange={this.changeColumnOrder}
+                    /> <TableColumnResizing
+                        defaultColumnWidths={defaultColumnWidths}
                     />
                     <TableHeaderRow showSortingControls messages={tableHeaderMessages} />
 
-
+                    <CustomPaging
+                        totalCount={totalCount}
+                    /> <PagingPanel
+                        pageSizes={pageSizes}
+                        messages={pagingPanelMessages}
+                    />
                     <TableGroupRow />
                     <TableColumnVisibility
                         hiddenColumnNames={hiddenColumnNames}
@@ -359,13 +358,9 @@ class ApiGridComponent extends React.PureComponent {
                         messages={filterMessages}
                     />
                     <Toolbar />
-                    <ColumnChooser messages={columnChooserMessages} />
+                    <ColumnChooser  messages={columnChooserMessages}/>
                     <GroupingPanel showGroupingControls={true} showSortingControls LocalizationMessages
                         messages={groupingPanelMessages} />
-                    <PagingPanel
-                        pageSizes={pageSizes}
-                        messages={pagingPanelMessages}
-                    />
                 </Grid>
                 {this.props.gridloading && <Loading />}
             </div>
@@ -373,7 +368,7 @@ class ApiGridComponent extends React.PureComponent {
     }
 }
 
-ApiGridComponent.contextTypes = {
+ApiModalGridComponent.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
@@ -398,5 +393,5 @@ const mapDispatchToProps = dispatch => ({
          dispatch(BasicInfo_action.GetRowData(data))
      },*/
 });
-const connectedApiGridComponent = connect(mapStateToProps, mapDispatchToProps)(ApiGridComponent);
-export { connectedApiGridComponent as ApiGridComponent };
+const connectedApiModalGridComponent = connect(mapStateToProps, mapDispatchToProps)(ApiModalGridComponent);
+export { connectedApiModalGridComponent as ApiModalGridComponent };

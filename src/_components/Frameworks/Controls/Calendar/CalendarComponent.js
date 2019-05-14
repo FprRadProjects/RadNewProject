@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import '../../content/css/Calendar.css';
+import '../../../../content/css/Calendar.css';
 import 'moment-jalaali';
 import Calendar from 'react-persian-calendar'
 import PropTypes from "prop-types"
+import connect from "react-redux/es/connect/connect";
 
 class CalendarComponent extends Component {
 
@@ -22,4 +23,6 @@ class CalendarComponent extends Component {
 CalendarComponent.contextTypes = {
     t: PropTypes.func.isRequired
 }
-export default CalendarComponent;
+
+const connectedCalendarComponent = connect(null, null)(CalendarComponent);
+export { connectedCalendarComponent as CalendarComponent };

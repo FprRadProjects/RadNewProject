@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton } from "../../Config";
+import { RibbonButton, ShortKeyButton } from "../../Frameworks";
 import { HideElementListModal, EditTextElementListModal } from "../../Basic";
 import {
     design_Actions,

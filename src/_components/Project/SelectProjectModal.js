@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {ProjectsInfo_action} from "../../_actions";
 import PropTypes from "prop-types"
-import {GridComponent} from "../Config/GridComponent";
+import {GridComponent} from "../Frameworks";
 
 var currencyColumns = [];
 var hiddenColumnNames = [];

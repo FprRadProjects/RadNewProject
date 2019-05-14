@@ -6,7 +6,7 @@ import {
     WorkBasic_action,
     BasicInfo_action, WorkActions_action
 } from "../../../_actions";
-import { ApiGridComponent } from "../../Config/ApiGridComponent";
+import { ApiGridComponent } from "../../Frameworks";
 import { RadioFilter } from "./RadioFilter";
 import PropTypes from "prop-types"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';

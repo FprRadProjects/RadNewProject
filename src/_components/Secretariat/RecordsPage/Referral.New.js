@@ -12,7 +12,7 @@ import {
 } from "../../../_actions";
 import { toast } from 'react-toastify';
 import { RibbonNewReferral } from '../Ribbon/Ribbon.NewReferral';
-import { ComboSelectList, CalendarDatePicker } from "../../Config";
+import { ComboSelectList, CalendarDatePicker } from "../../Frameworks";
 import { ReferralToModal } from '../../Basic';
 var finalSaveParams = {}
 var thisSaveParams = {

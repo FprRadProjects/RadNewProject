@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton } from "../../Config";
+import { RibbonButton, ShortKeyButton } from "../../Frameworks";
 import { HideElementListModal, EditTextElementListModal } from "../../Basic";
 import {
     design_Actions,
@@ -23,7 +23,7 @@ class RibbonNewWork extends Component {
     }
     componentDidMount() {
         const { GetTemplateForm } = this.props;
-        GetTemplateForm(FormInfo.fm_dabir_eghdam.id);
+        GetTemplateForm(FormInfo.fm_pub_sabt_kar.id);
     }
     handleClick() {
 

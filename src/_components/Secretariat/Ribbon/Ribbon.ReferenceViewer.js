@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { ReferenceViewer } from "../RecordsPage";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton } from "../../Config";
+import { RibbonButton, ShortKeyButton } from "../../Frameworks";
 import { HideElementListModal,EditTextElementListModal } from "../../Basic";
 import {
     Act_Reference,

@@ -4,8 +4,8 @@ import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { ReferenceViewer } from "../RecordsPage";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton } from "../../Config";
-import { HideElementListModal, EditTextElementListModal } from "../../Basic";
+import { RibbonButton, ShortKeyButton } from "../../Frameworks";
+import { HideElementListModal, EditTextElementListModal,WorkDiagramViewer } from "../../Basic";
 import {
     design_Actions,
 
@@ -13,7 +13,6 @@ import {
     , WorkAccess_action, WorkBasic_action
 } from "../../../_actions";
 import { toast } from 'react-toastify';
-import { DiagramViewer } from "../../Config/DiagramViewer";
 class RibbonReferences extends Component {
     constructor(props) {
 
@@ -53,7 +52,7 @@ class RibbonReferences extends Component {
             toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
-    OpenDiagramViewer() {
+    OpenWorkDiagramViewer() {
 
 
         const { SelectedRow, SetLog, lang, SeenWork, GetWorkInfo, workDiagram } = this.props;
@@ -81,7 +80,7 @@ class RibbonReferences extends Component {
 
     }
 
-    toggleDiagramViewer() {
+    toggleWorkDiagramViewer() {
         this.setState(prevState => ({
             DiagramModal: !prevState.DiagramModal
         }));
@@ -262,7 +261,7 @@ class RibbonReferences extends Component {
                                         <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="diagram"
-                                            handleClick={this.OpenDiagramViewer.bind(this)}
+                                            handleClick={this.OpenWorkDiagramViewer.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="Diagram"
                                         />
@@ -468,7 +467,7 @@ class RibbonReferences extends Component {
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-diagram") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.OpenDiagramViewer.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.OpenWorkDiagramViewer.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="diagram" tooltip={this.context.t("Diagram")} />
                                     )
                                 }
@@ -480,8 +479,8 @@ class RibbonReferences extends Component {
                 </nav>
 
 
-                {this.state.DiagramModal && <DiagramViewer modal={this.state.DiagramModal}
-                    toggle={this.toggleDiagramViewer.bind(this)}
+                {this.state.DiagramModal && <WorkDiagramViewer modal={this.state.DiagramModal}
+                    toggle={this.toggleWorkDiagramViewer.bind(this)}
                     SelectedRow={SelectedRow} />}
 
 

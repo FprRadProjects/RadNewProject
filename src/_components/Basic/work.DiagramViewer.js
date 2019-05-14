@@ -5,7 +5,7 @@ import PropTypes from "prop-types"
 
 import {OrgChart} from "../Frameworks/orgChart";
 
-class DiagramViewer extends Component {
+class WorkDiagramViewer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -60,7 +60,7 @@ class DiagramViewer extends Component {
 const mapDispatchToProps = dispatch => ({
 
 });
-DiagramViewer.contextTypes = {
+WorkDiagramViewer.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
@@ -80,5 +80,5 @@ function mapStateToProps(state) {
 }
 
 
-const connectedDiagramViewer = connect(mapStateToProps, mapDispatchToProps)(DiagramViewer);
-export { connectedDiagramViewer as DiagramViewer };
+const connectedWorkDiagramViewer = connect(mapStateToProps, mapDispatchToProps)(WorkDiagramViewer);
+export { connectedWorkDiagramViewer as WorkDiagramViewer };

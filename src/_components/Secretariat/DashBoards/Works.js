@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux"
 import {Act_Reference, design_Actions} from "../../../_actions";
-import {ApiGridComponent} from "../../Config/ApiGridComponent";
+import { ApiGridComponent } from "../../Frameworks";
 import {RadioFilter} from "./RadioFilter";
 import PropTypes from "prop-types"
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';

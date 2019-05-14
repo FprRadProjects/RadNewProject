@@ -1,17 +1,15 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
-
 import {
     PagingState,
     SortingState,
-    IntegratedFiltering,
+    CustomPaging,
     GroupingState,
     IntegratedGrouping,
     IntegratedPaging,
-    IntegratedSorting,
     FilteringState,
-    DataTypeProvider
+    DataTypeProvider,
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
@@ -26,14 +24,12 @@ import {
     TableColumnVisibility,
     TableColumnReordering,
     TableColumnResizing,
-    TableFilterRow
+    TableFilterRow,
 } from '@devexpress/dx-react-grid-material-ui';
 
 import '@material-ui/icons/ChevronLeft'
-
-
-import { Loading } from '../../theme-sources/bootstrap4/components/loading';
-import { CurrencyTypeProvider } from '../../theme-sources/bootstrap4/components/currency-type-provider';
+import { Loading } from '../../../../theme-sources/bootstrap4/components/loading';
+import { CurrencyTypeProvider } from '../../../../theme-sources/bootstrap4/components/currency-type-provider';
 import connect from "react-redux/es/connect/connect";
 
 var Params = {};
@@ -71,7 +67,7 @@ const BooleanEditor = ({ value, onValueChange }) => (
     </select>
 );
 
-class GridComponent extends React.PureComponent {
+class ApiGridComponent extends React.PureComponent {
 
     ChangeStyle = (restProps) => {
 
@@ -81,7 +77,9 @@ class GridComponent extends React.PureComponent {
         <Table.Row
             {...restProps}
             onClick={(e) => {
-                this.props.GetRowInfo(row);
+                //  this.props.GetRowInfo(row);
+                this.props.SelectRow(row);
+
                 this.ChangeStyle(restProps);
             }
             }
@@ -98,6 +96,10 @@ class GridComponent extends React.PureComponent {
         Object.keys(columns).map((item, index) => {
             return defaultColumnWidths[index++] = { columnName: columns[item].name, width: columnwidth };
         })
+        let columnOrder = [];
+        Object.keys(columns).map((item, index) => {
+            return columnOrder[index++] = columns[item].name;
+        })
         this.state = {
             rows: [],
             totalCount: 0,
@@ -110,30 +112,37 @@ class GridComponent extends React.PureComponent {
             currencyColumns: currencyColumns,
             booleanColumns: booleanColumns,
             currentPage: 0,
-            loading: false,
             hiddenColumnNames: hiddenColumnNames,
             columnWidths: [],
             booleanFilterOperations: ['boolean'],
             currencyFilterOperations: ['equals'],
-            columnOrder: [],
+            columnOrder: columnOrder,
             defaultColumnWidths: defaultColumnWidths,
-
         };
-        this.loadData();
         this.changeSorting = this.changeSorting.bind(this);
         this.changeCurrentPage = this.changeCurrentPage.bind(this);
         this.changePageSize = this.changePageSize.bind(this);
         this.changeGroup = this.changeGroup.bind(this);
-        this.changeFilters = this.changeFilters.bind(this);
         this.hiddenColumnNamesChange = (hiddenColumnNames) => {
             this.setState({ hiddenColumnNames });
         };
+        this.changeFilters = this.changeFilters.bind(this);
         this.changeColumnOrder = this.changeColumnOrder.bind(this);
 
-
+        this.changeColumnWidths = (columnWidths) => {
+            this.setState({ columnWidths });
+        };
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.UrlParams !== this.props.UrlParams) {
+            Params = nextProps.UrlParams;
+        }
     }
     changeColumnOrder(newOrder) {
-        this.setState({ columnOrder: newOrder });
+        this.setState({
+            columnOrder: newOrder,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
+        });
     }
 
     componentDidMount() {
@@ -146,58 +155,58 @@ class GridComponent extends React.PureComponent {
     }
 
     componentDidUpdate() {
-        //  this.loadData();
+        this.loadData();
     }
 
     changeSorting(sorting) {
         this.setState({
-            // loading: true,
             sorting,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
     }
+
     changeFilters(filters) {
         var newFilters = Object.keys(filters).map((item, index) => {
-            return { 
+            return {
                 columnName: filters[item].columnName,
                 value: filters[item].value.replace("ی", "ي"),
                 operation: filters[item].operation
             };
         })
         this.setState({
-            filters:newFilters
-        });
-    }
-    changeColumnWidths(columnWidths) {
-        this.setState({
             // loading: true,
-            columnWidths,
+            filters: newFilters,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
     }
 
     changeGroup(grouping) {
         this.setState({
-            loading: true,
-            grouping
+            grouping,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });
     }
 
     changeCurrentPage(currentPage) {
         this.setState({
-            loading: true,
             currentPage,
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
+
         });
     }
 
 
     changePageSize(pageSize) {
-        const { totalCount, currentPage: stateCurrentPage } = this.state;
+        this.setState({
+            totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
+        });
+        const { currentPage: stateCurrentPage } = this.state;
+        const totalCount = this.props.totalCount !== undefined ? this.props.totalCount : 0;
         const totalPages = Math.ceil(totalCount / pageSize);
         const currentPage = Math.min(stateCurrentPage, totalPages - 1);
-
         this.setState({
-            loading: true,
             pageSize,
-            currentPage,
+            currentPage
         });
     }
 
@@ -232,16 +241,12 @@ class GridComponent extends React.PureComponent {
     loadData() {
         const queryString = this.queryString();
         if (queryString === this.lastQuery) {
-            this.setState({ loading: false });
             return;
         }
         const { fetchData } = this.props;
-        if (fetchData !== undefined)
-        {
-            Params.filter = this.state.filters;
-            fetchData(Params);
-            this.lastQuery = queryString;
-        }
+        Params.filter = this.state.filters;
+        fetchData(Params);
+        this.lastQuery = queryString;
     }
 
     render() {
@@ -251,17 +256,17 @@ class GridComponent extends React.PureComponent {
         const {
             currencyColumns,
             sorting,
+            pageSize,
             pageSizes,
+            currentPage,
             filters,
-            loading,
             tableColumnExtensions,
             hiddenColumnNames,
             defaultColumnWidths,
             booleanColumns,
             columnOrder,
             booleanFilterOperations,
-            currencyFilterOperations,
-            pageSize
+            currencyFilterOperations
         } = this.state;
         if (this.props.rows !== undefined)
             rows = this.props.rows;
@@ -280,6 +285,7 @@ class GridComponent extends React.PureComponent {
         const filterMessages = {
             filterPlaceholder: this.context.t("GrigFilter"),
         };
+        
         //add navid
         const tableHeaderMessages = {
             sortingHint: this.context.t("SortingHint"),
@@ -291,6 +297,8 @@ class GridComponent extends React.PureComponent {
         const columnChooserMessages = {
             showColumnChooser: this.context.t("ShowColumnChooser"),
         };
+
+
         return (
             <div>
                 <Grid
@@ -310,40 +318,38 @@ class GridComponent extends React.PureComponent {
                         sorting={sorting}
                         onSortingChange={this.changeSorting}
                     />
-                    <IntegratedSorting />
                     <GroupingState defaultGrouping={[]}
                         columnGroupingEnabled={true}
                     />
                     <IntegratedGrouping />
-
+                    <PagingState
+                        currentPage={currentPage}
+                        onCurrentPageChange={this.changeCurrentPage}
+                        defaultCurrentPage={0}
+                        pageSize={pageSize === 0 ? 10 : pageSize}
+                        onPageSizeChange={this.changePageSize}
+                    />
+                    <CustomPaging
+                        totalCount={totalCount}
+                    />
+                    {pageSize === 0 && <IntegratedPaging />}
                     <FilteringState
                         filters={filters}
                         onFiltersChange={this.changeFilters}
                     />
-                    <IntegratedFiltering />
-                    <PagingState
-                        defaultCurrentPage={0}
-                        defaultPageSize={pageSize}
-                    />
-                    <IntegratedPaging />
                     <Table rowComponent={this.TableRow}
                         columnExtensions={tableColumnExtensions}
                         messages={tableMessages}
                     />
-                    <TableColumnReordering
+                    <TableColumnResizing
+                        defaultColumnWidths={defaultColumnWidths}
+                    /><TableColumnReordering
                         order={columnOrder}
                         onOrderChange={this.changeColumnOrder}
                     />
-                    <TableColumnResizing
-                        defaultColumnWidths={defaultColumnWidths}
-                    />
-
                     <TableHeaderRow showSortingControls messages={tableHeaderMessages} />
 
-                    <PagingPanel
-                        pageSizes={pageSizes}
-                        messages={pagingPanelMessages}
-                    />
+
                     <TableGroupRow />
                     <TableColumnVisibility
                         hiddenColumnNames={hiddenColumnNames}
@@ -356,20 +362,32 @@ class GridComponent extends React.PureComponent {
                     <ColumnChooser messages={columnChooserMessages} />
                     <GroupingPanel showGroupingControls={true} showSortingControls LocalizationMessages
                         messages={groupingPanelMessages} />
+                    <PagingPanel
+                        pageSizes={pageSizes}
+                        messages={pagingPanelMessages}
+                    />
                 </Grid>
-                {loading && <Loading />}
+                {this.props.gridloading && <Loading />}
             </div>
         );
     }
 }
 
-GridComponent.contextTypes = {
+ApiGridComponent.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
-const mapStateToProps = state => ({
-    lang: state.i18nState.lang
-});
+function mapStateToProps(state) {
+    const { lang } = state.i18nState
+    const { gridloading } = state.loading;
+
+    return {
+
+        gridloading,
+        lang,
+    }
+}
+
 
 
 const mapDispatchToProps = dispatch => ({
@@ -380,5 +398,5 @@ const mapDispatchToProps = dispatch => ({
          dispatch(BasicInfo_action.GetRowData(data))
      },*/
 });
-const connectedGridComponent = connect(mapStateToProps, mapDispatchToProps)(GridComponent);
-export { connectedGridComponent as GridComponent };
+const connectedApiGridComponent = connect(mapStateToProps, mapDispatchToProps)(ApiGridComponent);
+export { connectedApiGridComponent as ApiGridComponent };

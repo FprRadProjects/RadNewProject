@@ -4,25 +4,11 @@ import PropTypes from "prop-types"
 import { MenuProvider } from "react-contexify";
 import {
     BasicInfo_action
-} from "../../_actions";
+} from "../../../../_actions";
 var target = "";
 class RibbonButton extends Component {
     constructor(props) {
         super(props);
-    }
-    componentDidMount() {
-        document.addEventListener('contextmenu', this._handleContextMenu);
-
-    }
-    _handleContextMenu = (event) => {
-        if (event.target.attributes.formid !== undefined) {
-            if (event.target !== target) {
-                target = event.target;
-                var FormId = event.target.attributes.formid.value;
-                const { GetSelectedFormId } = this.props;
-                GetSelectedFormId(parseInt(FormId));
-            }
-        }
     }
     render() {
         const { DeletedElements, EditedElements, handleClick, Id, Text, FormId } = this.props;
@@ -34,7 +20,7 @@ class RibbonButton extends Component {
                 ) && <a id={"lnk-" + Id} onClick={handleClick.bind(this)} Description={this.context.t(Text)}
                     formid={FormId}
                 >
-                        <i formid={FormId} className={"icon " + Id} id={"icon-" + Id} element={"lnk-" + Id} 
+                        <i formid={FormId} isshortkey="true" className={"icon " + Id} id={"icon-" + Id} element={"lnk-" + Id} 
                         Description={this.context.t(Text)} title={this.context.t(Text)}></i>
                         <span formid={FormId} id={"lbl-" + Id} element={"lnk-" + Id}  Description={this.context.t(Text)}
                             erowid={(EditedElements === undefined || EditedElements["lbl-" + Id] === undefined) ?

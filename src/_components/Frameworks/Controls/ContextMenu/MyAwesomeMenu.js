@@ -4,10 +4,11 @@ import PropTypes from "prop-types"
 import { Menu, Item, Separator, Submenu, MenuProvider } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.min.css';
 import connect from "react-redux/es/connect/connect";
+import { toast } from 'react-toastify';
 
 import {
     BasicInfo_action
-} from "../../_actions";
+} from "../../../../_actions";
 
 class MyAwesomeMenu extends Component {
     constructor(props) {
@@ -28,6 +29,9 @@ class MyAwesomeMenu extends Component {
 
     HideClick = ({ event, props }) => {
         const id = event.target.attributes.id !== undefined ? event.target.attributes.id.value : "";
+        const formid = event.target.attributes.formid;
+        if (formid === undefined)
+            return false;
         if (id.indexOf("ShortKey") === -1 && id !== "") {
             this.setState(prevState => ({
                 ...this.state,
@@ -40,6 +44,7 @@ class MyAwesomeMenu extends Component {
             }));
         }
         else if (id.indexOf("ShortKey") !== -1) {
+
             if (event.target.nodeName == "I") {
                 var RowId = event.target.attributes.rowid.value;
                 var FormId = event.target.attributes.formid.value;
@@ -50,6 +55,9 @@ class MyAwesomeMenu extends Component {
 
     }
     EditClick = ({ event, props }) => {
+        const formid = event.target.attributes.formid;
+        if (formid === undefined)
+            return false;
         if (event.target.nodeName == "SPAN") {
             if (event.target.attributes.id !== undefined) {
                 const id = event.target.attributes.id.value;
@@ -77,15 +85,22 @@ class MyAwesomeMenu extends Component {
     }
     ShortKeyClick = ({ event, props }) => {
         const id = event.target.attributes.id !== undefined ? event.target.attributes.id.value : "";
-        if (id.indexOf("ShortKey") === -1 && id !== "") {
-            this.setState(prevState => ({
-                ...this.state,
-                modal: !prevState.modal,
-                event: event,
-                public: false,
-                ishide: false,
-                isshort: true,
-            }));
+
+        const formid = event.target.attributes.formid;
+        if (formid === undefined)
+            return false;
+        const isShortKey = event.target.attributes.isShortKey !== undefined ? event.target.attributes.isShortKey.value : "false";
+        if (id.indexOf("ShortKey") === -1 && isShortKey !== "false" && id !== "") {
+            if (event.target.nodeName == "I") {
+                this.setState(prevState => ({
+                    ...this.state,
+                    modal: !prevState.modal,
+                    event: event,
+                    public: false,
+                    ishide: false,
+                    isshort: true,
+                }));
+            }
         }
     }
     SaveChange = () => {
@@ -107,7 +122,6 @@ class MyAwesomeMenu extends Component {
                 }));
             }
         } else if (!this.state.isshort) {
-            console.log(this.state.event.target.attributes)
             var HideParam =
             {
                 RowId: 0,
@@ -124,19 +138,23 @@ class MyAwesomeMenu extends Component {
             }));
         }
         else {
+            var formId=this.state.event.target.attributes.formid!==undefined?
+            this.state.event.target.attributes.formid.value:0;
             var Params =
             {
                 RowId: 0,
-                FormId: this.state.event.target.attributes.FormId.value,
+                FormId: formId,
                 Meta: "",
                 Element: "",
                 IsPublic: this.state.public,
             }
             if (this.state.event.target.attributes.id !== undefined) {
                 if (this.state.event.target.nodeName == "I") {
-                    if (this.state.event.target.attributes.id.value.indexOf("ShortKey") === -1) {
-                        const { Set_ShortKey_TemplateForm, ShortKeys } = this.props;
+
+                    if (this.state.event.target.attributes.id.value.indexOf("ShortKey") === -1 ) {
+                        const { Set_ShortKey_TemplateForm, Design } = this.props;
                         Params.Element = "ShortKey" + this.state.event.target.attributes.id.value;
+                        const ShortKeys=Design!==undefined? Design["ShortKeys"+formId]:undefined;
                         if (ShortKeys === undefined) {
                             this.state.event.target.attributes.element.value = Params.Element;
                             Set_ShortKey_TemplateForm(Params);
@@ -145,6 +163,9 @@ class MyAwesomeMenu extends Component {
                             this.state.event.target.attributes.element.value = Params.Element;
                             Set_ShortKey_TemplateForm(Params);
                         }
+                        else
+                        toast.error(this.context.t("Information_Is_Duplicate"))
+
                     }
                 }
             }
@@ -216,14 +237,10 @@ MyAwesomeMenu.contextTypes = {
 
 function mapStateToProps(state) {
     const { lang } = state.i18nState;
-    const { SelectedFormId } = state.BasicInfo;
-    var FormId = SelectedFormId;
-    if (SelectedFormId === undefined)
-        FormId = 0;
-    var ShortKeys = state.Design["ShortKeys" + FormId];
+    const { Design } = state;
     return {
         lang,
-        ShortKeys
+        Design
     };
 }
 

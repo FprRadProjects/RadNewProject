@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import { AutoBasicInfo_action } from "../../_actions";
 import PropTypes from "prop-types"
-import { GridComponent, MultiSelectGridComponent } from "../Config";
+import { GridComponent, MultiSelectGridComponent } from "../Frameworks";
 import { toast } from 'react-toastify';
 
 import { confirmAlert } from 'react-confirm-alert'; // Import

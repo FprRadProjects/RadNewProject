@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { RadioGroup, Radio } from 'react-radio-group'
 import connect from "react-redux/es/connect/connect";
 import PropTypes from "prop-types"
-import CalendarComponent from "../../Config/CalendarComponent";
+import {CalendarComponent} from "../../Frameworks";
 
 class RadioFilter extends Component {
 

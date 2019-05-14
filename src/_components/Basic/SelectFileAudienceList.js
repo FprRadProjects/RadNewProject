@@ -3,7 +3,7 @@ import {connect} from "react-redux"
 import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
 import {AutoBasicInfo_action} from "../../_actions";
 import PropTypes from "prop-types"
-import {ApiModalGridComponent} from "../Config/ApiModalGridComponent";
+import {ApiModalGridComponent} from "../Frameworks";
 var currencyColumns = [];
 var hiddenColumnNames = ['tel1','fax','add1','email','www','mokh_mob','vaziyat','mokhatab_id'];
 var booleanColumns = [];

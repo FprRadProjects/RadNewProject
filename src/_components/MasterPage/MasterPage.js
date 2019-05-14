@@ -15,7 +15,7 @@ import '../../content/css/font-awesome.min.css';
 import '../../content/css/main.css'
 import { Sidebar } from '../sections/Sidebar';
 import '../../content/js/script.js';
-import { MyAwesomeMenu } from "../Config/MyAwesomeMenu";
+import { MyAwesomeMenu } from "../Frameworks";
 import { mainpageActions } from "../../_actions/MainPage";
 import { design_Actions } from "../../_actions/Design";
 import { ToastContainer, toast } from 'react-toastify';

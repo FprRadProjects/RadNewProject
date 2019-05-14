@@ -11,11 +11,14 @@ import { FormInfo } from "../../../locales";
 import {
     AutoBasicInfo_action,
     ArchiveBasic_action, WorkActions_action,
-    ProjectsInfo_action
+    ProjectsInfo_action, design_Actions
 } from "../../../_actions";
 import { toast } from 'react-toastify';
 import { RibbonNewWork } from '../Ribbon/Ribbon.NewWork';
-import { ComboSelectList, CalendarDatePicker, ApiComboMultiSelectList } from "../../Config";
+import {
+    ComboSelectList, LabelCheckBox, LabelInputText,
+    LabelCombobox, LabelCalendar, LabelPopUpInputText, BoxGroup
+} from "../../Frameworks";
 var finalSaveParams = {}
 // var fileShowField = ["id_taraf", "name", "coname", "mokhatab_name", "mokhatab_id"];
 var thisSaveParams = {
@@ -48,7 +51,7 @@ var WorkerParams = {
     "filter": []
 };
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
-var DefaultInfoParams = { form: "referrals", wt_id: 0, flow_id: 0, isInternal: 0 }
+var DefaultInfoParams = { form: "work", wt_id: 0, flow_id: 0, isInternal: 0 }
 
 
 class NewWork extends Component {
@@ -61,16 +64,20 @@ class NewWork extends Component {
             AttachmentList: [],
             SelectedAudienceId: 0,
             SelectedFileId: 0,
+            hasformsazCheckBox: false,
             manager_role_id: 0,
             user_role_id: 0,
+            SubjectInputText: "",
+            ResultTextArea: "",
+            DescriptionTextArea: "",
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-automation-modal r-newwork-modal"
         };
     }
 
     componentDidMount() {
-         finalSaveParams = {}
-         thisSaveParams = {
+        finalSaveParams = {}
+        thisSaveParams = {
             form: "",
             type: "new",
             data: [],
@@ -84,13 +91,13 @@ class NewWork extends Component {
             smsToWorker: 0,
             smsToAudience: 0,
             archivesList: []
-        
+
         };
-         projectParams = {
+        projectParams = {
             "Id_Taraf": 0
         };
-        
-         WorkerParams = {
+
+        WorkerParams = {
             "page": 0,
             "pagesize": 10,
             "id_role": 0,
@@ -99,10 +106,10 @@ class NewWork extends Component {
             "direction": "desc",
             "filter": []
         };
-         workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
-         DefaultInfoParams = { form: "referrals", wt_id: 0, flow_id: 0, isInternal: 0 }
-        
-        
+        workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
+        DefaultInfoParams = { form: "work", wt_id: 0, flow_id: 0, isInternal: 0 }
+
+
 
         const { SelectWorkTypeList, SelectPriorityList, SelectFlowList,
             SelectWorkGroupList, SelectRoleList, SelectWorkerList
@@ -118,19 +125,27 @@ class NewWork extends Component {
     }
     CalendarChange = (value, name) => {
         thisSaveParams.data[[name]] = { [name]: value }
+        this.setState({ setDefaultActionDate: value });
     }
     changeHandle = (e, val) => {
+
         if (val !== undefined) {
             const { name } = e;
+            console.log(name)
             if (name === "flow_id")
-                this.flowChange(val.value);
+                this.flowChange(val);
             else if (name === "workgroup_id")
-                this.workgroupChange(val.value);
+                this.workgroupChange(val);
             else if (name === "wt_id")
-                this.reloadWorkType(val.value);
+                this.reloadWorkType(val);
             else if (name === "worker_id") {
-                thisSaveParams.workers[0].worker = val.value;
+                let worker_id = val.value;
+                let workerLabel = val.label;
+                thisSaveParams.workers[0].worker = worker_id;
                 const { SayManagerOnWorkerWtype } = this.props;
+                thisSaveParams.workers[0].manager = val.value;
+                this.setState({ workerSelectedOption: { value: worker_id, label: workerLabel } });
+
                 SayManagerOnWorkerWtype(val.value, WorkerParams.wt_id).then(data => {
                     if (data.status) {
                         this.setState({ managerSelectedOption: { value: data.data.managerId, label: data.data.managerUName } });
@@ -138,27 +153,49 @@ class NewWork extends Component {
                     }
                 });
             }
-            else if (name === "defmodir_id" ) {
+            else if (name === "defmodir_id") {
+                const manager_id = val.value;
+                const managerLabel = val.label;
                 thisSaveParams.workers[0].manager = val.value;
-            }    
-            else if (name === "p_type_id" && val.value === 0) {
-                this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                thisSaveParams.data["p_type_id"] = { "p_type_id": null };
-                this.refs.project_code.value = "";
+                this.setState({ managerSelectedOption: { value: manager_id, label: managerLabel } });
             }
-            console.log(val.value)
-            console.log(name)
+            else if (name === "p_type_id") {
+                this.projectChange(val);
+            }
             if (name !== "worker_id" && name !== "defmodir_id")
                 thisSaveParams.data[[name]] = { [name]: val.value === 0 ? null : val.value }
+
         }
         else {
             const { name, value } = e.target;
+            if (name === "mozo")
+                this.setState({ SubjectInputText: value });
+            if (name === "natije")
+                this.setState({ ResultTextArea: value });
+            if (name === "tozihat")
+                this.setState({ DescriptionTextArea: value });
             thisSaveParams.data[[name]] = { [name]: value };
         }
     }
-    workgroupChange = (workgroup_id) => {
+    projectChange = (Val) => {
+
+        const project_id = Val.value;
+        const projectLabel = Val.label;
+        if (project_id !== 0)
+            this.setState({ ProjectSelectedOption: { value: project_id, label: projectLabel } });
+        else {
+
+            this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            thisSaveParams.data["p_type_id"] = { "p_type_id": null };
+            // this.setState({ project_codeText: "" });
+        }
+    }
+    workgroupChange = (Val) => {
+        const workgroup_id = Val.value;
+        const workgrouLabel = Val.label;
         const { SelectWorkTypeList } = this.props;
         if (workgroup_id !== 0) {
+            this.setState({ WorkgroupSelectedOption: { value: workgroup_id, label: workgrouLabel } });
             workTypeParams.WorkGroupId = workgroup_id;
             this.setState({ flow_id_disabled: true });
             SelectWorkTypeList(workTypeParams);
@@ -171,15 +208,19 @@ class NewWork extends Component {
             this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
             this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
             this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ WorkgroupSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
         }
     }
-    flowChange = (flowId) => {
+    flowChange = (Val) => {
+        const flowId = Val.value;
+        const flowLabel = Val.label;
         const { SelectWorkTypeList, FirstWorkOnFlow } = this.props;
         if (flowId !== 0) {
             workTypeParams.FlowId = flowId;
             thisSaveParams.data["erja"] = { "erja": 1 };
             thisSaveParams.data["flow_id"] = { "flow_id": flowId };
             DefaultInfoParams.flow_id = flowId;
+            this.setState({ FlowSelectedOption: { value: flowId, label: flowLabel } });
             this.setState({ workgroup_id_disabled: true });
             SelectWorkTypeList(workTypeParams).then(Response1 => {
                 if (Response1.status) {
@@ -189,10 +230,10 @@ class NewWork extends Component {
                             if (Response2.data.workTypeId !== 0 && found) {
                                 this.setState({ workTypeSelectedOption: { value: Response2.data.workTypeId, label: Response2.data.workType } });
                                 workTypeParams.FlowId = flowId;
-                                this.reloadWorkType(Response2.data.workTypeId);
+                                this.reloadWorkType({ value: Response2.data.workTypeId, label: Response2.data.workType });
                             } else {
                                 this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-                                this.refs.flow.checked = false;
+                                this.setState({ flowCheckBox: false });
                             }
                         }
                     });
@@ -203,17 +244,21 @@ class NewWork extends Component {
             thisSaveParams.data["flow_id"] = { "flow_id": null };
             workTypeParams.FlowId = 0;
             DefaultInfoParams.flow_id = 0;
+            this.setState({ FlowSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
             this.setState({ workgroup_id_disabled: false });
             SelectWorkTypeList(workTypeParams);
             this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
             this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
             this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-            this.refs.flow.checked = true;
+            this.setState({ flowCheckBox: true });
             thisSaveParams.data["erja"] = { "erja": 1 };
         }
     }
-    reloadWorkType = (selectedWtId) => {
-        const { SelectWorkTypeList, SelectWorkerList } = this.props;
+    reloadWorkType = (Val) => {
+        const selectedWtId = Val.value;
+        const selectedWtLabel = Val.label;
+        this.setState({ workTypeSelectedOption: { value: selectedWtId, label: selectedWtLabel } });
+        const { SelectWorkerList } = this.props;
         if (selectedWtId == 0) {
             WorkerParams.wt_id = 0;
             thisSaveParams.data["wt_id"] = { "wt_id": null };
@@ -230,7 +275,7 @@ class NewWork extends Component {
         thisSaveParams.data["arshiv_id"] = { "arshiv_id": 0 };
         thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
 
-        this.refs.Follower.value = "";
+        this.setState({ FollowerText: "" });
         thisSaveParams.data["p_id"] = { "p_id": 0 };
         this.setState({ SelectedFollowerId: 0 });
         this.setState({ SelectedShowtreeFollowerId: 0 });
@@ -239,20 +284,20 @@ class NewWork extends Component {
             if (data.status) {
                 if (data.data.DefaultValue !== null) {
                     if (workTypeParams.FlowId === 0 || workTypeParams.FlowId === undefined || workTypeParams.FlowId === null) {
-                        this.refs.flow.checked = data.data.DefaultValue.flow;
+                        this.setState({ flowCheckBox: data.data.DefaultValue.flow });
                         thisSaveParams.data["flow_id"] = { "flow_id": null };
                         thisSaveParams.data["erja"] = { "erja": data.data.DefaultValue.flow ? 1 : 0 };
                     }
-                    this.refs.alowatt.checked = data.data.DefaultValue.alowatt;
-                    thisSaveParams["alowatt"] = data.data.DefaultValue.alowatt ? 1 : 0;
+                    this.setState({ alowattCheckBox: data.data.DefaultValue.alowatt });
+                    thisSaveParams.data["alowatt"] = { "alowatt": data.data.DefaultValue.alowatt ? 1 : 0 };
 
-                    this.refs.emailToWorker.checked = data.data.DefaultValue.web_emailtokarbar;
-                    this.refs.smsToWorker.checked = data.data.DefaultValue.web_smstokarbar;
+                    this.setState({ emailToWorkerCheckBox: data.data.DefaultValue.web_emailtokarbar });
+                    this.setState({ smsToWorkerCheckBox: data.data.DefaultValue.web_smstokarbar });
                     thisSaveParams["emailToWorker"] = data.data.DefaultValue.web_emailtokarbar ? 1 : 0;
                     thisSaveParams["smsToWorker"] = data.data.DefaultValue.web_smstokarbar ? 1 : 0;
 
-                    this.refs.emailToAudience.checked = data.data.DefaultValue.web_emailtomokhatab;
-                    this.refs.smsToAudience.checked = data.data.DefaultValue.web_smstomokhatab;
+                    this.setState({ emailToAudienceCheckBox: data.data.DefaultValue.web_emailtomokhatab });
+                    this.setState({ smsToAudienceCheckBox: data.data.DefaultValue.web_smstomokhatab });
                     thisSaveParams["emailToAudience"] = data.data.DefaultValue.web_emailtomokhatab ? 1 : 0;
                     thisSaveParams["smsToAudience"] = data.data.DefaultValue.web_smstomokhatab ? 1 : 0;
 
@@ -266,10 +311,10 @@ class NewWork extends Component {
                             thisSaveParams.data["id_tel"] = { "id_tel": data.data.FileInfo.id };
                             this.setState({ SelectedFileId: data.data.FileInfo.id });
                             thisSaveParams.data["ashkhas_id"] = { "ashkhas_id": null };
-                            this.refs.fileInfo.value = data.data.FileInfo.coname;
+                            this.setState({ fileInfoText: data.data.FileInfo.coname });
                             if (data.data.FileInfo.ptype_id !== null || data.data.FileInfo.ptype_id !== 0) {
                                 this.setState({ ProjectSelectedOption: { value: data.data.FileInfo.ptype_id, label: data.data.FileInfo.ptype } });
-                                this.refs.project_code.value = data.data.FileInfo.ptypecode;
+                                // this.setState({ project_codeText: data.data.FileInfo.ptypecode });
                                 thisSaveParams.data["p_type_id"] = { "p_type_id": data.data.FileInfo.ptype_id };
                             }
                             projectParams.Id_Taraf = data.data.FileInfo.id
@@ -277,7 +322,10 @@ class NewWork extends Component {
                             GetSelectComboProject(projectParams);
                         }
                     }
-                    this.setState({ setDefaultActionDate: data.data.ActionDate });
+                    if (data.data.ActionDate !== "") {
+                        this.setState({ setDefaultActionDate: data.data.ActionDate });
+                        thisSaveParams.data["tarikhaction"] = { "tarikhaction": data.data.ActionDate };
+                    }
                 }
             }
             else {
@@ -302,24 +350,36 @@ class NewWork extends Component {
         if (name === "withoutFlow") {
             thisSaveParams.data["flow_id"] = { "flow_id": null };
             thisSaveParams.data["erja"] = { "erja": value };
-        }
-        else if (name === "emailToWorker")
+            this.setState({ flowCheckBox: checked });
+        } if (name === "alowatt") {
+            thisSaveParams.data["alowatt"] = { "alowatt": value };
+            this.setState({ alowattCheckBox: checked });
+        } if (name === "lock") {
+            thisSaveParams.data["lock"] = { "lock": value };
+            this.setState({ lockCheckBox: checked });
+        } else if (name === "emailToWorker") {
             thisSaveParams["emailToWorker"] = value;
-        else if (name === "smsToWorker")
+            this.setState({ emailToWorkerCheckBox: checked });
+        } else if (name === "smsToWorker") {
             thisSaveParams["smsToWorker"] = value;
-        else if (name === "emailToAudience")
+            this.setState({ smsToWorkerCheckBox: checked });
+        } else if (name === "emailToAudience") {
             thisSaveParams["emailToAudience"] = value;
-        else if (name === "smsToAudience")
+            this.setState({ emailToAudienceCheckBox: checked });
+        } else if (name === "smsToAudience") {
             thisSaveParams["smsToAudience"] = value;
-
-        else if (name === "cpy_form_kar") {
+            this.setState({ smsToAudienceCheckBox: checked });
+        } else if (name === "cpy_form_kar") {
             if (checked && this.state.SelectedShowtreeFollowerId !== undefined && this.state.SelectedShowtreeFollowerId !== 0)
                 thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": this.state.SelectedShowtreeFollowerId };
             else
                 thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
-            // this.setState({ "cpy_form_kar": checked });
+            this.setState({ "cpy_form_karCheckBox": checked });
         }
         else if (name === "hasformsaz") {
+            console.log("hasformsaz")
+            console.log(checked)
+            this.setState({ hasformsazCheckBox: checked });
             workTypeParams.HasFormGen = value;
             SelectWorkTypeList(workTypeParams);
             this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
@@ -336,16 +396,20 @@ class NewWork extends Component {
     SuccessSelectSubject = (row, e) => {
         if (row !== undefined && row !== null) {
             if (this.state.SubjectSelectmodal)
-                if (this.state.type === "subject") {
-                    this.refs.SubjectInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                    thisSaveParams.data["mozo"] = { "mozo": this.refs.SubjectInput.value };
-                } else if (this.state.type === "result") {
-                    this.refs.ResultTextArea.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                    thisSaveParams.data["natije"] = { "natije": this.refs.ResultTextArea.value };
+                if (this.state.type === "Subject") {
+                    const newSubject = this.state.SubjectInputText + " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    this.setState({ SubjectInputText: newSubject });
+                    thisSaveParams.data["mozo"] = { "mozo": newSubject };
+                } else if (this.state.type === "Result") {
+                    const newResult = this.state.ResultTextArea + " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    this.setState({ ResultTextArea: newResult });
+
+                    thisSaveParams.data["natije"] = { "natije": newResult };
                 }
                 else {
-                    this.refs.DescriptionTextArea.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                    thisSaveParams.data["tozihat"] = { "tozihat": this.refs.DescriptionTextArea.value };
+                    const newDescription = this.state.DescriptionTextArea + " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    this.setState({ DescriptionTextArea: newDescription });
+                    thisSaveParams.data["tozihat"] = { "tozihat": newDescription };
                 }
             this.setState({
                 SubjectSelectmodal: !this.state.SubjectSelectmodal,
@@ -359,20 +423,24 @@ class NewWork extends Component {
     saveWorkHandle = () => {
         const { lang, toggle, InsertNewWorkInfo } = this.props;
         var formname = lang == "fa" ? FormInfo.fm_pub_sabt_kar.form_name : FormInfo.fm_pub_sabt_kar.en_form_name;
-
+        console.log(thisSaveParams)
         if (thisSaveParams.data["wt_id"] === undefined) {
             toast.error(this.context.t("msg_No_Select_WorkType"));
+            return false;
+        }
+        if (thisSaveParams.data["id_tel"] === undefined) {
+            toast.error(this.context.t("msg_No_Select_File_Audience"));
             return false;
         }
         if (thisSaveParams.workers.length == 0) {
             toast.error(this.context.t("msg_No_Select_Worker"));
             return false;
         }
-        if (thisSaveParams.workers[0].worker_id ===undefined || thisSaveParams.workers[0].worker_id ==0) {
+        if (thisSaveParams.workers[0].worker === undefined || thisSaveParams.workers[0].worker == 0) {
             toast.error(this.context.t("msg_No_Select_Worker"));
             return false;
-        } 
-        if (thisSaveParams.workers[0].manager_id ===undefined || thisSaveParams.workers[0].manager_id ==0) {
+        }
+        if (thisSaveParams.workers[0].manager === undefined || thisSaveParams.workers[0].manager == 0) {
             toast.error(this.context.t("msg_No_Select_Manager"));
             return false;
         }
@@ -393,8 +461,6 @@ class NewWork extends Component {
             return obj[index++] = finalSaveParams.data[item];
         })
         finalSaveParams.data = obj;
-        console.log(finalSaveParams)
-        return false;
         if (finalSaveParams.peygir_id === 0) {
             InsertNewWorkInfo(finalSaveParams, this.context.t("msg_Operation_Success")).then(data => {
                 if (data.status) {
@@ -404,7 +470,7 @@ class NewWork extends Component {
             });
         }
         else if (finalSaveParams.peygir_id !== 0) {
-            console.log(thisSaveParams)
+            alert("updated")
             console.log(finalSaveParams)
             //update
         }
@@ -425,8 +491,8 @@ class NewWork extends Component {
     }
     SelectFileAudienceRow(row) {
         const { GetSelectComboProject } = this.props;
-        this.refs.fileInfo.value = row.coname + " - " + row.name;
-        this.refs.Audience.value = row.mokhatab_name;
+        this.setState({ fileInfoText: row.coname + " - " + row.name });
+        this.setState({ AudienceText: row.mokhatab_name });
         this.setState({ SelectedFileId: row.id_taraf });
         this.setState({ SelectedAudienceId: row.mokhatab_id });
         thisSaveParams.data["id_tel"] = { "id_tel": row.id_taraf };
@@ -435,10 +501,10 @@ class NewWork extends Component {
             SelectFileAudiencemodal: !this.state.SelectFileAudiencemodal,
         });
         this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-        this.refs.project_code.value = "";
+        // this.setState({ project_codeText: "" });
         projectParams.Id_Taraf = row.id_taraf;
         GetSelectComboProject(projectParams);
-        this.refs.Follower.value = "";
+        this.setState({ FollowerText: "" });
         thisSaveParams.data["p_id"] = { "p_id": 0 };
         this.setState({ SelectedFollowerId: 0 });
         this.setState({ SelectedShowtreeFollowerId: 0 });
@@ -456,11 +522,13 @@ class NewWork extends Component {
     }
     SelectFollowerRow(row) {
         if ((row.flow_id === null || row.flow_id == 0) && row.flow_id !== undefined) {
-            this.refs.Follower.value = row.peygir_id + " - " + row.wtype + " - " + this.context.t("Serial") + " : " + row.nos_id;
+            this.setState({ FollowerText: row.peygir_id + " - " + row.wtype + " - " + this.context.t("Serial") + " : " + row.nos_id });
             thisSaveParams.data["p_id"] = { "p_id": row.peygir_id };
             this.setState({ SelectedFollowerId: row.peygir_id });
             this.setState({ SelectedShowtreeFollowerId: row.showtree_id });
-            if (this.refs.cpy_form_kar.checked)
+            thisSaveParams.data["showtree_id"] = { "showtree_id": row.showtree_id };
+            thisSaveParams.data["arshiv_id"] = { "arshiv_id": row.showtree_id };
+            if (this.state.cpy_form_karCheckBox)
                 thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": row.showtree_id };
             else
                 thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
@@ -472,7 +540,7 @@ class NewWork extends Component {
             toast.error(this.context.t("msg_No_Select_Is_In_Flow"));
     }
     deleteFollower = () => {
-        this.refs.Follower.value = "";
+        this.setState({ FollowerText: "" });
         thisSaveParams.data["p_id"] = { "p_id": 0 };
         this.setState({ SelectedFollowerId: 0 });
     }
@@ -492,7 +560,7 @@ class NewWork extends Component {
                 let PtypeId = row !== undefined ? row.id !== undefined ? row.id : "" : "";
                 let Code = row !== undefined ? row.code !== undefined ? row.code : "" : "";
                 this.setState({ ProjectSelectedOption: { value: PtypeId, label: Ptype } });
-                this.refs.project_code.value = Code;
+                // this.setState({ project_codeText: Code });
             }
             thisSaveParams.data["p_type_id"] = { "p_type_id": row.id };
             this.setState({
@@ -510,39 +578,34 @@ class NewWork extends Component {
             if (name === "user_role_id") {
                 WorkerParams.id_role = val.value;
                 SelectWorkerList(WorkerParams);
-                this.setState({
-                    user_role_id: val.value,
-                });
+                this.setState({ user_roleSelectedOption: { value: val.value, label: val.label } });
                 this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
             }
             else if (name === "manager_role_id") {
                 SelectManagerList(val.value, 0);
-                this.setState({
-                    manager_role_id: val.value,
-                });
+                this.setState({ manager_roleSelectedOption: { value: val.value, label: val.label } });
                 this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
             }
         }
     }
     deleteProject = () => {
         this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-        this.refs.project_code.value = "";
+        // this.setState({ project_codeText: "" });
     }
     render() {
         const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows,
             SelectWorkFlowList_rows, SelectWorkGroupList_rows, SelectRoleList_rows,
-            SelectProjectComboList_rows, SelectWorkerList_rows, SelectFileAudience_rows,
-            SelectManagerList_rows, GetSelectFileAudienceList } = this.props;
+            SelectProjectComboList_rows, SelectWorkerList_rows,
+            SelectManagerList_rows, DeletedElements, EditedElements } = this.props;
         var None = [{ value: 0, label: this.context.t("NoSelection") }]
-        var PriorityList = None.concat(SelectPriorityList_rows);
-        var WorkFlowList = None.concat(SelectWorkFlowList_rows);
-        var WorkGroupList = None.concat(SelectWorkGroupList_rows);
-        var WorkTypeList = None.concat(SelectWorkTypeList_rows);
-        var UserRollList = None.concat(SelectRoleList_rows);
-        var WorkerList = None.concat(SelectWorkerList_rows);
-        var ManagerList = None.concat(SelectManagerList_rows);
-        var ProjectList = None.concat(SelectProjectComboList_rows);
-        var FileList = None.concat(SelectFileAudience_rows);
+        var PriorityList = SelectPriorityList_rows !== undefined ? None.concat(SelectPriorityList_rows) : None
+        var WorkFlowList = SelectWorkFlowList_rows !== undefined ? None.concat(SelectWorkFlowList_rows) : None
+        var WorkGroupList = SelectWorkGroupList_rows !== undefined ? None.concat(SelectWorkGroupList_rows) : None
+        var WorkTypeList = SelectWorkTypeList_rows !== undefined ? None.concat(SelectWorkTypeList_rows) : None
+        var UserRollList = SelectRoleList_rows !== undefined ? None.concat(SelectRoleList_rows) : None
+        var WorkerList = SelectWorkerList_rows !== undefined ? None.concat(SelectWorkerList_rows) : None
+        var ManagerList = SelectManagerList_rows !== undefined ? None.concat(SelectManagerList_rows) : None
+        var ProjectList = SelectProjectComboList_rows !== undefined ? None.concat(SelectProjectComboList_rows) : None
 
         const modalBackDrop = `
         .modal-backdrop {
@@ -563,35 +626,58 @@ class NewWork extends Component {
                             <RibbonNewWork saveWorkHandle={this.saveWorkHandle.bind(this)} attachmentsToggle={this.attachmentsToggle.bind(this)} />
                         </div>
                         <div className="referral-modal">
-                            <div className="row bg-gray mg-b-5">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon flow"></span>
-                                </div>
+                            <BoxGroup className="row bg-gray mg-b-5"
+                                Text={this.context.t("WorkInfoBox")}
+                                FormId={FormInfo.fm_pub_sabt_kar.id}
+                                Id="WorkInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon flow"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
                                 <div className="col-11">
                                     <div className="row">
-                                        <div className="col-6">
+                                        <LabelCombobox className1="form-group row"
+                                            ColClassName="col-6"
+                                            LabelclassName="col-2 col-form-label"
+                                            Text={this.context.t("WorkFlow")}
+                                            className2="col-10"
+                                            ComboclassName="mt-2 mb-1" name="flow_id"
+                                            Id="WorkFlow"
+                                            changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            isDisabled={this.state.flow_id_disabled}
+                                            selectedOption={this.state.FlowSelectedOption}
+                                            options={WorkFlowList}
+                                        ></LabelCombobox>
+                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-4"
+                                            Text={this.context.t("WorkGroup")} className2="col-10"
+                                            ComboclassName="mt-2 mb-1" name="workgroup_id"
+                                            Id="WorkGroup" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            isDisabled={this.state.workgroup_id_disabled}
+                                            selectedOption={this.state.WorkgroupSelectedOption}
+                                            options={WorkGroupList}
+                                        ></LabelCombobox>
+                                        <div className="col-2">
                                             <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("WorkFlow")}</label>
-                                                <div className="col-10">
-                                                    {SelectWorkFlowList_rows !== undefined &&
-                                                        <ComboSelectList isDisabled={this.state.flow_id_disabled} options={WorkFlowList} classname="mt-2 mb-1" name="flow_id" ref="flow_id" onChange={this.changeHandle.bind(this)} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("WorkGroup")}</label>
-                                                <div className="col-10">
+                                                <div className="col-12">
                                                     <div className="input-group mt-2 mb-1">
-                                                        {SelectWorkGroupList_rows !== undefined &&
-                                                            <ComboSelectList isDisabled={this.state.workgroup_id_disabled} options={WorkGroupList} name="workgroup_id" ref="workgroup_id" onChange={this.changeHandle.bind(this)} />
-                                                        }
-                                                        <div className="input-group-append pl-5 pt-2 text-space-nowrap">
-                                                            <div className="checkbox">
-                                                                <input id="formbuilder0" ref="hasFormBuilder" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="hasformsaz" />
-                                                                <label htmlFor="formbuilder0" className="m-0">{this.context.t("HasFormBuilder")}</label>
-                                                            </div>
+                                                        <div className="input-group-append pl-5 pt-1 text-space-nowrap">
+                                                            <LabelCheckBox LabelclassName="m-0"
+                                                                Text={this.context.t("HasFormBuilder")}
+                                                                name="hasformsaz"
+                                                                Id="HasFormBuilder" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                                FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                                DeletedElements={DeletedElements}
+                                                                EditedElements={EditedElements}
+                                                                checked={this.state.hasformsazCheckBox}
+                                                            ></LabelCheckBox>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -600,290 +686,321 @@ class NewWork extends Component {
 
                                     </div>
                                     <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("WorkType")}</label>
-                                                <div className="col-10">
-                                                    {SelectWorkTypeList_rows !== undefined &&
-                                                        <ComboSelectList options={WorkTypeList} name="wt_id" classname="mt-1 mb-2" onChange={this.changeHandle.bind(this)} selectedOption={this.state.workTypeSelectedOption} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("WorkType")} className2="col-10"
+                                            ComboclassName="mt-1 mb-2" name="wt_id"
+                                            Id="WorkType" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            selectedOption={this.state.workTypeSelectedOption}
+                                            options={WorkTypeList}
+                                        ></LabelCombobox>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="row bg-gray mg-b-5">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon flow"></span>
+                            </BoxGroup>
+
+                            <BoxGroup className="row bg-gray mg-b-5"
+                                Text={this.context.t("FileInfoBox")}
+                                FormId={FormInfo.fm_pub_sabt_kar.id}
+                                Id="FileInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon flow"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
+                                <div className="col-11">
+                                    <div className="row">
+                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("File")} className2="col-10"
+                                            InputclassName="form-control" name="id_tel"
+                                            Id="File" ButtonClick={this.ToggleSelectFileAudience.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            isDisabled={true}
+                                            value={this.state.fileInfoText}
+                                            color="primary" color="primary"
+                                            className3="input-group mt-2 mb-1"
+                                            Type="Input"
+                                            changeHandle={this.changeHandle.bind(this)}
+                                            ButtonText={this.context.t("SelectPopup")}
+                                        ></LabelPopUpInputText>
+
+                                        <LabelInputText className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("Audience")} className2="col-10"
+                                            InputclassName="form-control mt-2 mb-1" name="ashkhas_id"
+                                            Id="Audience" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.AudienceText}
+                                            isDisabled={true}
+                                        ></LabelInputText>
+
+                                    </div>
+                                    <div className="row">
+                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("Project")} className2="col-10"
+                                            InputclassName="form-control" name="p_type_id"
+                                            Id="Project" ButtonClick={this.ToggleSelectProject.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.ProjectSelectedOption}
+                                            color="primary" color="primary"
+                                            className3="input-group mt-1 mb-2"
+                                            Type="ComboBox"
+                                            options={ProjectList}
+                                            changeHandle={this.changeHandle.bind(this)}
+                                            ButtonText={this.context.t("SelectPopup")}
+                                        ></LabelPopUpInputText>
+                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("Following")} className2="col-10"
+                                            InputclassName="form-control" name="p_id"
+                                            Id="Following" ButtonClick={this.ToggleSelectFollower.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            isDisabled={true}
+                                            value={this.state.FollowerText}
+                                            color="primary" color="primary"
+                                            className3="input-group mt-1 mb-2"
+                                            Type="Input"
+                                            hasDelete={true}
+                                            deleteHandler={this.deleteFollower.bind(this)}
+                                            changeHandle={this.changeHandle.bind(this)}
+                                            ButtonText={this.context.t("SelectPopup")}
+                                        ></LabelPopUpInputText>
+                                    </div>
                                 </div>
+                            </BoxGroup>
+
+                            <BoxGroup className="row bg-gray mg-b-5"
+                                Text={this.context.t("DateTimeInfoBox")}
+                                FormId={FormInfo.fm_pub_sabt_kar.id}
+                                Id="DateTimeInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon clock"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
+                                <div className="col-11">
+                                    <div className="row">
+                                        <LabelCalendar className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("ActionDate")} className2="col-10"
+                                            InputclassName="form-control my-2  ltr" name="tarikhaction"
+                                            Id="ActionDate" CalendarChange={this.CalendarChange.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            setDate={this.state.setDefaultActionDate}
+                                        ></LabelCalendar>
+
+                                        <LabelInputText className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("DeadTime")} className2="col-10"
+                                            InputclassName="form-control my-2  ltr" name="deadtime"
+                                            Id="DeadTime" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.deadtimeText}
+                                            mask="99:99"
+                                        ></LabelInputText>
+                                    </div>
+
+                                </div>
+                            </BoxGroup>
+
+                            <BoxGroup className="row bg-gray mg-b-5"
+                                Text={this.context.t("UsersInfoBox")}
+                                FormId={FormInfo.fm_pub_sabt_kar.id}
+                                Id="UsersInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon flow"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
+                                <div className="col-11">
+                                    <div className="row">
+                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("Roll")} className2="col-10"
+                                            ComboclassName="mt-2 mb-1" name="user_role_id"
+                                            Id="WorkerRoll"
+                                            changeHandle={this.changeRoleHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            selectedOption={this.state.user_roleSelectedOption}
+                                            options={UserRollList}
+                                        ></LabelCombobox>
+                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("UserFullName")} className2="col-10"
+                                            ComboclassName="mt-2 mb-1" name="worker_id"
+                                            Id="UserFullName" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            selectedOption={this.state.workerSelectedOption}
+                                            options={WorkerList}
+                                        ></LabelCombobox>
+                                    </div>
+                                    <div className="row">
+
+                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("Roll")} className2="col-10"
+                                            ComboclassName="mt-1 mb-2" name="manager_role_id"
+                                            Id="ManagerRoll" changeHandle={this.changeRoleHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            selectedOption={this.state.manager_roleSelectedOption}
+                                            options={UserRollList}
+                                        ></LabelCombobox>
+                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("AdminFullName")} className2="col-10"
+                                            ComboclassName="mt-1 mb-2" name="defmodir_id"
+                                            Id="AdminFullName" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            selectedOption={this.state.managerSelectedOption}
+                                            options={ManagerList}
+                                        ></LabelCombobox>
+
+                                    </div>
+
+                                </div>
+                            </BoxGroup>
+                            <BoxGroup className="row bg-gray mg-b-5"
+                                Text={this.context.t("DetailsInfoBox")}
+                                FormId={FormInfo.fm_pub_sabt_kar.id}
+                                Id="DetailsInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon flow"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
+                                <div className="col-11">
+                                    <div className="row">
+                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("Subject")} className2="col-10"
+                                            className3="input-group mt-2 mb-1"
+                                            InputclassName="form-control" name="mozo"
+                                            Id="Subject" ButtonClick={this.OpenSelectDefaultText.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.SubjectInputText}
+                                            color="primary"
+                                            Type="Input"
+                                            changeHandle={this.changeHandle.bind(this)}
+                                            ButtonText={this.context.t("SelectPopup")}
+                                        ></LabelPopUpInputText>
+                                        <LabelInputText className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("Code")} className2="col-10"
+                                            InputclassName="form-control mt-2 mb-1 ltr" name="code"
+                                            Id="Code" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.CodeText}
+                                        ></LabelInputText>
+
+                                    </div>
+                                    <div className="row">
+
+                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("Priority")} className2="col-10"
+                                            ComboclassName="mt-1 mb-2" name="olaviyat_id"
+                                            Id="Priority" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            selectedOption={this.state.prioritySelectedOption}
+                                            options={PriorityList}
+                                        ></LabelCombobox>
+
+                                        <LabelInputText className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("FileNumber")} className2="col-10"
+                                            InputclassName="form-control mt-1 mb-2 ltr" name="shomare"
+                                            Id="FileNumber" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.ShomareText}
+                                        ></LabelInputText>
+
+                                    </div>
+
+                                </div>
+                            </BoxGroup>
+                            <BoxGroup className="row bg-gray"
+                                Text={this.context.t("DescriptionsInfoBox")}
+                                FormId={FormInfo.fm_pub_sabt_kar.id}
+                                Id="DescriptionsInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon result"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
                                 <div className="col-11">
                                     <div className="row">
 
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("File")}</label>
-                                                <div className="col-10">
-                                                    <div className="input-group mt-2 mb-1">
-                                                        <div className="input-group-prepend">
-                                                            <Button color="primary"
-                                                                onClick={this.ToggleSelectFileAudience.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                                                        </div>
-                                                        <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true}
-                                                            name="id_tel" id="id_tel" ref="fileInfo" />
-
-                                                        {/* {SelectFileAudience_rows !== undefined &&
-                                                     <ApiComboMultiSelectList keyField="mokhatab_id" showField={fileShowField} options={FileList} ref="fileInfo" 
-                                                     fetchData={GetSelectFileAudienceList.bind(this)} Params={FileAudienceParams}
-                                                      name="id_tel" onChange={this.changeHandle.bind(this)} 
-                                                      selectedOption={this.state.FileAudienceSelectedOption} />
-                                                     } */}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Audience")}</label>
-                                                <div className="col-10">
-                                                    <input type="text" autoComplete="off" className="form-control mt-2 mb-1" readOnly={true} disabled={true}
-                                                        name="audience_id" id="ashkhas_id" ref="Audience" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-1 col-form-label"
+                                            ColClassName="col-12"
+                                            Text={this.context.t("WorkDescription")} className2="col-11"
+                                            className3="input-group mt-2 mb-1"
+                                            InputclassName="form-control" name="tozihat"
+                                            Id="Description" ButtonClick={this.OpenSelectDefaultText.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.DescriptionTextArea}
+                                            color="primary"
+                                            Type="TextArea"
+                                            changeHandle={this.changeHandle.bind(this)}
+                                            ButtonText={this.context.t("SelectPopup")}
+                                        ></LabelPopUpInputText>
 
                                     </div>
                                     <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Project")}</label>
-                                                <div className="col-10">
-                                                    <div className="input-group mt-1 mb-2">
-                                                        <div className="input-group-prepend">
-                                                            <Button color="primary"
-                                                                onClick={this.ToggleSelectProject.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                                                            {/* <Button className="rounded-0" color="danger" onClick={this.deleteProject.bind(this)}>{this.context.t("Delete")}</Button> */}
-                                                        </div>
-                                                        <input type="text" autoComplete="off" className="form-control wd-100 flex-0 bd-l-1" readOnly={true} disabled={true} name="project_code" ref="project_code" placeholder={this.context.t("ProjectCode")} />
-                                                        {SelectProjectComboList_rows !== undefined &&
-                                                            <ComboSelectList options={ProjectList} ref="p_type_id" name="p_type_id" onChange={this.changeHandle.bind(this)} selectedOption={this.state.ProjectSelectedOption} />
-                                                        }
-                                                        {
-                                                            SelectProjectComboList_rows == undefined &&
-                                                            <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true} name="p_type_id"
-                                                                name="p_type_id" id="p_type_id" ref="Project" placeholder={this.context.t("Project")} />
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Following")}</label>
-                                                <div className="col-10">
-                                                    <div className="input-group mt-1 mb-2">
-                                                        <div className="input-group-prepend">
-                                                            <Button color="primary"
-                                                                onClick={this.ToggleSelectFollower.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                                                            <Button className="rounded-0" color="danger" onClick={this.deleteFollower.bind(this)}>{this.context.t("Delete")}</Button>
-                                                        </div>
-                                                        <input type="text" autoComplete="off" className="form-control" readOnly={true} disabled={true} name="atf_id"
-                                                            name="p_id" id="atf_id" ref="Follower" />
-                                                        {/* <div className="input-group-append">
-                                                        </div> */}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row bg-gray mg-b-5">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon clock"></span>
-                                </div>
-                                <div className="col-11">
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("ActionDate")}</label>
-                                                <div className="col-10">
-                                                    <CalendarDatePicker fieldname="tarikhaction" className="form-control my-2  ltr" id="actiondate" setDate={this.state.setDefaultActionDate} CalendarChange={this.CalendarChange.bind(this)} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("DeadTime")}</label>
-                                                <div className="col-10">
-                                                    <InputMask type="text" name="deadtime" autoComplete="off" className="form-control my-2  ltr" mask="99:99" onChange={this.changeHandle.bind(this)} />
-                                                </div>
-                                            </div>
-                                        </div>
+
+                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-1 col-form-label"
+                                            ColClassName="col-12"
+                                            Text={this.context.t("WorkResult")} className2="col-11"
+                                            className3="input-group mt-1 mb-2"
+                                            InputclassName="form-control" name="natije"
+                                            Id="Result" ButtonClick={this.OpenSelectDefaultText.bind(this)}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.ResultTextArea}
+                                            color="primary"
+                                            Type="TextArea"
+                                            changeHandle={this.changeHandle.bind(this)}
+                                            ButtonText={this.context.t("SelectPopup")}
+                                        ></LabelPopUpInputText>
                                     </div>
 
                                 </div>
-                            </div>
-                            <div className="row bg-gray mg-b-5">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon flow"></span>
-                                </div>
-                                <div className="col-11">
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Roll")}</label>
-                                                <div className="col-10">
-                                                    {SelectRoleList_rows !== undefined &&
-                                                        <ComboSelectList options={UserRollList} classname="mt-2 mb-1" name="user_role_id" onChange={this.changeRoleHandle.bind(this)} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("UserFullName")}</label>
-                                                <div className="col-10">
+                            </BoxGroup>
 
-                                                    {SelectWorkerList_rows !== undefined &&
-                                                        <ComboSelectList options={WorkerList} classname="mt-2 mb-1" name="worker_id" onChange={this.changeHandle.bind(this)} selectedOption={this.state.workerSelectedOption} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Roll")}</label>
-                                                <div className="col-10">
-                                                    {SelectRoleList_rows !== undefined &&
-                                                        <ComboSelectList options={UserRollList} classname="mt-1 mb-2" name="manager_role_id" onChange={this.changeRoleHandle.bind(this)} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("AdminFullName")}</label>
-                                                <div className="col-10">
-
-                                                    {SelectManagerList_rows !== undefined &&
-                                                        <ComboSelectList options={ManagerList} classname="mt-1 mb-2" name="defmodir_id" onChange={this.changeHandle.bind(this)} selectedOption={this.state.managerSelectedOption} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div className="row bg-gray mg-b-5">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon flow"></span>
-                                </div>
-                                <div className="col-11">
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Subject")}</label>
-                                                <div className="col-10">
-                                                    <div className="input-group mt-2 mb-1">
-                                                        <div className="input-group-prepend">
-                                                            <Button color="primary" name="subject"
-                                                                onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                                                        </div>
-                                                        <input type="text" autoComplete="off" className="form-control" ref="SubjectInput" onChange={this.changeHandle.bind(this)}
-                                                            name="mozo" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Code")}</label>
-                                                <div className="col-10">
-                                                    <input type="text" autoComplete="off" className="form-control mt-2 mb-1 ltr" onChange={this.changeHandle.bind(this)}
-                                                        name="code" id="Code" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Priority")}</label>
-                                                <div className="col-10">
-                                                    {SelectPriorityList_rows !== undefined &&
-                                                        <ComboSelectList options={PriorityList} name="olaviyat_id" classname="mt-1 mb-2" onChange={this.changeHandle.bind(this)} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("FileNumber")}</label>
-                                                <div className="col-10">
-                                                    <input type="text" autoComplete="off" className="form-control mt-1 mb-2 ltr" name="shomare"
-
-                                                        onChange={this.changeHandle.bind(this)} />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div className="row bg-gray">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon result"></span>
-                                </div>
-                                <div className="col-11">
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <div className="form-group row">
-                                                <label className="col-1 col-form-label">{this.context.t("WorkDescription")}</label>
-                                                <div className="col-11">
-                                                    <div className="input-group mt-2 mb-1">
-                                                        <div className="input-group-prepend align-self-stretch">
-                                                            <Button color="primary" name="description"
-                                                                onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
-
-                                                        </div>
-                                                        <textarea type="text" className="form-control" rows="3"
-                                                            name="tozihat" ref="DescriptionTextArea"
-                                                            onChange={this.changeHandle.bind(this)}></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <div className="form-group row">
-                                                <label className="col-1 col-form-label">{this.context.t("WorkResult")}</label>
-                                                <div className="col-11">
-                                                    <div className="input-group mt-1 mb-2">
-                                                        <div className="input-group-prepend align-self-stretch">
-                                                            <Button color="primary" name="result"
-                                                                onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
-
-                                                        </div>
-                                                        <textarea type="text" className="form-control" rows="3"
-                                                            name="natije" ref="ResultTextArea"
-                                                            onChange={this.changeHandle.bind(this)}></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
 
                         </div>
                         <style>{modalBackDrop}</style>
@@ -894,77 +1011,145 @@ class NewWork extends Component {
                             <div className="col-6">
                                 <div className="row">
                                     <div className="col-4">
-                                        <div className="card ">
-                                            <div className="card-header">
-                                                <i className="workform-authority">
-                                                </i>
-                                            </div>
+                                        <BoxGroup className="card"
+                                            Text={this.context.t("WorkFlowSettingBox")}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            Id="WorkFlowSettingBox"
+                                            IconDivClassName="card-header"
+                                            IconClassName="workform-authority"
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                        >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <div className="checkbox">
-                                                        <input id="workform0" name="cpy_form_kar" ref="cpy_form_kar" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" />
-                                                        <label htmlFor="workform0">{this.context.t("CopyWorkForm")}</label>
-                                                    </div>
-                                                    <div className="checkbox">
-                                                        <input id="workform1" name="withoutFlow" onChange={this.checkBoxChangeHandler.bind(this)} defaultChecked={true} ref="flow" type="checkbox" />
-                                                        <label htmlFor="workform1">{this.context.t("NoWorkFlow")}</label>
-                                                    </div>
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("CopyWorkForm")}
+                                                        name="cpy_form_kar"
+                                                        Id="CopyWorkForm"
+                                                        checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.cpy_form_karCheckBox}
+                                                    ></LabelCheckBox>
+
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("NoWorkFlow")}
+                                                        name="withoutFlow"
+                                                        Id="NoWorkFlow"
+                                                        checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.flowCheckBox}
+                                                        defaultChecked={true}
+                                                    ></LabelCheckBox>
+
                                                 </div>
 
                                             </div>
-                                        </div>
+                                        </BoxGroup>
                                     </div>
 
                                     <div className="col-4">
-                                        <div className="card ">
-                                            <div className="card-header">
-                                                <i className="attach-authority">
-                                                </i>
-                                            </div>
+
+                                        <BoxGroup className="card"
+                                            Text={this.context.t("AttachmentSettingBox")}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            Id="AttachmentSettingBox"
+                                            IconDivClassName="card-header"
+                                            IconClassName="attach-authority"
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                        >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <div className="checkbox">
-                                                        <input id="attach0" ref="alowatt" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="alowatt" />
-                                                        <label htmlFor="attach0">{this.context.t("AllowAttachment")}</label>
-                                                    </div>
-                                                    <div className="checkbox">
-                                                        <input id="attach1" defaultChecked={true} type="checkbox" onChange={this.checkBoxChangeHandler.bind(this)} name="lockedAttachment" />
-                                                        <label htmlFor="attach1">{this.context.t("LockedAttachment")}</label>
-                                                    </div>
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("AllowAttachment")}
+                                                        name="alowatt"
+                                                        Id="AllowAttachment" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.alowattCheckBox}
+                                                        defaultChecked={true}
+                                                    ></LabelCheckBox>
+
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("LockedAttachment")}
+                                                        name="lock"
+                                                        Id="LockedAttachment" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.lockCheckBox}
+                                                    ></LabelCheckBox>
+
                                                 </div>
                                             </div>
-                                        </div>
+                                        </BoxGroup>
+
                                     </div>
                                     <div className="col-4">
-                                        <div className="card ">
-                                            <div className="card-header border-0">
-                                                <i className="send-authority">
-                                                </i>
-                                            </div>
+                                        <BoxGroup className="card"
+                                            Text={this.context.t("TerminalSettingBox")}
+                                            FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            Id="TerminalSettingBox"
+                                            IconDivClassName="card-header border-0"
+                                            IconClassName="send-authority"
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                        >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <div className="checkbox">
-                                                        <input id="send0" ref="emailToWorker" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="emailToWorker" />
-                                                        <label htmlFor="send0">{this.context.t("SendEmailToUser")}</label>
-                                                    </div>
-                                                    <div className="checkbox">
-                                                        <input id="send1" ref="emailToAudience" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="emailToAudience" />
-                                                        <label htmlFor="send1">{this.context.t("SendSmsToAudience")}</label>
-                                                    </div>
-                                                    <div className="checkbox">
-                                                        <input id="send2" ref="smsToWorker" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="smsToWorker" />
-                                                        <label htmlFor="send2">{this.context.t("SendSmsToUser")}</label>
-                                                    </div>
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("SendEmailToUser")}
+                                                        name="emailToWorker"
+                                                        Id="SendEmailToUser" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.emailToWorkerCheckBox}
+                                                    ></LabelCheckBox>
 
-                                                    <div className="checkbox">
-                                                        <input id="send3" ref="smsToAudience" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="smsToAudience" />
-                                                        <label htmlFor="send3">{this.context.t("SendSmsToAudience")}</label>
-                                                    </div>
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("SendEmailToAudience")}
+                                                        name="emailToAudience"
+                                                        Id="SendEmailToAudience" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.emailToAudienceCheckBox}
+                                                    ></LabelCheckBox>
+
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("SendSmsToUser")}
+                                                        name="smsToWorker"
+                                                        Id="SendSmsToUser"
+                                                        checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.smsToWorkerCheckBox}
+                                                    ></LabelCheckBox>
+
+
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("SendSmsToAudience")}
+                                                        name="smsToAudience"
+                                                        Id="SendSmsToAudience" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.smsToAudienceCheckBox}
+                                                    ></LabelCheckBox>
+
 
                                                 </div>
 
                                             </div>
-                                        </div>
+                                        </BoxGroup>
+
                                     </div>
                                 </div>
                             </div>
@@ -974,42 +1159,51 @@ class NewWork extends Component {
                         <button type="button" className="js-authority-toggle-btn active" title={this.context.t("Authority")}></button>
                     </div>
                 </Modal>
-                {this.state.SubjectSelectmodal &&
+                {
+                    this.state.SubjectSelectmodal &&
                     <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}
                         toggle={this.CloseSelectDefaultText.bind(this)}
                         Successtoggle={this.SuccessSelectSubject.bind(this)}
-                    />}
-                {this.state.SelectFileAudiencemodal &&
+                    />
+                }
+                {
+                    this.state.SelectFileAudiencemodal &&
                     <SelectFileAudienceList modal={this.state.SelectFileAudiencemodal}
                         toggle={this.ToggleSelectFileAudience.bind(this)}
                         Successtoggle={this.SelectFileAudienceRow.bind(this)}
-                    />}
+                    />
+                }
 
-                {this.state.SelectFollowermodal &&
+                {
+                    this.state.SelectFollowermodal &&
                     <SelectFollowerList modal={this.state.SelectFollowermodal}
                         toggle={this.ToggleSelectFollower.bind(this)}
                         Successtoggle={this.SelectFollowerRow.bind(this)}
                         id_tel={this.state.SelectedFileId}
-                    />}
-                {this.state.AttachmentReviewmodal &&
+                    />
+                }
+                {
+                    this.state.AttachmentReviewmodal &&
                     <AttachmentsReview modal={this.state.AttachmentReviewmodal}
                         AttachmentList={this.state.AttachmentList}
                         ChangeAttachments={this.ChangeAttachments.bind(this)}
                         toggle={this.attachmentsToggle.bind(this)}
-                        parentPeygirId={0} peygir_id={0} />}
-                {this.state.ProjectSelectmodal &&
+                        parentPeygirId={0} peygir_id={0} />
+                }
+                {
+                    this.state.ProjectSelectmodal &&
                     <SelectProjectModal modal={this.state.ProjectSelectmodal}
                         toggle={this.ToggleSelectProject.bind(this)}
                         Successtoggle={this.SuccessSelectProject.bind(this)}
                         id_tel={this.state.SelectedFileId}
-                    />}
+                    />
+                }
             </div >
         );
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-
     SelectWorkTypeList: (Params) => {
         return dispatch(AutoBasicInfo_action.SelectWorkTypeList(Params))
     },
@@ -1070,6 +1264,8 @@ function mapStateToProps(state) {
     const { AttachmentOnWork } = state.ArchiveBasic
     const { SelectProjectComboList_rows } = state.projects
 
+    const { DeletedElements344 } = state.Design !== undefined ? state.Design : {};
+    const { EditedElements344 } = state.Design !== undefined ? state.Design : {};
     return {
         alert,
         loading,
@@ -1085,7 +1281,9 @@ function mapStateToProps(state) {
         SelectWorkerList_rows,
         SelectProjectComboList_rows,
         SelectFileAudience_totalCount,
-        SelectFileAudience_rows
+        SelectFileAudience_rows,
+        DeletedElements: DeletedElements344,
+        EditedElements: EditedElements344,
     };
 }
 

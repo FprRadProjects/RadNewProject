@@ -10571,7 +10571,7 @@ ul .submenu input {
      28. Radio CSS Start
 ==========================**/
 
-.checkbox label {
+.checkbox label,.checkbox span {
     display: inline-block;
     position: relative;
     padding-left: 16px;
@@ -10580,7 +10580,9 @@ ul .submenu input {
     margin-bottom: 10px;
 }
 
-.checkbox label::before {
+.checkbox label::before,
+.checkbox span::before
+ {
     content: "";
     display: inline-block;
     position: absolute;
@@ -10595,7 +10597,8 @@ ul .submenu input {
     transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
 }
 
-.checkbox label::after {
+.checkbox label::after,
+.checkbox span::after {
     display: inline-block;
     position: absolute;
     width: 16px;
@@ -30786,7 +30789,9 @@ body .page-wrapper .page-body-wrapper .page-sidebar.native-image-bg .sidebar-use
     padding-left: unset;
 }
 
-.rtl .checkbox label::before {
+.rtl .checkbox label::before,
+.rtl .checkbox span::before
+ {
     right: 0;
     left: unset;
     margin-right: -16px;
@@ -35452,14 +35457,15 @@ i.icon.internal-replication {
     background-image: url(../images/modal/new-referral/attach-authority.svg);
 }
 
-.rtl .r-modal .checkbox label {
+.rtl .r-modal .checkbox label ,
+.rtl .r-modal .checkbox span {
     margin: 3px;
     padding-left: 0;
     padding-right: 15px;
     transition: none;
 }
 
-.rtl .r-modal .checkbox label::before {
+.rtl .r-modal .checkbox label::before,.rtl .r-modal .checkbox span::before {
     margin: 0 -8px;
     width: 15px;
     height: 15px;
@@ -35473,7 +35479,8 @@ i.icon.internal-replication {
     transition: none;
 }
 
-.rtl .r-modal .checkbox input[type="checkbox"]:checked+label::before {
+.rtl .r-modal .checkbox input[type="checkbox"]:checked+label::before,
+.rtl .r-modal .checkbox input[type="checkbox"]:checked+span::before {
     margin: 0 -11px;
     content: "";
     border: none;

@@ -158,6 +158,15 @@ export const translations = {
         AudienceMobile:"تلفن همراه مخاطب",
         AudienceTel:"تلفن مخاطب",
         Signatory:"امضا کننده",
+        WorkInfoBox:"فیلد های اطلاعاتی کار",
+        FileInfoBox:"فیلد های اطلاعاتی پرونده",
+        DateTimeInfoBox:"فیلد های اطلاعاتی تاریخ",
+        UsersInfoBox:"فیلد های اطلاعاتی کاربران",
+        DetailsInfoBox:"فیلد های اطلاعاتی تکمیلی",
+        DescriptionsInfoBox:"فیلد های اطلاعاتی متنی",
+        WorkFlowSettingBox:"فیلد های تنظیماتی فرایندی",
+        AttachmentSettingBox:"فیلد های تنظیماتی ضمائم",
+        TerminalSettingBox:"فیلد های تنظیماتی ترمینال داده",
         
         //---------------تاییدیه------------------شروع
         Yes: 'بلی',
@@ -203,9 +212,11 @@ export const translations = {
         msg_No_Select_WorkType:"نوع کار انتخاب نشده است",
         msg_No_Select_ReferralWorkers:"ارجاع به انتخاب نشده است",
         msg_No_Select_File_Audience:"طرف حساب - مخاطب انتخاب نشده است.",
+        msg_No_Select_File:"پرونده انتخاب نشده است.",
         msg_No_Select_Is_In_Flow:"سطر انتخابی دارای فرآیند می باشد.",
         msg_No_Select_Worker:"کاربر انتخاب نشده است",
         msg_No_Select_Manager:"مدیر انتخاب نشده است",
+        Information_Is_Duplicate: 'اطلاعات تکراری می باشد.',
 
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
@@ -402,7 +413,15 @@ export const translations = {
         AudienceMobile:"Audience Mobile",
         AudienceTel:"Audience Tel",
         Signatory:"Signatory",
-        
+        WorkInfoBox:"Work Info Box",
+        FileInfoBox:"File Info Box",
+        DateTimeInfoBox:"DateTime Info Box",
+        UsersInfoBox:"Users Info Box",
+        DetailsInfoBox:"Details Info Box",
+        DescriptionsInfoBox:"Descriptions Info Box",
+        WorkFlowSettingBox:"WorkFlow Setting Box",
+        AttachmentSettingBox:"Attachment Setting Box",
+        TerminalSettingBox:"Terminal Setting Box",
         //Start---------------Confirm-----------------
         Yes: 'Yes',
         No: 'No',
@@ -448,8 +467,11 @@ export const translations = {
         msg_No_Select_WorkType:"Work Type Not Selected.",
         msg_No_Select_ReferralWorkers:"Referral Workers Not Selected.",
         msg_No_Select_File_Audience:"File - Audience Not Selected.",
+        msg_No_Select_File:"File Not Selected.",
         msg_No_Select_Is_In_Flow:"The Selected Row Has Flow",
-
+        msg_No_Select_Worker:"Worker Not Selected.",
+        msg_No_Select_Manager:"Manager Not Selected.",
+        Information_Is_Duplicate: 'The Information Is Duplicate.',
         //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',
