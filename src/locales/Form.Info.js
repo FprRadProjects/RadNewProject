@@ -950,7 +950,12 @@ export const FormInfo =
         fm_par_diagram: {
             "id": 217,
             "form_name": "دياگرام کارها",
-            "sys_name": "fm_par_diagram"
+            "sys_name": "fm_par_diagram",
+            "fa_module_name1": "اتوماسیون",
+            "fa_module_name2": "",
+            "en_form_name": "WorkDiagram",
+            "en_module_name1": "Automation",
+            "en_module_name2": "",
         },
         fm_par_karfaree: {
             "id": 218,

@@ -5,7 +5,8 @@ import { FormInfo } from "../../../locales";
 import { ReferenceViewer } from "../RecordsPage";
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton } from "../../Frameworks";
-import { HideElementListModal, EditTextElementListModal,WorkDiagramViewer } from "../../Basic";
+import { HideElementListModal, EditTextElementListModal } from "../../Basic";
+import { WorkDiagramViewer } from "../../Automation";
 import {
     design_Actions,
 

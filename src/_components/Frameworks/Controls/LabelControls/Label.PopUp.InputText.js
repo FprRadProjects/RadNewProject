@@ -42,22 +42,29 @@ class LabelPopUpInputText extends Component {
               <div className={className2}>
                 <div className={className3} >
                   <div className="input-group-prepend">
-                    <Button color={color} formid={FormId} element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextSelect-" + Id} Description={Text}
-                      onClick={ButtonClick.bind(this)} name={Id} disabled={isButtonDisabled === undefined ? false : isButtonDisabled}>{ButtonText}</Button>
-                    {hasDelete !== undefined && (hasDelete && 
-                    <Button className="rounded-0"  formid={FormId} element={"LabelPopUpInputText-" + Id} 
-                    id={"LabelPopUpInputTextDelete-" + Id} Description={Text} 
-                    color="danger" onClick={deleteHandler.bind(this)}>{this.context.t("Delete")}</Button>)}
-                    
-                  </div>
-                  {Type === "Input" && <input formid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text} 
-                  autoComplete="off" className={InputclassName} name={name} value={this.state.value}
-                    onChange={changeHandle.bind(this)} disabled={isDisabled === undefined ? false : isDisabled} />}
+                    {ButtonText !== undefined && ButtonClick !== undefined && <Button color={color} formid={FormId} element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextSelect-" + Id} Description={Text}
+                      onClick={ButtonClick.bind(this)} name={Id} disabled={isButtonDisabled === undefined ? false : isButtonDisabled}>{ButtonText}</Button>}
+                    {hasDelete !== undefined && (hasDelete &&
+                      <Button className="rounded-0" formid={FormId} element={"LabelPopUpInputText-" + Id}
+                        id={"LabelPopUpInputTextDelete-" + Id} Description={Text}
+                        color="danger" onClick={deleteHandler.bind(this)}>{this.context.t("Delete")}</Button>)}
 
-                  {Type === "TextArea" &&
-                    <textarea rows="3"
+                  </div>
+                  {Type === "Input" && changeHandle !== undefined && <input formid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text}
+                    autoComplete="off" className={InputclassName} name={name} value={this.state.value}
+                    onChange={changeHandle.bind(this)} disabled={isDisabled === undefined ? false : isDisabled} />}
+                  {Type === "Input"  && changeHandle === undefined && <input formid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text}
+                    autoComplete="off" className={InputclassName} name={name} value={this.state.value}
+                    disabled={isDisabled === undefined ? false : isDisabled} />}
+
+                  {Type === "TextArea" && changeHandle !== undefined &&
+                    <textarea rows="3" className={InputclassName}
                       ormid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text} autoComplete="off" className={InputclassName} name={name} value={this.state.value}
                       onChange={changeHandle.bind(this)} disabled={isDisabled === undefined ? false : isDisabled}></textarea>
+                  } {Type === "TextArea" && changeHandle === undefined &&
+                    <textarea rows="3" className={InputclassName}
+                      ormid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text} autoComplete="off" className={InputclassName} name={name} value={this.state.value}
+                      disabled={isDisabled === undefined ? false : isDisabled}></textarea>
                   }
                   {Type === "ComboBox" &&
                     <ComboSelectList

@@ -167,6 +167,13 @@ export const translations = {
         WorkFlowSettingBox:"فیلد های تنظیماتی فرایندی",
         AttachmentSettingBox:"فیلد های تنظیماتی ضمائم",
         TerminalSettingBox:"فیلد های تنظیماتی ترمینال داده",
+        BasicInfoBox:"فیلد های اطلاعاتی پایه",
+        ViewForm:"نمایش فرم",
+        WorkDeadline:"مهلت کار",
+        FlowResult:"نتیجه فرآیند",
+        Create:"ایجاد",
+        Implement:"انجام",
+        Show:"نمایش",
         
         //---------------تاییدیه------------------شروع
         Yes: 'بلی',
@@ -422,6 +429,13 @@ export const translations = {
         WorkFlowSettingBox:"WorkFlow Setting Box",
         AttachmentSettingBox:"Attachment Setting Box",
         TerminalSettingBox:"Terminal Setting Box",
+        BasicInfoBox:"Basic Info Box",
+        ViewForm:"View Form",
+        WorkDeadline:"Work Deadline",
+        FlowResult:"Flow Result",
+        Create:"Create",
+        Implement:"Implement",
+        Show:"Show",
         //Start---------------Confirm-----------------
         Yes: 'Yes',
         No: 'No',

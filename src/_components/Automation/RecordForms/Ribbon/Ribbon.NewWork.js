@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
-import { FormInfo } from "../../../locales";
+import { FormInfo } from "../../../../locales";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton } from "../../Frameworks";
-import { HideElementListModal, EditTextElementListModal } from "../../Basic";
+import { RibbonButton, ShortKeyButton } from "../../../Frameworks";
+import { HideElementListModal, EditTextElementListModal } from "../../../Basic";
 import {
     design_Actions,
-} from "../../../_actions";
+} from "../../../../_actions";
 
 class RibbonNewWork extends Component {
     constructor(props) {

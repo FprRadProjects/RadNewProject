@@ -106,8 +106,10 @@ class OrgChart extends PureComponent {
             const svgroot = d3
                 .select(id)
                 .append('svg')
-                .attr('width', elemWidth)
+                // .attr('width', elemWidth)
+                .attr('width', '100%')
                 .attr('height', "100vh")
+                // .attr('style', "min-height:calc(100vh - 300px)")
 
             // Add our base svg group to transform when a user zooms/pans
             const svg = svgroot
@@ -147,7 +149,7 @@ class OrgChart extends PureComponent {
             const zoom = d3.behavior
                 .zoom()
                 // Define the [zoomOutBound, zoomInBound]
-                .scaleExtent([0.5, 2])
+                .scaleExtent([0.5, 1])
                 .duration(50)
                 .on('zoom', this.renderUpdate(config))
 

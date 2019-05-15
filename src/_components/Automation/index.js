@@ -1,3 +1,3 @@
 export * from './RecordForms';
-export * from './Ribbon';
+export * from './ViewForms';
 

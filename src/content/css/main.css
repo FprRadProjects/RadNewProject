@@ -35933,3 +35933,87 @@ th[class*=MuiTableCell-root] {
 .r-modal .r-main-box__ribbon .nav-tabs{
 min-height: 32px;
 } */
+.r-diagram-modal-content{
+    padding:20px;
+}
+#r-diagram-row-main{
+    overflow-x: hidden;
+}
+#r-diagram-content {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    border-radius:5px;
+    /* background-color: #f2f2f2; */
+}
+#r-diagram-sidebar {
+    -webkit-transition: margin 0.3s ease;
+    -moz-transition: margin 0.3s ease;
+    -o-transition: margin 0.3s ease;
+    transition: margin 0.3s ease;
+    padding-left: 20px;
+}
+
+
+.collapsed {
+    display: none; /* hide it for small displays */
+}
+@media (min-width: 992px) {
+    .collapsed {
+        display: block;
+        margin-right: -41.666667%; /* same width as sidebar */
+    }
+}
+
+.toggle-diagram{
+    position: absolute;
+    left:-15px;
+    top:0;
+    bottom: 0;
+    height:100%;
+    width:30px;
+    background-color: #f2f3f2;
+    margin-right: 5px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    border-radius:5px 0 0 5px;
+    z-index: 2;
+    box-shadow: -2px 0 0 3px  #fff;
+    /* border-left: 4px solid #fff; */
+}
+.collapsed .toggle-diagram{
+    left:-30px;
+}
+
+.toggle-diagram-sidebar{
+    width:40px;
+    height: 40px;
+    background-color:#fff;
+    border-radius:50%;
+    background-image:url(../images/modal/referral-result/authority-toggle-close-green.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    position: absolute;
+    top:50%;
+    transform:translateY(-50%) rotate(90deg);
+    box-shadow: 0 -2px 4px 0 rgba(0,0,0,.2);
+    border: 0;
+    cursor: pointer;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+    left:-15px;
+}
+.collapsed .toggle-diagram-sidebar
+{
+    transform:translateY(-50%) rotate(-90deg);
+}
+
+.toggle-diagram-sidebar:focus{
+    outline: none;
+}

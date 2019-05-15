@@ -14,7 +14,7 @@ import {
     ProjectsInfo_action, design_Actions
 } from "../../../_actions";
 import { toast } from 'react-toastify';
-import { RibbonNewWork } from '../Ribbon/Ribbon.NewWork';
+import { RibbonNewWork } from './Ribbon/Ribbon.NewWork';
 import {
     ComboSelectList, LabelCheckBox, LabelInputText,
     LabelCombobox, LabelCalendar, LabelPopUpInputText, BoxGroup
@@ -733,7 +733,7 @@ class NewWork extends Component {
                                             ColClassName="col-6"
                                             Text={this.context.t("Audience")} className2="col-10"
                                             InputclassName="form-control mt-2 mb-1" name="ashkhas_id"
-                                            Id="Audience" changeHandle={this.changeHandle.bind(this)}
+                                            Id="Audience" 
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
@@ -774,7 +774,6 @@ class NewWork extends Component {
                                             Type="Input"
                                             hasDelete={true}
                                             deleteHandler={this.deleteFollower.bind(this)}
-                                            changeHandle={this.changeHandle.bind(this)}
                                             ButtonText={this.context.t("SelectPopup")}
                                         ></LabelPopUpInputText>
                                     </div>

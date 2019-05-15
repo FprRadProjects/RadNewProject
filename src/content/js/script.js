@@ -124,11 +124,12 @@ $(document).on('click', function (e) {
     if (e.target.className !== "r-main-box__controlpanel--action dropdown-toggle")
         $(document).find('.dropdown-menu').removeClass('show');
 });
+$(document).on('click','.toggle-diagram-sidebar', function (e) {
+    $("#r-diagram-sidebar").toggleClass("collapsed");
+    $("#r-diagram-content").toggleClass("col-12 col-7");
+    return false;
+});
 $(document).ready(function () {
-    // $("span:contains('Rows per page')").text("تعداد سطر در هر صفحه:");
-    // var $text = $("span:contains('of')");
-    // var newtext = $text.text().replace('of', 'از');
-    // $text.text(newtext);
 
 
     if ($(window).width() <= 991) {
