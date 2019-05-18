@@ -4,8 +4,7 @@ import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { ReferenceViewer } from "../RecordsPage";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton } from "../../Frameworks";
-import { HideElementListModal, EditTextElementListModal } from "../../Basic";
+import { RibbonButton, ShortKeyButton,ControlPanel } from "../../Frameworks";
 import { WorkDiagramViewer } from "../../Automation";
 import {
     design_Actions,
@@ -22,8 +21,6 @@ class RibbonReferences extends Component {
             ...this.state,
             ReferenceViewermodal: false,
             DiagramModal: false,
-            HideElementListmodal: false,
-            EditTextElementListmodal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
@@ -138,17 +135,7 @@ class RibbonReferences extends Component {
         Params.page = 0;
         FetchData(Params);
     }
-    controlpanelClick(e) {
-        const { name } = e.target;
-        if (name === "hide")
-            this.setState(prevState => ({
-                HideElementListmodal: !prevState.HideElementListmodal
-            }));
-        else if (name === "edit")
-            this.setState(prevState => ({
-                EditTextElementListmodal: !prevState.EditTextElementListmodal
-            }));
-    }
+   
     render() {
 
 
@@ -162,26 +149,10 @@ class RibbonReferences extends Component {
                         <span className="switch-state"></span>
                     </label>
                 </div>
-                <div className="r-main-box__controlpanel">
+                <ControlPanel FormInfoId={FormInfo.fm_dabir_kartabl_erjaat.id}></ControlPanel>
 
-                    <div class="dropdown ltr">
-                        <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                        <div className="dropdown-menu">
-                            <a className="dropdown-item"
-                                title={this.context.t("Toolbox")} name="hide" onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
-                            <a className="dropdown-item"
-                                title={this.context.t("Toolbox")} name="edit" onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
-                        </div>
-                    </div>
-                </div>
                 <ul className="nav nav-tabs" id="ribbon-tab">
                     <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">{this.context.t("Operations")}</a></li>
-                    {/* <li className="nav-item"><a href="#tab2" className="nav-link" data-toggle="tab">تب
-                                    بسته</a></li>
-                    <li className="nav-item"><a href="#tab3" className="nav-link" data-toggle="tab">تب
-                                    بسته</a></li>
-                    <li className="nav-item"><a href="#tab4" className="nav-link" data-toggle="tab">تب
-                                    بسته</a></li> */}
                 </ul>
                 <div className="tab-content">
                     <div className="gradient"></div>
@@ -492,12 +463,7 @@ class RibbonReferences extends Component {
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
 
-                {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
-                    toggle={this.controlpanelClick.bind(this)}
-                    FormId={FormInfo.fm_dabir_kartabl_erjaat.id} />}
-                {this.state.EditTextElementListmodal && <EditTextElementListModal modal={this.state.EditTextElementListmodal}
-                    toggle={this.controlpanelClick.bind(this)}
-                    FormId={FormInfo.fm_dabir_kartabl_erjaat.id} />}
+
 
             </div>
         );

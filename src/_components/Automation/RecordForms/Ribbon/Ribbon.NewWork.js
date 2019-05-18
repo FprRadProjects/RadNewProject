@@ -3,8 +3,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInfo } from "../../../../locales";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton } from "../../../Frameworks";
-import { HideElementListModal, EditTextElementListModal } from "../../../Basic";
+import { RibbonButton, ShortKeyButton,ControlPanel } from "../../../Frameworks";
 import {
     design_Actions,
 } from "../../../../_actions";
@@ -15,7 +14,6 @@ class RibbonNewWork extends Component {
         super(props);
         this.state = {
             ...this.state,
-            EditTextElementListmodal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal"
         };
@@ -28,18 +26,7 @@ class RibbonNewWork extends Component {
     handleClick() {
 
     }
-    controlpanelClick(e) {
-        const { name } = e.target;
-        if (name === "hide")
-            this.setState(prevState => ({
-                HideElementListmodal: !prevState.HideElementListmodal
-            }));
-        else if (name === "edit")
-            this.setState(prevState => ({
-                EditTextElementListmodal: !prevState.EditTextElementListmodal
-            }));
-    }
-
+  
     render() {
         const { saveWorkHandle, ShortKeys, DeletedElements, EditedElements, attachmentsToggle } = this.props;
 
@@ -51,19 +38,8 @@ class RibbonNewWork extends Component {
                         <span className="switch-state"></span>
                     </label>
                 </div>
-
-                <div className="r-main-box__controlpanel">
-
-                    <div className="dropdown ltr">
-                        <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                        <div className="dropdown-menu">
-                            <a className="dropdown-item"
-                                title={this.context.t("Toolbox")} name="hide" onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
-                            <a className="dropdown-item"
-                                title={this.context.t("Toolbox")} name="edit" onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
-                        </div>
-                    </div>
-                </div>
+                <ControlPanel FormInfoId={FormInfo.fm_pub_sabt_kar.id}></ControlPanel>
+                
                 <ul className="nav nav-tabs" id="ribbon-tab">
                     <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">{this.context.t("Operations")}</a></li>
                     <li className="nav-item"><a href="#tab2" className="nav-link" data-toggle="tab">{this.context.t("Forms")}</a></li>
@@ -339,12 +315,7 @@ class RibbonNewWork extends Component {
                     </MenuProvider>
                 </nav>
 
-                {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
-                    toggle={this.controlpanelClick.bind(this)}
-                    FormId={FormInfo.fm_pub_sabt_kar.id} />}
-                {this.state.EditTextElementListmodal && <EditTextElementListModal modal={this.state.EditTextElementListmodal}
-                    toggle={this.controlpanelClick.bind(this)}
-                    FormId={FormInfo.fm_pub_sabt_kar.id} />}
+              
 
             </div>
         );

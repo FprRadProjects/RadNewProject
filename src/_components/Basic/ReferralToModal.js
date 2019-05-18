@@ -98,7 +98,7 @@ class ReferralToModal extends Component {
         ];
         const { modal, ConfirmWorkers,  SelectWorkerGridList, SelectWorkerGridList_rows,
             worktypeSelected } = this.props;
-        Params.wt_id = worktypeSelected;
+        Params.wt_id = worktypeSelected.value;
         console.log(Params)
         return (
             <Modal isOpen={modal}

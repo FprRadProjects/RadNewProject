@@ -4,15 +4,24 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { SelectProjectModal } from "../../Project/";
 import { SelectDefaultTextModal } from "../../Basic/";
-
-import { Act_Reference, WorkAccess_action, WorkBasic_action, design_Actions, WorkActions_action } from "../../../_actions";
 import { FormInfo } from "../../../locales";
+
+import {
+    Act_Reference, WorkAccess_action, WorkBasic_action, design_Actions, WorkActions_action,
+    ProjectsInfo_action
+} from "../../../_actions";
 import { toast } from 'react-toastify';
 import { RibbonReferenceViewer } from '../Ribbon/Ribbon.ReferenceViewer';
-import InputMask from 'react-input-mask';
 
+import {
+    LabelInputText, LabelPopUpInputText, BoxGroup
+} from "../../Frameworks";
 var SaveParams = { form: "", data: [] };
-
+var projectParams = {
+    "Id_Taraf": 0
+};
+var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: {} };
+var finalSaveParams = {}
 class ReferenceViewer extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +32,9 @@ class ReferenceViewer extends Component {
             SubjectSelectmodal: false,
             FlowResultSelectmodal: false,
             ReviewWorkModal: false,
+            SubjectInputText: "",
+            ResultTextArea: "",
+            DescriptionTextArea: "",
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal"
         };
@@ -30,8 +42,29 @@ class ReferenceViewer extends Component {
 
     }
 
+    componentDidMount() {
+        SaveParams = { form: "", data: [] };
+        finalSaveParams = {};
+        const { WorkInfo, GetSelectComboProject } = this.props;
+        projectParams = {
+            "Id_Taraf": WorkInfo.id_tel
+        };
+        GetSelectComboProject(projectParams);
+
+    }
+    componentWillReceiveProps(nextProps) {
+        const { WorkInfo } = nextProps;
+        this.setState({ ProjectSelectedOption: { value: WorkInfo.p_type_id, label: WorkInfo.ptype } });
+        this.setState({ SubjectInputText: WorkInfo.mozo !== null ? WorkInfo.mozo : "" });
+        this.setState({ ResultTextArea: WorkInfo.natije !== null ? WorkInfo.natije : "" });
+        this.setState({ CodeText: WorkInfo.code !== null ? WorkInfo.code : "" });
+        this.setState({ FileNumberText: WorkInfo.shomare !== null ? WorkInfo.shomare : "" });
+        this.setState({ DurationDoneText: WorkInfo.modat_anjam_w !== null ? WorkInfo.modat_anjam_w : "" });
+
+    }
+
     OpenSelectProject = () => {
-        const { WorkInfo, showError } = this.props;
+        const { WorkInfo } = this.props;
         WorkAccess_action.CanSetProjectOnWork(WorkInfo.peygir_id).then(
             data => {
                 if (data.status) {
@@ -56,9 +89,11 @@ class ReferenceViewer extends Component {
     }
     SuccessSelectProject(row, e) {
         if (row !== undefined && row !== null) {
-            const { WorkInfo } = this.props;
-            if (this.state.ProjectSelectmodal)
-                this.refs.ProjectInput.value = row !== undefined ? row.ptype !== undefined ? row.ptype : WorkInfo.ptype : WorkInfo.ptype;
+            if (this.state.ProjectSelectmodal) {  // this.refs.ProjectInput.value = row !== undefined ? row.ptype !== undefined ? row.ptype : WorkInfo.ptype : WorkInfo.ptype;
+                let Ptype = row !== undefined ? row.ptype !== undefined ? row.ptype : "" : "";
+                let PtypeId = row !== undefined ? row.id !== undefined ? row.id : "" : "";
+                this.setState({ ProjectSelectedOption: { value: PtypeId, label: Ptype } });
+            }
             SaveParams.data["p_type_id"] = { "p_type_id": row.id };
             this.setState({
                 ProjectSelectmodal: !this.state.ProjectSelectmodal,
@@ -74,18 +109,18 @@ class ReferenceViewer extends Component {
         const { name } = e.target;
         const { WorkInfo } = this.props;
         WorkAccess_action.CanSetInfoOnWork(WorkInfo.peygir_id)
-        .then(data => {
-            if (data.status)
-                this.setState({
-                    SubjectSelectmodal: !this.state.SubjectSelectmodal,
-                    type: name,
-                });
-            else {
-                toast.error(data.error)
-            }
-        }, error => {
-            toast.error(error)
-        });
+            .then(data => {
+                if (data.status)
+                    this.setState({
+                        SubjectSelectmodal: !this.state.SubjectSelectmodal,
+                        type: name,
+                    });
+                else {
+                    toast.error(data.error)
+                }
+            }, error => {
+                toast.error(error)
+            });
     }
     CloseSelectDefaultText = (e) => {
         this.setState({
@@ -97,12 +132,16 @@ class ReferenceViewer extends Component {
     SuccessSelectSubject = (row, e) => {
         if (row !== undefined && row !== null) {
             if (this.state.SubjectSelectmodal)
-                if (this.state.type === "subject") {
-                    this.refs.SubjectInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                    SaveParams.data["mozo"] = { "mozo": this.refs.SubjectInput.value };
+                if (this.state.type === "Subject") {
+                    const newSubject = this.state.SubjectInputText + " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    this.setState({ SubjectInputText: newSubject });
+                    // this.refs.SubjectInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    SaveParams.data["mozo"] = { "mozo": newSubject };
                 } else {
-                    this.refs.ResultTextArea.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                    SaveParams.data["natije"] = { "natije": this.refs.ResultTextArea.value };
+                    // this.refs.ResultTextArea.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    const newResult = this.state.ResultTextArea + " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                    this.setState({ ResultTextArea: newResult });
+                    SaveParams.data["natije"] = { "natije": newResult };
                 }
             this.setState({
                 SubjectSelectmodal: !this.state.SubjectSelectmodal,
@@ -117,21 +156,93 @@ class ReferenceViewer extends Component {
 
 
 
-    changeHandle = (e) => {
+    changeHandle = (e, val) => {
         const { WorkInfo } = this.props;
-        const { name, value } = e.target;
-
-        if (!WorkInfo.done)
-            SaveParams.data[[name]] = { [name]: value };
-
+        if (!WorkInfo.done) {
+            SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
+            if (val !== undefined) {
+                const { name } = e;
+                SaveParams.data[[name]] = { [name]: val.value };
+            }
+            else {
+                const { name, value } = e.target;
+                if (name === "mozo")
+                    this.setState({ SubjectInputText: value });
+                if (name === "natije")
+                    this.setState({ ResultTextArea: value });
+                if (name === "code")
+                    this.setState({ CodeText: value });
+                if (name === "shomare")
+                    this.setState({ FileNumberText: value });
+                if (name === "modat_anjam_w")
+                    this.setState({ DurationDoneText: value });
+                SaveParams.data[[name]] = { [name]: value };
+            }
+        }
     }
     clearSaveParams = (e) => {
         SaveParams = { form: "", data: [] };
     }
 
+    saveWorkHandle = (msg) => {
+        const { ParentForm, WorkInfo, SaveWorkInfo, lang, FetchWorkInfo,
+            RefreshParentForm, Params
+        } = this.props;
+        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
+        if (SaveParams.data["peygir_id"] === undefined) {
+            toast.warn(this.context.t("Information_Not_Available_For_Editing"));
+            return false;
+        }
+        SaveParams.form = formname;
+        finalSaveParams = Object.assign({}, SaveParams);
+        let obj = [];
+        Object.keys(finalSaveParams.data).map((item, index) => {
+            return obj[index++] = finalSaveParams.data[item];
+        })
+        finalSaveParams.data = obj;
+        SaveWorkInfo(finalSaveParams, msg).then(data => {
+            if (data.status) {
+                RefreshParentForm(Params);
+                FetchWorkInfo(WorkInfo.peygir_id);
+                this.clearSaveParams();
+            }
+        });
+    }
+    ConfirmationHandle = (e) => {
+        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params,
+            RefreshParentForm } = this.props;
+        ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
+        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
+        ConfirmParams["Form"] = formname;
+        SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
+        SaveParams.form = formname;
+        finalSaveParams = Object.assign({}, SaveParams);
+        let obj = [];
+        Object.keys(finalSaveParams.data).map((item, index) => {
+            return obj[index++] = finalSaveParams.data[item];
+        })
+        finalSaveParams.data = obj;
+        ConfirmParams.SaveParams = finalSaveParams;
+        InitConfirmWork(ConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
+            if (data.status) {
+                if (data.code === 2 && data.data !== null) {
+                    this.setState({
+                        FlowResultSelectmodal: true,
+                    });
+                }
+                else {
+                    FetchWorkInfo(WorkInfo.peygir_id);
+                    RefreshParentForm(Params);
+
+                }
+                this.clearSaveParams();
+            }
+        });
+    }
 
     render() {
-        const { FetchData, modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm, Design } = this.props;
+        const { FetchData, modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm, SelectProjectComboList_rows,
+            DeletedElements, EditedElements } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -141,6 +252,8 @@ class ReferenceViewer extends Component {
             background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
         }`;
+        var None = [{ value: 0, label: this.context.t("NoSelection") }]
+        var ProjectList = SelectProjectComboList_rows !== undefined ? None.concat(SelectProjectComboList_rows) : None
 
         return (
             <div>
@@ -149,7 +262,7 @@ class ReferenceViewer extends Component {
                     <ModalHeader toggle={toggle}>{this.context.t("ReferralResult")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonReferenceViewer clearSaveParams={this.clearSaveParams.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} FetchData={FetchData.bind(this)} Params={Params} />
+                            <RibbonReferenceViewer saveWorkHandle={this.saveWorkHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} FetchData={FetchData.bind(this)} Params={Params} />
                         </div>
 
                         {/*<Button color="success"
@@ -157,223 +270,274 @@ class ReferenceViewer extends Component {
 
                         {WorkInfo !== undefined &&
                             <div className="referral-result-modal">
-                                <div className="row bg-gray mg-b-5">
-                                    <div className="col-1 d-flex">
-                                        <span className="row-icon audience"></span>
-                                    </div>
+                                <BoxGroup className="row bg-gray mg-b-5"
+                                    Text={this.context.t("FileInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="FileInfoBox"
+                                    IconDivClassName="col-1 d-flex"
+                                    IconClassName="row-icon audience"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
                                     <div className="col-11">
                                         <div className="row">
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("PartyAccountName")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.name} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("CompanyName")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.coname} />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("PartyAccountName")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="tarafname"
+                                                Id="PartyAccountName" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.name}
+                                            ></LabelInputText>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("CompanyName")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="coname"
+                                                Id="CompanyName" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.coname}
+                                            ></LabelInputText>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("Audience")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="ashkhasname"
+                                                Id="Audience" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.ashkhasname}
+                                            ></LabelInputText>
 
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("Audience")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.ashkhasname} />
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 
-                                </div>
-                                <div className="row bg-gray mg-b-5">
-                                    <div className="col-1 d-flex">
-                                        <span className="row-icon flow"></span>
-                                    </div>
+                                </BoxGroup>
+
+                                <BoxGroup className="row bg-gray mg-b-5"
+                                    Text={this.context.t("WorkInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="WorkInfoBox"
+                                    IconDivClassName="col-1 d-flex"
+                                    IconClassName="row-icon flow"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
                                     <div className="col-11">
                                         <div className="row">
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("WorkID")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.peygir_id} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("Flow")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.flow} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("WorkType")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.wtype} />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("WorkID")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="peygir_id"
+                                                Id="WorkID" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.peygir_id}
+                                            ></LabelInputText>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("Flow")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="Flow"
+                                                Id="Flow" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.flow}
+                                            ></LabelInputText>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("WorkType")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="wtype"
+                                                Id="WorkType" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.wtype}
+                                            ></LabelInputText>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row bg-gray mg-b-5">
-                                    <div className="col-1 d-flex">
-                                        <span className="row-icon creator"></span>
+                                </BoxGroup>
+                                <BoxGroup className="row bg-gray mg-b-5"
+                                    Text={this.context.t("UsersInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="UsersInfoBox"
+                                    IconDivClassName="col-1 d-flex"
+                                    IconClassName="row-icon creator"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
+                                    <div className="col-11">
+                                        <div className="row">
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("creator")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="cuser"
+                                                Id="creator" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.cuser}
+                                            ></LabelInputText>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("CreatedDate")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="c_date"
+                                                Id="CreatedDate" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.c_date}
+                                            ></LabelInputText>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("CreatedTime")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="c_time"
+                                                Id="CreatedTime" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.c_time}
+                                            ></LabelInputText>
+                                        </div>
                                     </div>
+                                </BoxGroup>
+                                <BoxGroup className="row bg-gray mg-b-5"
+                                    Text={this.context.t("DescriptionsInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="DescriptionsInfoBox"
+                                    IconDivClassName="col-1 d-flex"
+                                    IconClassName="row-icon description"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
+                                    <div className="col-11">
+                                        <div className="row">
+                                            <LabelPopUpInputText className1="form-group row"
+                                                LabelclassName="col-1 col-form-label"
+                                                ColClassName="col-12"
+                                                Text={this.context.t("Description")} className2="col-11"
+                                                className3="input-group mt-1 mb-2"
+                                                InputclassName="form-control" name="natije"
+                                                Id="Description"
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                value={WorkInfo.tozihat}
+                                                color="primary"
+                                                Type="TextArea"
+                                                isDisabled={true}
+                                            ></LabelPopUpInputText>
+                                        </div>
+                                    </div>
+                                </BoxGroup>
+                                <BoxGroup className="row bg-gray mg-b-5"
+                                    Text={this.context.t("DetailsInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="DetailsInfoBox"
+                                    IconDivClassName="col-1 d-flex"
+                                    IconClassName="row-icon project"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
+                                    <div className="col-11">
+                                        <div className="row">
+                                            <LabelPopUpInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label"
+                                                ColClassName="col-4"
+                                                Text={this.context.t("Project")} className2="col-8"
+                                                InputclassName="form-control" name="p_type_id"
+                                                Id="Project" ButtonClick={this.OpenSelectProject.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                value={this.state.ProjectSelectedOption}
+                                                color="primary" color="primary"
+                                                className3="input-group mb-2"
+                                                Type="ComboBox"
+                                                options={ProjectList}
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                isButtonDisabled={WorkInfo.done ? true : false}
+                                                changeHandle={this.changeHandle.bind(this)}
+                                                ButtonText={this.context.t("SelectPopup")}
+                                            ></LabelPopUpInputText>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label"
+                                                ColClassName="col-4"
+                                                Text={this.context.t("FileNumber")} className2="col-8"
+                                                InputclassName="form-control my-2 ltr" name="shomare"
+                                                Id="FileNumber" changeHandle={this.changeHandle.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                value={this.state.FileNumberText}
+                                            ></LabelInputText>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label"
+                                                ColClassName="col-4"
+                                                Text={this.context.t("Code")} className2="col-8"
+                                                InputclassName="form-control my-2 ltr" name="code"
+                                                Id="Code" changeHandle={this.changeHandle.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                EditedElements={EditedElements}
+                                                value={this.state.CodeText}
+                                            ></LabelInputText>
+                                            <LabelInputText className1="form-group row"
+                                                LabelclassName="col-4 col-form-label"
+                                                ColClassName="col-4"
+                                                Text={this.context.t("Duration_Of_Work_Short")} className2="col-8"
+                                                InputclassName="form-control mb-2 ltr" name="modat_anjam_w"
+                                                Id="Duration_Of_Work_Short" changeHandle={this.changeHandle.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements} mask="99999999"
+                                                maskChar=""
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                value={this.state.DurationDoneText}
+                                            ></LabelInputText>
+
+                                            <LabelPopUpInputText className1="form-group row"
+                                                LabelclassName="col-2 col-form-label"
+                                                ColClassName="col-8"
+                                                Text={this.context.t("Subject")} className2="col-10"
+                                                className3="input-group mb-2"
+                                                InputclassName="form-control" name="mozo"
+                                                Id="Subject" ButtonClick={this.OpenSelectDefaultText.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                value={this.state.SubjectInputText}
+                                                color="primary"
+                                                Type="Input"
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                isButtonDisabled={WorkInfo.done ? true : false}
+                                                changeHandle={this.changeHandle.bind(this)}
+                                                ButtonText={this.context.t("SelectPopup")}
+                                            ></LabelPopUpInputText>
+                                        </div>
+                                    </div>
+                                </BoxGroup>
+                                <BoxGroup className="row bg-gray mg-b-5"
+                                    Text={this.context.t("ResultInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="ResultInfoBox"
+                                    IconDivClassName="col-1 d-flex"
+                                    IconClassName="row-icon result"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
                                     <div className="col-11">
                                         <div className="row">
 
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("creator")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.cuser} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("CreatedDate")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.c_date} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("CreatedTime")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.c_time} />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <LabelPopUpInputText className1="form-group row" LabelclassName="col-1 col-form-label"
+                                                ColClassName="col-12"
+                                                Text={this.context.t("WorkResult")} className2="col-11"
+                                                className3="input-group mt-1 mb-2"
+                                                InputclassName="form-control" name="natije"
+                                                Id="Result" ButtonClick={this.OpenSelectDefaultText.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                value={this.state.ResultTextArea}
+                                                color="primary"
+                                                Type="TextArea"
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                isButtonDisabled={WorkInfo.done ? true : false}
+                                                changeHandle={this.changeHandle.bind(this)}
+                                                ButtonText={this.context.t("SelectPopup")}
+                                            ></LabelPopUpInputText>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="row bg-gray mg-b-10">
-                                    <div className="col-1 d-flex">
-                                        <span className="row-icon description"></span>
-                                    </div>
-                                    <div className="col-11">
-                                        <div className="row">
-                                            <div className="col-12">
-                                                <div className="form-group row">
-                                                    <label className="col-1 col-form-label">{this.context.t("Description")}</label>
-                                                    <div className="col-11">
-                                                        <textarea type="text" rows="3" className="form-control-plaintext" disabled={true} defaultValue={WorkInfo.tozihat}></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row bg-gray mg-b-5">
-                                    <div className="col-1 d-flex">
-                                        <span className="row-icon project"></span>
-                                    </div>
-                                    <div className="col-11">
-                                        <div className="row">
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("Project")}</label>
-                                                    <div className="col-8">
-                                                        <div className="input-group my-2">
-                                                            <div className="input-group-prepend">
-                                                                <Button color="primary"
-                                                                    onClick={this.OpenSelectProject.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                                                            </div>
-                                                            <input type="text" autoComplete="off" className="form-control" onChange={this.changeHandle.bind(this)} name="p_type_id"
-                                                                ref="ProjectInput" readOnly={true}
-                                                                defaultValue={WorkInfo.ptype} />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("FileNumber")}</label>
-                                                    <div className="col-8">
+                                </BoxGroup>
 
-                                                        <input type="text" autoComplete="off" className="form-control my-2 ltr" defaultValue={WorkInfo.shomare} name="shomare"
-                                                            readOnly={WorkInfo.done ? true : false}
-                                                            onChange={this.changeHandle.bind(this)} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("Code")}</label>
-                                                    <div className="col-8">
-                                                        <input type="text" autoComplete="off" className="form-control my-2 ltr" onChange={this.changeHandle.bind(this)}
-                                                            readOnly={WorkInfo.done ? true : false}
-                                                            defaultValue={WorkInfo.code} name="code" id="Code" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-4">
-                                                <div className="form-group row">
-                                                    <label className="col-4 col-form-label">{this.context.t("Duration_Of_Work_Short")}</label>
-                                                    <div className="col-8">
-                                                        <InputMask type="text" autoComplete="off" mask="99999999" maskChar="" className="form-control mb-2 ltr" name="modat_anjam_w" value={WorkInfo.modat_anjam_w}
-                                                            readOnly={WorkInfo.done ? true : false}
-                                                            onChange={this.changeHandle.bind(this)} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="col-8">
-                                                <div className="form-group row">
-                                                    <label className="col-2 col-form-label">{this.context.t("Subject")}</label>
-                                                    <div className="col-10">
-                                                        <div className="input-group mb-2">
-                                                            <div className="input-group-prepend">
-                                                                <Button color="primary" name="subject"
-                                                                    onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                                                            </div>
-                                                            <input type="text" autoComplete="off" className="form-control" ref="SubjectInput" onChange={this.changeHandle.bind(this)}
-                                                                name="mozo"
-                                                                defaultValue={WorkInfo.mozo} readOnly={WorkInfo.done ? true : false} />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="row bg-gray">
-                                    <div className="col-1 d-flex">
-                                        <span className="row-icon result"></span>
-                                    </div>
-                                    <div className="col-11">
-                                        <div className="row">
-                                            <div className="col-12">
-                                                <div className="form-group row">
-                                                    <label className="col-1 col-form-label">{this.context.t("Result")}</label>
-                                                    <div className="col-11">
-                                                        <div className="input-group my-2">
-                                                            <div className="input-group-prepend align-self-stretch">
-                                                                <Button color="primary" name="result"
-                                                                    onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
-
-                                                            </div>
-                                                            <textarea type="text" className="form-control" rows="5" defaultValue={WorkInfo.natije} readOnly={WorkInfo.done ? true : false}
-                                                                name="natije" ref="ResultTextArea"
-                                                                onChange={this.changeHandle.bind(this)}></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
 
                                 {this.state.ProjectSelectmodal &&
                                     <SelectProjectModal modal={this.state.ProjectSelectmodal}
@@ -423,10 +587,19 @@ const mapDispatchToProps = dispatch => ({
     InitConfirmWork: (Params, msg) => {
         return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
     },
-
+    GetSelectComboProject: (Params) => {
+        dispatch(ProjectsInfo_action.GetSelectComboProject(Params))
+    },
     FetchWorkInfo: (peygir_id) => {
         dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
-    }
+    },
+    SaveWorkInfo: (SaveParams, msg) => {
+        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
+    },
+    InitConfirmWork: (Params, msg) => {
+        return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
+    },
+
 
 
 });
@@ -442,15 +615,20 @@ function mapStateToProps(state) {
     const { SelectFlowResultTogleModal } = state.Auto_WorkBasic;
     const { ReviewWorkTogleModal } = state.Auto_WorkBasic;
     const { WorkInfo } = state.Auto_WorkBasic;
-
+    const { SelectProjectComboList_rows } = state.projects
+    const { DeletedElements340 } = state.Design !== undefined ? state.Design : {};
+    const { EditedElements340 } = state.Design !== undefined ? state.Design : {};
     return {
         alert,
         loading,
         WorkInfo,
         lang,
         Refresh_Form,
+        SelectProjectComboList_rows,
         SelectFlowResultTogleModal,
-        ReviewWorkTogleModal
+        ReviewWorkTogleModal,
+        DeletedElements: DeletedElements340,
+        EditedElements: EditedElements340
     };
 }
 

@@ -5,4 +5,5 @@ export * from './Calendar';
 export * from './Grid';
 export * from './LabelControls';
 export * from './BoxGroup';
+export * from './ControlPanel';
 

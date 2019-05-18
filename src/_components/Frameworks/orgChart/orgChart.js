@@ -1,10 +1,10 @@
-import {createElement, PureComponent} from 'react'
+import { createElement, PureComponent } from 'react'
 import connect from "react-redux/es/connect/connect";
 import defaultConfig from "./chart/config";
-import {defineBoxShadow} from "./defs/box-shadow";
-import {defineAvatarClip} from "./defs/avatar-clip";
-import {collapse} from "./utils/collapse";
-import {renders} from './chart/render'
+import { defineBoxShadow } from "./defs/box-shadow";
+import { defineAvatarClip } from "./defs/avatar-clip";
+import { collapse } from "./utils/collapse";
+import { renders } from './chart/render'
 import d3 from "d3";
 
 
@@ -28,7 +28,7 @@ class OrgChart extends PureComponent {
     }
 
 
-    renderUpdate({svg}) {
+    renderUpdate({ svg }) {
         return () => {
             svg.attr(
                 'transform',
@@ -40,29 +40,29 @@ class OrgChart extends PureComponent {
 
 
     init(options) {
-        try{
-        // Merge options with the default config
-        const config = {
-            ...defaultConfig,
-            ...options,
-            treeData: options.data
-        }
+        try {
+            // Merge options with the default config
+            const config = {
+                ...defaultConfig,
+                ...options,
+                treeData: options.data
+            }
+            config.clickHandler = this.clickHandle.bind(this);
+            if (!config.id) {
+                console.error('react-org-chart: missing id for svg root')
+                return
+            }
 
-        if (!config.id) {
-            console.error('react-org-chart: missing id for svg root')
-            return
-        }
-
-        const {
-            id,
-            treeData,
-            lineType,
-            margin,
-            nodeWidth,
-            nodeHeight,
-            nodeSpacing,
-            shouldResize
-        } = config
+            const {
+                id,
+                treeData,
+                lineType,
+                margin,
+                nodeWidth,
+                nodeHeight,
+                nodeSpacing,
+                shouldResize,
+            } = config
 
 
 
@@ -97,11 +97,11 @@ class OrgChart extends PureComponent {
                 treeData.children = treeData._children
                 treeData._children = null
             }
-        var childrenWidth=1;
-        if (treeData.children !== undefined) {
-            // Calculate width of a node with expanded children
-              childrenWidth = parseInt(treeData.children.length * nodeWidth / 2)
-        }
+            var childrenWidth = 1;
+            if (treeData.children !== undefined) {
+                // Calculate width of a node with expanded children
+                childrenWidth = parseInt(treeData.children.length * nodeWidth / 2)
+            }
             // Add svg root for d3
             const svgroot = d3
                 .select(id)
@@ -109,7 +109,7 @@ class OrgChart extends PureComponent {
                 // .attr('width', elemWidth)
                 .attr('width', '100%')
                 .attr('height', "100vh")
-                // .attr('style', "min-height:calc(100vh - 300px)")
+            // .attr('style', "min-height:calc(100vh - 300px)")
 
             // Add our base svg group to transform when a user zooms/pans
             const svg = svgroot
@@ -136,20 +136,21 @@ class OrgChart extends PureComponent {
             treeData.y0 = elemHeight / 2
 
             // Collapse all of the children on initial load
-        if (treeData.children !== undefined) {
-            treeData.children.forEach(collapse)
-        }
+            if (treeData.children !== undefined) {
+                treeData.children.forEach(collapse)
+            }
             // Connect core variables to config so that they can be
             // used in internal rendering functions
             config.svg = svg
             config.svgroot = svgroot
             config.render = renders
+            config.onClickHandler = this.clickHandle.bind(this);
 
             // Defined zoom behavior
             const zoom = d3.behavior
                 .zoom()
                 // Define the [zoomOutBound, zoomInBound]
-                .scaleExtent([0.5, 1])
+                .scaleExtent([.20, 3])
                 .duration(50)
                 .on('zoom', this.renderUpdate(config))
 
@@ -183,23 +184,23 @@ class OrgChart extends PureComponent {
 
             // Update DOM root height
             d3.select(id).style('height', elemHeight + margin.top + margin.bottom)
-        }catch(err){}
+        } catch (err) { }
     }
 
     componentDidMount() {
 
-        const {id, data,currentId} = this.props
+        const { id, data, currentId } = this.props
 
 
-        this.init({id: `#${id}`, data,  lineType: 'angle'})
+        this.init({ id: `#${id}`, data, lineType: 'angle' })
 
 
 
         setTimeout(() => {
-            try{
-            document.getElementById(currentId).setAttribute('stroke', '#3C69F7');
-            document.getElementById(currentId).setAttribute('stroke-width', 5);
-            }catch(err){}
+            try {
+                document.getElementById(currentId).setAttribute('stroke', '#3C69F7');
+                document.getElementById(currentId).setAttribute('stroke-width', 2);
+            } catch (err) { }
         }, 100)
 
         // console.log(JSON.stringify(data, null, 4) )
@@ -207,14 +208,15 @@ class OrgChart extends PureComponent {
 
 
     }
-
+    clickHandle = (d3,datum) => {
+        const { onNodeClickHandler } = this.props
+        onNodeClickHandler(datum.id);
+    }
 
     render() {
-        const {id} = this.props
-
-        return createElement('div', {
-            id
-        })
+        const { id } = this.props
+        console.log(id)
+        return createElement('div', { id })
     }
 
 }
@@ -227,4 +229,4 @@ const mapStateToProps = state => {
 
 
 const connectedOrgChart = connect(mapStateToProps, null)(OrgChart);
-export {connectedOrgChart as OrgChart};
+export { connectedOrgChart as OrgChart };

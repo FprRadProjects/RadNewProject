@@ -67,7 +67,7 @@ class LabelPopUpInputText extends Component {
                       disabled={isDisabled === undefined ? false : isDisabled}></textarea>
                   }
                   {Type === "ComboBox" &&
-                    <ComboSelectList
+                    <ComboSelectList isDisabled={isDisabled === undefined ? false : isDisabled}
                       element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text}
                       options={options} name={name} onChange={changeHandle.bind(this)} selectedOption={this.state.value} />
                   }

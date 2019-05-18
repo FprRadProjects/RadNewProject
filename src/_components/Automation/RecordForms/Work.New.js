@@ -16,7 +16,7 @@ import {
 import { toast } from 'react-toastify';
 import { RibbonNewWork } from './Ribbon/Ribbon.NewWork';
 import {
-    ComboSelectList, LabelCheckBox, LabelInputText,
+    LabelCheckBox, LabelInputText,
     LabelCombobox, LabelCalendar, LabelPopUpInputText, BoxGroup
 } from "../../Frameworks";
 var finalSaveParams = {}
@@ -131,7 +131,6 @@ class NewWork extends Component {
 
         if (val !== undefined) {
             const { name } = e;
-            console.log(name)
             if (name === "flow_id")
                 this.flowChange(val);
             else if (name === "workgroup_id")
@@ -174,6 +173,12 @@ class NewWork extends Component {
                 this.setState({ ResultTextArea: value });
             if (name === "tozihat")
                 this.setState({ DescriptionTextArea: value });
+            if (name === "code")
+                this.setState({ CodeText: value });
+            if (name === "shomare")
+                this.setState({ ShomareText: value });
+            if (name === "deadtime")
+                this.setState({ deadtimeText: value });
             thisSaveParams.data[[name]] = { [name]: value };
         }
     }
@@ -187,7 +192,6 @@ class NewWork extends Component {
 
             this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
             thisSaveParams.data["p_type_id"] = { "p_type_id": null };
-            // this.setState({ project_codeText: "" });
         }
     }
     workgroupChange = (Val) => {
@@ -314,7 +318,6 @@ class NewWork extends Component {
                             this.setState({ fileInfoText: data.data.FileInfo.coname });
                             if (data.data.FileInfo.ptype_id !== null || data.data.FileInfo.ptype_id !== 0) {
                                 this.setState({ ProjectSelectedOption: { value: data.data.FileInfo.ptype_id, label: data.data.FileInfo.ptype } });
-                                // this.setState({ project_codeText: data.data.FileInfo.ptypecode });
                                 thisSaveParams.data["p_type_id"] = { "p_type_id": data.data.FileInfo.ptype_id };
                             }
                             projectParams.Id_Taraf = data.data.FileInfo.id
@@ -377,8 +380,6 @@ class NewWork extends Component {
             this.setState({ "cpy_form_karCheckBox": checked });
         }
         else if (name === "hasformsaz") {
-            console.log("hasformsaz")
-            console.log(checked)
             this.setState({ hasformsazCheckBox: checked });
             workTypeParams.HasFormGen = value;
             SelectWorkTypeList(workTypeParams);
@@ -423,7 +424,6 @@ class NewWork extends Component {
     saveWorkHandle = () => {
         const { lang, toggle, InsertNewWorkInfo } = this.props;
         var formname = lang == "fa" ? FormInfo.fm_pub_sabt_kar.form_name : FormInfo.fm_pub_sabt_kar.en_form_name;
-        console.log(thisSaveParams)
         if (thisSaveParams.data["wt_id"] === undefined) {
             toast.error(this.context.t("msg_No_Select_WorkType"));
             return false;
@@ -501,7 +501,6 @@ class NewWork extends Component {
             SelectFileAudiencemodal: !this.state.SelectFileAudiencemodal,
         });
         this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-        // this.setState({ project_codeText: "" });
         projectParams.Id_Taraf = row.id_taraf;
         GetSelectComboProject(projectParams);
         this.setState({ FollowerText: "" });
@@ -560,7 +559,6 @@ class NewWork extends Component {
                 let PtypeId = row !== undefined ? row.id !== undefined ? row.id : "" : "";
                 let Code = row !== undefined ? row.code !== undefined ? row.code : "" : "";
                 this.setState({ ProjectSelectedOption: { value: PtypeId, label: Ptype } });
-                // this.setState({ project_codeText: Code });
             }
             thisSaveParams.data["p_type_id"] = { "p_type_id": row.id };
             this.setState({
@@ -590,7 +588,6 @@ class NewWork extends Component {
     }
     deleteProject = () => {
         this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-        // this.setState({ project_codeText: "" });
     }
     render() {
         const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows,
@@ -722,7 +719,7 @@ class NewWork extends Component {
                                             EditedElements={EditedElements}
                                             isDisabled={true}
                                             value={this.state.fileInfoText}
-                                            color="primary" color="primary"
+                                            color="primary" 
                                             className3="input-group mt-2 mb-1"
                                             Type="Input"
                                             changeHandle={this.changeHandle.bind(this)}
@@ -733,7 +730,7 @@ class NewWork extends Component {
                                             ColClassName="col-6"
                                             Text={this.context.t("Audience")} className2="col-10"
                                             InputclassName="form-control mt-2 mb-1" name="ashkhas_id"
-                                            Id="Audience" 
+                                            Id="Audience"
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
@@ -752,7 +749,7 @@ class NewWork extends Component {
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             value={this.state.ProjectSelectedOption}
-                                            color="primary" color="primary"
+                                            color="primary" 
                                             className3="input-group mt-1 mb-2"
                                             Type="ComboBox"
                                             options={ProjectList}
@@ -769,7 +766,7 @@ class NewWork extends Component {
                                             EditedElements={EditedElements}
                                             isDisabled={true}
                                             value={this.state.FollowerText}
-                                            color="primary" color="primary"
+                                            color="primary" 
                                             className3="input-group mt-1 mb-2"
                                             Type="Input"
                                             hasDelete={true}

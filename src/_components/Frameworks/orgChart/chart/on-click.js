@@ -10,7 +10,7 @@ const { collapse } = require('../utils')
 export function onClick(config = {} ) {
 
 
-  const { treeData, loadChildren, render, onPersonClick } = config
+  const { treeData, loadChildren, render, onPersonClick,onClickHandler } = config
 
   return datum => {
 
@@ -24,6 +24,10 @@ export function onClick(config = {} ) {
       if (typeof result === 'boolean' && !result) {
         return
       }
+    }
+    if(onClickHandler)
+    {
+      onClickHandler(d3,datum)
     }
 
     // If this person doesn't have children but `hasChild` is true,

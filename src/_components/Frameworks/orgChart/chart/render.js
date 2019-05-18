@@ -36,7 +36,7 @@ export function renders(config) {
         treeData,
         sourceNode,
         onPersonLinkClick,
-
+        onClickHandler
     } = config
 
 
@@ -62,11 +62,12 @@ export function renders(config) {
     const toggleColor = function (x, id) {
         setTimeout(() => {
             document.getElementById(id).setAttribute('stroke', x);
-            document.getElementById(id).setAttribute('stroke-width', 5);
+            document.getElementById(id).setAttribute('stroke-width', 2);
         }, 100)
 
 
     }
+
 
 
     // Enter any new nodes at the parent's previous position.
@@ -77,7 +78,7 @@ export function renders(config) {
         .attr('transform', `translate(${parentNode.x0}, ${parentNode.y0})`)
 
         .on('mouseup', d => toggleColor('#3C69F7', d.id))
-        .on('click', onClick(config))
+        .on('click',onClick(config))
 
 
     // Person Card Shadow
@@ -204,7 +205,7 @@ export function renders(config) {
             }
         })
         .attr('stroke', borderColor)
-        .attr("stroke-width", 5)
+        .attr("stroke-width", 2)
         .attr('rx',
             d => {
                 switch (d.WorkInfo.shape) {
@@ -245,7 +246,7 @@ export function renders(config) {
                 switch (d.WorkInfo.shape) {
 
                     case 'Diamond' : {
-                        return "M0 32 L57 62 L113 32 L57 2 Z"
+                        return "M0 35 L57 70 L114.5 35 L57 0 Z"
                     }
                     default:
                         return ''
@@ -424,7 +425,7 @@ export function renders(config) {
                 switch (d.WorkInfo.shape) {
 
                     case 'Diamond' : {
-                        return "M0 32 L57 62 L113 32 L57 2 Z"
+                        return "M0 35 L57 70 L114.5 35 L57 0 Z"
                     }
                     default:
                         return ''
@@ -542,11 +543,11 @@ export function renders(config) {
         .style("font-size", function (d) {
             const size = Math.min(2 * 25, (2 * 25 - 8) / this.getComputedTextLength() * 24)
 
-            return size >= 16 ? 15 + "px" : size + "px";
+            return size >= 16 ? 14 + "px" : size + "px";
 
         })
         .style("text-anchor", "middle")
-        .attr("dy", ".35em");
+        .attr("dy", ".30em");
 
 
     // // Person's Title
@@ -572,7 +573,7 @@ export function renders(config) {
         .attr('x', namePos.x + widthForReport)
         .attr('y', namePos.y + heightForReport)
         .attr('dy', '.9em')
-        .style('font-size', 7)
+        .style('font-size', 6)
         .style('font-weight', 500)
         .style('cursor', 'pointer')
         .style('fill', reportsColor)
@@ -601,7 +602,7 @@ export function renders(config) {
         .style('cursor', 'pointer')
         .style('fill', titleColor)
         .style('font-weight', 600)
-        .style('font-size', 8)
+        .style('font-size', 7)
         .attr('text-anchor', 'middle')
         .text(helpers.getTextForDepartment)
         .style("text-anchor", "middle")
@@ -625,7 +626,7 @@ export function renders(config) {
     //     x: nodeWidth - 28,
     //     y: nodeHeight - 28
     // })
-
+    
     // Transition nodes to their new position.
     const nodeUpdate = node
         .transition()

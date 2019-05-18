@@ -7,6 +7,7 @@ import { paramsService, emptyservice } from "../../../../_webservices";
 export const WorkBasic_action = {
     GetWorkInfo,
     FetchWorkInfo,
+    FetchLoadingWorkInfo,
     FlowResultListOnWork,
     ReviewWorkConfirmList,
     GetReviewWorkInfo,
@@ -21,7 +22,7 @@ function GetReviewWorkInfo(row) {
     return dispatch => {
         var Params = new FormData();
         Params.append('peygir_id', peygir_id);
-        return   paramsService.callservice(Params,"WorkInfo")
+        return paramsService.callservice(Params, "WorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -42,7 +43,7 @@ function FetchGetReviewWorkInfo(peygir_id) {
     return dispatch => {
         var Params = new FormData();
         Params.append('peygir_id', peygir_id);
-        paramsService.callservice(Params,"WorkInfo")
+        paramsService.callservice(Params, "WorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -64,7 +65,7 @@ function GetWorkInfo(row) {
         dispatch(loadingActions.ShowLoading());
         var Params = new FormData();
         Params.append('peygir_id', peygir_id);
-        return  paramsService.callservice(Params,"WorkInfo")
+        return paramsService.callservice(Params, "WorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -87,7 +88,7 @@ function FetchWorkInfo(peygir_id) {
     return dispatch => {
         var Params = new FormData();
         Params.append('peygir_id', peygir_id);
-        paramsService.callservice(Params,"WorkInfo")
+        paramsService.callservice(Params, "WorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -103,9 +104,33 @@ function FetchWorkInfo(peygir_id) {
             );
     }
 }
+function FetchLoadingWorkInfo(peygir_id) {
+    return dispatch => {
+        dispatch(loadingActions.ShowLoading());
+        var Params = new FormData();
+        Params.append('peygir_id', peygir_id);
+       return  paramsService.callservice(Params, "WorkInfo")
+            .then(
+                data => {
+                    if (data.status) {
+                        dispatch(UserGetWorkInfo_Reducer(data.data));
+                    }
+                    else {
+                        toast.error(data.error);
+                    }
+                    dispatch(loadingActions.HideLoading());
+                    return Promise.resolve(data)
+                },
+                error => {
+                    toast.error(error);
+                    dispatch(loadingActions.HideLoading());
+                }
+            );
+    }
+}
 function FlowResultListOnWork(params) {
     return dispatch => {
-        paramsService.callservice(params,"FlowResultListOnWork")
+        paramsService.callservice(params, "FlowResultListOnWork")
             .then(
                 data => {
                     if (data.status) {
@@ -124,7 +149,7 @@ function FlowResultListOnWork(params) {
 }
 function ReviewWorkConfirmList(params) {
     return dispatch => {
-        paramsService.callservice(params,"ReviewWorkConfirmList")
+        paramsService.callservice(params, "ReviewWorkConfirmList")
             .then(
                 data => {
                     if (data.status) {
@@ -142,11 +167,11 @@ function ReviewWorkConfirmList(params) {
     }
 }
 
-function workDiagram(peygir_id){
+function workDiagram(peygir_id) {
     return dispatch => {
         var Params = new FormData();
         Params.append('peygir_id', peygir_id);
-      return  paramsService.callservice(Params,"WorkDiagram")
+        return paramsService.callservice(Params, "WorkDiagram")
             .then(
                 data => {
                     if (data.status) {
@@ -155,7 +180,7 @@ function workDiagram(peygir_id){
                     else {
                         toast.error(data.error);
                     }
-                 return   Promise.resolve(data)
+                    return Promise.resolve(data)
                 },
                 error => {
                     toast.error(error);
@@ -172,13 +197,13 @@ function GetReviewWorkInfo_Reducer(data) {
 }
 
 function flowResultAddTotalCount(data) {
-    return {type: AutoWorkBasicConstant.SELECT_FLOW_RESULT_GET_GRID_TOTAL_COUNT, data}
+    return { type: AutoWorkBasicConstant.SELECT_FLOW_RESULT_GET_GRID_TOTAL_COUNT, data }
 }
 
 function flowResultAddRows(data) {
-    return {type: AutoWorkBasicConstant.SELECT_FLOW_RESULT_SET_GRID_ROWS, data}
+    return { type: AutoWorkBasicConstant.SELECT_FLOW_RESULT_SET_GRID_ROWS, data }
 }
 
 function workDiagram_Reducer(data) {
-    return {type:AutoWorkBasicConstant.GET_WORK_INFO_DIAGRAM_DATA_SUCCESS,data }
+    return { type: AutoWorkBasicConstant.GET_WORK_INFO_DIAGRAM_DATA_SUCCESS, data }
 }

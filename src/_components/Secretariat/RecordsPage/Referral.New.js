@@ -5,14 +5,18 @@ import PropTypes from "prop-types"
 import { SelectDefaultTextModal } from "../../Basic/";
 import InputMask from 'react-input-mask';
 import { AttachmentsReview } from "../../Archives";
+import { FormInfo } from "../../../locales";
 
+import {
+    LabelCombobox, LabelCalendar, LabelInputText, LabelPopUpInputText, BoxGroup,
+    LabelCheckBox
+} from "../../Frameworks";
 import {
     AutoBasicInfo_action,
     ArchiveBasic_action, WorkActions_action
 } from "../../../_actions";
 import { toast } from 'react-toastify';
 import { RibbonNewReferral } from '../Ribbon/Ribbon.NewReferral';
-import { ComboSelectList, CalendarDatePicker } from "../../Frameworks";
 import { ReferralToModal } from '../../Basic';
 var finalSaveParams = {}
 var thisSaveParams = {
@@ -44,9 +48,9 @@ class NewReferral extends Component {
         this.state = {
             ...this.state,
             modal: false,
+            DescriptionTextArea: "",
             SelectedWorkers: [],
             AttachmentList: [],
-            workTypeSelectedOption: 0,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-referral-modal"
         };
@@ -80,25 +84,31 @@ class NewReferral extends Component {
             const { name } = e;
             if (val.value !== 0) {
                 if (name === "wt_id") {
-                    this.setState({ workTypeSelectedOption: val.value });
+                    this.setState({ workTypeSelectedOption: { value: val.value, label: val.label } });
                     this.setState({ SelectedWorkers: [] });
-                    this.refs.Workers.value = this.context.t("unselected");
+                    this.setState({ SelectedWorkerText: this.context.t("unselected") });
                     const { GetNewWorkDefaultInfo } = this.props;
                     DefaultInfoParams.wt_id = val.value;
                     thisSaveParams.data["sadere_ref"] = { "sadere_ref": val.value }
                     GetNewWorkDefaultInfo(DefaultInfoParams).then(data => {
                         if (data.status) {
                             if (data.data.DefaultValue !== null) {
-                                this.refs.flow.checked = data.data.DefaultValue.flow;
+
+                                this.setState({ flowCheckBox: data.data.DefaultValue.flow });
+                                // this.refs.flow.checked = data.data.DefaultValue.flow;
                                 thisSaveParams.data["flow_id"] = { "flow_id": null };
                                 thisSaveParams.data["erja"] = { "erja": data.data.DefaultValue.flow ? 1 : 0 };
-                                this.refs.emailToWorker.checked = data.data.DefaultValue.web_emailtokarbar;
-                                this.refs.smsToWorker.checked = data.data.DefaultValue.web_smstokarbar;
+                                // this.refs.emailToWorker.checked = data.data.DefaultValue.web_emailtokarbar;
+                                // this.refs.smsToWorker.checked = data.data.DefaultValue.web_smstokarbar;
+                                this.setState({ emailToWorkerCheckBox: data.data.DefaultValue.web_emailtokarbar });
+                                this.setState({ smsToWorkerCheckBox: data.data.DefaultValue.web_smstokarbar });
+
                                 thisSaveParams["emailToWorker"] = data.data.DefaultValue.web_emailtokarbar ? 1 : 0;
                                 thisSaveParams["smsToWorker"] = data.data.DefaultValue.web_smstokarbar ? 1 : 0;
                                 if (data.data.WorkerId !== undefined && data.data.WorkerId !== 0) {
                                     this.setState({ SelectedWorkers: [{ id_user: data.data.WorkerId, username: data.data.WorkerUserName, id_role: data.data.WorkerId_Role, rolename: data.data.WorkerRoleName }] });
-                                    this.refs.Workers.value = this.state.SelectedWorkers[0].username;
+                                    //  this.refs.Workers.value = this.state.SelectedWorkers[0].username;
+                                    this.setState({ SelectedWorkerText: this.state.SelectedWorkers[0].username });
                                     thisSaveParams.workers = [{ worker: data.data.WorkerId, manager: 0 }];
                                 }
                                 this.setState({ setDefaultDate: data.data.ActionDate });
@@ -109,7 +119,8 @@ class NewReferral extends Component {
                         }
                     });
                 }
-
+                if (name === "olaviyat_id")
+                    this.setState({ prioritySelectedOption: { value: val.value, label: val.label } });
                 thisSaveParams.data[[name]] = { [name]: val.value }
 
             } else
@@ -117,15 +128,22 @@ class NewReferral extends Component {
         }
         else {
             const { name, value } = e.target;
+            if (name === "tozihat")
+                this.setState({ DescriptionTextArea: value });
+            if (name === "deadtime")
+                this.setState({ deadtimeText: value });
             thisSaveParams.data[[name]] = { [name]: value };
         }
     }
     OpenReferralTo() {
-        if (this.state.workTypeSelectedOption !== 0 && this.state.workTypeSelectedOption !== undefined) {
-            this.setState(prevState => ({
-                ReferralTomodal: !prevState.ReferralTomodal,
-            }));
-        }
+        if (this.state.workTypeSelectedOption !== undefined)
+            if (this.state.workTypeSelectedOption.value !== undefined && this.state.workTypeSelectedOption.value !== 0 && this.state.workTypeSelectedOption !== undefined) {
+                this.setState(prevState => ({
+                    ReferralTomodal: !prevState.ReferralTomodal,
+                }));
+            }
+            else
+                toast.error(this.context.t("msg_No_Select_ReferralType"));
         else
             toast.error(this.context.t("msg_No_Select_ReferralType"));
     }
@@ -135,11 +153,11 @@ class NewReferral extends Component {
         });
         this.setState({ SelectedWorkers: Workers });
         if (Workers.length > 1)
-            this.refs.Workers.value = Workers.length + " " + this.context.t("Items") + " " + this.context.t("selected");
+            this.setState({ SelectedWorkerText: Workers.length + " " + this.context.t("Items") + " " + this.context.t("selected") });
         else if (Workers.length == 1)
-            this.refs.Workers.value = Workers[0].username;
+            this.setState({ SelectedWorkerText: Workers[0].username });
         else
-            this.refs.Workers.value = this.context.t("unselected");
+            this.setState({ SelectedWorkerText: this.context.t("unselected") });
         var newWorkers = Object.keys(Workers).map((item, index) => {
             return { worker: Workers[item].id_user, manager: 0 };
         })
@@ -156,8 +174,10 @@ class NewReferral extends Component {
     SuccessSelectDescription = (row, e) => {
         if (row !== undefined && row !== null) {
             if (this.state.SubjectSelectmodal) {
-                this.refs.DescriptionInput.value += " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
-                thisSaveParams.data["tozihat"] = { "tozihat": this.refs.DescriptionInput.value };
+                console.log(this.state.DescriptionTextArea)
+                const newDescription = this.state.DescriptionTextArea + " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
+                this.setState({ DescriptionTextArea: newDescription });
+                thisSaveParams.data["tozihat"] = { "tozihat": newDescription };
             }
             this.setState({
                 SubjectSelectmodal: !this.state.SubjectSelectmodal,
@@ -174,15 +194,20 @@ class NewReferral extends Component {
         if (name === "withoutFlow") {
             thisSaveParams.data["flow_id"] = { "flow_id": null };
             thisSaveParams.data["erja"] = { "erja": value };
+            this.setState({ flowCheckBox: checked });
         }
-        else if (name === "emailToWorker")
+        else if (name === "emailToWorker") {
             thisSaveParams["emailToWorker"] = value;
-        else if (name === "smsToWorker")
+            this.setState({ emailToWorkerCheckBox: checked });
+        }
+        else if (name === "smsToWorker") {
             thisSaveParams["smsToWorker"] = value;
-        else if (name === "attachFromParent") {
+            this.setState({ smsToWorkerCheckBox: checked });
+        } else if (name === "attachFromParent") {
             thisSaveParams["attachFromParent"] = value;
+            this.setState({ attachFromParentCheckBox: checked });
             if (value === 1) {
-                let SelectedArchiveRows =this.state.AttachmentList.filter(function (item) { return !item.fromParent });
+                let SelectedArchiveRows = this.state.AttachmentList.filter(function (item) { return !item.fromParent });
                 this.setState({
                     AttachmentList: [...Object.keys(AttachmentOnWork).map((item, index) => {
                         return { archiveId: AttachmentOnWork[item].id, fromParent: true, fileName: AttachmentOnWork[item].filename };
@@ -190,24 +215,26 @@ class NewReferral extends Component {
                 });
             }
             else {
-                let SelectedArchiveRows =this.state.AttachmentList.filter(function (item) { return !item.fromParent });
+                let SelectedArchiveRows = this.state.AttachmentList.filter(function (item) { return !item.fromParent });
                 this.setState({
                     AttachmentList: SelectedArchiveRows
                 });
             }
         }
 
-        else if (name === "infoFromParent")
+        else if (name === "infoFromParent") {
             thisSaveParams["infoFromParent"] = value;
-        else if (name === "cpy_form_kar")
+            this.setState({ infoFromParentCheckBox: checked });
+        } else if (name === "cpy_form_kar") {
             if (checked) thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": WorkInfo.showtree_id };
             else thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
-
+            this.setState({ cpy_form_karCheckBox: checked });
+        }
     }
     saveReferralHandle = () => {
-        const { WorkInfo, lang, FormInfo, toggle, RefreshParentForm, Params, InsertNewWorkInfo } = this.props;
-        var formname = lang == "fa" ? FormInfo.form_name : FormInfo.en_form_name;
+        const { WorkInfo, lang, toggle, RefreshParentForm, Params, InsertNewWorkInfo } = this.props;
 
+        var formname = lang == "fa" ? FormInfo.fm_dabir_eghdam.form_name : FormInfo.fm_dabir_eghdam.en_form_name;
 
         if (thisSaveParams.data["wt_id"] === undefined) {
             toast.error(this.context.t("msg_No_Select_ReferralType"));
@@ -271,10 +298,11 @@ class NewReferral extends Component {
     }
 
     render() {
-        const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows, WorkInfo } = this.props;
+        const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows, WorkInfo,
+            DeletedElements, EditedElements } = this.props;
         var None = [{ value: 0, label: this.context.t("NoSelection") }]
-        var ReferralTypeList = None.concat(SelectWorkTypeList_rows)
-        var PriorityList = None.concat(SelectPriorityList_rows);
+        var ReferralTypeList = SelectWorkTypeList_rows !== undefined ? None.concat(SelectWorkTypeList_rows) : None
+        var PriorityList = SelectPriorityList_rows !== undefined ? None.concat(SelectPriorityList_rows) : None
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -294,112 +322,143 @@ class NewReferral extends Component {
                             <RibbonNewReferral saveReferralHandle={this.saveReferralHandle.bind(this)} attachmentsToggle={this.attachmentsToggle.bind(this)} />
                         </div>
                         <div className="referral-modal">
-                            <div className="row bg-gray mg-b-5">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon flow"></span>
-                                </div>
+                            <BoxGroup className="row bg-gray mg-b-5"
+                                Text={this.context.t("WorkInfoBox")}
+                                FormId={FormInfo.fm_dabir_eghdam.id}
+                                Id="WorkInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon flow"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
                                 <div className="col-11">
                                     <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("ReferralType")}</label>
-                                                <div className="col-10">
-                                                    {SelectWorkTypeList_rows !== undefined &&
-                                                        <ComboSelectList options={ReferralTypeList} classname="my-2" name="wt_id" onChange={this.changeHandle.bind(this)} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
+
+                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("ReferralType")} className2="col-10"
+                                            ComboclassName="my-2" name="wt_id"
+                                            Id="ReferralType" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_dabir_eghdam.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            selectedOption={this.state.workTypeSelectedOption}
+                                            options={ReferralTypeList}
+                                        ></LabelCombobox>
+                                    </div>
+
+                                </div>
+                            </BoxGroup>
+                            <BoxGroup className="row bg-gray mg-b-5"
+                                Text={this.context.t("UsersInfoBox")}
+                                FormId={FormInfo.fm_dabir_eghdam.id}
+                                Id="UsersInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon creator"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
+                                <div className="col-11">
+                                    <div className="row">
+                                        <LabelPopUpInputText className1="form-group row"
+                                            LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("ReferralTo")} className2="col-10"
+                                            InputclassName="form-control" name="Workers"
+                                            Id="ReferralTo" ButtonClick={this.OpenReferralTo.bind(this)}
+                                            FormId={FormInfo.fm_dabir_eghdam.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            isDisabled={true}
+                                            value={this.state.SelectedWorkerText}
+                                            color="primary"
+                                            className3="input-group mt-2 mb-1"
+                                            Type="Input"
+                                            changeHandle={this.changeHandle.bind(this)}
+                                            ButtonText={this.context.t("SelectPopup")}
+                                        ></LabelPopUpInputText>
+                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("Priority")} className2="col-10"
+                                            ComboclassName="my-2" name="olaviyat_id"
+                                            Id="Priority" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_dabir_eghdam.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            selectedOption={this.state.prioritySelectedOption}
+                                            options={PriorityList}
+                                        ></LabelCombobox>
+                                    </div>
+                                </div>
+                            </BoxGroup>
+
+                            <BoxGroup className="row bg-gray mg-b-5"
+                                Text={this.context.t("DateTimeInfoBox")}
+                                FormId={FormInfo.fm_dabir_eghdam.id}
+                                Id="DateTimeInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon clock"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
+                                <div className="col-11">
+                                    <div className="row">
+                                        <LabelCalendar className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("ReferralDurationDate")} className2="col-10"
+                                            InputclassName="form-control my-2  ltr" name="tarikhaction"
+                                            Id="ReferralDurationDate" CalendarChange={this.CalendarChange.bind(this)}
+                                            FormId={FormInfo.fm_dabir_eghdam.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            setDate={this.state.setDefaultDate}
+                                        ></LabelCalendar>
+                                        <LabelInputText className1="form-group row" LabelclassName="col-2 col-form-label"
+                                            ColClassName="col-6"
+                                            Text={this.context.t("ReferralDurationTime")} className2="col-10"
+                                            InputclassName="form-control my-2  ltr" name="deadtime"
+                                            Id="ReferralDurationTime" changeHandle={this.changeHandle.bind(this)}
+                                            FormId={FormInfo.fm_dabir_eghdam.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.deadtimeText}
+                                            mask="99:99"
+                                        ></LabelInputText>
 
                                     </div>
 
                                 </div>
-                            </div>
-                            <div className="row bg-gray mg-b-5">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon creator"></span>
-                                </div>
+                            </BoxGroup>
+                            <BoxGroup className="row bg-gray"
+                                Text={this.context.t("DescriptionsInfoBox")}
+                                FormId={FormInfo.fm_dabir_eghdam.id}
+                                Id="DescriptionsInfoBox"
+                                IconDivClassName="col-1 d-flex"
+                                IconClassName="row-icon description"
+                                DeletedElements={DeletedElements}
+                                EditedElements={EditedElements}
+                            >
                                 <div className="col-11">
                                     <div className="row">
-
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("ReferralTo")}</label>
-                                                <div className="col-10">
-                                                    <div className="input-group my-2">
-                                                        <div className="input-group-prepend">
-                                                            <Button color="primary"
-                                                                onClick={this.OpenReferralTo.bind(this)}>...</Button>
-                                                        </div>
-                                                        <input type="text" ref="Workers" autoComplete="off" className="form-control" readOnly={true} defaultValue={this.context.t("unselected")} />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("Priority")}</label>
-                                                <div className="col-10">
-                                                    {SelectPriorityList_rows !== undefined &&
-                                                        <ComboSelectList options={PriorityList} name="olaviyat_id" classname="my-2" onChange={this.changeHandle.bind(this)} />
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div className="row bg-gray mg-b-5">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon clock"></span>
-                                </div>
-                                <div className="col-11">
-                                    <div className="row">
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("ReferralDurationDate")}</label>
-                                                <div className="col-10">
-                                                    <CalendarDatePicker fieldname="tarikhaction" className="form-control my-2  ltr" id="acfas" setDate={this.state.setDefaultDate} CalendarChange={this.CalendarChange.bind(this)} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-6">
-                                            <div className="form-group row">
-                                                <label className="col-2 col-form-label">{this.context.t("ReferralDurationTime")}</label>
-                                                <div className="col-10">
-                                                    <InputMask type="text" name="deadtime" autoComplete="off" className="form-control my-2  ltr" mask="99:99" onChange={this.changeHandle.bind(this)} />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div className="row bg-gray">
-                                <div className="col-1 d-flex">
-                                    <span className="row-icon description"></span>
-                                </div>
-                                <div className="col-11">
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <div className="form-group row">
-                                                <label className="col-1 col-form-label">{this.context.t("ReferralDescription")}</label>
-                                                <div className="col-11">
-                                                    <div className="input-group my-2">
-                                                        <div className="input-group-prepend align-self-stretch">
-                                                            <Button color="primary" name="tozihat"
-                                                                onClick={this.OpenSelectDefaultText.bind(this)}>{this.context.t("SelectPopup")}</Button>
-                                                        </div>
-                                                        <textarea type="text" className="form-control" rows="4"
-                                                            ref="DescriptionInput" name="tozihat"></textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-1 col-form-label"
+                                            ColClassName="col-12"
+                                            Text={this.context.t("WorkDescription")} className2="col-11"
+                                            className3="input-group my-2"
+                                            InputclassName="form-control" name="tozihat"
+                                            Id="Description" ButtonClick={this.OpenSelectDefaultText.bind(this)}
+                                            FormId={FormInfo.fm_dabir_eghdam.id}
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                            value={this.state.DescriptionTextArea}
+                                            color="primary"
+                                            Type="TextArea"
+                                            changeHandle={this.changeHandle.bind(this)}
+                                            ButtonText={this.context.t("SelectPopup")}
+                                        ></LabelPopUpInputText>
                                     </div>
                                 </div>
-                            </div>
+                            </BoxGroup>
+
                             {this.state.ReferralTomodal &&
                                 <ReferralToModal modal={this.state.ReferralTomodal}
                                     ConfirmWorkers={this.ConfirmWorkers.bind(this)}
@@ -426,66 +485,121 @@ class NewReferral extends Component {
                             <div className="col-6">
                                 <div className="row">
                                     <div className="col-4">
-                                        <div className="card ">
-                                            <div className="card-header">
-                                                <i className="import-authority">
-                                                </i>
-                                            </div>
+
+                                        <BoxGroup className="card"
+                                            Text={this.context.t("AttachmentSettingBox")}
+                                            FormId={FormInfo.fm_dabir_eghdam.id}
+                                            Id="AttachmentSettingBox"
+                                            IconDivClassName="card-header"
+                                            IconClassName="import-authority"
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                        >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <div class="checkbox">
-                                                        <input id="import0" defaultChecked={true} type="checkbox" name="infoFromParent" onChange={this.checkBoxChangeHandler.bind(this)} />
-                                                        <label htmlFor="import0">{this.context.t("ImportInformationFromLetter")}</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <input id="import1" defaultChecked={true} type="checkbox" onChange={this.checkBoxChangeHandler.bind(this)} name="attachFromParent" />
-                                                        <label htmlFor="import1">{this.context.t("ImportAttachmentFromLetter")}</label>
-                                                    </div>
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("ImportInformationFromLetter")}
+                                                        name="infoFromParent"
+                                                        Id="ImportInformationFromLetter"
+                                                        checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_dabir_eghdam.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.infoFromParentCheckBox}
+                                                    ></LabelCheckBox>
+
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("ImportAttachmentFromLetter")}
+                                                        name="attachFromParent"
+                                                        Id="ImportAttachmentFromLetter"
+                                                        checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_dabir_eghdam.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.attachFromParentCheckBox}
+                                                    ></LabelCheckBox>
+
                                                 </div>
                                             </div>
-                                        </div>
+                                        </BoxGroup>
                                     </div>
+
                                     <div className="col-4">
-                                        <div className="card ">
-                                            <div className="card-header">
-                                                <i className="workform-authority">
-                                                </i>
-                                            </div>
+
+                                        <BoxGroup className="card"
+                                            Text={this.context.t("WorkFlowSettingBox")}
+                                            FormId={FormInfo.fm_dabir_eghdam.id}
+                                            Id="WorkFlowSettingBox"
+                                            IconDivClassName="card-header"
+                                            IconClassName="workform-authority"
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                        >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <div class="checkbox">
-                                                        <input id="workform0" name="cpy_form_kar" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" />
-                                                        <label htmlFor="workform0">{this.context.t("CopyWorkForm")}</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <input id="workform1" name="withoutFlow" onChange={this.checkBoxChangeHandler.bind(this)} defaultChecked={true} ref="flow" type="checkbox" />
-                                                        <label htmlFor="workform1">{this.context.t("NoWorkFlow")}</label>
-                                                    </div>
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("CopyWorkForm")}
+                                                        name="cpy_form_kar"
+                                                        Id="CopyWorkForm"
+                                                        checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_dabir_eghdam.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.cpy_form_karCheckBox}
+                                                    ></LabelCheckBox>
+
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("NoWorkFlow")}
+                                                        name="withoutFlow"
+                                                        Id="NoWorkFlow"
+                                                        checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_dabir_eghdam.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.flowCheckBox}
+                                                        defaultChecked={true}
+                                                    ></LabelCheckBox>
                                                 </div>
 
                                             </div>
-                                        </div>
+                                        </BoxGroup>
+
                                     </div>
                                     <div className="col-4">
-                                        <div className="card ">
-                                            <div className="card-header border-0">
-                                                <i className="send-authority">
-                                                </i>
-                                            </div>
+                                        <BoxGroup className="card"
+                                            Text={this.context.t("TerminalSettingBox")}
+                                            FormId={FormInfo.fm_dabir_eghdam.id}
+                                            Id="TerminalSettingBox"
+                                            IconDivClassName="card-header"
+                                            IconClassName="send-authority"
+                                            DeletedElements={DeletedElements}
+                                            EditedElements={EditedElements}
+                                        >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <div class="checkbox">
-                                                        <input id="send0" ref="smsToWorker" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="smsToWorker" />
-                                                        <label htmlFor="send0">{this.context.t("SendSmsToUser")}</label>
-                                                    </div>
-                                                    <div class="checkbox">
-                                                        <input id="send1" ref="emailToWorker" onChange={this.checkBoxChangeHandler.bind(this)} type="checkbox" name="emailToWorker" />
-                                                        <label htmlFor="send1">{this.context.t("SendEmailToUser")}</label>
-                                                    </div>
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("SendSmsToUser")}
+                                                        name="smsToWorker"
+                                                        Id="SendSmsToUser"
+                                                        checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_dabir_eghdam.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.smsToWorkerCheckBox}
+                                                    ></LabelCheckBox>
+                                                    <LabelCheckBox LabelclassName="m-0"
+                                                        Text={this.context.t("SendEmailToUser")}
+                                                        name="emailToWorker"
+                                                        Id="SendEmailToUser" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        FormId={FormInfo.fm_dabir_eghdam.id}
+                                                        DeletedElements={DeletedElements}
+                                                        EditedElements={EditedElements}
+                                                        checked={this.state.emailToWorkerCheckBox}
+                                                    ></LabelCheckBox>
                                                 </div>
 
                                             </div>
-                                        </div>
+                                        </BoxGroup>
                                     </div>
                                 </div>
                             </div>
@@ -533,6 +647,8 @@ function mapStateToProps(state) {
     const { SelectWorkTypeList_rows, SelectPriorityList_rows } = state.Auto_BasicInfo
     const { AttachmentOnWork } = state.ArchiveBasic
 
+    const { DeletedElements310 } = state.Design !== undefined ? state.Design : {};
+    const { EditedElements310 } = state.Design !== undefined ? state.Design : {};
     return {
         alert,
         loading,
@@ -540,7 +656,9 @@ function mapStateToProps(state) {
         WorkInfo,
         SelectWorkTypeList_rows,
         SelectPriorityList_rows,
-        AttachmentOnWork
+        AttachmentOnWork,
+        DeletedElements: DeletedElements310,
+        EditedElements: EditedElements310,
     };
 }
 

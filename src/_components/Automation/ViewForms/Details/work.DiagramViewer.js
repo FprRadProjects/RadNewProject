@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
+import { WorkBasic_action } from "../../../../_actions";
 
 import { OrgChart } from "../../../Frameworks/orgChart";
 import { RibbonWorkDiagram } from './Ribbon';
@@ -22,7 +23,10 @@ class WorkDiagramViewer extends Component {
         };
 
     }
-
+    componentDidMount() {
+        const { FetchLoadingWorkInfo, SelectedRow } = this.props;
+        FetchLoadingWorkInfo(SelectedRow.peygir_id);
+    }
 
     toggleDiagram() {
         this.setState(prevState => ({
@@ -34,10 +38,45 @@ class WorkDiagramViewer extends Component {
         SaveParams = { form: "", data: [] };
     }
 
-    changeHandle = (e, val) => {
+    changeHandle = (Id) => {
+        const { FetchLoadingWorkInfo } = this.props;
+        FetchLoadingWorkInfo(Id);
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.WorkInfo !== this.props.WorkInfo) {
+            this.setState({ PeygirIdText: nextProps.WorkInfo.peygir_id });
+            this.setState({ SerialText: nextProps.WorkInfo.nos_id });
+            this.setState({
+                CreateText: nextProps.WorkInfo.cuser
+                    + " - " + nextProps.WorkInfo.c_date + " - " + nextProps.WorkInfo.c_time
+            });
+            this.setState({
+                ImplementText: nextProps.WorkInfo.done ? nextProps.WorkInfo.doneuser
+                    + " - " + nextProps.WorkInfo.tarikh + " - " + nextProps.WorkInfo.saat : ""
+            });
+            this.setState({
+                SeenText: nextProps.WorkInfo.see_date !== null ?
+                    nextProps.WorkInfo.see_date + " - " + nextProps.WorkInfo.see_time : ""
+            });
+            const FileInfo=(nextProps.WorkInfo.coname===null?"": nextProps.WorkInfo.coname)+ " - " + (nextProps.WorkInfo.name===null?"": nextProps.WorkInfo.name);
+            this.setState({ ManagerText: nextProps.WorkInfo.modir });
+            this.setState({ WorkDeadlineText: nextProps.WorkInfo.tarikhaction });
+            this.setState({ DeadTimeText: nextProps.WorkInfo.deadtime });
+            this.setState({ FileText: FileInfo });
+            this.setState({ AudienceText:nextProps.WorkInfo.ashkhasname !== null ? nextProps.WorkInfo.ashkhasname:"" });
+            this.setState({ ProjectText:nextProps.WorkInfo.ptype !== null ? nextProps.WorkInfo.ptype:"" });
+            this.setState({ SubjectText: nextProps.WorkInfo.mozo });
+            this.setState({ CodeText:nextProps.WorkInfo.code !== null ? nextProps.WorkInfo.code:"" });
+            this.setState({ FlowText:nextProps.WorkInfo.flow !== null ? nextProps.WorkInfo.flow:"" });
+            this.setState({ FlowResultText:nextProps.WorkInfo.f_natije !== null ? nextProps.WorkInfo.f_natije:"" });
+            this.setState({ FlowCodeText:nextProps.WorkInfo.flow_code !== null ? nextProps.WorkInfo.flow_code:"" });
+            this.setState({ CertificateNameText:nextProps.WorkInfo.madrak_name !== null ? nextProps.WorkInfo.madrak_name:"" });
+            this.setState({ DescriptionText: nextProps.WorkInfo.tozihat });
+            this.setState({ ResultText: nextProps.WorkInfo.natije });
+        }
     }
     render() {
-        const { modal, toggle, FetchData, Params, RefreshParentForm, ParentForm, WorkInfo_Diagram, SelectedRow
+        const { modal, toggle, Params, RefreshParentForm, ParentForm, WorkInfo_Diagram, SelectedRow
             , DeletedElements, EditedElements } = this.props;
 
         const modalBackDrop = `
@@ -61,7 +100,7 @@ class WorkDiagramViewer extends Component {
                         </div>
                         <div className="r-diagram-modal-content">
                             <div className="row" id="r-diagram-row-main">
-                                <div className="col-5 collapsed"  id="r-diagram-sidebar">
+                                <div className="col-5" id="r-diagram-sidebar">
                                     <div class="toggle-diagram"><button type="button" class="toggle-diagram-sidebar" title=""></button></div>
 
                                     <BoxGroup className="row bg-gray mg-b-5"
@@ -81,7 +120,7 @@ class WorkDiagramViewer extends Component {
                                                     Text={this.context.t("WorkID")} className2="col-8"
                                                     InputclassName="form-control mt-2 mb-1" name="peygir_id"
                                                     Id="PeygirId"
-                                                    
+
                                                     FormId={FormInfo.fm_par_diagram.id}
                                                     DeletedElements={DeletedElements}
                                                     EditedElements={EditedElements}
@@ -94,7 +133,7 @@ class WorkDiagramViewer extends Component {
                                                     Text={this.context.t("Serial")} className2="col-8"
                                                     InputclassName="form-control mt-2 mb-1" name="nos_id"
                                                     Id="Serial"
-                                                    
+
                                                     FormId={FormInfo.fm_par_diagram.id}
                                                     DeletedElements={DeletedElements}
                                                     EditedElements={EditedElements}
@@ -107,7 +146,7 @@ class WorkDiagramViewer extends Component {
                                                     Text={this.context.t("Create")} className2="col-10"
                                                     InputclassName="form-control my-1" name="create_id"
                                                     Id="Create"
-                                                    
+
                                                     FormId={FormInfo.fm_par_diagram.id}
                                                     DeletedElements={DeletedElements}
                                                     EditedElements={EditedElements}
@@ -118,9 +157,9 @@ class WorkDiagramViewer extends Component {
                                                     LabelclassName="col-2 col-form-label"
                                                     ColClassName="col-12"
                                                     Text={this.context.t("Implement")} className2="col-10"
-                                                    InputclassName="form-control my-1" name="implement_id"
+                                                    InputclassName="form-control my-1" name="doneuser"
                                                     Id="Implement"
-                                                    
+
                                                     FormId={FormInfo.fm_par_diagram.id}
                                                     DeletedElements={DeletedElements}
                                                     EditedElements={EditedElements}
@@ -136,7 +175,7 @@ class WorkDiagramViewer extends Component {
                                                     FormId={FormInfo.fm_par_diagram.id}
                                                     DeletedElements={DeletedElements}
                                                     EditedElements={EditedElements}
-                                                    value={this.state.ShowText}
+                                                    value={this.state.SeenText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
                                                 <LabelInputText className1="form-group row"
@@ -228,9 +267,9 @@ class WorkDiagramViewer extends Component {
                                                     isDisabled={true}
                                                 ></LabelInputText>
                                                 <LabelInputText className1="form-group row"
-                                                    LabelclassName="col-4 col-form-label"
-                                                    ColClassName="col-6"
-                                                    Text={this.context.t("Project")} className2="col-8"
+                                                    LabelclassName="col-2 col-form-label"
+                                                    ColClassName="col-12"
+                                                    Text={this.context.t("Project")} className2="col-10"
                                                     InputclassName="form-control mt-1 mb-2" name="project_id"
                                                     Id="Project"
                                                     FormId={FormInfo.fm_par_diagram.id}
@@ -281,9 +320,9 @@ class WorkDiagramViewer extends Component {
                                         </div>
                                     </BoxGroup>
                                     <BoxGroup className="row bg-gray mg-b-5"
-                                        Text={this.context.t("WorkFlowSettingBox")}
+                                        Text={this.context.t("WorkFlowInfoBox")}
                                         FormId={FormInfo.fm_par_diagram.id}
-                                        Id="WorkFlowSettingBox"
+                                        Id="WorkFlowInfoBox"
                                         IconDivClassName="col-2 d-flex"
                                         IconClassName="row-icon flow"
                                         DeletedElements={DeletedElements}
@@ -309,7 +348,7 @@ class WorkDiagramViewer extends Component {
                                                     Text={this.context.t("FlowResult")} className2="col-10"
                                                     InputclassName="form-control my-1" name="flowresult_id"
                                                     Id="FlowResult"
-                                                    
+
                                                     FormId={FormInfo.fm_par_diagram.id}
                                                     DeletedElements={DeletedElements}
                                                     EditedElements={EditedElements}
@@ -354,12 +393,12 @@ class WorkDiagramViewer extends Component {
                                     >
                                         <div className="col-10">
                                             <div className="row">
-                                                <LabelPopUpInputText className1="form-group row" 
+                                                <LabelPopUpInputText className1="form-group row"
                                                     LabelclassName="col-2 col-form-label"
                                                     ColClassName="col-12"
                                                     Text={this.context.t("Description")} className2="col-10"
                                                     InputclassName="form-control  rounded" name="tozihat"
-                                                    Id="Description" 
+                                                    Id="Description"
                                                     FormId={FormInfo.fm_par_diagram.id}
                                                     DeletedElements={DeletedElements}
                                                     EditedElements={EditedElements}
@@ -369,12 +408,12 @@ class WorkDiagramViewer extends Component {
                                                     className3="input-group mt-2 mb-1"
                                                     Type="TextArea"
                                                 ></LabelPopUpInputText>
-                                                 <LabelPopUpInputText className1="form-group row" 
-                                                 LabelclassName="col-2 col-form-label"
+                                                <LabelPopUpInputText className1="form-group row"
+                                                    LabelclassName="col-2 col-form-label"
                                                     ColClassName="col-12"
                                                     Text={this.context.t("Result")} className2="col-10"
                                                     InputclassName="form-control rounded" name="natije"
-                                                    Id="Result" 
+                                                    Id="Result"
                                                     FormId={FormInfo.fm_par_diagram.id}
                                                     DeletedElements={DeletedElements}
                                                     EditedElements={EditedElements}
@@ -388,10 +427,10 @@ class WorkDiagramViewer extends Component {
                                         </div>
                                     </BoxGroup>
                                 </div>
-                                <div className="col-12" id="r-diagram-content">
+                                <div className="col-7" id="r-diagram-content">
                                     <div className="row bg-gray">
                                         <div className="col-12">
-                                            <OrgChart data={WorkInfo_Diagram} currentId={SelectedRow.peygir_id} />
+                                            <OrgChart data={WorkInfo_Diagram} onNodeClickHandler={this.changeHandle.bind(this)} currentId={SelectedRow.peygir_id} />
                                         </div>
                                     </div>
                                 </div>
@@ -406,7 +445,9 @@ class WorkDiagramViewer extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-
+    FetchLoadingWorkInfo: (peygir_id) => {
+        dispatch(WorkBasic_action.FetchLoadingWorkInfo(peygir_id))
+    }
 });
 WorkDiagramViewer.contextTypes = {
     t: PropTypes.func.isRequired
@@ -419,7 +460,7 @@ function mapStateToProps(state) {
     const { WorkInfo_Diagram } = state.Auto_WorkBasic;
     const { DeletedElements217 } = state.Design !== undefined ? state.Design : {};
     const { EditedElements217 } = state.Design !== undefined ? state.Design : {};
-    console.log(DeletedElements217)
+    const { WorkInfo } = state.Auto_WorkBasic;
 
     return {
         alert,
@@ -428,6 +469,7 @@ function mapStateToProps(state) {
         WorkInfo_Diagram,
         DeletedElements: DeletedElements217,
         EditedElements: EditedElements217,
+        WorkInfo
     };
 
 }

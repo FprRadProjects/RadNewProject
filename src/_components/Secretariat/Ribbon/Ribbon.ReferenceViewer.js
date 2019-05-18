@@ -4,8 +4,7 @@ import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { ReferenceViewer } from "../RecordsPage";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton } from "../../Frameworks";
-import { HideElementListModal,EditTextElementListModal } from "../../Basic";
+import { RibbonButton, ShortKeyButton,ControlPanel } from "../../Frameworks";
 import {
     Act_Reference,
     WorkBasic_action,
@@ -17,7 +16,7 @@ import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 
 import { toast } from 'react-toastify';
 import { NewReferral } from '../RecordsPage/Referral.New';
-var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: {} };
+
 
 class RibbonReferenceViewer extends Component {
     constructor(props) {
@@ -26,8 +25,6 @@ class RibbonReferenceViewer extends Component {
         this.state = {
             ...this.state,
             ReferenceViewermodal: false,
-            HideElementListmodal: false,
-            EditTextElementListmodal:false,
             Referralmodal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal"
@@ -107,62 +104,10 @@ class RibbonReferenceViewer extends Component {
         FetchData(Params);
     }
 
-    saveHandle = (msg) => {
-        const { ParentForm, WorkInfo, SaveWorkInfo, lang, FetchWorkInfo,
-            RefreshParentForm, Params, SaveParams, clearSaveParams
-        } = this.props;
-        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
-        SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
-        SaveParams.form = formname;
-        let obj = [];
-        Object.keys(SaveParams.data).map((item, index) => {
-            return obj[index++] = SaveParams.data[item];
-        })
-        SaveParams.data = obj;
-        SaveWorkInfo(SaveParams, msg).then(data => {
-            if (data.status) {
-                RefreshParentForm(Params);
-                FetchWorkInfo(WorkInfo.peygir_id);
-            }
-        });
-        clearSaveParams();
-    }
-    ConfirmationHandle = (e) => {
-        const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params,
-            clearSaveParams, RefreshParentForm, SaveParams } = this.props;
-        ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
-        var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
-        ConfirmParams["Form"] = formname;
-        SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
-        SaveParams.form = formname;
-        let obj = [];
-        Object.keys(SaveParams.data).map((item, index) => {
-            return obj[index++] = SaveParams.data[item];
-        })
-        SaveParams.data = obj;
-        ConfirmParams.SaveParams = SaveParams;
-        console.log(ConfirmParams.SaveParams)
-        //this.saveHandle("");
-        InitConfirmWork(ConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
-            if (data.status) {
-                if (data.code === 2 && data.data !== null) {
-                    this.setState({
-                        FlowResultSelectmodal: true,
-                    });
-                }
-                else {
-                    FetchWorkInfo(WorkInfo.peygir_id);
-                    RefreshParentForm(Params);
-
-                }
-            }
-        });
-        clearSaveParams();
-    }
     ReferralHandle() {
-        const {  WorkInfo, CanSubOnWork } = this.props;
+        const { WorkInfo, CanSubOnWork } = this.props;
         if (WorkInfo !== undefined) {
-            CanSubOnWork(WorkInfo.peygir_id, WorkInfo.id_tel,this.context.t("frm_New_Referral"),"referral").then(data => {
+            CanSubOnWork(WorkInfo.peygir_id, WorkInfo.id_tel, this.context.t("frm_New_Referral"), "referral").then(data => {
                 if (data.status) {
                     this.setState({
                         Referralmodal: true,
@@ -184,18 +129,7 @@ class RibbonReferenceViewer extends Component {
             }
         });
     }
-    controlpanelClick(e) {
-        const { name } = e.target;
-        if (name === "hide")
-            this.setState(prevState => ({
-                HideElementListmodal: !prevState.HideElementListmodal
-            }));
-        else if (name === "edit")
-            this.setState(prevState => ({
-                EditTextElementListmodal: !prevState.EditTextElementListmodal
-            }));
-    }
-
+  
     CloseleSelectFlowResult = (e) => {
         this.setState({
             FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
@@ -204,7 +138,7 @@ class RibbonReferenceViewer extends Component {
 
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements, EditedElements, RefreshParentForm, ParentForm
-            , FetchWorkInfo
+            , FetchWorkInfo,saveWorkHandle,ConfirmationHandle
         } = this.props;
         return (
             <div>
@@ -214,17 +148,8 @@ class RibbonReferenceViewer extends Component {
                         <span className="switch-state"></span>
                     </label>
                 </div>
-                <div className="r-main-box__controlpanel">
-                    <div class="dropdown ltr">
-                        <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
-                        <div className="dropdown-menu">
-                            <a className="dropdown-item"
-                                title={this.context.t("Toolbox")} name="hide" onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
-                            <a className="dropdown-item"
-                                title={this.context.t("Toolbox")} name="edit" onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
-                        </div>
-                    </div>
-                </div>
+                <ControlPanel FormInfoId={FormInfo.fm_dabir_natije_erja.id}></ControlPanel>
+
                 <ul className="nav nav-tabs" id="ribbon-tab">
                     <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">عملیات</a></li>
                 </ul>
@@ -239,7 +164,7 @@ class RibbonReferenceViewer extends Component {
                                         <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
                                             DeletedElements={DeletedElements}
                                             Id="confirmation"
-                                            handleClick={this.ConfirmationHandle.bind(this)}
+                                            handleClick={ConfirmationHandle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="Confirmation"
                                         />
@@ -253,7 +178,7 @@ class RibbonReferenceViewer extends Component {
                                         <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
                                             DeletedElements={DeletedElements}
                                             Id="save"
-                                            handleClick={this.saveHandle.bind(this, this.context.t("msg_Operation_Success"))}
+                                            handleClick={saveWorkHandle.bind(this, this.context.t("msg_Operation_Success"))}
                                             EditedElements={EditedElements}
                                             Text="Save"
                                         />
@@ -286,13 +211,13 @@ class RibbonReferenceViewer extends Component {
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
                                 if (ShortKeys[keyName].Element === "ShortKeyicon-confirmation") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.ConfirmationHandle.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={ConfirmationHandle.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="confirmation" tooltip={this.context.t("Confirmation")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-save") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.saveHandle.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={saveWorkHandle.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="save" tooltip={this.context.t("Save")} />
                                     )
                                 }
@@ -313,13 +238,7 @@ class RibbonReferenceViewer extends Component {
                     </MenuProvider>
                 </nav>
 
-                {this.state.HideElementListmodal && <HideElementListModal modal={this.state.HideElementListmodal}
-                    toggle={this.controlpanelClick.bind(this)}
-                    FormId={FormInfo.fm_dabir_natije_erja.id} />}
-                    
-                {this.state.EditTextElementListmodal && <EditTextElementListModal modal={this.state.EditTextElementListmodal}
-                    toggle={this.controlpanelClick.bind(this)}
-                    FormId={FormInfo.fm_dabir_natije_erja.id} />}
+              
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                     toggle={this.toggleReferenceViewer.bind(this)}
                     WorkInfo={WorkInfo}
@@ -334,10 +253,9 @@ class RibbonReferenceViewer extends Component {
                 {this.state.Referralmodal &&
                     <NewReferral modal={this.state.Referralmodal}
                         toggle={this.toggleReferral.bind(this)}
-                        FormInfo={FormInfo.fm_dabir_natije_erja}
                         RefreshParentForm={RefreshParentForm}
                         Params={Params}
-                        />
+                    />
                 }
             </div>
         );
@@ -352,26 +270,19 @@ const mapDispatchToProps = dispatch => ({
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
     },
-    SaveWorkInfo: (SaveParams, msg) => {
-        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
-    },
     RebuildWork: (Peygir_id, msg) => {
         return dispatch(WorkActions_action.RebuildWork(Peygir_id, msg))
     },
     DeleteWork: (Peygir_id, msg) => {
         dispatch(WorkActions_action.DeleteWork(Peygir_id))
     },
-    InitConfirmWork: (Params, msg) => {
-        return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
-    },
-
     FetchWorkInfo: (peygir_id) => {
         dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
     },
-    CanSubOnWork: (peygir_id,id_tel,formname,from) => {
-        return dispatch(WorkAccess_action.CanSubOnWork(peygir_id,id_tel,formname,from))
+    CanSubOnWork: (peygir_id, id_tel, formname, from) => {
+        return dispatch(WorkAccess_action.CanSubOnWork(peygir_id, id_tel, formname, from))
     },
-    
+
 
 });
 RibbonReferenceViewer.contextTypes = {

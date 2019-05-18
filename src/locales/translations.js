@@ -161,9 +161,12 @@ export const translations = {
         WorkInfoBox:"فیلد های اطلاعاتی کار",
         FileInfoBox:"فیلد های اطلاعاتی پرونده",
         DateTimeInfoBox:"فیلد های اطلاعاتی تاریخ",
-        UsersInfoBox:"فیلد های اطلاعاتی کاربران",
+        UsersInfoBox:"فیلد های اطلاعاتی کاربری",
         DetailsInfoBox:"فیلد های اطلاعاتی تکمیلی",
+        ResultInfoBox:"فیلد های اطلاعاتی نتیجه",
         DescriptionsInfoBox:"فیلد های اطلاعاتی متنی",
+        ProjectInfoBox:"فیلد های اطلاعاتی پروژه",
+        WorkFlowInfoBox:"فیلد های اطلاعاتی فرآیندی",
         WorkFlowSettingBox:"فیلد های تنظیماتی فرایندی",
         AttachmentSettingBox:"فیلد های تنظیماتی ضمائم",
         TerminalSettingBox:"فیلد های تنظیماتی ترمینال داده",
@@ -224,6 +227,7 @@ export const translations = {
         msg_No_Select_Worker:"کاربر انتخاب نشده است",
         msg_No_Select_Manager:"مدیر انتخاب نشده است",
         Information_Is_Duplicate: 'اطلاعات تکراری می باشد.',
+        Information_Not_Available_For_Editing: 'اطلاعات برای ویرایش موجود نمی باشد.',
 
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
@@ -423,9 +427,12 @@ export const translations = {
         WorkInfoBox:"Work Info Box",
         FileInfoBox:"File Info Box",
         DateTimeInfoBox:"DateTime Info Box",
-        UsersInfoBox:"Users Info Box",
+        UsersInfoBox:"User Info Box",
         DetailsInfoBox:"Details Info Box",
+        ProjectInfoBox:"Project Info Box",
+        ResultInfoBox:"Result Info Box",
         DescriptionsInfoBox:"Descriptions Info Box",
+        WorkFlowInfoBox:"WorkFlow Info Box",
         WorkFlowSettingBox:"WorkFlow Setting Box",
         AttachmentSettingBox:"Attachment Setting Box",
         TerminalSettingBox:"Terminal Setting Box",
@@ -486,7 +493,8 @@ export const translations = {
         msg_No_Select_Worker:"Worker Not Selected.",
         msg_No_Select_Manager:"Manager Not Selected.",
         Information_Is_Duplicate: 'The Information Is Duplicate.',
-        //End-----------------Messages----------------
+        Information_Not_Available_For_Editing: 'Information Is Not Available For Editing.',
+  //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',
         frm_Automation: 'Automation',
