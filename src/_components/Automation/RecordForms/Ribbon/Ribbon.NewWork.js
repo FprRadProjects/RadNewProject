@@ -41,12 +41,12 @@ class RibbonNewWork extends Component {
                 <ControlPanel FormInfoId={FormInfo.fm_pub_sabt_kar.id}></ControlPanel>
                 
                 <ul className="nav nav-tabs" id="ribbon-tab">
-                    <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">{this.context.t("Operations")}</a></li>
-                    <li className="nav-item"><a href="#tab2" className="nav-link" data-toggle="tab">{this.context.t("Forms")}</a></li>
+                    <li className="nav-item"><a href="#newworktab1" className="nav-link active" role="tab" data-toggle="tab">{this.context.t("Operations")}</a></li>
+                    <li className="nav-item"><a href="#newworktab2" className="nav-link" role="tab" data-toggle="tab">{this.context.t("Forms")}</a></li>
                 </ul>
                 <div className="tab-content">
                     <div className="gradient"></div>
-                    <div className="tab-pane active" id="tab1">
+                    <div className="tab-pane fade show active" id="newworktab1" role="tabpanel">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
                                 <div className="tab-group-caption">{this.context.t("Operations")}</div>
@@ -145,7 +145,7 @@ class RibbonNewWork extends Component {
                         
                         </div>
                     </div>
-                    <div role="tabpanel" className="tab-pane fade" id="tab2">
+                    <div className="tab-pane fade" id="newworktab2" role="tabpanel">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
                                 <div className="tab-group-caption">{this.context.t("Forms")}</div>

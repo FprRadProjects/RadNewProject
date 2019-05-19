@@ -42,12 +42,12 @@ class RibbonWorkDiagram extends Component {
                 <ControlPanel FormInfoId={FormInfo.fm_par_diagram.id}></ControlPanel>
 
                 <ul className="nav nav-tabs" id="ribbon-tab">
-                    <li className="nav-item"><a href="#diagramtab1" className="nav-link active" role="tab" data-toggle="tab">{this.context.t("Operations")}</a></li>
-                    <li className="nav-item"><a href="#diagramtab2" className="nav-link" role="tab" data-toggle="tab">{this.context.t("Forms")}</a></li>
+                    <li className="nav-item"><a href="#workdiagramtab1" className="nav-link active" role="tab" data-toggle="tab">{this.context.t("Operations")}</a></li>
+                    <li className="nav-item"><a href="#workdiagramtab2" className="nav-link" role="tab" data-toggle="tab">{this.context.t("Forms")}</a></li>
                 </ul>
                 <div className="tab-content">
                     <div className="gradient"></div>
-                    <div className="tab-pane fade show active" id="diagramtab1" role="tabpanel">
+                    <div className="tab-pane fade show active" id="workdiagramtab1" role="tabpanel">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
                                 <div className="tab-group-caption">{this.context.t("Operations")}</div>
@@ -87,7 +87,7 @@ class RibbonWorkDiagram extends Component {
                             </div>
                         </div>
                     </div>
-                    <div role="tabpanel" className="tab-pane fade" id="diagramtab2" role="tabpanel">
+                    <div className="tab-pane fade" id="workdiagramtab2" role="tabpanel">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
                                 <div className="tab-group-caption">{this.context.t("Forms")}</div>

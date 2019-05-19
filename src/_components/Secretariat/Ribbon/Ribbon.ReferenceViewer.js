@@ -151,11 +151,11 @@ class RibbonReferenceViewer extends Component {
                 <ControlPanel FormInfoId={FormInfo.fm_dabir_natije_erja.id}></ControlPanel>
 
                 <ul className="nav nav-tabs" id="ribbon-tab">
-                    <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">عملیات</a></li>
+                    <li className="nav-item"><a href="#referenceviewertab1" className="nav-link active" role="tab" data-toggle="tab">عملیات</a></li>
                 </ul>
                 <div className="tab-content">
                     <div className="gradient"></div>
-                    <div className="tab-pane active" id="tab1">
+                    <div className="tab-pane fade show active" id="referenceviewertab1" role="tabpanel">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
                                 <div className="tab-group-caption">ثبت</div>
