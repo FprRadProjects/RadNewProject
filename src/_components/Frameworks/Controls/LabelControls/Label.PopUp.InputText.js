@@ -31,14 +31,14 @@ class LabelPopUpInputText extends Component {
         ) &&
           <div className={ColClassName===undefined?"col-6":ColClassName} id={"LabelPopUpInputText-" + Id} Description={Text} formid={FormId} element={"LabelPopUpInputText-" + Id}>
             <div className={className1===undefined?"form-group row":className1} id={"LabelPopUpInputTextDiv1-" + Id} Description={Text} formid={FormId} element={"LabelPopUpInputText-" + Id} >
-              <span formid={FormId} className={LabelclassName===undefined?"col-2 col-form-label":LabelclassName} id={"LabelPopUpInputTextLbl-" + Id} element={"LabelPopUpInputText-" + Id}
+              <label formid={FormId} className={LabelclassName===undefined?"col-2 col-form-label":LabelclassName} id={"LabelPopUpInputTextLbl-" + Id} element={"LabelPopUpInputText-" + Id}
                 erowid={(EditedElements === undefined || EditedElements["LabelPopUpInputTextLbl-" + Id] === undefined) ?
                   0 : EditedElements["LabelPopUpInputTextLbl-" + Id].Id}
                 public={(EditedElements === undefined || EditedElements["LabelPopUpInputTextLbl-" + Id] === undefined) ?
                   "false" : EditedElements["LabelPopUpInputTextLbl-" + Id].IsPublic + ""}
                 Description={Text} >
                 {(EditedElements === undefined || EditedElements["LabelPopUpInputTextLbl-" + Id] === undefined) ?
-                  Text : EditedElements["LabelPopUpInputTextLbl-" + Id].Title}</span>
+                  Text : EditedElements["LabelPopUpInputTextLbl-" + Id].Title}</label>
               <div className={className2===undefined?"col-10":className2}>
                 <div className={className3===undefined?"input-group mt-2 mb-1":className3} >
                   <div className="input-group-prepend">

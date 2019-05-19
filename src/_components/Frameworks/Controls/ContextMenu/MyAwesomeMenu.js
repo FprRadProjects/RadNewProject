@@ -58,7 +58,7 @@ class MyAwesomeMenu extends Component {
         const formid = event.target.attributes.formid;
         if (formid === undefined)
             return false;
-        if (event.target.nodeName == "SPAN") {
+        if (event.target.nodeName == "LABEL") {
             if (event.target.attributes.id !== undefined) {
                 const id = event.target.attributes.id.value;
                 if (id.indexOf("ShortKey") === -1) {

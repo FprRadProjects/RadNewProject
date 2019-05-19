@@ -28,13 +28,13 @@ class ControlPanel extends Component {
       <div className="r-main-box__controlpanel">
 
         <div class="dropdown ltr">
-          <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+          <a className="r-main-box__controlpanel--action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
           <div className="dropdown-menu">
-            <a className="dropdown-item"
+            <a className="dropdown-item disable-select"
               title={this.context.t("DeletedControlManagement")} name="hide" onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
-            <a className="dropdown-item"
+            <a className="dropdown-item disable-select"
               title={this.context.t("LabelManagement")} name="edit" onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
-            <a className="dropdown-item"
+            <a className="dropdown-item disable-select"
               title={this.context.t("SaveFormLayout")} name="savelaout" onClick={this.controlpanelClick.bind(this)}>{this.context.t("SaveFormLayout")}</a>
           </div>
         </div>

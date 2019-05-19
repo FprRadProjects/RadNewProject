@@ -22,13 +22,13 @@ class RibbonButton extends Component {
                 >
                         <i formid={FormId} isshortkey="true" className={"icon " + Id} id={"icon-" + Id} element={"lnk-" + Id} 
                         Description={this.context.t(Text)} title={this.context.t(Text)}></i>
-                        <span formid={FormId} id={"lbl-" + Id} element={"lnk-" + Id}  Description={this.context.t(Text)}
+                        <label formid={FormId} id={"lbl-" + Id} element={"lnk-" + Id}  Description={this.context.t(Text)}
                             erowid={(EditedElements === undefined || EditedElements["lbl-" + Id] === undefined) ?
                                 0 : EditedElements["lbl-" + Id].Id}
                             public={(EditedElements === undefined || EditedElements["lbl-" + Id] === undefined) ?
                                 "false" : EditedElements["lbl-" + Id].IsPublic + ""}
                         >{(EditedElements === undefined || EditedElements["lbl-" + Id] === undefined) ?
-                            this.context.t(Text) : EditedElements["lbl-" + Id].Title}</span>
+                            this.context.t(Text) : EditedElements["lbl-" + Id].Title}</label>
                     </a>}
             </MenuProvider>
         );

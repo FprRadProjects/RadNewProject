@@ -29,14 +29,14 @@ class LabelCheckBox extends Component {
               onChange={checkBoxChangeHandler.bind(this)} name={name} disabled={isDisabled===undefined?false:isDisabled} 
               defaultChecked={defaultChecked===undefined?false:defaultChecked}
               checked={this.state.checked} type="checkbox" />
-            <span htmlFor={"LabelCheckBoxInput-" + Id} formid={FormId} className={LabelclassName===undefined?"m-0":LabelclassName} id={"LabelCheckBoxLbl-" + Id} element={"LabelCheckBox-" + Id}
+            <label htmlFor={"LabelCheckBoxInput-" + Id} formid={FormId} className={LabelclassName===undefined?"m-0":LabelclassName} id={"LabelCheckBoxLbl-" + Id} element={"LabelCheckBox-" + Id}
               erowid={(EditedElements === undefined || EditedElements["LabelCheckBoxLbl-" + Id] === undefined) ?
                 0 : EditedElements["LabelCheckBoxLbl-" + Id].Id}
               public={(EditedElements === undefined || EditedElements["LabelCheckBoxLbl-" + Id] === undefined) ?
                 "false" : EditedElements["LabelCheckBoxLbl-" + Id].IsPublic + ""}
               Description={Text}
             >{(EditedElements === undefined || EditedElements["LabelCheckBoxLbl-" + Id] === undefined) ?
-              Text : EditedElements["LabelCheckBoxLbl-" + Id].Title}</span>
+              Text : EditedElements["LabelCheckBoxLbl-" + Id].Title}</label>
 
           </div>
         }

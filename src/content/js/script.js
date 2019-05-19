@@ -124,11 +124,25 @@ $(document).on('click', function (e) {
     if (e.target.className !== "r-main-box__controlpanel--action dropdown-toggle")
         $(document).find('.dropdown-menu').removeClass('show');
 });
-$(document).on('click','.toggle-diagram-sidebar', function (e) {
+$(document).on('click', '.toggle-diagram-sidebar', function (e) {
     $("#r-diagram-sidebar").toggleClass("collapsed");
     $("#r-diagram-content").toggleClass("col-12 col-7");
     return false;
 });
+
+
+$('.r-main-box__controlpanel--action').on('click', function (e) {
+    console.log($(this).next().hasClass("show"));
+    if ($(this).next().hasClass("show")) {
+        $(this).next().removeClass("show");
+        $(this).parent().removeClass("show");
+    }
+    else {
+        $(this).next().addClass("show");
+        $(this).parent().addClass("show");
+    }
+});
+
 $(document).ready(function () {
 
 

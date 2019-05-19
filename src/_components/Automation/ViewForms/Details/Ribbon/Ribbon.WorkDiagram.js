@@ -42,73 +42,17 @@ class RibbonWorkDiagram extends Component {
                 <ControlPanel FormInfoId={FormInfo.fm_par_diagram.id}></ControlPanel>
 
                 <ul className="nav nav-tabs" id="ribbon-tab">
-                    <li className="nav-item"><a href="#tab1" className="nav-link active" data-toggle="tab">{this.context.t("Operations")}</a></li>
-                    <li className="nav-item"><a href="#tab2" className="nav-link" data-toggle="tab">{this.context.t("Forms")}</a></li>
+                    <li className="nav-item"><a href="#diagramtab1" className="nav-link active" role="tab" data-toggle="tab">{this.context.t("Operations")}</a></li>
+                    <li className="nav-item"><a href="#diagramtab2" className="nav-link" role="tab" data-toggle="tab">{this.context.t("Forms")}</a></li>
                 </ul>
                 <div className="tab-content">
                     <div className="gradient"></div>
-                    <div className="tab-pane active" id="tab1">
+                    <div className="tab-pane fade show active" id="diagramtab1" role="tabpanel">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
                                 <div className="tab-group-caption">{this.context.t("Operations")}</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
-                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="new-work"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="NewWork"
-                                        />
-                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="create-work"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="CreateWork"
-                                        />
-                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="follow"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="Follow"
-                                        />
-                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="time-spent"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="TimeSpent"
-                                        />
-                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="edit"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="Edit"
-                                        />
-                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="confirmation"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="WorkConfirmation"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">{this.context.t("WorksCheck")}</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="call-work"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="CallWork"
-                                        />
                                         <RibbonButton FormId={FormInfo.fm_par_diagram.id}
                                             DeletedElements={DeletedElements}
                                             Id="work-view"
@@ -123,30 +67,27 @@ class RibbonWorkDiagram extends Component {
                                             EditedElements={EditedElements}
                                             Text="WorkInfoView"
                                         />
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">{this.context.t("Attachments")}</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
                                         <RibbonButton FormId={FormInfo.fm_par_diagram.id}
                                             DeletedElements={DeletedElements}
-                                            Id="attachments"
+                                            Id="attachments-view"
                                             handleClick={this.handleClick.bind(this)}
                                             EditedElements={EditedElements}
-                                            Text="Attachments"
+                                            Text="AttachmentsView"
                                         />
-                                        
-                                        
+                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
+                                            DeletedElements={DeletedElements}
+                                            Id="referral-result"
+                                            handleClick={this.handleClick.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="ReferralResult"
+                                        />
+                                       
                                     </div>
                                 </div>
                             </div>
-                        
                         </div>
                     </div>
-                    <div role="tabpanel" className="tab-pane fade" id="tab2">
+                    <div role="tabpanel" className="tab-pane fade" id="diagramtab2" role="tabpanel">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
                                 <div className="tab-group-caption">{this.context.t("Forms")}</div>
@@ -183,29 +124,6 @@ class RibbonWorkDiagram extends Component {
                                     </div>
                                 </div>
                             </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">{this.context.t("Copy")}</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="internal-replication"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="InternalReplication"
-                                        />
-                                        <RibbonButton FormId={FormInfo.fm_par_diagram.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="external-replication"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="ExternalReplication"
-                                        />
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                       
                         </div>
                     </div>
                 </div>
@@ -214,50 +132,7 @@ class RibbonWorkDiagram extends Component {
                     <MenuProvider id="menu_id">
                         <ul className="menu">
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
-                                if (ShortKeys[keyName].Element === "ShortKeyicon-new-work") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="new-work" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-create-work") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={saveWorkHandle.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="create-work" />
-                                    )
-                                }
-                                
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-follow") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="follow" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-time-spent") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="time-spent" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-edit") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="edit" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-confirmation") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="confirmation" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-call-work") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="call-work" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-work-view") {
+                                if (ShortKeys[keyName].Element === "ShortKeyicon-work-view") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="work-view" />
@@ -265,16 +140,25 @@ class RibbonWorkDiagram extends Component {
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-work-info-view") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={saveWorkHandle.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="work-info-view" />
                                     )
                                 }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-attachments") {
+                                
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={attachmentsToggle.bind(this)}
-                                        ShortKey={ShortKeys[keyName]} Id="attachments" />
+                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
+                                            ShortKey={ShortKeys[keyName]} Id="referral-result" />
                                     )
                                 }
+                               
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-attachments-view") {
+                                    return (
+                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
+                                            ShortKey={ShortKeys[keyName]} Id="attachments-view" />
+                                    )
+                                }
+                                
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-work-form") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
@@ -299,18 +183,7 @@ class RibbonWorkDiagram extends Component {
                                             ShortKey={ShortKeys[keyName]} Id="process-form-builder" />
                                     )
                                 }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-external-replication") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="external-replication" />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-internal-replication") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="internal-replication" />
-                                    )
-                                }
+                               
                             })}
                         </ul>
                     </MenuProvider>
