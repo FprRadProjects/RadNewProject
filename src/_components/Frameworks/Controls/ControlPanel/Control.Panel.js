@@ -31,9 +31,11 @@ class ControlPanel extends Component {
           <a className="r-main-box__controlpanel--action dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
           <div className="dropdown-menu">
             <a className="dropdown-item"
-              title={this.context.t("Toolbox")} name="hide" onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
+              title={this.context.t("DeletedControlManagement")} name="hide" onClick={this.controlpanelClick.bind(this)}>{this.context.t("DeletedControlManagement")}</a>
             <a className="dropdown-item"
-              title={this.context.t("Toolbox")} name="edit" onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
+              title={this.context.t("LabelManagement")} name="edit" onClick={this.controlpanelClick.bind(this)}>{this.context.t("LabelManagement")}</a>
+            <a className="dropdown-item"
+              title={this.context.t("SaveFormLayout")} name="savelaout" onClick={this.controlpanelClick.bind(this)}>{this.context.t("SaveFormLayout")}</a>
           </div>
         </div>
 
@@ -41,10 +43,10 @@ class ControlPanel extends Component {
           <HideElementListModal modal={this.state.HideElementListmodal}
             toggle={this.controlpanelClick.bind(this)}
             FormId={FormInfoId} />}
-        {this.state.EditTextElementListmodal && 
-        <EditTextElementListModal modal={this.state.EditTextElementListmodal}
-          toggle={this.controlpanelClick.bind(this)}
-          FormId={FormInfoId} />}
+        {this.state.EditTextElementListmodal &&
+          <EditTextElementListModal modal={this.state.EditTextElementListmodal}
+            toggle={this.controlpanelClick.bind(this)}
+            FormId={FormInfoId} />}
       </div>
     );
   }

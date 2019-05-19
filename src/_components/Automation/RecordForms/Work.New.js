@@ -623,23 +623,19 @@ class NewWork extends Component {
                             <RibbonNewWork saveWorkHandle={this.saveWorkHandle.bind(this)} attachmentsToggle={this.attachmentsToggle.bind(this)} />
                         </div>
                         <div className="referral-modal">
-                            <BoxGroup className="row bg-gray mg-b-5"
+                            <BoxGroup 
                                 Text={this.context.t("WorkInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="WorkInfoBox"
-                                IconDivClassName="col-1 d-flex"
                                 IconClassName="row-icon flow"
                                 DeletedElements={DeletedElements}
                                 EditedElements={EditedElements}
                             >
                                 <div className="col-11">
                                     <div className="row">
-                                        <LabelCombobox className1="form-group row"
-                                            ColClassName="col-6"
-                                            LabelclassName="col-2 col-form-label"
+                                        <LabelCombobox
                                             Text={this.context.t("WorkFlow")}
-                                            className2="col-10"
-                                            ComboclassName="mt-2 mb-1" name="flow_id"
+                                             name="flow_id"
                                             Id="WorkFlow"
                                             changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -649,10 +645,10 @@ class NewWork extends Component {
                                             selectedOption={this.state.FlowSelectedOption}
                                             options={WorkFlowList}
                                         ></LabelCombobox>
-                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
+                                        <LabelCombobox
                                             ColClassName="col-4"
-                                            Text={this.context.t("WorkGroup")} className2="col-10"
-                                            ComboclassName="mt-2 mb-1" name="workgroup_id"
+                                            Text={this.context.t("WorkGroup")} 
+                                             name="workgroup_id"
                                             Id="WorkGroup" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -666,7 +662,7 @@ class NewWork extends Component {
                                                 <div className="col-12">
                                                     <div className="input-group mt-2 mb-1">
                                                         <div className="input-group-append pl-5 pt-1 text-space-nowrap">
-                                                            <LabelCheckBox LabelclassName="m-0"
+                                                            <LabelCheckBox 
                                                                 Text={this.context.t("HasFormBuilder")}
                                                                 name="hasformsaz"
                                                                 Id="HasFormBuilder" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -683,9 +679,8 @@ class NewWork extends Component {
 
                                     </div>
                                     <div className="row">
-                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("WorkType")} className2="col-10"
+                                        <LabelCombobox
+                                            Text={this.context.t("WorkType")} 
                                             ComboclassName="mt-1 mb-2" name="wt_id"
                                             Id="WorkType" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -698,38 +693,32 @@ class NewWork extends Component {
                                 </div>
                             </BoxGroup>
 
-                            <BoxGroup className="row bg-gray mg-b-5"
+                            <BoxGroup 
                                 Text={this.context.t("FileInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="FileInfoBox"
-                                IconDivClassName="col-1 d-flex"
                                 IconClassName="row-icon flow"
                                 DeletedElements={DeletedElements}
                                 EditedElements={EditedElements}
                             >
                                 <div className="col-11">
                                     <div className="row">
-                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("File")} className2="col-10"
-                                            InputclassName="form-control" name="id_tel"
+                                        <LabelPopUpInputText
+                                            Text={this.context.t("File")} 
+                                             name="id_tel"
                                             Id="File" ButtonClick={this.ToggleSelectFileAudience.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             isDisabled={true}
                                             value={this.state.fileInfoText}
-                                            color="primary" 
-                                            className3="input-group mt-2 mb-1"
                                             Type="Input"
                                             changeHandle={this.changeHandle.bind(this)}
                                             ButtonText={this.context.t("SelectPopup")}
                                         ></LabelPopUpInputText>
-
-                                        <LabelInputText className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("Audience")} className2="col-10"
-                                            InputclassName="form-control mt-2 mb-1" name="ashkhas_id"
+                                        <LabelInputText
+                                            Text={this.context.t("Audience")} 
+                                             name="ashkhas_id"
                                             Id="Audience"
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -737,36 +726,31 @@ class NewWork extends Component {
                                             value={this.state.AudienceText}
                                             isDisabled={true}
                                         ></LabelInputText>
-
                                     </div>
                                     <div className="row">
-                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("Project")} className2="col-10"
-                                            InputclassName="form-control" name="p_type_id"
+                                        <LabelPopUpInputText
+                                            Text={this.context.t("Project")} 
+                                             name="p_type_id"
                                             Id="Project" ButtonClick={this.ToggleSelectProject.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             value={this.state.ProjectSelectedOption}
-                                            color="primary" 
                                             className3="input-group mt-1 mb-2"
                                             Type="ComboBox"
                                             options={ProjectList}
                                             changeHandle={this.changeHandle.bind(this)}
                                             ButtonText={this.context.t("SelectPopup")}
                                         ></LabelPopUpInputText>
-                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("Following")} className2="col-10"
-                                            InputclassName="form-control" name="p_id"
+                                        <LabelPopUpInputText
+                                            Text={this.context.t("Following")} 
+                                             name="p_id"
                                             Id="Following" ButtonClick={this.ToggleSelectFollower.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             isDisabled={true}
                                             value={this.state.FollowerText}
-                                            color="primary" 
                                             className3="input-group mt-1 mb-2"
                                             Type="Input"
                                             hasDelete={true}
@@ -777,21 +761,19 @@ class NewWork extends Component {
                                 </div>
                             </BoxGroup>
 
-                            <BoxGroup className="row bg-gray mg-b-5"
+                            <BoxGroup 
                                 Text={this.context.t("DateTimeInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="DateTimeInfoBox"
-                                IconDivClassName="col-1 d-flex"
                                 IconClassName="row-icon clock"
                                 DeletedElements={DeletedElements}
                                 EditedElements={EditedElements}
                             >
                                 <div className="col-11">
                                     <div className="row">
-                                        <LabelCalendar className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("ActionDate")} className2="col-10"
-                                            InputclassName="form-control my-2  ltr" name="tarikhaction"
+                                        <LabelCalendar
+                                            Text={this.context.t("ActionDate")} 
+                                             name="tarikhaction"
                                             Id="ActionDate" CalendarChange={this.CalendarChange.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -799,9 +781,8 @@ class NewWork extends Component {
                                             setDate={this.state.setDefaultActionDate}
                                         ></LabelCalendar>
 
-                                        <LabelInputText className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("DeadTime")} className2="col-10"
+                                        <LabelInputText
+                                            Text={this.context.t("DeadTime")} 
                                             InputclassName="form-control my-2  ltr" name="deadtime"
                                             Id="DeadTime" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -815,21 +796,19 @@ class NewWork extends Component {
                                 </div>
                             </BoxGroup>
 
-                            <BoxGroup className="row bg-gray mg-b-5"
+                            <BoxGroup 
                                 Text={this.context.t("UsersInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="UsersInfoBox"
-                                IconDivClassName="col-1 d-flex"
                                 IconClassName="row-icon flow"
                                 DeletedElements={DeletedElements}
                                 EditedElements={EditedElements}
                             >
                                 <div className="col-11">
                                     <div className="row">
-                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("Roll")} className2="col-10"
-                                            ComboclassName="mt-2 mb-1" name="user_role_id"
+                                        <LabelCombobox
+                                            Text={this.context.t("Roll")} 
+                                             name="user_role_id"
                                             Id="WorkerRoll"
                                             changeHandle={this.changeRoleHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -838,10 +817,9 @@ class NewWork extends Component {
                                             selectedOption={this.state.user_roleSelectedOption}
                                             options={UserRollList}
                                         ></LabelCombobox>
-                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("UserFullName")} className2="col-10"
-                                            ComboclassName="mt-2 mb-1" name="worker_id"
+                                        <LabelCombobox
+                                            Text={this.context.t("UserFullName")} 
+                                             name="worker_id"
                                             Id="UserFullName" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -851,10 +829,8 @@ class NewWork extends Component {
                                         ></LabelCombobox>
                                     </div>
                                     <div className="row">
-
-                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("Roll")} className2="col-10"
+                                        <LabelCombobox
+                                            Text={this.context.t("Roll")} 
                                             ComboclassName="mt-1 mb-2" name="manager_role_id"
                                             Id="ManagerRoll" changeHandle={this.changeRoleHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -863,9 +839,8 @@ class NewWork extends Component {
                                             selectedOption={this.state.manager_roleSelectedOption}
                                             options={UserRollList}
                                         ></LabelCombobox>
-                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("AdminFullName")} className2="col-10"
+                                        <LabelCombobox
+                                            Text={this.context.t("AdminFullName")} 
                                             ComboclassName="mt-1 mb-2" name="defmodir_id"
                                             Id="AdminFullName" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -879,35 +854,30 @@ class NewWork extends Component {
 
                                 </div>
                             </BoxGroup>
-                            <BoxGroup className="row bg-gray mg-b-5"
+                            <BoxGroup 
                                 Text={this.context.t("DetailsInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="DetailsInfoBox"
-                                IconDivClassName="col-1 d-flex"
                                 IconClassName="row-icon flow"
                                 DeletedElements={DeletedElements}
                                 EditedElements={EditedElements}
                             >
                                 <div className="col-11">
                                     <div className="row">
-                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("Subject")} className2="col-10"
-                                            className3="input-group mt-2 mb-1"
-                                            InputclassName="form-control" name="mozo"
+                                        <LabelPopUpInputText
+                                            Text={this.context.t("Subject")} 
+                                             name="mozo"
                                             Id="Subject" ButtonClick={this.OpenSelectDefaultText.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             value={this.state.SubjectInputText}
-                                            color="primary"
                                             Type="Input"
                                             changeHandle={this.changeHandle.bind(this)}
                                             ButtonText={this.context.t("SelectPopup")}
                                         ></LabelPopUpInputText>
-                                        <LabelInputText className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("Code")} className2="col-10"
+                                        <LabelInputText
+                                            Text={this.context.t("Code")} 
                                             InputclassName="form-control mt-2 mb-1 ltr" name="code"
                                             Id="Code" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -919,9 +889,8 @@ class NewWork extends Component {
                                     </div>
                                     <div className="row">
 
-                                        <LabelCombobox className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("Priority")} className2="col-10"
+                                        <LabelCombobox
+                                            Text={this.context.t("Priority")} 
                                             ComboclassName="mt-1 mb-2" name="olaviyat_id"
                                             Id="Priority" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -931,9 +900,8 @@ class NewWork extends Component {
                                             options={PriorityList}
                                         ></LabelCombobox>
 
-                                        <LabelInputText className1="form-group row" LabelclassName="col-2 col-form-label"
-                                            ColClassName="col-6"
-                                            Text={this.context.t("FileNumber")} className2="col-10"
+                                        <LabelInputText
+                                            Text={this.context.t("FileNumber")} 
                                             InputclassName="form-control mt-1 mb-2 ltr" name="shomare"
                                             Id="FileNumber" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -943,32 +911,27 @@ class NewWork extends Component {
                                         ></LabelInputText>
 
                                     </div>
-
                                 </div>
                             </BoxGroup>
                             <BoxGroup className="row bg-gray"
                                 Text={this.context.t("DescriptionsInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="DescriptionsInfoBox"
-                                IconDivClassName="col-1 d-flex"
                                 IconClassName="row-icon result"
                                 DeletedElements={DeletedElements}
                                 EditedElements={EditedElements}
                             >
                                 <div className="col-11">
                                     <div className="row">
-
-                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-1 col-form-label"
+                                        <LabelPopUpInputText LabelclassName="col-1 col-form-label"
                                             ColClassName="col-12"
                                             Text={this.context.t("WorkDescription")} className2="col-11"
-                                            className3="input-group mt-2 mb-1"
-                                            InputclassName="form-control" name="tozihat"
+                                             name="tozihat"
                                             Id="Description" ButtonClick={this.OpenSelectDefaultText.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             value={this.state.DescriptionTextArea}
-                                            color="primary"
                                             Type="TextArea"
                                             changeHandle={this.changeHandle.bind(this)}
                                             ButtonText={this.context.t("SelectPopup")}
@@ -977,17 +940,16 @@ class NewWork extends Component {
                                     </div>
                                     <div className="row">
 
-                                        <LabelPopUpInputText className1="form-group row" LabelclassName="col-1 col-form-label"
+                                        <LabelPopUpInputText LabelclassName="col-1 col-form-label"
                                             ColClassName="col-12"
                                             Text={this.context.t("WorkResult")} className2="col-11"
                                             className3="input-group mt-1 mb-2"
-                                            InputclassName="form-control" name="natije"
+                                             name="natije"
                                             Id="Result" ButtonClick={this.OpenSelectDefaultText.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             value={this.state.ResultTextArea}
-                                            color="primary"
                                             Type="TextArea"
                                             changeHandle={this.changeHandle.bind(this)}
                                             ButtonText={this.context.t("SelectPopup")}
@@ -1018,7 +980,7 @@ class NewWork extends Component {
                                         >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <LabelCheckBox LabelclassName="m-0"
+                                                    <LabelCheckBox 
                                                         Text={this.context.t("CopyWorkForm")}
                                                         name="cpy_form_kar"
                                                         Id="CopyWorkForm"
@@ -1029,7 +991,7 @@ class NewWork extends Component {
                                                         checked={this.state.cpy_form_karCheckBox}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox LabelclassName="m-0"
+                                                    <LabelCheckBox 
                                                         Text={this.context.t("NoWorkFlow")}
                                                         name="withoutFlow"
                                                         Id="NoWorkFlow"
@@ -1060,7 +1022,7 @@ class NewWork extends Component {
                                         >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <LabelCheckBox LabelclassName="m-0"
+                                                    <LabelCheckBox 
                                                         Text={this.context.t("AllowAttachment")}
                                                         name="alowatt"
                                                         Id="AllowAttachment" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -1071,7 +1033,7 @@ class NewWork extends Component {
                                                         defaultChecked={true}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox LabelclassName="m-0"
+                                                    <LabelCheckBox 
                                                         Text={this.context.t("LockedAttachment")}
                                                         name="lock"
                                                         Id="LockedAttachment" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -1098,7 +1060,7 @@ class NewWork extends Component {
                                         >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <LabelCheckBox LabelclassName="m-0"
+                                                    <LabelCheckBox 
                                                         Text={this.context.t("SendEmailToUser")}
                                                         name="emailToWorker"
                                                         Id="SendEmailToUser" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -1108,7 +1070,7 @@ class NewWork extends Component {
                                                         checked={this.state.emailToWorkerCheckBox}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox LabelclassName="m-0"
+                                                    <LabelCheckBox 
                                                         Text={this.context.t("SendEmailToAudience")}
                                                         name="emailToAudience"
                                                         Id="SendEmailToAudience" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -1118,7 +1080,7 @@ class NewWork extends Component {
                                                         checked={this.state.emailToAudienceCheckBox}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox LabelclassName="m-0"
+                                                    <LabelCheckBox 
                                                         Text={this.context.t("SendSmsToUser")}
                                                         name="smsToWorker"
                                                         Id="SendSmsToUser"
@@ -1130,7 +1092,7 @@ class NewWork extends Component {
                                                     ></LabelCheckBox>
 
 
-                                                    <LabelCheckBox LabelclassName="m-0"
+                                                    <LabelCheckBox 
                                                         Text={this.context.t("SendSmsToAudience")}
                                                         name="smsToAudience"
                                                         Id="SendSmsToAudience" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}

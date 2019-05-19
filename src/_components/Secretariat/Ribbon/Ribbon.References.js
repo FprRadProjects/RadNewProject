@@ -220,14 +220,14 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-caption">{this.context.t("Diagram")}</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
-                                        {/* دیاگرام عطف  */}
+                                        {/* دیاگرام عطف 
                                         <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
                                             Id="follow-up-diagram"
                                             handleClick={this.OpenReferenceViewer.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="FollowUpDiagram"
-                                        />
+                                        /> */}
 
                                         {/* دیاگرام  */}
                                         <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}

@@ -16,9 +16,9 @@ class BoxGroup extends Component {
                 {(DeletedElements === undefined || DeletedElements["BoxInfo-" + Id] === undefined ||
                     DeletedElements["BoxInfo-" + Id].IsShow
                 ) &&
-                    <div className={className} id={"BoxInfo-" + Id} Description={Text} formid={FormId} element={"BoxInfo-" + Id} >
+                    <div className={className===undefined?"row bg-gray mg-b-5":className} id={"BoxInfo-" + Id} Description={Text} formid={FormId} element={"BoxInfo-" + Id} >
                        
-                       <div className={IconDivClassName} id={"BoxInfoiconDiv-" + Id} Description={Text} formid={FormId} element={"BoxInfo-" + Id}>
+                       <div className={IconDivClassName===undefined?"col-1 d-flex":IconDivClassName} id={"BoxInfoiconDiv-" + Id} Description={Text} formid={FormId} element={"BoxInfo-" + Id}>
                             <i className={IconClassName} id={"BoxInfoIconSpan-" + Id} isshortkey="false" Description={Text} formid={FormId} element={"BoxInfo-" + Id}></i>
                        </div>
                         {children}

@@ -128,7 +128,7 @@ class Sidebar extends Component {
                             <li>
                                 <a href="#!" onClick={this.OpenNewWork.bind(this)}>
                                     <i className="icon-system"></i>
-                                    <span>{this.context.t("frm_New_Work")}</span>
+                                    <span>{this.context.t("frm_Create_Work")}</span>
                                 </a>
                             </li>
                             <NavItem activeOnlyWhenExact={true} to="/">

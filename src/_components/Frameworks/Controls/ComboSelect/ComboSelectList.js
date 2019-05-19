@@ -38,7 +38,7 @@ class ComboSelectList extends Component {
         onChange={this.handleChange.bind(this)}
         options={options}
         isRtl
-        placeholder="انتخاب کنید"
+        placeholder={this.context.t("Select")}
         classNamePrefix="custom-select"
       />
         );
