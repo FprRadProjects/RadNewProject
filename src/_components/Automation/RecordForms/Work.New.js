@@ -617,7 +617,7 @@ class NewWork extends Component {
             <div>
                 <Modal isOpen={modal} toggle={toggle} keyboard={false}
                     className={this.state.modalClass} backdrop={this.state.backdrop}>
-                    <ModalHeader toggle={toggle}>{this.context.t("frm_New_Work")}</ModalHeader>
+                    <ModalHeader toggle={toggle}>{this.context.t("frm_Create_Work")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
                             <RibbonNewWork saveWorkHandle={this.saveWorkHandle.bind(this)} attachmentsToggle={this.attachmentsToggle.bind(this)} />
