@@ -124,6 +124,7 @@ class RibbonReferenceViewer extends Component {
         const { RebuildWork, WorkInfo, RefreshParentForm, FetchWorkInfo, Params } = this.props;
         RebuildWork(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
+                if(RefreshParentForm!==undefined)
                 RefreshParentForm(Params);
                 FetchWorkInfo(WorkInfo.peygir_id);
             }

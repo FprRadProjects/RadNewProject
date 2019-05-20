@@ -38,7 +38,7 @@ export   function getTextForDepartment(datum) {
     return departmentAbbrMap[worker].toUpperCase()
   }
 
-  return datum.WorkInfo.worker.substring(0, 3).toUpperCase()
+  return datum.WorkInfo.worker.toUpperCase()
 }
 
 export  function getCursorForNode(datum) {

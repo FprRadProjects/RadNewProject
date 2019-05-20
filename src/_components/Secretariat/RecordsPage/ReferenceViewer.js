@@ -202,6 +202,7 @@ class ReferenceViewer extends Component {
         finalSaveParams.data = obj;
         SaveWorkInfo(finalSaveParams, msg).then(data => {
             if (data.status) {
+                if(RefreshParentForm!==undefined)
                 RefreshParentForm(Params);
                 FetchWorkInfo(WorkInfo.peygir_id);
                 this.clearSaveParams();
@@ -232,7 +233,8 @@ class ReferenceViewer extends Component {
                 }
                 else {
                     FetchWorkInfo(WorkInfo.peygir_id);
-                    RefreshParentForm(Params);
+                if(RefreshParentForm!==undefined)
+                RefreshParentForm(Params);
 
                 }
                 this.clearSaveParams();

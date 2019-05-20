@@ -167,10 +167,8 @@ function ReviewWorkConfirmList(params) {
     }
 }
 
-function workDiagram(peygir_id) {
+function workDiagram(Params) {
     return dispatch => {
-        var Params = new FormData();
-        Params.append('peygir_id', peygir_id);
         return paramsService.callservice(Params, "WorkDiagram")
             .then(
                 data => {

@@ -5,25 +5,28 @@ import PropTypes from "prop-types"
 import { WorkBasic_action } from "../../../../_actions";
 import { OrgChart } from "../../../Frameworks/orgChart";
 import { RibbonWorkDiagram } from './Ribbon';
+import { ReferenceViewer } from "../../../Secretariat/RecordsPage";
 import { FormInfo } from "../../../../locales";
 import {
     LabelInputText, LabelPopUpInputText, BoxGroup
 } from "../../../Frameworks";
+import { toast } from 'react-toastify';
 
-var SaveParams = { form: "", data: [] };
 class WorkDiagramViewer extends Component {
     constructor(props) {
         super(props);
+        const {  WorkInfo_Diagram } = this.props;
         this.state = {
+            WorkInfo_Diagram: WorkInfo_Diagram,
             ...this.state,
-            colClass:"col-7",
+            colClass: "col-7",
             toggleDiagram: false,
+            selectedPeygirId: 0,
             modalClass: "modal-dialog-centered modal-xl r-modal r-diagram-modal r-automation-modal"
         };
-
     }
     componentDidMount() {
-        const { FetchLoadingWorkInfo, SelectedRow } = this.props;
+        const { FetchLoadingWorkInfo, SelectedRow, WorkInfo_Diagram } = this.props;
         FetchLoadingWorkInfo(SelectedRow.peygir_id)
             .then(data => {
                 if (!data.status)
@@ -33,6 +36,8 @@ class WorkDiagramViewer extends Component {
                     this.setState({ colClass: "col-7" });
                 }
             });
+        if (WorkInfo_Diagram !== undefined)
+            this.setState({ WorkInfo_Diagram: WorkInfo_Diagram });
     }
     clearState = () => {
         this.setState({ PeygirIdText: "" });
@@ -64,12 +69,11 @@ class WorkDiagramViewer extends Component {
         }));
     }
 
-    clearSaveParams = (e) => {
-        SaveParams = { form: "", data: [] };
-    }
+
 
     changeHandle = (Id) => {
         const { FetchLoadingWorkInfo } = this.props;
+        this.setState({ selectedPeygirId: Id });
         FetchLoadingWorkInfo(Id)
             .then(data => {
                 if (!data.status)
@@ -81,6 +85,9 @@ class WorkDiagramViewer extends Component {
             });
     }
     componentWillReceiveProps(nextProps) {
+        if (nextProps.WorkInfo_Diagram !== this.props.WorkInfo_Diagram) {
+            this.setState({ WorkInfo_Diagram: nextProps.WorkInfo_Diagram });
+        }
         if (nextProps.WorkInfo !== this.props.WorkInfo) {
             this.setState({ PeygirIdText: nextProps.WorkInfo.peygir_id });
             this.setState({ SerialText: nextProps.WorkInfo.nos_id });
@@ -114,10 +121,19 @@ class WorkDiagramViewer extends Component {
             this.setState({ ResultText: nextProps.WorkInfo.natije });
         }
     }
-    render() {
-        const { modal, toggle, Params, RefreshParentForm, ParentForm, WorkInfo_Diagram, SelectedRow
-            , DeletedElements, EditedElements } = this.props;
 
+    OpenReferenceViewer() {
+        if (this.state.PeygirIdText !== "" && this.state.PeygirIdText !== undefined)
+            this.setState({
+                ReferenceViewermodal: !this.state.ReferenceViewermodal
+            });
+    }
+    render() {
+        const { modal, toggle, SelectedRow
+            , DeletedElements, EditedElements,
+            RefreshParentForm, Params
+        } = this.props;
+console.log(this.state.WorkInfo_Diagram)
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -135,7 +151,7 @@ class WorkDiagramViewer extends Component {
                     <ModalHeader toggle={toggle}>دیاگرام</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonWorkDiagram clearSaveParams={this.clearSaveParams.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} Params={Params} />
+                            <RibbonWorkDiagram OpenReferenceViewer={this.OpenReferenceViewer.bind(this)} />
                         </div>
                         <div className="r-diagram-modal-content">
                             <div className="row" id="r-diagram-row-main">
@@ -465,10 +481,10 @@ class WorkDiagramViewer extends Component {
                                         </div>
                                     </BoxGroup>
                                 </div>
-                                <div className= { this.state.colClass} id="r-diagram-content">
+                                <div className={this.state.colClass} id="r-diagram-content">
                                     <div className="row bg-gray">
                                         <div className="col-12">
-                                            <OrgChart data={WorkInfo_Diagram} onNodeClickHandler={this.changeHandle.bind(this)} currentId={SelectedRow.peygir_id} />
+                                            <OrgChart data={this.state.WorkInfo_Diagram} onNodeClickHandler={this.changeHandle.bind(this)} currentId={SelectedRow.peygir_id} />
                                         </div>
                                     </div>
                                 </div>
@@ -477,6 +493,11 @@ class WorkDiagramViewer extends Component {
                     </ModalBody>
                 </Modal>
                 <style>{modalBackDrop}</style>
+                {this.state.ReferenceViewermodal &&
+                    <ReferenceViewer modal={this.state.ReferenceViewermodal}
+                        toggle={this.OpenReferenceViewer.bind(this)}
+                        Params={Params} RefreshParentForm={RefreshParentForm.bind(this)}
+                        ParentForm={FormInfo.fm_par_diagram} />}
             </div>
         );
     }
@@ -485,6 +506,8 @@ class WorkDiagramViewer extends Component {
 const mapDispatchToProps = dispatch => ({
     FetchLoadingWorkInfo: (peygir_id) => {
         return dispatch(WorkBasic_action.FetchLoadingWorkInfo(peygir_id))
+    }, workDiagram: (Params, From) => {
+        return dispatch(WorkBasic_action.workDiagram(Params, From))
     }
 });
 WorkDiagramViewer.contextTypes = {
