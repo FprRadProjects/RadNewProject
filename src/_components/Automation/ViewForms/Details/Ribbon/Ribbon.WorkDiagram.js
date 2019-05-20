@@ -27,8 +27,6 @@ class RibbonWorkDiagram extends Component {
     handleClick=()=>{}
     OpenReferenceViewer() {
         const { SelectedPeygirId } = this.props;
-        console.log(SelectedPeygirId)
-
         if (SelectedPeygirId !== "" && SelectedPeygirId !== undefined)
             this.setState({
                 ReferenceViewermodal: !this.state.ReferenceViewermodal
@@ -85,6 +83,7 @@ class RibbonWorkDiagram extends Component {
                                         <RibbonButton FormId={FormInfo.fm_par_diagram.id}
                                             DeletedElements={DeletedElements}
                                             Id="referral-result"
+                                            AccessInfo={FormInfo.fm_dabir_natije_erja}
                                             handleClick={this.OpenReferenceViewer.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="ReferralResult"
@@ -161,7 +160,8 @@ class RibbonWorkDiagram extends Component {
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.OpenReferenceViewer.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="referral-result" />
+                                        AccessInfo={FormInfo.fm_dabir_natije_erja}
+                                        ShortKey={ShortKeys[keyName]} Id="referral-result" />
                                     )
                                 }
                                

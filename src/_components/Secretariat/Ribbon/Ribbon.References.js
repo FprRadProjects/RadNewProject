@@ -174,6 +174,7 @@ class RibbonReferences extends Component {
 
                                         {/* نتیجه ارجاع */}
                                         <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                            AccessInfo={FormInfo.fm_dabir_natije_erja}
                                             DeletedElements={DeletedElements}
                                             Id="referral-result"
                                             handleClick={this.OpenReferenceViewer.bind(this)}
@@ -232,6 +233,7 @@ class RibbonReferences extends Component {
 
                                         {/* دیاگرام  */}
                                         <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                            AccessInfo={FormInfo.fm_par_diagram}
                                             DeletedElements={DeletedElements}
                                             Id="diagram"
                                             handleClick={this.OpenWorkDiagramViewer.bind(this)}
@@ -405,7 +407,8 @@ class RibbonReferences extends Component {
                                 if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.OpenReferenceViewer.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="referral-result" tooltip={this.context.t("ReferralResult")} />
+                                        AccessInfo={FormInfo.fm_dabir_natije_erja}
+                                        ShortKey={ShortKeys[keyName]} Id="referral-result" tooltip={this.context.t("ReferralResult")} />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-refresh-information") {
@@ -435,13 +438,15 @@ class RibbonReferences extends Component {
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-follow-up-diagram") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="follow-up-diagram" tooltip={this.context.t("FollowUpDiagram")} />
+                                        AccessInfo={FormInfo.fm_par_diagram}
+                                        ShortKey={ShortKeys[keyName]} Id="follow-up-diagram" tooltip={this.context.t("FollowUpDiagram")}  />
                                     )
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-diagram") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.OpenWorkDiagramViewer.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="diagram" tooltip={this.context.t("Diagram")} />
+                                        AccessInfo={FormInfo.fm_par_diagram}
+                                        ShortKey={ShortKeys[keyName]} Id="diagram" tooltip={this.context.t("Diagram")} />
                                     )
                                 }
                             })}

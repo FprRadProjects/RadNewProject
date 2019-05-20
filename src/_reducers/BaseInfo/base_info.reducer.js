@@ -11,10 +11,15 @@ export function BasicInfo(state = {}, action) {
         case BaseConstant.USER_ACCESS_FORM_SUCCESS: {
             return {
                 ...state,
-                FormAccessInfo:{ ...action.data}
+                ["FormAccessInfo" + action.data.FormId]: {
+                    ...action.data.RetList.reduce((obj, item) => {
+                        obj[item.sysname] = item;
+                        return obj;
+                    }, {})
+                }
             }
+
         }
-  
         case BaseConstant.GET_GRID_ROW_DATA_SUCCESS: {
             return {
                 ...state,

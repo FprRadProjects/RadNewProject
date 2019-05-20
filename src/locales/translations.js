@@ -231,6 +231,7 @@ export const translations = {
         msg_No_Select_Manager:"مدیر انتخاب نشده است",
         Information_Is_Duplicate: 'اطلاعات تکراری می باشد.',
         Information_Not_Available_For_Editing: 'اطلاعات برای ویرایش موجود نمی باشد.',
+        Form_Not_Access: 'عدم دسترسی به فرم ',
 
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
@@ -500,6 +501,7 @@ export const translations = {
         msg_No_Select_Manager:"Manager Not Selected.",
         Information_Is_Duplicate: 'The Information Is Duplicate.',
         Information_Not_Available_For_Editing: 'Information Is Not Available For Editing.',
+        Form_Not_Access: 'Lack Of Access To The Form ',
   //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',

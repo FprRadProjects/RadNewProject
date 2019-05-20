@@ -47,7 +47,6 @@ class References extends Component {
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
-        console.log(FormInfo.fm_dabir_kartabl_erjaat)
         localStorage.setItem("MasterFormInfo", JSON.stringify( FormInfo.fm_dabir_kartabl_erjaat));
 
     }

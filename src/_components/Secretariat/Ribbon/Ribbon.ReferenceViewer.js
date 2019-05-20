@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { ReferenceViewer } from "../RecordsPage";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton,ControlPanel } from "../../Frameworks";
+import { RibbonButton, ShortKeyButton, ControlPanel } from "../../Frameworks";
 import {
     Act_Reference,
     WorkBasic_action,
@@ -124,13 +124,13 @@ class RibbonReferenceViewer extends Component {
         const { RebuildWork, WorkInfo, RefreshParentForm, FetchWorkInfo, Params } = this.props;
         RebuildWork(WorkInfo.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
-                if(RefreshParentForm!==undefined)
-                RefreshParentForm(Params);
+                if (RefreshParentForm !== undefined)
+                    RefreshParentForm(Params);
                 FetchWorkInfo(WorkInfo.peygir_id);
             }
         });
     }
-  
+
     CloseleSelectFlowResult = (e) => {
         this.setState({
             FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
@@ -139,7 +139,7 @@ class RibbonReferenceViewer extends Component {
 
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements, EditedElements, RefreshParentForm, ParentForm
-            , FetchWorkInfo,saveWorkHandle,ConfirmationHandle
+            , FetchWorkInfo, saveWorkHandle, ConfirmationHandle
         } = this.props;
         return (
             <div>
@@ -193,6 +193,7 @@ class RibbonReferenceViewer extends Component {
                                         <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
                                             DeletedElements={DeletedElements}
                                             Id="referral"
+                                            AccessInfo={FormInfo.fm_dabir_eghdam}
                                             handleClick={this.ReferralHandle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="Referral"
@@ -231,7 +232,8 @@ class RibbonReferenceViewer extends Component {
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-referral") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.ReferralHandle.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="referral" tooltip={this.context.t("Referral")} />
+                                        AccessInfo={FormInfo.fm_dabir_eghdam}
+                                        ShortKey={ShortKeys[keyName]} Id="referral" tooltip={this.context.t("Referral")} />
                                     )
                                 }
                             })}
@@ -239,7 +241,7 @@ class RibbonReferenceViewer extends Component {
                     </MenuProvider>
                 </nav>
 
-              
+
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                     toggle={this.toggleReferenceViewer.bind(this)}
                     WorkInfo={WorkInfo}
