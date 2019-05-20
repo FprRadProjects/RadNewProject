@@ -27,7 +27,7 @@ class ControlPanel extends Component {
     return (
       <div className="r-main-box__controlpanel">
 
-        <div class="dropdown ltr">
+        <div className="dropdown ltr">
           <a className="r-main-box__controlpanel--action" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
           <div className="dropdown-menu">
             <a className="dropdown-item disable-select"

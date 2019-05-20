@@ -148,8 +148,7 @@ class WorkDiagramViewer extends Component {
                         <div className="r-diagram-modal-content">
                             <div className="row" id="r-diagram-row-main">
                                 <div className={"col-5 " + this.state.collapsedClass} id="r-diagram-sidebar">
-                                    <div class="toggle-diagram"><button type="button" class="toggle-diagram-sidebar" title=""></button></div>
-
+                                    <div className="toggle-diagram"><button type="button" className="toggle-diagram-sidebar" title=""></button></div>
                                     <BoxGroup
                                         Text={this.context.t("BasicInfoBox")}
                                         FormId={FormInfo.fm_par_diagram.id}
