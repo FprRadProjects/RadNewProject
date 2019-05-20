@@ -21,6 +21,7 @@ class RibbonReferences extends Component {
             ...this.state,
             ReferenceViewermodal: false,
             DiagramModal: false,
+            DiagramParams:{peygir_id:0,From:"Branch"},
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
@@ -51,11 +52,10 @@ class RibbonReferences extends Component {
     }
 
     OpenWorkDiagramViewer() {
-
-
-        const { SelectedRow, SetLog, lang, SeenWork, GetWorkInfo, workDiagram } = this.props;
+        const { SelectedRow, SetLog, lang, SeenWork, workDiagram } = this.props;
         if (SelectedRow !== undefined) {
-            workDiagram(SelectedRow.peygir_id).then(data => {
+            this.setState({DiagramParams:{peygir_id:SelectedRow.peygir_id,From:"Branch"}});
+            workDiagram({peygir_id:SelectedRow.peygir_id,From:"Branch"}).then(data => {
                 if (data.status) {
                     let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
                     SetLog(formName);
@@ -139,7 +139,8 @@ class RibbonReferences extends Component {
     render() {
 
 
-        const { SelectedRow, FetchData, Params, ShortKeys, DeletedElements, EditedElements } = this.props;
+        const { SelectedRow, FetchData, Params, ShortKeys, DeletedElements, EditedElements,
+            workDiagram } = this.props;
 
         return (
             <div>
@@ -453,13 +454,13 @@ class RibbonReferences extends Component {
 
                 {this.state.DiagramModal && <WorkDiagramViewer modal={this.state.DiagramModal}
                     toggle={this.toggleWorkDiagramViewer.bind(this)}
+                    Params={this.state.DiagramParams} RefreshParentForm={workDiagram.bind(this)}
                     SelectedRow={SelectedRow} />}
 
 
 
                 {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
                     toggle={this.toggleReferenceViewer.bind(this)}
-                    SelectedRow={SelectedRow}
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
 

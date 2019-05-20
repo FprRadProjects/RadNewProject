@@ -5,42 +5,89 @@ import PropTypes from "prop-types"
 import { WorkBasic_action } from "../../../../_actions";
 import { OrgChart } from "../../../Frameworks/orgChart";
 import { RibbonWorkDiagram } from './Ribbon';
+import { ReferenceViewer } from "../../../Secretariat/RecordsPage";
 import { FormInfo } from "../../../../locales";
 import {
-    LabelInputText,LabelPopUpInputText, BoxGroup
+    LabelInputText, LabelPopUpInputText, BoxGroup
 } from "../../../Frameworks";
+import { toast } from 'react-toastify';
 
-var SaveParams = { form: "", data: [] };
 class WorkDiagramViewer extends Component {
     constructor(props) {
         super(props);
+        const {  WorkInfo_Diagram } = this.props;
         this.state = {
+            WorkInfo_Diagram: WorkInfo_Diagram,
             ...this.state,
+            colClass: "col-7",
             toggleDiagram: false,
+            selectedPeygirId: 0,
             modalClass: "modal-dialog-centered modal-xl r-modal r-diagram-modal r-automation-modal"
         };
-
     }
     componentDidMount() {
-        const { FetchLoadingWorkInfo, SelectedRow } = this.props;
-        FetchLoadingWorkInfo(SelectedRow.peygir_id);
+        const { FetchLoadingWorkInfo, SelectedRow, WorkInfo_Diagram } = this.props;
+        FetchLoadingWorkInfo(SelectedRow.peygir_id)
+            .then(data => {
+                if (!data.status)
+                    this.clearState();
+                else {
+                    this.setState({ collapsedClass: "" });
+                    this.setState({ colClass: "col-7" });
+                }
+            });
+        if (WorkInfo_Diagram !== undefined)
+            this.setState({ WorkInfo_Diagram: WorkInfo_Diagram });
     }
-
+    clearState = () => {
+        this.setState({ PeygirIdText: "" });
+        this.setState({ SerialText: "" });
+        this.setState({ CreateText: "" });
+        this.setState({ ImplementText: "" });
+        this.setState({ SeenText: "" });
+        this.setState({ ManagerText: "" });
+        this.setState({ WorkDeadlineText: "" });
+        this.setState({ DeadTimeText: "" });
+        this.setState({ FileText: "" });
+        this.setState({ AudienceText: "" });
+        this.setState({ ProjectText: "" });
+        this.setState({ SubjectText: "" });
+        this.setState({ CodeText: "" });
+        this.setState({ FileNumberText: "" });
+        this.setState({ FlowText: "" });
+        this.setState({ FlowResultText: "" });
+        this.setState({ FlowCodeText: "" });
+        this.setState({ CertificateNameText: "" });
+        this.setState({ DescriptionText: "" });
+        this.setState({ ResultText: "" });
+        this.setState({ collapsedClass: "collapsed" });
+        this.setState({ colClass: "col-12" });
+    }
     toggleDiagram() {
         this.setState(prevState => ({
             toggleDiagram: !prevState.toggleDiagram
         }));
     }
 
-    clearSaveParams = (e) => {
-        SaveParams = { form: "", data: [] };
-    }
+
 
     changeHandle = (Id) => {
         const { FetchLoadingWorkInfo } = this.props;
-        FetchLoadingWorkInfo(Id);
+        this.setState({ selectedPeygirId: Id });
+        FetchLoadingWorkInfo(Id)
+            .then(data => {
+                if (!data.status)
+                    this.clearState();
+                else {
+                    this.setState({ collapsedClass: "" });
+                    this.setState({ colClass: "col-7" });
+                }
+            });
     }
     componentWillReceiveProps(nextProps) {
+        if (nextProps.WorkInfo_Diagram !== this.props.WorkInfo_Diagram) {
+            this.setState({ WorkInfo_Diagram: nextProps.WorkInfo_Diagram });
+        }
         if (nextProps.WorkInfo !== this.props.WorkInfo) {
             this.setState({ PeygirIdText: nextProps.WorkInfo.peygir_id });
             this.setState({ SerialText: nextProps.WorkInfo.nos_id });
@@ -66,7 +113,7 @@ class WorkDiagramViewer extends Component {
             this.setState({ SubjectText: nextProps.WorkInfo.mozo });
             this.setState({ CodeText: nextProps.WorkInfo.code !== null ? nextProps.WorkInfo.code : "" });
             this.setState({ FileNumberText: nextProps.WorkInfo.shomare !== null ? nextProps.WorkInfo.shomare : "" });
-              this.setState({ FlowText: nextProps.WorkInfo.flow !== null ? nextProps.WorkInfo.flow : "" });
+            this.setState({ FlowText: nextProps.WorkInfo.flow !== null ? nextProps.WorkInfo.flow : "" });
             this.setState({ FlowResultText: nextProps.WorkInfo.f_natije !== null ? nextProps.WorkInfo.f_natije : "" });
             this.setState({ FlowCodeText: nextProps.WorkInfo.flow_code !== null ? nextProps.WorkInfo.flow_code : "" });
             this.setState({ CertificateNameText: nextProps.WorkInfo.madrak_name !== null ? nextProps.WorkInfo.madrak_name : "" });
@@ -74,10 +121,19 @@ class WorkDiagramViewer extends Component {
             this.setState({ ResultText: nextProps.WorkInfo.natije });
         }
     }
-    render() {
-        const { modal, toggle, Params, RefreshParentForm, ParentForm, WorkInfo_Diagram, SelectedRow
-            , DeletedElements, EditedElements } = this.props;
 
+    OpenReferenceViewer() {
+        if (this.state.PeygirIdText !== "" && this.state.PeygirIdText !== undefined)
+            this.setState({
+                ReferenceViewermodal: !this.state.ReferenceViewermodal
+            });
+    }
+    render() {
+        const { modal, toggle, SelectedRow
+            , DeletedElements, EditedElements,
+            RefreshParentForm, Params
+        } = this.props;
+console.log(this.state.WorkInfo_Diagram)
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -95,14 +151,19 @@ class WorkDiagramViewer extends Component {
                     <ModalHeader toggle={toggle}>دیاگرام</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonWorkDiagram clearSaveParams={this.clearSaveParams.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} Params={Params} />
+                            <RibbonWorkDiagram OpenReferenceViewer={this.OpenReferenceViewer.bind(this)} />
                         </div>
                         <div className="r-diagram-modal-content">
                             <div className="row" id="r-diagram-row-main">
+<<<<<<< HEAD
                                 <div className="col-5" id="r-diagram-sidebar">
                                     <div className="toggle-diagram"><button type="button" className="toggle-diagram-sidebar" title=""></button></div>
+=======
+                                <div className={"col-5 " + this.state.collapsedClass} id="r-diagram-sidebar">
+                                    <div class="toggle-diagram"><button type="button" class="toggle-diagram-sidebar" title=""></button></div>
+>>>>>>> f563773c3b3c11d3c338510a729ceab570a6eb80
 
-                                    <BoxGroup 
+                                    <BoxGroup
                                         Text={this.context.t("BasicInfoBox")}
                                         FormId={FormInfo.fm_par_diagram.id}
                                         Id="BasicInfoBox"
@@ -113,7 +174,7 @@ class WorkDiagramViewer extends Component {
                                     >
                                         <div className="col-10">
                                             <div className="row">
-                                                <LabelInputText 
+                                                <LabelInputText
                                                     LabelclassName="col-4 col-form-label"
                                                     Text={this.context.t("WorkID")} className2="col-8"
                                                     InputclassName="form-control mt-2 mb-1  ltr" name="peygir_id"
@@ -124,7 +185,7 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.PeygirIdText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
+                                                <LabelInputText
                                                     LabelclassName="col-4 col-form-label"
                                                     Text={this.context.t("Serial")} className2="col-8"
                                                     InputclassName="form-control mt-2 mb-1 ltr" name="nos_id"
@@ -135,10 +196,10 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.SerialText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
-                                                    
+                                                <LabelInputText
+
                                                     ColClassName="col-12"
-                                                    Text={this.context.t("Create")} 
+                                                    Text={this.context.t("Create")}
                                                     InputclassName="form-control my-1" name="create_id"
                                                     Id="Create"
                                                     FormId={FormInfo.fm_par_diagram.id}
@@ -147,10 +208,10 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.CreateText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
-                                                    
+                                                <LabelInputText
+
                                                     ColClassName="col-12"
-                                                    Text={this.context.t("Implement")} 
+                                                    Text={this.context.t("Implement")}
                                                     InputclassName="form-control my-1" name="doneuser"
                                                     Id="Implement"
                                                     FormId={FormInfo.fm_par_diagram.id}
@@ -159,10 +220,10 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.ImplementText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
-                                                    
+                                                <LabelInputText
+
                                                     ColClassName="col-12"
-                                                    Text={this.context.t("Show")} 
+                                                    Text={this.context.t("Show")}
                                                     InputclassName="form-control my-1" name="show_id"
                                                     Id="Show"
                                                     FormId={FormInfo.fm_par_diagram.id}
@@ -171,10 +232,10 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.SeenText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
-                                                    
+                                                <LabelInputText
+
                                                     ColClassName="col-12"
-                                                    Text={this.context.t("manager")} 
+                                                    Text={this.context.t("manager")}
                                                     InputclassName="form-control mt-1 mb-2" name="manager_id"
                                                     Id="Manager"
                                                     FormId={FormInfo.fm_par_diagram.id}
@@ -186,7 +247,7 @@ class WorkDiagramViewer extends Component {
                                             </div>
                                         </div>
                                     </BoxGroup>
-                                    <BoxGroup 
+                                    <BoxGroup
                                         Text={this.context.t("DateTimeInfoBox")}
                                         FormId={FormInfo.fm_par_diagram.id}
                                         Id="DateTimeInfoBox"
@@ -197,9 +258,9 @@ class WorkDiagramViewer extends Component {
                                     >
                                         <div className="col-10">
                                             <div className="row">
-                                                <LabelInputText 
+                                                <LabelInputText
                                                     LabelclassName="col-4 col-form-label"
-                                                    
+
                                                     Text={this.context.t("WorkDeadline")} className2="col-8"
                                                     InputclassName="form-control my-2" name="workdeadline_id"
                                                     Id="WorkDeadline"
@@ -209,9 +270,9 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.WorkDeadlineText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
+                                                <LabelInputText
                                                     LabelclassName="col-4 col-form-label"
-                                                    
+
                                                     Text={this.context.t("DeadTime")} className2="col-8"
                                                     InputclassName="form-control my-2" name="deadtime_id"
                                                     Id="DeadTime"
@@ -224,7 +285,7 @@ class WorkDiagramViewer extends Component {
                                             </div>
                                         </div>
                                     </BoxGroup>
-                                    <BoxGroup 
+                                    <BoxGroup
                                         Text={this.context.t("FileInfoBox")}
                                         FormId={FormInfo.fm_par_diagram.id}
                                         Id="FileInfoBox"
@@ -235,7 +296,7 @@ class WorkDiagramViewer extends Component {
                                     >
                                         <div className="col-10">
                                             <div className="row">
-                                                <LabelInputText 
+                                                <LabelInputText
                                                     LabelclassName="col-4 col-form-label"
                                                     Text={this.context.t("File")} className2="col-8"
                                                     InputclassName="form-control my-2" name="file_id"
@@ -246,9 +307,9 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.FileText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
+                                                <LabelInputText
                                                     LabelclassName="col-4 col-form-label"
-                                                    
+
                                                     Text={this.context.t("Audience")} className2="col-8"
                                                     InputclassName="form-control my-2" name="audience_id"
                                                     Id="Audience"
@@ -258,8 +319,8 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.AudienceText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
-                                                    
+                                                <LabelInputText
+
                                                     ColClassName="col-12"
                                                     Text={this.context.t("Project")}
                                                     InputclassName="form-control mt-1 mb-2" name="project_id"
@@ -273,7 +334,7 @@ class WorkDiagramViewer extends Component {
                                             </div>
                                         </div>
                                     </BoxGroup>
-                                    <BoxGroup 
+                                    <BoxGroup
                                         Text={this.context.t("DetailsInfoBox")}
                                         FormId={FormInfo.fm_par_diagram.id}
                                         Id="DetailsInfoBox"
@@ -284,10 +345,10 @@ class WorkDiagramViewer extends Component {
                                     >
                                         <div className="col-10">
                                             <div className="row">
-                                                <LabelInputText 
-                                                    
+                                                <LabelInputText
+
                                                     ColClassName="col-12"
-                                                    Text={this.context.t("Subject")} 
+                                                    Text={this.context.t("Subject")}
                                                     InputclassName="form-control my-2" name="subject_id"
                                                     Id="Subject"
                                                     FormId={FormInfo.fm_par_diagram.id}
@@ -296,9 +357,9 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.SubjectText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
+                                                <LabelInputText
                                                     LabelclassName="col-4 col-form-label"
-                                                    
+
                                                     Text={this.context.t("Code")} className2="col-8"
                                                     InputclassName="form-control mt-1 mb-2 ltr" name="code_id"
                                                     Id="Code"
@@ -308,7 +369,7 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.CodeText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
+                                                <LabelInputText
                                                     LabelclassName="col-4 col-form-label"
                                                     Text={this.context.t("FileNumber")} className2="col-8"
                                                     InputclassName="form-control mt-1 mb-2 ltr" name="shomare"
@@ -322,7 +383,7 @@ class WorkDiagramViewer extends Component {
                                             </div>
                                         </div>
                                     </BoxGroup>
-                                    <BoxGroup 
+                                    <BoxGroup
                                         Text={this.context.t("WorkFlowInfoBox")}
                                         FormId={FormInfo.fm_par_diagram.id}
                                         Id="WorkFlowInfoBox"
@@ -333,9 +394,9 @@ class WorkDiagramViewer extends Component {
                                     >
                                         <div className="col-10">
                                             <div className="row">
-                                                <LabelInputText 
+                                                <LabelInputText
                                                     ColClassName="col-12"
-                                                    Text={this.context.t("Flow")} 
+                                                    Text={this.context.t("Flow")}
                                                     InputclassName="form-control mt-2 mb-1" name="flow_id"
                                                     Id="Flow"
                                                     FormId={FormInfo.fm_par_diagram.id}
@@ -344,8 +405,8 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.FlowText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
-                                                    
+                                                <LabelInputText
+
                                                     ColClassName="col-12"
                                                     Text={this.context.t("FlowResult")}
                                                     InputclassName="form-control my-1" name="flowresult_id"
@@ -357,8 +418,8 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.FlowResultText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
-                                                    
+                                                <LabelInputText
+
                                                     ColClassName="col-12"
                                                     Text={this.context.t("FlowCode")}
                                                     InputclassName="form-control my-1" name="flowcode_id"
@@ -369,10 +430,10 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.FlowCodeText}
                                                     isDisabled={true}
                                                 ></LabelInputText>
-                                                <LabelInputText 
-                                                    
+                                                <LabelInputText
+
                                                     ColClassName="col-12"
-                                                    Text={this.context.t("CertificateName")} 
+                                                    Text={this.context.t("CertificateName")}
                                                     InputclassName="form-control mt-1 mb-2" name="certificatename_id"
                                                     Id="CertificateName"
                                                     FormId={FormInfo.fm_par_diagram.id}
@@ -384,7 +445,7 @@ class WorkDiagramViewer extends Component {
                                             </div>
                                         </div>
                                     </BoxGroup>
-                                    <BoxGroup 
+                                    <BoxGroup
                                         Text={this.context.t("DescriptionsInfoBox")}
                                         FormId={FormInfo.fm_par_diagram.id}
                                         Id="DescriptionsInfoBox"
@@ -395,9 +456,9 @@ class WorkDiagramViewer extends Component {
                                     >
                                         <div className="col-10">
                                             <div className="row">
-                                                <LabelPopUpInputText 
+                                                <LabelPopUpInputText
                                                     ColClassName="col-12"
-                                                    Text={this.context.t("Description")} 
+                                                    Text={this.context.t("Description")}
                                                     InputclassName="form-control  rounded" name="tozihat"
                                                     Id="Description"
                                                     FormId={FormInfo.fm_par_diagram.id}
@@ -407,8 +468,8 @@ class WorkDiagramViewer extends Component {
                                                     value={this.state.DescriptionText}
                                                     Type="TextArea"
                                                 ></LabelPopUpInputText>
-                                                <LabelPopUpInputText 
-                                                    
+                                                <LabelPopUpInputText
+
                                                     ColClassName="col-12"
                                                     Text={this.context.t("Result")}
                                                     InputclassName="form-control rounded" name="natije"
@@ -425,10 +486,10 @@ class WorkDiagramViewer extends Component {
                                         </div>
                                     </BoxGroup>
                                 </div>
-                                <div className="col-7" id="r-diagram-content">
+                                <div className={this.state.colClass} id="r-diagram-content">
                                     <div className="row bg-gray">
                                         <div className="col-12">
-                                            <OrgChart data={WorkInfo_Diagram} onNodeClickHandler={this.changeHandle.bind(this)} currentId={SelectedRow.peygir_id} />
+                                            <OrgChart data={this.state.WorkInfo_Diagram} onNodeClickHandler={this.changeHandle.bind(this)} currentId={SelectedRow.peygir_id} />
                                         </div>
                                     </div>
                                 </div>
@@ -437,6 +498,11 @@ class WorkDiagramViewer extends Component {
                     </ModalBody>
                 </Modal>
                 <style>{modalBackDrop}</style>
+                {this.state.ReferenceViewermodal &&
+                    <ReferenceViewer modal={this.state.ReferenceViewermodal}
+                        toggle={this.OpenReferenceViewer.bind(this)}
+                        Params={Params} RefreshParentForm={RefreshParentForm.bind(this)}
+                        ParentForm={FormInfo.fm_par_diagram} />}
             </div>
         );
     }
@@ -444,7 +510,9 @@ class WorkDiagramViewer extends Component {
 
 const mapDispatchToProps = dispatch => ({
     FetchLoadingWorkInfo: (peygir_id) => {
-        dispatch(WorkBasic_action.FetchLoadingWorkInfo(peygir_id))
+        return dispatch(WorkBasic_action.FetchLoadingWorkInfo(peygir_id))
+    }, workDiagram: (Params, From) => {
+        return dispatch(WorkBasic_action.workDiagram(Params, From))
     }
 });
 WorkDiagramViewer.contextTypes = {

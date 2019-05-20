@@ -267,6 +267,7 @@ class NewReferral extends Component {
         finalSaveParams.data = obj;
         InsertNewWorkInfo(finalSaveParams, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
+                if(RefreshParentForm!==undefined)
                 RefreshParentForm(Params);
                 toggle();
                 thisSaveParams = {

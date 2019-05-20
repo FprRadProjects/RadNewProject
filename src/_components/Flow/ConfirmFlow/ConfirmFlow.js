@@ -46,8 +46,10 @@ class ConfirmFlow extends Component {
                             ReviewWorkModal: true,
                         });
                     }
-                    FetchWorkInfo(peygir_id);
-                    RefreshParentForm(Params);
+                if(FetchWorkInfo!==undefined)
+                FetchWorkInfo(peygir_id);
+                if(RefreshParentForm!==undefined)
+                RefreshParentForm(Params);
                 }
             });;
         }
@@ -61,6 +63,7 @@ class ConfirmFlow extends Component {
                 this.setState({
                     ReviewWorkModal: false,
                 });
+                if(RefreshParentForm!==undefined)
                 RefreshParentForm(Params);
             }
         });

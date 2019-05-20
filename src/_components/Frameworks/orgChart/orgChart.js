@@ -208,7 +208,7 @@ class OrgChart extends PureComponent {
 
 
     }
-    clickHandle = (d3,datum) => {
+    clickHandle = (d3, datum) => {
         const { onNodeClickHandler } = this.props
         onNodeClickHandler(datum.id);
     }

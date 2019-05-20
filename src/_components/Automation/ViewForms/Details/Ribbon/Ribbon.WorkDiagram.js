@@ -28,7 +28,7 @@ class RibbonWorkDiagram extends Component {
     }
   
     render() {
-        const { saveWorkHandle, ShortKeys, DeletedElements, EditedElements, attachmentsToggle } = this.props;
+        const { saveWorkHandle, ShortKeys, DeletedElements, EditedElements, OpenReferenceViewer } = this.props;
 
         return (
             <div>
@@ -77,7 +77,7 @@ class RibbonWorkDiagram extends Component {
                                         <RibbonButton FormId={FormInfo.fm_par_diagram.id}
                                             DeletedElements={DeletedElements}
                                             Id="referral-result"
-                                            handleClick={this.handleClick.bind(this)}
+                                            handleClick={OpenReferenceViewer.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="ReferralResult"
                                         />
@@ -147,7 +147,7 @@ class RibbonWorkDiagram extends Component {
                                 
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={OpenReferenceViewer.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="referral-result" />
                                     )
                                 }
