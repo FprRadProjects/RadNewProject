@@ -28,7 +28,8 @@ class RibbonNewWork extends Component {
     }
   
     render() {
-        const { saveWorkHandle, ShortKeys, DeletedElements, EditedElements, attachmentsToggle } = this.props;
+        const { saveWorkHandle, ShortKeys, DeletedElements, EditedElements, attachmentsToggle,
+            newWorkHandle } = this.props;
 
         return (
             <div>
@@ -55,7 +56,7 @@ class RibbonNewWork extends Component {
                                         <RibbonButton FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             Id="new-work"
-                                            handleClick={this.handleClick.bind(this)}
+                                            handleClick={newWorkHandle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="NewWork"
                                         />

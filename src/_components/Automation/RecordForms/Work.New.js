@@ -161,6 +161,11 @@ class NewWork extends Component {
             else if (name === "p_type_id") {
                 this.projectChange(val);
             }
+            if (name === "olaviyat_id" ) {
+                const priority_id = val.value;
+                const priorityLabel = val.label;
+                this.setState({ prioritySelectedOption: { value: priority_id, label: priorityLabel } });
+            }
             if (name !== "worker_id" && name !== "defmodir_id")
                 thisSaveParams.data[[name]] = { [name]: val.value === 0 ? null : val.value }
 
@@ -190,7 +195,7 @@ class NewWork extends Component {
             this.setState({ ProjectSelectedOption: { value: project_id, label: projectLabel } });
         else {
 
-            this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
             thisSaveParams.data["p_type_id"] = { "p_type_id": null };
         }
     }
@@ -203,16 +208,16 @@ class NewWork extends Component {
             workTypeParams.WorkGroupId = workgroup_id;
             this.setState({ flow_id_disabled: true });
             SelectWorkTypeList(workTypeParams);
-            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
         }
         else {
             this.setState({ flow_id_disabled: false });
             workTypeParams.WorkGroupId = 0;
             SelectWorkTypeList(workTypeParams);
-            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-            this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-            this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-            this.setState({ WorkgroupSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+            this.setState({ workerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+            this.setState({ managerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+            this.setState({ WorkgroupSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
         }
     }
     flowChange = (Val) => {
@@ -236,7 +241,7 @@ class NewWork extends Component {
                                 workTypeParams.FlowId = flowId;
                                 this.reloadWorkType({ value: Response2.data.workTypeId, label: Response2.data.workType });
                             } else {
-                                this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+                                this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
                                 this.setState({ flowCheckBox: false });
                             }
                         }
@@ -248,16 +253,18 @@ class NewWork extends Component {
             thisSaveParams.data["flow_id"] = { "flow_id": null };
             workTypeParams.FlowId = 0;
             DefaultInfoParams.flow_id = 0;
-            this.setState({ FlowSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ FlowSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
             this.setState({ workgroup_id_disabled: false });
+
             SelectWorkTypeList(workTypeParams);
-            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-            this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-            this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+            this.setState({ workerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+            this.setState({ managerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
             this.setState({ flowCheckBox: true });
             thisSaveParams.data["erja"] = { "erja": 1 };
         }
     }
+
     reloadWorkType = (Val) => {
         const selectedWtId = Val.value;
         const selectedWtLabel = Val.label;
@@ -377,15 +384,17 @@ class NewWork extends Component {
                 thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": this.state.SelectedShowtreeFollowerId };
             else
                 thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
-            this.setState({ "cpy_form_karCheckBox": checked });
+            this.setState({ cpy_form_karCheckBox: checked });
         }
+
         else if (name === "hasformsaz") {
             this.setState({ hasformsazCheckBox: checked });
             workTypeParams.HasFormGen = value;
             SelectWorkTypeList(workTypeParams);
-            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-            this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
-            this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+            this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+            this.setState({ workerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+            this.setState({ managerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+
         }
     }
     CloseSelectDefaultText = (e) => {
@@ -411,6 +420,7 @@ class NewWork extends Component {
                     const newDescription = this.state.DescriptionTextArea + " " + (row !== undefined ? row.sharh !== undefined ? row.sharh : "" : "");
                     this.setState({ DescriptionTextArea: newDescription });
                     thisSaveParams.data["tozihat"] = { "tozihat": newDescription };
+
                 }
             this.setState({
                 SubjectSelectmodal: !this.state.SubjectSelectmodal,
@@ -483,6 +493,7 @@ class NewWork extends Component {
     }
     ChangeAttachments(NewAttchments) {
         this.setState({ AttachmentList: NewAttchments });
+
     }
     ToggleSelectFileAudience = () => {
         this.setState({
@@ -500,7 +511,7 @@ class NewWork extends Component {
         this.setState({
             SelectFileAudiencemodal: !this.state.SelectFileAudiencemodal,
         });
-        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
         projectParams.Id_Taraf = row.id_taraf;
         GetSelectComboProject(projectParams);
         this.setState({ FollowerText: "" });
@@ -511,7 +522,6 @@ class NewWork extends Component {
     }
 
     ToggleSelectFollower = () => {
-
         if (this.state.SelectedFileId !== 0)
             this.setState({
                 SelectFollowermodal: !this.state.SelectFollowermodal,
@@ -557,7 +567,6 @@ class NewWork extends Component {
             if (this.state.ProjectSelectmodal) {
                 let Ptype = row !== undefined ? row.ptype !== undefined ? row.ptype : "" : "";
                 let PtypeId = row !== undefined ? row.id !== undefined ? row.id : "" : "";
-                let Code = row !== undefined ? row.code !== undefined ? row.code : "" : "";
                 this.setState({ ProjectSelectedOption: { value: PtypeId, label: Ptype } });
             }
             thisSaveParams.data["p_type_id"] = { "p_type_id": row.id };
@@ -577,24 +586,79 @@ class NewWork extends Component {
                 WorkerParams.id_role = val.value;
                 SelectWorkerList(WorkerParams);
                 this.setState({ user_roleSelectedOption: { value: val.value, label: val.label } });
-                this.setState({ workerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+                this.setState({ workerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
             }
             else if (name === "manager_role_id") {
                 SelectManagerList(val.value, 0);
                 this.setState({ manager_roleSelectedOption: { value: val.value, label: val.label } });
-                this.setState({ managerSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+                this.setState({ managerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
             }
         }
     }
     deleteProject = () => {
-        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("NoSelection") } });
+        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+    }
+    newWorkHandle = () => {
+        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+        this.setState({ managerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+        this.setState({ manager_roleSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+        this.setState({ user_roleSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+        this.setState({ workerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+        this.setState({ WorkgroupSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+        this.setState({ FlowSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+        this.setState({ FlowSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+        this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+        this.setState({ SelectedFollowerId: 0 });
+        this.setState({ SelectedShowtreeFollowerId: 0 });
+        this.setState({ SelectedFileId: 0 });
+        this.setState({ SelectedAudienceId: 0 });
+        this.setState({ AudienceText: "" });
+        this.setState({ FollowerText: "" });
+        this.setState({ fileInfoText: "" });
+        this.setState({ DescriptionTextArea: "" });
+        this.setState({ SubjectInputText: "" });
+        this.setState({ ResultTextArea: "" });
+        this.setState({ deadtimeText: "" });
+        this.setState({ CodeText: "" });
+        this.setState({ ShomareText: "" });
+        this.setState({ prioritySelectedOption: "" });
+
+        this.setState({ AttachmentList: null });
+        this.setState({ hasformsazCheckBox: false });
+        this.setState({ cpy_form_karCheckBox: false });
+        this.setState({ smsToAudienceCheckBox: false });
+        this.setState({ emailToAudienceCheckBox: false });
+        this.setState({ smsToWorkerCheckBox: false });
+        this.setState({ emailToWorkerCheckBox: false });
+        this.setState({ lockCheckBox: false });
+        this.setState({ alowattCheckBox: true });
+        this.setState({ flowCheckBox: true });
+        this.setState({ setDefaultActionDate: "" });
+        this.setState({ workgroup_id_disabled: false });
+        this.setState({ flow_id_disabled: false });
+        thisSaveParams = {
+            form: "",
+            type: "new",
+            data: [],
+            workers: [],
+            peygir_id: 0,
+            attachFromParent: 0,
+            infoFromParent: 0,
+            replication: "",
+            emailToWorker: 0,
+            emailToAudience: 0,
+            smsToWorker: 0,
+            smsToAudience: 0,
+            archivesList: []
+
+        };
     }
     render() {
         const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows,
             SelectWorkFlowList_rows, SelectWorkGroupList_rows, SelectRoleList_rows,
             SelectProjectComboList_rows, SelectWorkerList_rows,
             SelectManagerList_rows, DeletedElements, EditedElements } = this.props;
-        var None = [{ value: 0, label: this.context.t("NoSelection") }]
+        var None = [{ value: 0, label: this.context.t("SetSelect") }]
         var PriorityList = SelectPriorityList_rows !== undefined ? None.concat(SelectPriorityList_rows) : None
         var WorkFlowList = SelectWorkFlowList_rows !== undefined ? None.concat(SelectWorkFlowList_rows) : None
         var WorkGroupList = SelectWorkGroupList_rows !== undefined ? None.concat(SelectWorkGroupList_rows) : None
@@ -620,10 +684,13 @@ class NewWork extends Component {
                     <ModalHeader toggle={toggle}>{this.context.t("frm_Create_Work")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonNewWork saveWorkHandle={this.saveWorkHandle.bind(this)} attachmentsToggle={this.attachmentsToggle.bind(this)} />
+                            <RibbonNewWork
+                                saveWorkHandle={this.saveWorkHandle.bind(this)}
+                                newWorkHandle={this.newWorkHandle.bind(this)}
+                                attachmentsToggle={this.attachmentsToggle.bind(this)} />
                         </div>
                         <div className="referral-modal">
-                            <BoxGroup 
+                            <BoxGroup
                                 Text={this.context.t("WorkInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="WorkInfoBox"
@@ -635,7 +702,7 @@ class NewWork extends Component {
                                     <div className="row">
                                         <LabelCombobox
                                             Text={this.context.t("WorkFlow")}
-                                             name="flow_id"
+                                            name="flow_id"
                                             Id="WorkFlow"
                                             changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -647,8 +714,8 @@ class NewWork extends Component {
                                         ></LabelCombobox>
                                         <LabelCombobox
                                             ColClassName="col-4"
-                                            Text={this.context.t("WorkGroup")} 
-                                             name="workgroup_id"
+                                            Text={this.context.t("WorkGroup")}
+                                            name="workgroup_id"
                                             Id="WorkGroup" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -662,7 +729,7 @@ class NewWork extends Component {
                                                 <div className="col-12">
                                                     <div className="input-group mt-2 mb-1">
                                                         <div className="input-group-append pl-5 pt-1 text-space-nowrap">
-                                                            <LabelCheckBox 
+                                                            <LabelCheckBox
                                                                 Text={this.context.t("HasFormBuilder")}
                                                                 name="hasformsaz"
                                                                 Id="HasFormBuilder" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -680,7 +747,7 @@ class NewWork extends Component {
                                     </div>
                                     <div className="row">
                                         <LabelCombobox
-                                            Text={this.context.t("WorkType")} 
+                                            Text={this.context.t("WorkType")}
                                             ComboclassName="mt-1 mb-2" name="wt_id"
                                             Id="WorkType" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -693,7 +760,7 @@ class NewWork extends Component {
                                 </div>
                             </BoxGroup>
 
-                            <BoxGroup 
+                            <BoxGroup
                                 Text={this.context.t("FileInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="FileInfoBox"
@@ -704,8 +771,8 @@ class NewWork extends Component {
                                 <div className="col-11">
                                     <div className="row">
                                         <LabelPopUpInputText
-                                            Text={this.context.t("File")} 
-                                             name="id_tel"
+                                            Text={this.context.t("File")}
+                                            name="id_tel"
                                             Id="File" ButtonClick={this.ToggleSelectFileAudience.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -717,8 +784,8 @@ class NewWork extends Component {
                                             ButtonText={this.context.t("SelectPopup")}
                                         ></LabelPopUpInputText>
                                         <LabelInputText
-                                            Text={this.context.t("Audience")} 
-                                             name="ashkhas_id"
+                                            Text={this.context.t("Audience")}
+                                            name="ashkhas_id"
                                             Id="Audience"
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -729,8 +796,8 @@ class NewWork extends Component {
                                     </div>
                                     <div className="row">
                                         <LabelPopUpInputText
-                                            Text={this.context.t("Project")} 
-                                             name="p_type_id"
+                                            Text={this.context.t("Project")}
+                                            name="p_type_id"
                                             Id="Project" ButtonClick={this.ToggleSelectProject.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -743,8 +810,8 @@ class NewWork extends Component {
                                             ButtonText={this.context.t("SelectPopup")}
                                         ></LabelPopUpInputText>
                                         <LabelPopUpInputText
-                                            Text={this.context.t("Following")} 
-                                             name="p_id"
+                                            Text={this.context.t("Following")}
+                                            name="p_id"
                                             Id="Following" ButtonClick={this.ToggleSelectFollower.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -761,7 +828,7 @@ class NewWork extends Component {
                                 </div>
                             </BoxGroup>
 
-                            <BoxGroup 
+                            <BoxGroup
                                 Text={this.context.t("DateTimeInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="DateTimeInfoBox"
@@ -772,8 +839,8 @@ class NewWork extends Component {
                                 <div className="col-11">
                                     <div className="row">
                                         <LabelCalendar
-                                            Text={this.context.t("ActionDate")} 
-                                             name="tarikhaction"
+                                            Text={this.context.t("ActionDate")}
+                                            name="tarikhaction"
                                             Id="ActionDate" CalendarChange={this.CalendarChange.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -782,7 +849,7 @@ class NewWork extends Component {
                                         ></LabelCalendar>
 
                                         <LabelInputText
-                                            Text={this.context.t("DeadTime")} 
+                                            Text={this.context.t("DeadTime")}
                                             InputclassName="form-control my-2  ltr" name="deadtime"
                                             Id="DeadTime" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -796,7 +863,7 @@ class NewWork extends Component {
                                 </div>
                             </BoxGroup>
 
-                            <BoxGroup 
+                            <BoxGroup
                                 Text={this.context.t("UsersInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="UsersInfoBox"
@@ -807,8 +874,8 @@ class NewWork extends Component {
                                 <div className="col-11">
                                     <div className="row">
                                         <LabelCombobox
-                                            Text={this.context.t("Roll")} 
-                                             name="user_role_id"
+                                            Text={this.context.t("Roll")}
+                                            name="user_role_id"
                                             Id="WorkerRoll"
                                             changeHandle={this.changeRoleHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -818,8 +885,8 @@ class NewWork extends Component {
                                             options={UserRollList}
                                         ></LabelCombobox>
                                         <LabelCombobox
-                                            Text={this.context.t("UserFullName")} 
-                                             name="worker_id"
+                                            Text={this.context.t("UserFullName")}
+                                            name="worker_id"
                                             Id="UserFullName" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -830,7 +897,7 @@ class NewWork extends Component {
                                     </div>
                                     <div className="row">
                                         <LabelCombobox
-                                            Text={this.context.t("Roll")} 
+                                            Text={this.context.t("Roll")}
                                             ComboclassName="mt-1 mb-2" name="manager_role_id"
                                             Id="ManagerRoll" changeHandle={this.changeRoleHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -840,7 +907,7 @@ class NewWork extends Component {
                                             options={UserRollList}
                                         ></LabelCombobox>
                                         <LabelCombobox
-                                            Text={this.context.t("AdminFullName")} 
+                                            Text={this.context.t("AdminFullName")}
                                             ComboclassName="mt-1 mb-2" name="defmodir_id"
                                             Id="AdminFullName" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -854,7 +921,7 @@ class NewWork extends Component {
 
                                 </div>
                             </BoxGroup>
-                            <BoxGroup 
+                            <BoxGroup
                                 Text={this.context.t("DetailsInfoBox")}
                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                 Id="DetailsInfoBox"
@@ -865,8 +932,8 @@ class NewWork extends Component {
                                 <div className="col-11">
                                     <div className="row">
                                         <LabelPopUpInputText
-                                            Text={this.context.t("Subject")} 
-                                             name="mozo"
+                                            Text={this.context.t("Subject")}
+                                            name="mozo"
                                             Id="Subject" ButtonClick={this.OpenSelectDefaultText.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -877,7 +944,7 @@ class NewWork extends Component {
                                             ButtonText={this.context.t("SelectPopup")}
                                         ></LabelPopUpInputText>
                                         <LabelInputText
-                                            Text={this.context.t("Code")} 
+                                            Text={this.context.t("Code")}
                                             InputclassName="form-control mt-2 mb-1 ltr" name="code"
                                             Id="Code" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -890,7 +957,7 @@ class NewWork extends Component {
                                     <div className="row">
 
                                         <LabelCombobox
-                                            Text={this.context.t("Priority")} 
+                                            Text={this.context.t("Priority")}
                                             ComboclassName="mt-1 mb-2" name="olaviyat_id"
                                             Id="Priority" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -901,7 +968,7 @@ class NewWork extends Component {
                                         ></LabelCombobox>
 
                                         <LabelInputText
-                                            Text={this.context.t("FileNumber")} 
+                                            Text={this.context.t("FileNumber")}
                                             InputclassName="form-control mt-1 mb-2 ltr" name="shomare"
                                             Id="FileNumber" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
@@ -926,7 +993,7 @@ class NewWork extends Component {
                                         <LabelPopUpInputText LabelclassName="col-1 col-form-label"
                                             ColClassName="col-12"
                                             Text={this.context.t("WorkDescription")} className2="col-11"
-                                             name="tozihat"
+                                            name="tozihat"
                                             Id="Description" ButtonClick={this.OpenSelectDefaultText.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -944,7 +1011,7 @@ class NewWork extends Component {
                                             ColClassName="col-12"
                                             Text={this.context.t("WorkResult")} className2="col-11"
                                             className3="input-group mt-1 mb-2"
-                                             name="natije"
+                                            name="natije"
                                             Id="Result" ButtonClick={this.OpenSelectDefaultText.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
@@ -980,7 +1047,7 @@ class NewWork extends Component {
                                         >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("CopyWorkForm")}
                                                         name="cpy_form_kar"
                                                         Id="CopyWorkForm"
@@ -991,7 +1058,7 @@ class NewWork extends Component {
                                                         checked={this.state.cpy_form_karCheckBox}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("NoWorkFlow")}
                                                         name="withoutFlow"
                                                         Id="NoWorkFlow"
@@ -1022,7 +1089,7 @@ class NewWork extends Component {
                                         >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("AllowAttachment")}
                                                         name="alowatt"
                                                         Id="AllowAttachment" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -1033,7 +1100,7 @@ class NewWork extends Component {
                                                         defaultChecked={true}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("LockedAttachment")}
                                                         name="lock"
                                                         Id="LockedAttachment" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -1060,7 +1127,7 @@ class NewWork extends Component {
                                         >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("SendEmailToUser")}
                                                         name="emailToWorker"
                                                         Id="SendEmailToUser" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -1070,7 +1137,7 @@ class NewWork extends Component {
                                                         checked={this.state.emailToWorkerCheckBox}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("SendEmailToAudience")}
                                                         name="emailToAudience"
                                                         Id="SendEmailToAudience" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
@@ -1080,7 +1147,7 @@ class NewWork extends Component {
                                                         checked={this.state.emailToAudienceCheckBox}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("SendSmsToUser")}
                                                         name="smsToWorker"
                                                         Id="SendSmsToUser"
@@ -1092,7 +1159,7 @@ class NewWork extends Component {
                                                     ></LabelCheckBox>
 
 
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("SendSmsToAudience")}
                                                         name="smsToAudience"
                                                         Id="SendSmsToAudience" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}

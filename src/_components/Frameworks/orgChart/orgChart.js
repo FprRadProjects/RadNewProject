@@ -186,7 +186,19 @@ class OrgChart extends PureComponent {
             d3.select(id).style('height', elemHeight + margin.top + margin.bottom)
         } catch (err) { }
     }
+    componentWillReceiveProps(nextProps) {
+            if (nextProps.data !== this.props.data) {
+                const { id, data, currentId } =nextProps
 
+                this.init({ id: `#${id}`, data, lineType: 'angle' })
+                setTimeout(() => {
+                    try {
+                        document.getElementById(currentId).setAttribute('stroke', '#3C69F7');
+                        document.getElementById(currentId).setAttribute('stroke-width', 2);
+                    } catch (err) { }
+                }, 100)
+            }
+    }
     componentDidMount() {
 
         const { id, data, currentId } = this.props
@@ -215,7 +227,6 @@ class OrgChart extends PureComponent {
 
     render() {
         const { id } = this.props
-        console.log(id)
         return createElement('div', { id })
     }
 

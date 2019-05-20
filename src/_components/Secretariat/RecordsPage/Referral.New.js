@@ -51,6 +51,8 @@ class NewReferral extends Component {
             DescriptionTextArea: "",
             SelectedWorkers: [],
             AttachmentList: [],
+            attachFromParentCheckBox:1,
+            infoFromParentCheckBox:1,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-referral-modal"
         };

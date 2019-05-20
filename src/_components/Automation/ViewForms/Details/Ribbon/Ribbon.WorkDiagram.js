@@ -4,6 +4,7 @@ import PropTypes from "prop-types"
 import { FormInfo } from "../../../../../locales";
 import { MenuProvider } from "react-contexify";
 import { RibbonButton, ShortKeyButton,ControlPanel } from "../../../../Frameworks";
+import { ReferenceViewer } from "../../../../Secretariat";
 import {
     design_Actions,
 } from "../../../../../_actions";
@@ -23,12 +24,19 @@ class RibbonWorkDiagram extends Component {
         const { GetTemplateForm } = this.props;
         GetTemplateForm(FormInfo.fm_par_diagram.id);
     }
-    handleClick() {
+    handleClick=()=>{}
+    OpenReferenceViewer() {
+        const { SelectedPeygirId } = this.props;
+        console.log(SelectedPeygirId)
 
+        if (SelectedPeygirId !== "" && SelectedPeygirId !== undefined)
+            this.setState({
+                ReferenceViewermodal: !this.state.ReferenceViewermodal
+            });
     }
   
     render() {
-        const { saveWorkHandle, ShortKeys, DeletedElements, EditedElements, OpenReferenceViewer } = this.props;
+        const { saveWorkHandle, ShortKeys, DeletedElements, EditedElements, Params, RefreshParentForm } = this.props;
 
         return (
             <div>
@@ -77,7 +85,7 @@ class RibbonWorkDiagram extends Component {
                                         <RibbonButton FormId={FormInfo.fm_par_diagram.id}
                                             DeletedElements={DeletedElements}
                                             Id="referral-result"
-                                            handleClick={OpenReferenceViewer.bind(this)}
+                                            handleClick={this.OpenReferenceViewer.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="ReferralResult"
                                         />
@@ -126,6 +134,11 @@ class RibbonWorkDiagram extends Component {
                             </div>
                         </div>
                     </div>
+                    {this.state.ReferenceViewermodal && 
+                <ReferenceViewer modal={this.state.ReferenceViewermodal}
+                    toggle={this.OpenReferenceViewer.bind(this)}
+                    Params={Params} RefreshParentForm={RefreshParentForm.bind(this)}
+                    ParentForm={FormInfo.fm_par_diagram} />}
                 </div>
                 <nav className="radialnav">
                     <a href="#" className="ellipsis"></a>
@@ -147,7 +160,7 @@ class RibbonWorkDiagram extends Component {
                                 
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={OpenReferenceViewer.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_par_diagram.id} key={index} handleClick={this.OpenReferenceViewer.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="referral-result" />
                                     )
                                 }
