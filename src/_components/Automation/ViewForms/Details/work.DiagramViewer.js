@@ -155,14 +155,8 @@ console.log(this.state.WorkInfo_Diagram)
                         </div>
                         <div className="r-diagram-modal-content">
                             <div className="row" id="r-diagram-row-main">
-<<<<<<< HEAD
-                                <div className="col-5" id="r-diagram-sidebar">
-                                    <div className="toggle-diagram"><button type="button" className="toggle-diagram-sidebar" title=""></button></div>
-=======
                                 <div className={"col-5 " + this.state.collapsedClass} id="r-diagram-sidebar">
                                     <div class="toggle-diagram"><button type="button" class="toggle-diagram-sidebar" title=""></button></div>
->>>>>>> f563773c3b3c11d3c338510a729ceab570a6eb80
-
                                     <BoxGroup
                                         Text={this.context.t("BasicInfoBox")}
                                         FormId={FormInfo.fm_par_diagram.id}
