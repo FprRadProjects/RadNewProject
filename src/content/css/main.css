@@ -34825,116 +34825,174 @@ i.icon {
     z-index: 1!important;
 }
 
+/* بازخوانی اطلاعات */
 i.icon.refresh-information {
     background-image: url(../images/Ribbon/refresh-information.svg);
 }
 
+/* نتیجه ارجاع */
 i.icon.referral-result {
     background-image: url(../images/Ribbon/referral-result.svg);
 }
 
+/* نشانه ها */
 i.icon.marks {
     background-image: url(../images/Ribbon/marks.svg);
 }
 
+/* حذف نشانه */
 i.icon.remove-mark {
     background-image: url(../images/Ribbon/remove-mark.svg);
 }
 
+/* نشانه گذاری */
 i.icon.marking {
     background-image: url(../images/Ribbon/marking.svg);
 }
 
+/* دیاگرام عطف */
 i.icon.follow-up-diagram {
     background-image: url(../images/Ribbon/follow-up-diagram.svg);
 }
 
+/* دیاگرام */
 i.icon.diagram {
     background-image: url(../images/Ribbon/diagram.svg);
 }
 
+/* تایید */
 i.icon.confirmation {
     background-image: url(../images/Ribbon/confirmation.svg);
 }
 
+/* بازسازی */
 i.icon.rebuild {
     background-image: url(../images/Ribbon/rebuild.svg);
 }
 
+/* ذخیره */
 i.icon.save {
     background-image: url(../images/Ribbon/save.svg);
 }
 
+/* ارجاع */
 i.icon.referral {
     background-image: url(../images/Ribbon/referral.svg);
 }
 
+/* ضمائم */
 i.icon.attachments {
     background-image: url(../images/Ribbon/attachments.svg);
 }
 
+/* نمایش ضمائم */
 i.icon.attachments-view {
     background-image: url(../images/Ribbon/attachments-view.svg);
 }
 
+/* ثبت ارجاع */
 i.icon.submit-referral {
     background-image: url(../images/Ribbon/save.svg);
 }
 
+/* انصراف */
+i.icon.cancel {
+    background-image: url(../images/Ribbon/cancel.svg);
+}
+
+/* کار جدید */
 i.icon.new-work {
     background-image: url(../images/Ribbon/new-work.svg);
 }
 
+/* ایجاد کار */
 i.icon.create-work {
     background-image: url(../images/Ribbon/create-work.svg);
 }
 
+/* عطف */
 i.icon.follow {
     background-image: url(../images/Ribbon/follow.svg);
 }
 
+/* مدت زمان صرف شده */
 i.icon.time-spent {
     background-image: url(../images/Ribbon/time-spent.svg);
 }
 
+/* ویرایش */
 i.icon.edit {
     background-image: url(../images/Ribbon/edit.svg);
 }
 
+/* فراخوانی کار */
 i.icon.call-work {
     background-image: url(../images/Ribbon/call-work.svg);
 }
 
+/* نمایش کار */
 i.icon.work-view {
     background-image: url(../images/Ribbon/work-view.svg);
 }
 
+/* نمایش اطلاعات کار */
 i.icon.work-info-view {
     background-image: url(../images/Ribbon/work-info-view.svg);
 }
 
+/* فرم کار */
 i.icon.work-form {
     background-image: url(../images/Ribbon/work-form.svg);
 }
 
+/* فرم کار پیشرفته */
 i.icon.custom-work-form {
     background-image: url(../images/Ribbon/custom-work-form.svg);
 }
 
+/* فرم مالی */
 i.icon.financial-form {
     background-image: url(../images/Ribbon/financial-form.svg);
 }
 
+/* فرمساز فرآیند */
 i.icon.process-form-builder {
     background-image: url(../images/Ribbon/process-form-builder.svg);
 }
 
+/* رونوشت برون سازمانی */
 i.icon.external-replication {
     background-image: url(../images/Ribbon/external-replication.svg);
 }
 
+/* رونوشت درون سازمانی */
 i.icon.internal-replication {
     background-image: url(../images/Ribbon/internal-replication.svg);
+}
+
+/* ایجاد رونوشت */
+i.icon.create-replication {
+    background-image: url(../images/Ribbon/create-replication.svg);
+}
+
+/* پیش نیازها */
+i.icon.prerequisites {
+    background-image: url(../images/Ribbon/prerequisites.svg);
+}
+
+/* ویرایش ارجاع */
+i.icon.referral-edit {
+    background-image: url(../images/Ribbon/referral-edit.svg);
+}
+
+/* گروه آرشیو کاربر */
+i.icon.user-archive-group {
+    background-image: url(../images/Ribbon/user-archive-group.svg);
+}
+
+/* نمایش دبیرخانه */
+i.icon.view-secretariat {
+    background-image: url(../images/Ribbon/view-secretariat.svg);
 }
 
 .modal-form-action {
