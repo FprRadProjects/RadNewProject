@@ -122,12 +122,12 @@ class Sidebar extends Component {
                                     <span>پرونده</span>
                                 </a>
                             </li>
-                            <NavItem activeOnlyWhenExact={false}  Id= "creatework" to="#" OnClickHandler={this.OpenNewWork.bind(this)}
+                            <NavItem activeOnlyWhenExact={false}  Id= "frm_Create_Work" to="#" OnClickHandler={this.OpenNewWork.bind(this)}
                             AccessInfo={FormInfo.fm_pub_sabt_kar}>
                                 <i className="icon-system"></i>
                                 <span>{this.context.t("frm_Create_Work")}</span>
                             </NavItem>
-                            <NavItem activeOnlyWhenExact={true}  Id= "mainpage" to="/" AccessInfo={FormInfo.web_fm_mainpage}>
+                            <NavItem activeOnlyWhenExact={true}  Id= "frm_Main_Page" to="/" AccessInfo={FormInfo.web_fm_mainpage}>
                                 <i className="icon-system"></i>
                                 <span>{this.context.t("frm_Main_Page")}</span>
                             </NavItem>
@@ -164,7 +164,7 @@ class Sidebar extends Component {
                                 </Link>
                             </li>
                             
-                            <NavItem activeOnlyWhenExact={false} to="/references" Id= "references" AccessInfo={FormInfo.fm_dabir_kartabl_erjaat} >
+                            <NavItem activeOnlyWhenExact={false} to="/frm_Dashboard_References" Id= "references" AccessInfo={FormInfo.fm_dabir_kartabl_erjaat} >
                                 <i className="icon-system"></i>
                                 <span>{this.context.t("frm_Dashboard_References")}</span>
                             </NavItem>
