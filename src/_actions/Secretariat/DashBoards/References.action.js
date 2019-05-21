@@ -27,6 +27,8 @@ function FetchData(params) {
                         dispatch(loadingActions.HideGridLoading());
                     }
                     else if (data.code !== 0) {
+                        dispatch(AddTotalCount(0));
+                        dispatch(AddRows([]));
                         toast.error(data.error);
                         dispatch(loadingActions.HideGridLoading());
                     }
@@ -69,7 +71,6 @@ function FetchDataTree(params,reload,Tree) {
                     dispatch(loadingActions.HideLoading());
                 }
             })
-
     }
 }
 

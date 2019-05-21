@@ -13,8 +13,6 @@ class RibbonButton extends Component {
         const { UserAccessForm, AccessInfo, AccessType, handleClick,lang } = this.props;
         if (AccessInfo !== undefined) {
             let formName = lang == "fa" ? AccessInfo.form_name : AccessInfo.en_form_name;
-            console.log(lang)
-            console.log(formName)
             let AccessParams =  { "sysname": AccessInfo.sys_name, "type": AccessType !== undefined ? AccessType : "show",formname:formName };
             UserAccessForm(AccessParams).then(data => {
                 if (data.status)

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
-import NavItem from "./NavItem";
+import { NavItem } from "./NavItem";
 import { userActions } from '../../_actions/User';
-import { history } from "../../_helpers";
 import PropTypes from "prop-types"
 import { connect } from 'react-redux';
 import { NewWork } from '../Automation/RecordForms/Work.New';
-
+import { FormInfo } from "../../locales";
 class Sidebar extends Component {
     constructor(props) {
         super(props);
@@ -80,12 +79,10 @@ class Sidebar extends Component {
                                     </li>
                                 </ul>
                             </li>
-                            <li>
-                                <Link to="/" onClick={this.handleLogout.bind(this)}>
-                                    <i className="icon-system"></i>
-                                    <span>{this.context.t("logout")}</span>
-                                </Link>
-                            </li>
+                            <NavItem activeOnlyWhenExact={false} to="/"  Id= "logout"  OnClickHandler={this.handleLogout.bind(this)}>
+                                <i className="icon-system"></i>
+                                <span>{this.context.t("logout")}</span>
+                            </NavItem>
                         </ul>
                     </li>
                     <li>
@@ -125,15 +122,14 @@ class Sidebar extends Component {
                                     <span>پرونده</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="#!" onClick={this.OpenNewWork.bind(this)}>
-                                    <i className="icon-system"></i>
-                                    <span>{this.context.t("frm_Create_Work")}</span>
-                                </a>
-                            </li>
-                            <NavItem activeOnlyWhenExact={true} to="/">
+                            <NavItem activeOnlyWhenExact={false}  Id= "creatework" to="#" OnClickHandler={this.OpenNewWork.bind(this)}
+                            AccessInfo={FormInfo.fm_pub_sabt_kar}>
                                 <i className="icon-system"></i>
-                                <span>تقویم کاری</span>
+                                <span>{this.context.t("frm_Create_Work")}</span>
+                            </NavItem>
+                            <NavItem activeOnlyWhenExact={true}  Id= "mainpage" to="/" AccessInfo={FormInfo.web_fm_mainpage}>
+                                <i className="icon-system"></i>
+                                <span>{this.context.t("frm_Main_Page")}</span>
                             </NavItem>
                         </ul>
                     </li>
@@ -167,12 +163,11 @@ class Sidebar extends Component {
                                     <span>{this.context.t("frm_Insert_Draft_Letter_Issued")}</span>
                                 </Link>
                             </li>
-                            <li>
-                                <Link to="/references" >
-                                    <i className="icon-system"></i>
-                                    <span>{this.context.t("frm_Dashboard_References")}</span>
-                                </Link>
-                            </li>
+                            
+                            <NavItem activeOnlyWhenExact={false} to="/references" Id= "references" AccessInfo={FormInfo.fm_dabir_kartabl_erjaat} >
+                                <i className="icon-system"></i>
+                                <span>{this.context.t("frm_Dashboard_References")}</span>
+                            </NavItem>
                             <li>
                                 <Link to="#" >
                                     <i className="icon-system"></i>

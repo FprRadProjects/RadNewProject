@@ -267,6 +267,7 @@ export const translations = {
         frm_SubWork:"کار فرعی",
         frm_Attachment_Review: 'بازنگری ضمائم',
         frm_Create_Work: 'ثبت کار',
+        frm_Main_Page: 'تقویم کاری',
         frm_File_Audience: 'طرف حساب - مخاطب',
         frm_Follower_list: 'انتخاب پیرو',
         //--------------نام فرم ها--------------پایان
@@ -537,6 +538,7 @@ export const translations = {
         frm_SubWork:"Sub Work",
         frm_Attachment_Review: 'Attachment Review',
         frm_Create_Work: 'Create Work',
+        frm_Main_Page: 'Work Calendar',
         frm_File_Audience: 'File Audience',
         frm_Follower_list: 'Follower',
 
