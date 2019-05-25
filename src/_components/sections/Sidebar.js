@@ -164,7 +164,8 @@ class Sidebar extends Component {
                                 </Link>
                             </li>
                             
-                            <NavItem activeOnlyWhenExact={false} to="/frm_Dashboard_References" Id= "references" AccessInfo={FormInfo.fm_dabir_kartabl_erjaat} >
+                            <NavItem activeOnlyWhenExact={false} to="/references" 
+                            Id= "frm_Dashboard_References" AccessInfo={FormInfo.fm_dabir_kartabl_erjaat} >
                                 <i className="icon-system"></i>
                                 <span>{this.context.t("frm_Dashboard_References")}</span>
                             </NavItem>

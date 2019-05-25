@@ -229,9 +229,12 @@ export const translations = {
         msg_No_Select_Is_In_Flow:"سطر انتخابی دارای فرآیند می باشد.",
         msg_No_Select_Worker:"کاربر انتخاب نشده است",
         msg_No_Select_Manager:"مدیر انتخاب نشده است",
-        Information_Is_Duplicate: 'اطلاعات تکراری می باشد.',
-        Information_Not_Available_For_Editing: 'اطلاعات برای ویرایش موجود نمی باشد.',
-        Form_Not_Access: 'عدم دسترسی به فرم ',
+        msg_Information_Is_Duplicate: 'اطلاعات تکراری می باشد.',
+        msg_Information_Not_Available_For_Editing: 'اطلاعات برای ویرایش موجود نمی باشد.',
+        msg_Information_Not_Available_For_Editing: 'اطلاعات برای ویرایش موجود نمی باشد.',
+        msg_Form_Not_Access: 'عدم دسترسی به فرم ',
+        msg_Id_DosNot_Contain_Value : 'شاخص حاوی مقدار نیست...',
+        msg_Id_No_In_Editing_Mode : 'شاخص مورد نظر در مد ویرایش نمی باشد... ',
 
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
@@ -500,9 +503,11 @@ export const translations = {
         msg_No_Select_Is_In_Flow:"The Selected Row Has Flow",
         msg_No_Select_Worker:"Worker Not Selected.",
         msg_No_Select_Manager:"Manager Not Selected.",
-        Information_Is_Duplicate: 'The Information Is Duplicate.',
-        Information_Not_Available_For_Editing: 'Information Is Not Available For Editing.',
-        Form_Not_Access: 'Lack Of Access To The Form ',
+        msg_Information_Is_Duplicate: 'The Information Is Duplicate.',
+        msg_Information_Not_Available_For_Editing: 'Information Is Not Available For Editing.',
+        msg_Form_Not_Access: 'Lack Of Access To The Form ',
+        msg_Id_DosNot_Contain_Value : 'The Id Does Not Contain The Value... ',
+        msg_Id_No_In_Editing_Mode : 'ID Is Not In Editing Mode... ',
   //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',

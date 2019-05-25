@@ -48,7 +48,7 @@ class LabelPopUpInputText extends Component {
                     {hasDelete !== undefined && (hasDelete &&
                       <Button className="rounded-0" formid={FormId} element={"LabelPopUpInputText-" + Id}
                         id={"LabelPopUpInputTextDelete-" + Id} Description={Text}
-                        color="danger" onClick={deleteHandler.bind(this)}>{this.context.t("Delete")}</Button>)}
+                        color="danger" disabled={isButtonDisabled === undefined ? false : isButtonDisabled} onClick={deleteHandler.bind(this)}>{this.context.t("Delete")}</Button>)}
 
                   </div>
                   {Type === "Input" && changeHandle !== undefined && <input formid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text}

@@ -11,7 +11,7 @@ import { FormInfo } from "../../../locales";
 import {
     AutoBasicInfo_action,
     ArchiveBasic_action, WorkActions_action,
-    ProjectsInfo_action, design_Actions
+    ProjectsInfo_action, WorkAccess_action
 } from "../../../_actions";
 import { toast } from 'react-toastify';
 import { RibbonNewWork } from './Ribbon/Ribbon.NewWork';
@@ -20,39 +20,16 @@ import {
     LabelCombobox, LabelCalendar, LabelPopUpInputText, BoxGroup
 } from "../../Frameworks";
 var finalSaveParams = {}
-// var fileShowField = ["id_taraf", "name", "coname", "mokhatab_name", "mokhatab_id"];
 var thisSaveParams = {
-    form: "",
-    type: "new",
-    data: [],
-    workers: [],
-    peygir_id: 0,
-    attachFromParent: 0,
-    infoFromParent: 0,
-    replication: "",
-    emailToWorker: 0,
-    emailToAudience: 0,
-    smsToWorker: 0,
-    smsToAudience: 0,
-    archivesList: []
-
-};
-var projectParams = {
-    "Id_Taraf": 0
+    form: "", type: "new", data: [], workers: [], peygir_id: 0,
+    attachFromParent: 0, infoFromParent: 0, replication: "", emailToWorker: 0,
+    emailToAudience: 0, smsToWorker: 0, smsToAudience: 0, archivesList: []
 };
 
-var WorkerParams = {
-    "page": 0,
-    "pagesize": 10,
-    "id_role": 0,
-    "wt_id": 0,
-    "orderby": "id_user",
-    "direction": "desc",
-    "filter": []
-};
+var projectParams = { Id_Taraf: 0 };
+var WorkerParams = { page: 0, pagesize: 10, id_role: 0, wt_id: 0, orderby: "id_user", direction: "desc", filter: [] };
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
 var DefaultInfoParams = { form: "work", wt_id: 0, flow_id: 0, isInternal: 0 }
-
 
 class NewWork extends Component {
     constructor(props) {
@@ -60,10 +37,12 @@ class NewWork extends Component {
         this.state = {
             ...this.state,
             modal: false,
+            peygir_idText: 0,
             SelectedWorkers: [],
             AttachmentList: [],
             SelectedAudienceId: 0,
             SelectedFileId: 0,
+            isDisabled: false,
             hasformsazCheckBox: false,
             manager_role_id: 0,
             user_role_id: 0,
@@ -78,34 +57,12 @@ class NewWork extends Component {
     componentDidMount() {
         finalSaveParams = {}
         thisSaveParams = {
-            form: "",
-            type: "new",
-            data: [],
-            workers: [],
-            peygir_id: 0,
-            attachFromParent: 0,
-            infoFromParent: 0,
-            replication: "",
-            emailToWorker: 0,
-            emailToAudience: 0,
-            smsToWorker: 0,
-            smsToAudience: 0,
-            archivesList: []
-
+            form: "", type: "new", data: [], workers: [], peygir_id: 0,
+            attachFromParent: 0, infoFromParent: 0, replication: "", emailToWorker: 0,
+            emailToAudience: 0, smsToWorker: 0, smsToAudience: 0, archivesList: []
         };
-        projectParams = {
-            "Id_Taraf": 0
-        };
-
-        WorkerParams = {
-            "page": 0,
-            "pagesize": 10,
-            "id_role": 0,
-            "wt_id": 0,
-            "orderby": "id_user",
-            "direction": "desc",
-            "filter": []
-        };
+        projectParams = { Id_Taraf: 0 };
+        WorkerParams = { page: 0, pagesize: 10, id_role: 0, wt_id: 0, orderby: "id_user", direction: "desc", filter: [] };
         workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
         DefaultInfoParams = { form: "work", wt_id: 0, flow_id: 0, isInternal: 0 }
 
@@ -131,18 +88,17 @@ class NewWork extends Component {
 
         if (val !== undefined) {
             const { name } = e;
-            if (name === "flow_id")
+            if (name === "flow_id" && this.state.peygir_idText === 0)
                 this.flowChange(val);
-            else if (name === "workgroup_id")
+            else if (name === "workgroup_id" && this.state.peygir_idText === 0)
                 this.workgroupChange(val);
-            else if (name === "wt_id")
+            else if (name === "wt_id" && this.state.peygir_idText === 0)
                 this.reloadWorkType(val);
-            else if (name === "worker_id") {
+            if (name === "worker_id") {
                 let worker_id = val.value;
                 let workerLabel = val.label;
-                thisSaveParams.workers[0].worker = worker_id;
+                thisSaveParams.workers = [{ worker_id: worker_id, manager: val.value }];
                 const { SayManagerOnWorkerWtype } = this.props;
-                thisSaveParams.workers[0].manager = val.value;
                 this.setState({ workerSelectedOption: { value: worker_id, label: workerLabel } });
 
                 SayManagerOnWorkerWtype(val.value, WorkerParams.wt_id).then(data => {
@@ -161,13 +117,12 @@ class NewWork extends Component {
             else if (name === "p_type_id") {
                 this.projectChange(val);
             }
-            if (name === "olaviyat_id" ) {
+            else if (name === "olaviyat_id") {
                 const priority_id = val.value;
                 const priorityLabel = val.label;
                 this.setState({ prioritySelectedOption: { value: priority_id, label: priorityLabel } });
-            }
-            if (name !== "worker_id" && name !== "defmodir_id")
                 thisSaveParams.data[[name]] = { [name]: val.value === 0 ? null : val.value }
+            }
 
         }
         else {
@@ -193,11 +148,10 @@ class NewWork extends Component {
         const projectLabel = Val.label;
         if (project_id !== 0)
             this.setState({ ProjectSelectedOption: { value: project_id, label: projectLabel } });
-        else {
+        else
 
             this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
-            thisSaveParams.data["p_type_id"] = { "p_type_id": null };
-        }
+        thisSaveParams.data["p_type_id"] = { "p_type_id": project_id === 0 ? null : project_id }
     }
     workgroupChange = (Val) => {
         const workgroup_id = Val.value;
@@ -255,7 +209,6 @@ class NewWork extends Component {
             DefaultInfoParams.flow_id = 0;
             this.setState({ FlowSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
             this.setState({ workgroup_id_disabled: false });
-
             SelectWorkTypeList(workTypeParams);
             this.setState({ workTypeSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
             this.setState({ workerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
@@ -282,9 +235,9 @@ class NewWork extends Component {
         const { GetNewWorkDefaultInfo } = this.props;
         DefaultInfoParams.wt_id = selectedWtId;
         thisSaveParams.data["p_id"] = { "p_id": 0 };
-        thisSaveParams.data["showtree_id"] = { "showtree_id": 0 };
-        thisSaveParams.data["arshiv_id"] = { "arshiv_id": 0 };
-        thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
+        thisSaveParams.data["showtree_id"] = { "showtree_id": this.state.peygir_idText };
+        thisSaveParams.data["arshiv_id"] = { "arshiv_id": this.state.peygir_idText };
+        thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": this.state.peygir_idText };
 
         this.setState({ FollowerText: "" });
         thisSaveParams.data["p_id"] = { "p_id": 0 };
@@ -383,11 +336,11 @@ class NewWork extends Component {
             if (checked && this.state.SelectedShowtreeFollowerId !== undefined && this.state.SelectedShowtreeFollowerId !== 0)
                 thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": this.state.SelectedShowtreeFollowerId };
             else
-                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
+                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": this.state.peygir_idText };
             this.setState({ cpy_form_karCheckBox: checked });
         }
 
-        else if (name === "hasformsaz") {
+        else if (name === "hasformsaz" && this.state.peygir_idText === 0) {
             this.setState({ hasformsazCheckBox: checked });
             workTypeParams.HasFormGen = value;
             SelectWorkTypeList(workTypeParams);
@@ -432,39 +385,40 @@ class NewWork extends Component {
 
     }
     saveWorkHandle = () => {
-        const { lang, toggle, InsertNewWorkInfo } = this.props;
+        const { lang, SaveWorkInfo, InsertNewWorkInfo } = this.props;
         var formname = lang == "fa" ? FormInfo.fm_pub_sabt_kar.form_name : FormInfo.fm_pub_sabt_kar.en_form_name;
-        if (thisSaveParams.data["wt_id"] === undefined) {
-            toast.error(this.context.t("msg_No_Select_WorkType"));
-            return false;
-        }
-        if (thisSaveParams.data["id_tel"] === undefined) {
-            toast.error(this.context.t("msg_No_Select_File_Audience"));
-            return false;
-        }
-        if (thisSaveParams.workers.length == 0) {
-            toast.error(this.context.t("msg_No_Select_Worker"));
-            return false;
-        }
-        if (thisSaveParams.workers[0].worker === undefined || thisSaveParams.workers[0].worker == 0) {
-            toast.error(this.context.t("msg_No_Select_Worker"));
-            return false;
-        }
-        if (thisSaveParams.workers[0].manager === undefined || thisSaveParams.workers[0].manager == 0) {
-            toast.error(this.context.t("msg_No_Select_Manager"));
-            return false;
-        }
-        if (thisSaveParams.data["tarikhaction"] === undefined) {
-            toast.error(this.context.t("msg_ActionDate_Not_Valid"));
-            return false;
-        }
-        if (thisSaveParams.data["tarikhaction"].tarikhaction.length < 10) {
-            toast.error(this.context.t("msg_ActionDate_Not_Valid"));
-            return false;
+        if (this.state.peygir_idText === 0) {
+            if (thisSaveParams.data["wt_id"] === undefined) {
+                toast.error(this.context.t("msg_No_Select_WorkType"));
+                return false;
+            }
+            if (thisSaveParams.data["id_tel"] === undefined) {
+                toast.error(this.context.t("msg_No_Select_File_Audience"));
+                return false;
+            }
+            if (thisSaveParams.workers.length == 0) {
+                toast.error(this.context.t("msg_No_Select_Worker"));
+                return false;
+            }
+            if (thisSaveParams.workers[0].worker === undefined || thisSaveParams.workers[0].worker == 0) {
+                toast.error(this.context.t("msg_No_Select_Worker"));
+                return false;
+            }
+            if (thisSaveParams.workers[0].manager === undefined || thisSaveParams.workers[0].manager == 0) {
+                toast.error(this.context.t("msg_No_Select_Manager"));
+                return false;
+            }
+            if (thisSaveParams.data["tarikhaction"] === undefined) {
+                toast.error(this.context.t("msg_ActionDate_Not_Valid"));
+                return false;
+            }
+            if (thisSaveParams.data["tarikhaction"].tarikhaction.length < 10) {
+                toast.error(this.context.t("msg_ActionDate_Not_Valid"));
+                return false;
+            }
+            thisSaveParams.archivesList = this.state.AttachmentList;
         }
         thisSaveParams.form = formname;
-
-        thisSaveParams.archivesList = this.state.AttachmentList;
         finalSaveParams = Object.assign({}, thisSaveParams);
         let obj = [];
         Object.keys(finalSaveParams.data).map((item, index) => {
@@ -474,21 +428,39 @@ class NewWork extends Component {
         if (finalSaveParams.peygir_id === 0) {
             InsertNewWorkInfo(finalSaveParams, this.context.t("msg_Operation_Success")).then(data => {
                 if (data.status) {
-                    thisSaveParams.peygir_id = data.data.peygir_id0;
-                    console.log(thisSaveParams)
+                    thisSaveParams = {
+                        data: [], workers: [], peygir_id: data.data.peygir_id0,
+                        attachFromParent: 0, infoFromParent: 0, replication: "", emailToWorker: 0,
+                        emailToAudience: 0, smsToWorker: 0, smsToAudience: 0, archivesList: []
+                    };
+                    thisSaveParams.data["peygir_id"] = { "peygir_id": data.data.peygir_id0 };
+                    this.setState({ peygir_idText: data.data.peygir_id0 });
+                    this.setState({ isDisabled: true });
                 }
             });
         }
         else if (finalSaveParams.peygir_id !== 0) {
-            alert("updated")
-            console.log(finalSaveParams)
-            //update
+            console.log(finalSaveParams);
+            SaveWorkInfo(finalSaveParams, this.context.t("msg_Operation_Success")).then(data => {
+                if (data.status) {
+                    thisSaveParams = {
+                        data: [], workers: [], peygir_id: finalSaveParams.peygir_id,
+                        attachFromParent: 0, infoFromParent: 0, replication: "", emailToWorker: 0,
+                        emailToAudience: 0, smsToWorker: 0, smsToAudience: 0, archivesList: []
+                    };
+                    thisSaveParams.data["peygir_id"] = { "peygir_id": finalSaveParams.peygir_id };
+                    this.setState({ isDisabled: true });
+                }
+            });
         }
     }
     attachmentsToggle() {
-        this.setState({
-            AttachmentReviewmodal: !this.state.AttachmentReviewmodal
-        });
+        if (!this.state.isDisabled)
+            this.setState({
+                AttachmentReviewmodal: !this.state.AttachmentReviewmodal
+            });
+        else
+            toast.warn(this.context.t("msg_Id_No_In_Editing_Mode"));
 
     }
     ChangeAttachments(NewAttchments) {
@@ -540,7 +512,7 @@ class NewWork extends Component {
             if (this.state.cpy_form_karCheckBox)
                 thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": row.showtree_id };
             else
-                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": 0 };
+                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": this.state.peygir_idText };
             this.setState({
                 SelectFollowermodal: !this.state.SelectFollowermodal,
             });
@@ -598,7 +570,22 @@ class NewWork extends Component {
     deleteProject = () => {
         this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
     }
+    editWorkHandle = () => {
+        const { CanEditOnWork } = this.props;
+        if (this.state.peygir_idText === 0) {
+            toast.warn(this.context.t("msg_Id_DosNot_Contain_Value"));
+            return false;
+        }
+        CanEditOnWork(this.state.peygir_idText).then(data => {
+            if (data.status) {
+                this.setState({ isDisabled: false })
+            }
+        });
+
+    }
     newWorkHandle = () => {
+        this.setState({ isDisabled: false })
+        this.setState({ peygir_idText: 0 })
         this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
         this.setState({ managerSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
         this.setState({ manager_roleSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
@@ -623,7 +610,7 @@ class NewWork extends Component {
         this.setState({ ShomareText: "" });
         this.setState({ prioritySelectedOption: "" });
 
-        this.setState({ AttachmentList: null });
+        this.setState({ AttachmentList: [] });
         this.setState({ hasformsazCheckBox: false });
         this.setState({ cpy_form_karCheckBox: false });
         this.setState({ smsToAudienceCheckBox: false });
@@ -687,6 +674,7 @@ class NewWork extends Component {
                             <RibbonNewWork
                                 saveWorkHandle={this.saveWorkHandle.bind(this)}
                                 newWorkHandle={this.newWorkHandle.bind(this)}
+                                editWorkHandle={this.editWorkHandle.bind(this)}
                                 attachmentsToggle={this.attachmentsToggle.bind(this)} />
                         </div>
                         <div className="referral-modal">
@@ -708,7 +696,7 @@ class NewWork extends Component {
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
-                                            isDisabled={this.state.flow_id_disabled}
+                                            isDisabled={this.state.flow_id_disabled || this.state.isDisabled || this.state.peygir_idText !== 0}
                                             selectedOption={this.state.FlowSelectedOption}
                                             options={WorkFlowList}
                                         ></LabelCombobox>
@@ -720,7 +708,7 @@ class NewWork extends Component {
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
-                                            isDisabled={this.state.workgroup_id_disabled}
+                                            isDisabled={this.state.workgroup_id_disabled || this.state.isDisabled || this.state.peygir_idText !== 0}
                                             selectedOption={this.state.WorkgroupSelectedOption}
                                             options={WorkGroupList}
                                         ></LabelCombobox>
@@ -736,6 +724,7 @@ class NewWork extends Component {
                                                                 FormId={FormInfo.fm_pub_sabt_kar.id}
                                                                 DeletedElements={DeletedElements}
                                                                 EditedElements={EditedElements}
+                                                                isDisabled={this.state.isDisabled || this.state.peygir_idText !== 0}
                                                                 checked={this.state.hasformsazCheckBox}
                                                             ></LabelCheckBox>
                                                         </div>
@@ -754,6 +743,7 @@ class NewWork extends Component {
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             selectedOption={this.state.workTypeSelectedOption}
+                                            isDisabled={this.state.isDisabled || this.state.peygir_idText !== 0}
                                             options={WorkTypeList}
                                         ></LabelCombobox>
                                     </div>
@@ -778,6 +768,7 @@ class NewWork extends Component {
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             isDisabled={true}
+                                            isButtonDisabled={this.state.isDisabled || this.state.peygir_idText !== 0}
                                             value={this.state.fileInfoText}
                                             Type="Input"
                                             changeHandle={this.changeHandle.bind(this)}
@@ -804,6 +795,8 @@ class NewWork extends Component {
                                             EditedElements={EditedElements}
                                             value={this.state.ProjectSelectedOption}
                                             className3="input-group mt-1 mb-2"
+                                            isDisabled={this.state.isDisabled}
+                                            isButtonDisabled={this.state.isDisabled}
                                             Type="ComboBox"
                                             options={ProjectList}
                                             changeHandle={this.changeHandle.bind(this)}
@@ -817,6 +810,7 @@ class NewWork extends Component {
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             isDisabled={true}
+                                            isButtonDisabled={this.state.isDisabled}
                                             value={this.state.FollowerText}
                                             className3="input-group mt-1 mb-2"
                                             Type="Input"
@@ -843,6 +837,7 @@ class NewWork extends Component {
                                             name="tarikhaction"
                                             Id="ActionDate" CalendarChange={this.CalendarChange.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            isDisabled={this.state.isDisabled}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             setDate={this.state.setDefaultActionDate}
@@ -854,6 +849,7 @@ class NewWork extends Component {
                                             Id="DeadTime" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
+                                            isDisabled={this.state.isDisabled}
                                             EditedElements={EditedElements}
                                             value={this.state.deadtimeText}
                                             mask="99:99"
@@ -879,6 +875,7 @@ class NewWork extends Component {
                                             Id="WorkerRoll"
                                             changeHandle={this.changeRoleHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            isDisabled={this.state.isDisabled}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             selectedOption={this.state.user_roleSelectedOption}
@@ -889,6 +886,7 @@ class NewWork extends Component {
                                             name="worker_id"
                                             Id="UserFullName" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            isDisabled={this.state.isDisabled}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             selectedOption={this.state.workerSelectedOption}
@@ -902,6 +900,7 @@ class NewWork extends Component {
                                             Id="ManagerRoll" changeHandle={this.changeRoleHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
+                                            isDisabled={this.state.isDisabled}
                                             EditedElements={EditedElements}
                                             selectedOption={this.state.manager_roleSelectedOption}
                                             options={UserRollList}
@@ -911,6 +910,7 @@ class NewWork extends Component {
                                             ComboclassName="mt-1 mb-2" name="defmodir_id"
                                             Id="AdminFullName" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            isDisabled={this.state.isDisabled}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             selectedOption={this.state.managerSelectedOption}
@@ -936,6 +936,8 @@ class NewWork extends Component {
                                             name="mozo"
                                             Id="Subject" ButtonClick={this.OpenSelectDefaultText.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            isButtonDisabled={this.state.isDisabled}
+                                            isDisabled={this.state.isDisabled}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             value={this.state.SubjectInputText}
@@ -947,6 +949,7 @@ class NewWork extends Component {
                                             Text={this.context.t("Code")}
                                             InputclassName="form-control mt-2 mb-1 ltr" name="code"
                                             Id="Code" changeHandle={this.changeHandle.bind(this)}
+                                            isDisabled={this.state.isDisabled}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
@@ -960,6 +963,7 @@ class NewWork extends Component {
                                             Text={this.context.t("Priority")}
                                             ComboclassName="mt-1 mb-2" name="olaviyat_id"
                                             Id="Priority" changeHandle={this.changeHandle.bind(this)}
+                                            isDisabled={this.state.isDisabled}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
@@ -972,6 +976,7 @@ class NewWork extends Component {
                                             InputclassName="form-control mt-1 mb-2 ltr" name="shomare"
                                             Id="FileNumber" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            isDisabled={this.state.isDisabled}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             value={this.state.ShomareText}
@@ -996,6 +1001,8 @@ class NewWork extends Component {
                                             name="tozihat"
                                             Id="Description" ButtonClick={this.OpenSelectDefaultText.bind(this)}
                                             FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            isButtonDisabled={this.state.isDisabled}
+                                            isDisabled={this.state.isDisabled}
                                             DeletedElements={DeletedElements}
                                             EditedElements={EditedElements}
                                             value={this.state.DescriptionTextArea}
@@ -1018,6 +1025,8 @@ class NewWork extends Component {
                                             EditedElements={EditedElements}
                                             value={this.state.ResultTextArea}
                                             Type="TextArea"
+                                            isButtonDisabled={this.state.isDisabled}
+                                            isDisabled={this.state.isDisabled}
                                             changeHandle={this.changeHandle.bind(this)}
                                             ButtonText={this.context.t("SelectPopup")}
                                         ></LabelPopUpInputText>
@@ -1054,6 +1063,7 @@ class NewWork extends Component {
                                                         checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
                                                         FormId={FormInfo.fm_pub_sabt_kar.id}
                                                         DeletedElements={DeletedElements}
+                                                        isDisabled={this.state.isDisabled}
                                                         EditedElements={EditedElements}
                                                         checked={this.state.cpy_form_karCheckBox}
                                                     ></LabelCheckBox>
@@ -1065,6 +1075,7 @@ class NewWork extends Component {
                                                         checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
                                                         FormId={FormInfo.fm_pub_sabt_kar.id}
                                                         DeletedElements={DeletedElements}
+                                                        isDisabled={this.state.isDisabled}
                                                         EditedElements={EditedElements}
                                                         checked={this.state.flowCheckBox}
                                                         defaultChecked={true}
@@ -1094,6 +1105,7 @@ class NewWork extends Component {
                                                         name="alowatt"
                                                         Id="AllowAttachment" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
                                                         FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        isDisabled={this.state.isDisabled}
                                                         DeletedElements={DeletedElements}
                                                         EditedElements={EditedElements}
                                                         checked={this.state.alowattCheckBox}
@@ -1104,6 +1116,7 @@ class NewWork extends Component {
                                                         Text={this.context.t("LockedAttachment")}
                                                         name="lock"
                                                         Id="LockedAttachment" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        isDisabled={this.state.isDisabled}
                                                         FormId={FormInfo.fm_pub_sabt_kar.id}
                                                         DeletedElements={DeletedElements}
                                                         EditedElements={EditedElements}
@@ -1131,6 +1144,7 @@ class NewWork extends Component {
                                                         Text={this.context.t("SendEmailToUser")}
                                                         name="emailToWorker"
                                                         Id="SendEmailToUser" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        isDisabled={this.state.isDisabled}
                                                         FormId={FormInfo.fm_pub_sabt_kar.id}
                                                         DeletedElements={DeletedElements}
                                                         EditedElements={EditedElements}
@@ -1142,6 +1156,7 @@ class NewWork extends Component {
                                                         name="emailToAudience"
                                                         Id="SendEmailToAudience" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
                                                         FormId={FormInfo.fm_pub_sabt_kar.id}
+                                                        isDisabled={this.state.isDisabled}
                                                         DeletedElements={DeletedElements}
                                                         EditedElements={EditedElements}
                                                         checked={this.state.emailToAudienceCheckBox}
@@ -1152,6 +1167,7 @@ class NewWork extends Component {
                                                         name="smsToWorker"
                                                         Id="SendSmsToUser"
                                                         checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        isDisabled={this.state.isDisabled}
                                                         FormId={FormInfo.fm_pub_sabt_kar.id}
                                                         DeletedElements={DeletedElements}
                                                         EditedElements={EditedElements}
@@ -1163,6 +1179,7 @@ class NewWork extends Component {
                                                         Text={this.context.t("SendSmsToAudience")}
                                                         name="smsToAudience"
                                                         Id="SendSmsToAudience" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}
+                                                        isDisabled={this.state.isDisabled}
                                                         FormId={FormInfo.fm_pub_sabt_kar.id}
                                                         DeletedElements={DeletedElements}
                                                         EditedElements={EditedElements}
@@ -1213,7 +1230,7 @@ class NewWork extends Component {
                         AttachmentList={this.state.AttachmentList}
                         ChangeAttachments={this.ChangeAttachments.bind(this)}
                         toggle={this.attachmentsToggle.bind(this)}
-                        parentPeygirId={0} peygir_id={0} />
+                        parentPeygirId={0} peygir_id={this.state.peygir_idText} />
                 }
                 {
                     this.state.ProjectSelectmodal &&
@@ -1271,6 +1288,12 @@ const mapDispatchToProps = dispatch => ({
         return dispatch(AutoBasicInfo_action.SelectFileAudienceList(Params))
     }, SayManagerOnWorkerWtype: (worker_id, wt_id) => {
         return dispatch(AutoBasicInfo_action.SayManagerOnWorkerWtype(worker_id, wt_id))
+    },
+    CanEditOnWork: (peygir_id) => {
+        return dispatch(WorkAccess_action.CanEditOnWork(peygir_id))
+    },
+    SaveWorkInfo: (SaveParams, msg) => {
+        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
     },
 });
 NewWork.contextTypes = {

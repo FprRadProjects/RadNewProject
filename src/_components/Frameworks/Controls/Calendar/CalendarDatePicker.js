@@ -18,27 +18,32 @@ class CalendarDatePicker extends Component {
     }
   }
   onChange = name => event => {
-    this.setState({
-      value: event.target.formatted,
-    });
-    const { CalendarChange, fieldname,disabled } = this.props;
-    CalendarChange(event.target.formatted, fieldname);
+    const { CalendarChange, fieldname, isDisabled } = this.props;
+    let isdisabled = isDisabled === undefined ? false : isDisabled;
+    if (!isdisabled) 
+    {
+      this.setState({
+        value: event.target.formatted,
+      });
+      CalendarChange(event.target.formatted, fieldname);
+    }
   }
 
   render() {
-    const { formid } = this.props;
+    const { formid, isDisabled } = this.props;
     return (
-        <MuiThemeProvider >
-          <JalaliField  formid={formid}
-            id="standard-name"
-            value={this.state.value}
-            onChange={this.onChange('value')}
-            margin="normal"
-            style={{ width: '100%' }}
-            autoComplete="off"
-          />
+      <MuiThemeProvider   >
+        <JalaliField formid={formid}
+          id="standard-name"
+          value={this.state.value}
+          disabled={isDisabled!==undefined?isDisabled:false}
+          onChange={this.onChange('value')}
+          margin="normal"
+          style={{ width: '100%' }}
+          autoComplete="off"
+        />
 
-        </MuiThemeProvider>
+      </MuiThemeProvider>
     );
   }
 }

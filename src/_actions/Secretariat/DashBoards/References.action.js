@@ -18,7 +18,7 @@ function FetchData(params) {
     return dispatch => {
         // dispatch(loadingActions.ShowLoading());
         dispatch(loadingActions.ShowGridLoading());
-        paramsService.callservice(params,"WorkDashboard")
+        paramsService.callservice(params,"ReferencesDashboard")
             .then(
                 data => {
                     if (data.status) {

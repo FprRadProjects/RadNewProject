@@ -190,7 +190,7 @@ class ReferenceViewer extends Component {
         } = this.props;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         if (SaveParams.data["peygir_id"] === undefined) {
-            toast.warn(this.context.t("Information_Not_Available_For_Editing"));
+            toast.warn(this.context.t("msg_Information_Not_Available_For_Editing"));
             return false;
         }
         SaveParams.form = formname;
@@ -200,6 +200,7 @@ class ReferenceViewer extends Component {
             return obj[index++] = finalSaveParams.data[item];
         })
         finalSaveParams.data = obj;
+        console.log(finalSaveParams)
         SaveWorkInfo(finalSaveParams, msg).then(data => {
             if (data.status) {
                 if(RefreshParentForm!==undefined)
@@ -571,9 +572,6 @@ const mapDispatchToProps = dispatch => ({
     },
     GetTemplateForm: (Params) => {
         dispatch(design_Actions.GetTemplateForm(Params))
-    },
-    SaveWorkInfo: (SaveParams, msg) => {
-        return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
     },
     RebuildWork: (Peygir_id, msg) => {
         return dispatch(WorkActions_action.RebuildWork(Peygir_id, msg))
