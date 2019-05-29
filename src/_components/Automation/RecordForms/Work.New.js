@@ -473,24 +473,26 @@ class NewWork extends Component {
         });
     }
     SelectFileAudienceRow(row) {
-        const { GetSelectComboProject } = this.props;
-        this.setState({ fileInfoText: row.coname + " - " + row.name });
-        this.setState({ AudienceText: row.mokhatab_name });
-        this.setState({ SelectedFileId: row.id_taraf });
-        this.setState({ SelectedAudienceId: row.mokhatab_id });
-        thisSaveParams.data["id_tel"] = { "id_tel": row.id_taraf };
-        thisSaveParams.data["ashkhas_id"] = { "ashkhas_id": row.mokhatab_id };
-        this.setState({
-            SelectFileAudiencemodal: !this.state.SelectFileAudiencemodal,
-        });
-        this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
-        projectParams.Id_Taraf = row.id_taraf;
-        GetSelectComboProject(projectParams);
-        this.setState({ FollowerText: "" });
-        thisSaveParams.data["p_id"] = { "p_id": 0 };
-        this.setState({ SelectedFollowerId: 0 });
-        this.setState({ SelectedShowtreeFollowerId: 0 });
-
+        if (row !== undefined) {
+            const { GetSelectComboProject } = this.props;
+            this.setState({ fileInfoText: row.coname + " - " + row.name });
+            this.setState({ AudienceText: row.mokhatab_name });
+            this.setState({ SelectedFileId: row.id_taraf });
+            this.setState({ SelectedAudienceId: row.mokhatab_id });
+            thisSaveParams.data["id_tel"] = { "id_tel": row.id_taraf };
+            thisSaveParams.data["ashkhas_id"] = { "ashkhas_id": row.mokhatab_id };
+            this.setState({
+                SelectFileAudiencemodal: !this.state.SelectFileAudiencemodal,
+            });
+            this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
+            projectParams.Id_Taraf = row.id_taraf;
+            GetSelectComboProject(projectParams);
+            this.setState({ FollowerText: "" });
+            thisSaveParams.data["p_id"] = { "p_id": 0 };
+            this.setState({ SelectedFollowerId: 0 });
+            this.setState({ SelectedShowtreeFollowerId: 0 });
+        }
+        else toast.warn(this.context.t("msg_No_Select_Row"));
     }
 
     ToggleSelectFollower = () => {
@@ -502,23 +504,25 @@ class NewWork extends Component {
             toast.warn(this.context.t("msg_No_Select_File_Audience"));
     }
     SelectFollowerRow(row) {
-        if ((row.flow_id === null || row.flow_id == 0) && row.flow_id !== undefined) {
-            this.setState({ FollowerText: row.peygir_id + " - " + row.wtype + " - " + this.context.t("Serial") + " : " + row.nos_id });
-            thisSaveParams.data["p_id"] = { "p_id": row.peygir_id };
-            this.setState({ SelectedFollowerId: row.peygir_id });
-            this.setState({ SelectedShowtreeFollowerId: row.showtree_id });
-            thisSaveParams.data["showtree_id"] = { "showtree_id": row.showtree_id };
-            thisSaveParams.data["arshiv_id"] = { "arshiv_id": row.showtree_id };
-            if (this.state.cpy_form_karCheckBox)
-                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": row.showtree_id };
+        if (row !== undefined) {
+            if ((row.flow_id === null || row.flow_id == 0) && row.flow_id !== undefined) {
+                this.setState({ FollowerText: row.peygir_id + " - " + row.wtype + " - " + this.context.t("Serial") + " : " + row.nos_id });
+                thisSaveParams.data["p_id"] = { "p_id": row.peygir_id };
+                this.setState({ SelectedFollowerId: row.peygir_id });
+                this.setState({ SelectedShowtreeFollowerId: row.showtree_id });
+                thisSaveParams.data["showtree_id"] = { "showtree_id": row.showtree_id };
+                thisSaveParams.data["arshiv_id"] = { "arshiv_id": row.showtree_id };
+                if (this.state.cpy_form_karCheckBox)
+                    thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": row.showtree_id };
+                else
+                    thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": this.state.peygir_idText };
+                this.setState({
+                    SelectFollowermodal: !this.state.SelectFollowermodal,
+                });
+            }
             else
-                thisSaveParams.data["cpy_form_kar"] = { "cpy_form_kar": this.state.peygir_idText };
-            this.setState({
-                SelectFollowermodal: !this.state.SelectFollowermodal,
-            });
-        }
-        else
-            toast.error(this.context.t("msg_No_Select_Is_In_Flow"));
+                toast.error(this.context.t("msg_No_Select_Is_In_Flow"));
+        } else toast.warn(this.context.t("msg_No_Select_Row"));
     }
     deleteFollower = () => {
         this.setState({ FollowerText: "" });

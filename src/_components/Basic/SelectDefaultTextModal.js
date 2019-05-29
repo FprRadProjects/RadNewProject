@@ -51,7 +51,8 @@ class SelectDefaultTextModal extends Component {
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                            rows={SelectDefaultText_rows} totalCount={SelectDefaultText_totalCount}
-                                           UrlParams={Params} fetchData={GetDefaultText.bind(this)}
+                                    rowId="id"
+                                    UrlParams={Params} fetchData={GetDefaultText.bind(this)}
                                            GetRowInfo={this.SetSelectDefaultTextRowData} columnwidth={235}
                                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                             />

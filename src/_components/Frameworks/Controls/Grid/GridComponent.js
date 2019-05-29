@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 import {
     PagingState,
@@ -11,7 +12,9 @@ import {
     IntegratedPaging,
     IntegratedSorting,
     FilteringState,
-    DataTypeProvider
+    DataTypeProvider,
+    SelectionState,
+    IntegratedSelection
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
@@ -23,6 +26,7 @@ import {
     DragDropProvider,
     Toolbar,
     ColumnChooser,
+    TableSelection,
     TableColumnVisibility,
     TableColumnReordering,
     TableColumnResizing,
@@ -35,6 +39,225 @@ import '@material-ui/icons/ChevronLeft'
 import { Loading } from '../../../../theme-sources/bootstrap4/components/loading';
 import { CurrencyTypeProvider } from '../../../../theme-sources/bootstrap4/components/currency-type-provider';
 import connect from "react-redux/es/connect/connect";
+
+const theme = createMuiTheme({
+    overrides: {
+        RootBase: {
+            root: {
+                direction: "rtl !important",
+                fontFamily: 'IRANSans_Fa!important',
+                fontSize: "12px!important",
+            }
+        },
+        MuiTableCell: {
+            root: {
+                textAlign: "right!important",
+                direction: "rtl!important",
+                fontFamily: 'IRANSans_Fa!important',
+                fontSize: "12px!important",
+                borderBottom: '1px solid #dee2e6',
+            },
+            body: {
+                fontFamily: 'IRANSans_Fa!important',
+                fontSize: "12px!important",
+            },
+            head: {
+                borderBottom: '2px solid #dee2e6',
+            }
+        },
+        MuiTableRow: {
+            root: {
+                height: "30px!important",
+                cursor:"pointer !important"
+            },
+        },
+        TableInvisibleRow: {
+            row: {
+                height: "0px!important",
+            }
+        },
+        TableHeaderCell: {
+            cellDimmed: {
+                fontFamily: 'IRANSans_Fa!important',
+            }
+        },
+        MuiInput: {
+            input: {
+                fontFamily: 'IRANSans_Fa!important',
+                border: "1px solid rgba(224, 224, 224, 1)!important",
+                borderRadius: "4px!important",
+                fontSize: "12px!important",
+            },
+            root: {
+                "&:hover:before":  {
+                    display: "none!important",
+                    border: "0px!important",
+                },
+                "&:hover:after":  {
+                    display: "none!important",
+                    border: "0px!important",
+                },
+                "&:before": {
+                    display: "none!important",
+                    border: "0px!important",
+                },
+                "&:after": {
+                    display: "none!important",
+                    border: "0px!important",
+                }
+            }
+        },
+        SortLabel: {
+            root: {
+                fontFamily: 'IRANSans_Fa!important',
+            },
+        },
+        MuiTableSortLabel: {
+            root: {
+                fontFamily: 'IRANSans_Fa!important',
+            },
+        },
+        TableFilterCell: {
+            cell: {
+                fontFamily: 'IRANSans_Fa!important',
+                fontSize: "12px!important",
+            }
+        },
+        MuiListItem: {
+            button: {
+                fontFamily: 'IRANSans_Fa!important',
+                textAlign: "right!important",
+                direction: "rtl!important",
+            },
+            dense: {
+                padding: "0px!important",
+            },
+        },
+        MuiTypography: {
+            subheading: {
+                fontFamily: 'IRANSans_Fa!important',
+            },
+        },
+        
+      
+        MuiSelect: {
+            select: {
+                paddingLeft: "1rem!important",
+            },
+        },
+        Pagination: {
+            button: {
+                minHeight: "30px!important",
+                padding: "6px 12px!important",
+                "&& span": {
+                }
+            }, 
+            rowsLabel: {
+                fontFamily: 'IRANSans_Fa!important',
+                paddingLeft: "10px!important",
+                paddingRight: "10px!important",
+            },   
+            activeButton: {
+                backgroundColor: "rgba(0, 0, 0, .08)!important",
+            },
+            next: {
+                "&& path": {
+                    transform: "rotateY(180deg) translateX(-25px) !important",
+                },
+                fontSize: '30px!important',
+            },     
+            prev: {
+                "&& path": {
+                    transform: "rotateY(180deg) translateX(-25px) !important",
+                },
+                fontSize: '30px!important',
+            },
+        },
+        MuiIconButton: {
+            root: {
+                height: "30px!important",
+                width: "30px!important",
+            },
+        },
+        GroupPanelEmptyMessage: {
+            groupInfo: {
+                fontFamily: 'IRANSans_Fa!important',
+                fontSize: '13px!important',
+            },
+        },
+        Toolbar: {
+            toolbar: {
+                paddingLeft: "10px!important",
+                paddingRight: "10px!important",
+            },
+        },
+       
+        IconBase: {
+            groupButton: {
+                "&& path": {
+                    transform: "rotateY(180deg) translateX(-25px) !important",
+                },
+                marginRight: "0!important",
+                marginLeft: "8px!important",
+            },
+        },
+       
+      
+        MuiButton: {
+            label: {
+                fontFamily: 'IRANSans_Fa!important',
+            },
+        },
+        Pager: {
+            pager: {
+                justifyContent: "space-between!important",
+            },
+        },
+        MuiMenuItem: {
+            root: {
+                fontSize: "13px!important",
+            },
+        },
+        MuiCheckbox: {
+            colorSecondary: {
+                color: "#3383ef!important",
+            },
+        },
+        MuiTooltip: {
+            popper: {
+                fontFamily: 'IRANSans_Fa!important',
+            },
+        },
+        MuiChip: {
+            deleteIcon: {
+                margin: "0 -8px 0 4px!important",
+            },
+        },
+        ResizingControl: {
+            resizeHandle: {
+                left: "0!important",
+                right: "auto!important",
+            },
+        }, 
+        PageSizeSelector: {
+            selectIcon: {
+                fontFamily: 'IRANSans_Fa!important',
+                top: "6px!important",
+                left: "0!important",
+                right: "auto!important",
+            },
+            label: {
+                fontFamily: 'IRANSans_Fa!important',
+                paddingLeft: "10px!important",
+                paddingRight: "0px!important",
+            }, 
+            pageSizeSelector: {
+                fontFamily: 'IRANSans_Fa!important',
+                paddingRight: "0px!important",
+            },
+        },
+    }
+});
 
 var Params = {};
 const BooleanTypeProvider = props => (
@@ -110,6 +333,7 @@ class GridComponent extends React.PureComponent {
             currencyColumns: currencyColumns,
             booleanColumns: booleanColumns,
             currentPage: 0,
+            selection: [],
             loading: false,
             hiddenColumnNames: hiddenColumnNames,
             columnWidths: [],
@@ -129,13 +353,26 @@ class GridComponent extends React.PureComponent {
             this.setState({ hiddenColumnNames });
         };
         this.changeColumnOrder = this.changeColumnOrder.bind(this);
+        this.changeSelection = this.changeSelection.bind(this);
 
 
     }
     changeColumnOrder(newOrder) {
         this.setState({ columnOrder: newOrder });
     }
-
+    getRowId(row) {
+        return row[this.props.rowId];
+    }
+    changeSelection(selection) {
+        let selectedRowsData = this.props.rows.filter(
+            row =>
+                [selection[selection.length-1]].findIndex(selectId => selectId === this.getRowId(row)) !== -1
+        );
+        this.setState({
+            selection:[selection[selection.length-1]]
+        });
+        this.props.GetRowInfo(selectedRowsData[selectedRowsData.length-1]);
+    }
     componentDidMount() {
         this.loadData();
         // const classList = ReactDOM.findDOMNode(this).querySelector('.flex-column').classList;
@@ -258,6 +495,7 @@ class GridComponent extends React.PureComponent {
             hiddenColumnNames,
             defaultColumnWidths,
             booleanColumns,
+            selection,
             columnOrder,
             booleanFilterOperations,
             currencyFilterOperations,
@@ -292,10 +530,12 @@ class GridComponent extends React.PureComponent {
             showColumnChooser: this.context.t("ShowColumnChooser"),
         };
         return (
-            <div>
+            <MuiThemeProvider theme={theme} >
+          
                 <Grid
                     rows={rows}
                     columns={columns}
+                    getRowId={this.getRowId.bind(this)}
                 >
                     <DragDropProvider />
                     <CurrencyTypeProvider
@@ -320,13 +560,19 @@ class GridComponent extends React.PureComponent {
                         filters={filters}
                         onFiltersChange={this.changeFilters}
                     />
-                    <IntegratedFiltering />
                     <PagingState
                         defaultCurrentPage={0}
                         defaultPageSize={pageSize}
                     />
+                    
+                    <SelectionState
+                        selection={selection}
+                        onSelectionChange={this.changeSelection}
+                    />
                     <IntegratedPaging />
-                    <Table rowComponent={this.TableRow}
+                    <IntegratedSelection />
+                    <IntegratedFiltering />
+                    <Table 
                         columnExtensions={tableColumnExtensions}
                         messages={tableMessages}
                     />
@@ -338,6 +584,10 @@ class GridComponent extends React.PureComponent {
                         defaultColumnWidths={defaultColumnWidths}
                     />
 
+                    <TableSelection 
+                    selectByRowClick={true} 
+                    highlightRow={true} 
+                    showSelectionColumn={false}  />
                     <TableHeaderRow showSortingControls messages={tableHeaderMessages} />
 
                     <PagingPanel
@@ -358,7 +608,7 @@ class GridComponent extends React.PureComponent {
                         messages={groupingPanelMessages} />
                 </Grid>
                 {loading && <Loading />}
-            </div>
+            </MuiThemeProvider>
         );
     }
 }

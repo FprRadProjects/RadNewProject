@@ -156,6 +156,7 @@ class References extends Component {
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
                                           rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
+                                          rowId="peygir_id"  
                                           UrlParams={Params} fetchData={FetchData.bind(this)} SelectRow ={this.SelectRow.bind(this)}
                                           currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />

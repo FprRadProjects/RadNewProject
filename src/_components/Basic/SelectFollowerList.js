@@ -70,6 +70,7 @@ class SelectFollowerList extends Component {
                         <ModalBody>
                         <ApiModalGridComponent columns={columns} booleanColumns={booleanColumns}
                                           rows={SelectFollowerList_rows} totalCount={SelectFollowerList_totalCount} columnwidth={135}
+                                          rowId="peygir_id"  
                                           UrlParams={FollowerGridParams} fetchData={GetSelectFollowerList.bind(this)} SelectRow ={this.SetSelectFollowerRowData.bind(this)}
                                           currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />

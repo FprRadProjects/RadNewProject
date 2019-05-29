@@ -70,10 +70,10 @@ $(document).on('click', '.dx-g-bs4-table-cell', function (e) {
     $(this).parent().parent().find(".table-active").removeClass("table-active");
     $(this).parent().addClass("table-active");
 });
-$(document).on('click', '[class*=MuiTableCell-body]', function (e) {
-    $(this).parent().parent().find(".table-active").removeClass("table-active");
-    $(this).parent().addClass("table-active");
-});
+// $(document).on('click', '.r-main-box table tbody td', function (e) {
+//     $(this).parent().parent().find(".table-active").removeClass("table-active");
+//     $(this).parent().addClass("table-active");
+// });
 
 $(document).on('click', '.sidebar-menu li a', function (e) {
     var $this = $(this);
