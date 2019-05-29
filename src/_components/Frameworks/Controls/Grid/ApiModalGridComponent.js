@@ -561,7 +561,6 @@ class ApiModalGridComponent extends React.PureComponent {
                         onFiltersChange={this.changeFilters}
                     />
                     
-                    <IntegratedPaging />
                     <IntegratedSelection />
                     <IntegratedFiltering />
                     <Table 
