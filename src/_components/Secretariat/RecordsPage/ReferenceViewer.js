@@ -5,6 +5,7 @@ import PropTypes from "prop-types"
 import { SelectProjectModal } from "../../Project/";
 import { SelectDefaultTextModal } from "../../Basic/";
 import { FormInfo } from "../../../locales";
+import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 
 import {
     Act_Reference, WorkAccess_action, WorkBasic_action, design_Actions, WorkActions_action,
@@ -203,8 +204,8 @@ class ReferenceViewer extends Component {
         console.log(finalSaveParams)
         SaveWorkInfo(finalSaveParams, msg).then(data => {
             if (data.status) {
-                if(RefreshParentForm!==undefined)
-                RefreshParentForm(Params);
+                if (RefreshParentForm !== undefined)
+                    RefreshParentForm(Params);
                 FetchWorkInfo(WorkInfo.peygir_id);
                 this.clearSaveParams();
             }
@@ -234,15 +235,18 @@ class ReferenceViewer extends Component {
                 }
                 else {
                     FetchWorkInfo(WorkInfo.peygir_id);
-                if(RefreshParentForm!==undefined)
-                RefreshParentForm(Params);
-
+                    if (RefreshParentForm !== undefined)
+                        RefreshParentForm(Params);
                 }
                 this.clearSaveParams();
             }
         });
     }
-
+    CloseleSelectFlowResult = (e) => {
+        this.setState({
+            FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
+        });
+    }
     render() {
         const { FetchData, modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm, SelectProjectComboList_rows,
             DeletedElements, EditedElements } = this.props;
@@ -273,18 +277,18 @@ class ReferenceViewer extends Component {
 
                         {WorkInfo !== undefined &&
                             <div className="referral-result-modal">
-                                <BoxGroup 
+                                <BoxGroup
                                     Text={this.context.t("FileInfoBox")}
                                     FormId={FormInfo.fm_dabir_natije_erja.id}
                                     Id="FileInfoBox"
-                                    
+
                                     IconClassName="row-icon audience"
                                     DeletedElements={DeletedElements}
                                     EditedElements={EditedElements}
                                 >
                                     <div className="col-11">
                                         <div className="row">
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label" ColClassName="col-4"
                                                 Text={this.context.t("PartyAccountName")} className2="col-8"
                                                 InputclassName="form-control-plaintext" name="tarafname"
@@ -292,7 +296,7 @@ class ReferenceViewer extends Component {
                                                 DeletedElements={DeletedElements} isDisabled={true}
                                                 EditedElements={EditedElements} value={WorkInfo.name}
                                             ></LabelInputText>
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label" ColClassName="col-4"
                                                 Text={this.context.t("CompanyName")} className2="col-8"
                                                 InputclassName="form-control-plaintext" name="coname"
@@ -300,7 +304,7 @@ class ReferenceViewer extends Component {
                                                 DeletedElements={DeletedElements} isDisabled={true}
                                                 EditedElements={EditedElements} value={WorkInfo.coname}
                                             ></LabelInputText>
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label" ColClassName="col-4"
                                                 Text={this.context.t("Audience")} className2="col-8"
                                                 InputclassName="form-control-plaintext" name="ashkhasname"
@@ -314,18 +318,18 @@ class ReferenceViewer extends Component {
 
                                 </BoxGroup>
 
-                                <BoxGroup 
+                                <BoxGroup
                                     Text={this.context.t("WorkInfoBox")}
                                     FormId={FormInfo.fm_dabir_natije_erja.id}
                                     Id="WorkInfoBox"
-                                    
+
                                     IconClassName="row-icon flow"
                                     DeletedElements={DeletedElements}
                                     EditedElements={EditedElements}
                                 >
                                     <div className="col-11">
                                         <div className="row">
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label" ColClassName="col-4"
                                                 Text={this.context.t("WorkID")} className2="col-8"
                                                 InputclassName="form-control-plaintext" name="peygir_id"
@@ -333,7 +337,7 @@ class ReferenceViewer extends Component {
                                                 DeletedElements={DeletedElements} isDisabled={true}
                                                 EditedElements={EditedElements} value={WorkInfo.peygir_id}
                                             ></LabelInputText>
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label" ColClassName="col-4"
                                                 Text={this.context.t("Flow")} className2="col-8"
                                                 InputclassName="form-control-plaintext" name="Flow"
@@ -341,7 +345,7 @@ class ReferenceViewer extends Component {
                                                 DeletedElements={DeletedElements} isDisabled={true}
                                                 EditedElements={EditedElements} value={WorkInfo.flow}
                                             ></LabelInputText>
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label" ColClassName="col-4"
                                                 Text={this.context.t("WorkType")} className2="col-8"
                                                 InputclassName="form-control-plaintext" name="wtype"
@@ -352,18 +356,18 @@ class ReferenceViewer extends Component {
                                         </div>
                                     </div>
                                 </BoxGroup>
-                                <BoxGroup 
+                                <BoxGroup
                                     Text={this.context.t("UsersInfoBox")}
                                     FormId={FormInfo.fm_dabir_natije_erja.id}
                                     Id="UsersInfoBox"
-                                    
+
                                     IconClassName="row-icon creator"
                                     DeletedElements={DeletedElements}
                                     EditedElements={EditedElements}
                                 >
                                     <div className="col-11">
                                         <div className="row">
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label" ColClassName="col-4"
                                                 Text={this.context.t("creator")} className2="col-8"
                                                 InputclassName="form-control-plaintext" name="cuser"
@@ -371,7 +375,7 @@ class ReferenceViewer extends Component {
                                                 DeletedElements={DeletedElements} isDisabled={true}
                                                 EditedElements={EditedElements} value={WorkInfo.cuser}
                                             ></LabelInputText>
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label" ColClassName="col-4"
                                                 Text={this.context.t("CreatedDate")} className2="col-8"
                                                 InputclassName="form-control-plaintext" name="c_date"
@@ -379,7 +383,7 @@ class ReferenceViewer extends Component {
                                                 DeletedElements={DeletedElements} isDisabled={true}
                                                 EditedElements={EditedElements} value={WorkInfo.c_date}
                                             ></LabelInputText>
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label" ColClassName="col-4"
                                                 Text={this.context.t("CreatedTime")} className2="col-8"
                                                 InputclassName="form-control-plaintext" name="c_time"
@@ -390,18 +394,18 @@ class ReferenceViewer extends Component {
                                         </div>
                                     </div>
                                 </BoxGroup>
-                                <BoxGroup 
+                                <BoxGroup
                                     Text={this.context.t("DescriptionsInfoBox")}
                                     FormId={FormInfo.fm_dabir_natije_erja.id}
                                     Id="DescriptionsInfoBox"
-                                    
+
                                     IconClassName="row-icon description"
                                     DeletedElements={DeletedElements}
                                     EditedElements={EditedElements}
                                 >
                                     <div className="col-11">
                                         <div className="row">
-                                            <LabelPopUpInputText 
+                                            <LabelPopUpInputText
                                                 LabelclassName="col-1 col-form-label"
                                                 ColClassName="col-12"
                                                 Text={this.context.t("Description")} className2="col-11"
@@ -418,7 +422,7 @@ class ReferenceViewer extends Component {
                                         </div>
                                     </div>
                                 </BoxGroup>
-                                <BoxGroup 
+                                <BoxGroup
                                     Text={this.context.t("DetailsInfoBox")}
                                     FormId={FormInfo.fm_dabir_natije_erja.id}
                                     Id="DetailsInfoBox"
@@ -428,7 +432,7 @@ class ReferenceViewer extends Component {
                                 >
                                     <div className="col-11">
                                         <div className="row">
-                                            <LabelPopUpInputText 
+                                            <LabelPopUpInputText
                                                 LabelclassName="col-3 col-form-label"
                                                 ColClassName="col-4"
                                                 Text={this.context.t("Project")} className2="col-9"
@@ -445,7 +449,7 @@ class ReferenceViewer extends Component {
                                                 changeHandle={this.changeHandle.bind(this)}
                                                 ButtonText={this.context.t("SelectPopup")}
                                             ></LabelPopUpInputText>
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label"
                                                 ColClassName="col-4"
                                                 Text={this.context.t("FileNumber")} className2="col-8"
@@ -457,7 +461,7 @@ class ReferenceViewer extends Component {
                                                 isDisabled={WorkInfo.done ? true : false}
                                                 value={this.state.FileNumberText}
                                             ></LabelInputText>
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-4 col-form-label"
                                                 ColClassName="col-4"
                                                 Text={this.context.t("Code")} className2="col-8"
@@ -469,7 +473,7 @@ class ReferenceViewer extends Component {
                                                 EditedElements={EditedElements}
                                                 value={this.state.CodeText}
                                             ></LabelInputText>
-                                            <LabelInputText 
+                                            <LabelInputText
                                                 LabelclassName="col-3 col-form-label"
                                                 ColClassName="col-4"
                                                 Text={this.context.t("Duration_Of_Work_Short")} className2="col-9"
@@ -483,9 +487,9 @@ class ReferenceViewer extends Component {
                                                 value={this.state.DurationDoneText}
                                             ></LabelInputText>
 
-                                            <LabelPopUpInputText 
+                                            <LabelPopUpInputText
                                                 ColClassName="col-8"
-                                                Text={this.context.t("Subject")} 
+                                                Text={this.context.t("Subject")}
                                                 className3="input-group mb-2"
                                                 InputclassName="form-control" name="mozo"
                                                 Id="Subject" ButtonClick={this.OpenSelectDefaultText.bind(this)}
@@ -493,7 +497,7 @@ class ReferenceViewer extends Component {
                                                 DeletedElements={DeletedElements}
                                                 EditedElements={EditedElements}
                                                 value={this.state.SubjectInputText}
-                                                
+
                                                 Type="Input"
                                                 isDisabled={WorkInfo.done ? true : false}
                                                 isButtonDisabled={WorkInfo.done ? true : false}
@@ -503,11 +507,11 @@ class ReferenceViewer extends Component {
                                         </div>
                                     </div>
                                 </BoxGroup>
-                                <BoxGroup 
+                                <BoxGroup
                                     Text={this.context.t("ResultInfoBox")}
                                     FormId={FormInfo.fm_dabir_natije_erja.id}
                                     Id="ResultInfoBox"
-                                    
+
                                     IconClassName="row-icon result"
                                     DeletedElements={DeletedElements}
                                     EditedElements={EditedElements}
@@ -515,7 +519,7 @@ class ReferenceViewer extends Component {
                                     <div className="col-11">
                                         <div className="row">
 
-                                            <LabelPopUpInputText  LabelclassName="col-1 col-form-label"
+                                            <LabelPopUpInputText LabelclassName="col-1 col-form-label"
                                                 ColClassName="col-12"
                                                 Text={this.context.t("WorkResult")} className2="col-11"
                                                 className3="input-group mt-2 mb-2"
@@ -525,7 +529,7 @@ class ReferenceViewer extends Component {
                                                 DeletedElements={DeletedElements}
                                                 EditedElements={EditedElements}
                                                 value={this.state.ResultTextArea}
-                                                
+
                                                 Type="TextArea"
                                                 isDisabled={WorkInfo.done ? true : false}
                                                 isButtonDisabled={WorkInfo.done ? true : false}
@@ -547,7 +551,11 @@ class ReferenceViewer extends Component {
                                         toggle={this.CloseSelectDefaultText.bind(this)}
                                         Successtoggle={this.SuccessSelectSubject.bind(this)}
                                         id_tel={WorkInfo.id_tel} />}
-
+                                {this.state.FlowResultSelectmodal &&
+                                    <ConfirmFlow ParentForm={ParentForm}
+                                        flowResultSelectModal={this.state.FlowResultSelectmodal}
+                                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
+                                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
                             </div>}
                         <style>{modalBackDrop}</style>
                     </ModalBody>

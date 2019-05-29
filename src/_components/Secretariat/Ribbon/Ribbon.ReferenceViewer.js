@@ -131,11 +131,7 @@ class RibbonReferenceViewer extends Component {
         });
     }
 
-    CloseleSelectFlowResult = (e) => {
-        this.setState({
-            FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
-        });
-    }
+
 
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements, EditedElements, RefreshParentForm, ParentForm
@@ -247,12 +243,7 @@ class RibbonReferenceViewer extends Component {
                     WorkInfo={WorkInfo}
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
-                {this.state.FlowResultSelectmodal &&
-                    <ConfirmFlow ParentForm={ParentForm}
-                        flowResultSelectModal={this.state.FlowResultSelectmodal}
-                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
-                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} FetchWorkInfo={FetchWorkInfo} />}
-
+           
                 {this.state.Referralmodal &&
                     <NewReferral modal={this.state.Referralmodal}
                         toggle={this.toggleReferral.bind(this)}
