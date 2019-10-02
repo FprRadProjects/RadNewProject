@@ -47,7 +47,7 @@ class References extends Component {
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-lg r-filter-modal"
         };
-        localStorage.setItem("MasterFormInfo", JSON.stringify( FormInfo.fm_dabir_kartabl_erjaat));
+        localStorage.setItem("MasterFormInfo", JSON.stringify(FormInfo.fm_dabir_kartabl_erjaat));
 
     }
 
@@ -57,12 +57,11 @@ class References extends Component {
         }));
     }
     SelectRow(row) {
-        this.setState({SelectedRow:row});
+        this.setState({ SelectedRow: row });
     }
-
-
+  
     render() {
-
+     
         const columns = [
             { name: 'flow', title: this.context.t("Flow") },
             { name: 'peygir_id', title: this.context.t("WorkID") },
@@ -114,7 +113,7 @@ class References extends Component {
             { name: 'natije', title: this.context.t("Result") },
         ];
         const {
-            FetchData, WorkInfo, GetWorkInfo, Dashboards_totalCount, Dashboards_rows
+            FetchData, Dashboards_totalCount, Dashboards_rows
             , lang
         } = this.props;
         let formName = lang == "fa" ? FormInfo.fm_dabir_kartabl_erjaat.form_name : FormInfo.fm_dabir_kartabl_erjaat.en_form_name;
@@ -137,14 +136,14 @@ class References extends Component {
                     <div className="r-main-box">
                         <div className="r-main-box__ribbon sticky-top">
                             <RibbonReferences FetchData={FetchData.bind(this)} Params={Params}
-                            SelectedRow={this.state.SelectedRow}  />
+                                SelectedRow={this.state.SelectedRow} />
                             <div className="r-main-box__filter">
                                 <Button color="" className="r-main-box__filter--btn"
-                                        onClick={this.toggleFilter.bind(this)}></Button>
+                                    onClick={this.toggleFilter.bind(this)}></Button>
                             </div>
                         </div>
                         <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}
-                               className={this.state.modalClass} backdrop={this.state.backdrop}>
+                            className={this.state.modalClass} backdrop={this.state.backdrop}>
                             <ModalHeader toggle={this.toggleFilter.bind(this)}></ModalHeader>
                             <ModalBody>
                                 <RadioFilter Params={Params} fetchData={FetchData.bind(this)} />
@@ -155,10 +154,10 @@ class References extends Component {
                             </ModalFooter>
                         </Modal>
                         <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
-                                          rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
-                                          rowId="peygir_id"  
-                                          UrlParams={Params} fetchData={FetchData.bind(this)} SelectRow ={this.SelectRow.bind(this)}
-                                          currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                            rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
+                            rowId="peygir_id"
+                            UrlParams={Params} fetchData={FetchData.bind(this)} SelectRow={this.SelectRow.bind(this)}
+                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>
                 </div>

@@ -13,41 +13,43 @@ class UploadFile extends Component {
       clear: "حذف همه فایل ها",
       upload: "آپلود فایلها"
     };
-const _Config =JSON.parse(localStorage.getItem("_Config"));
-this.asyncSettings = {
+    const _Config = JSON.parse(localStorage.getItem("_Config"));
+    this.asyncSettings = {
       chunkSize: 10000000,
-      saveUrl: _Config.BaseUrl +'/AddChunkAttachment',
-      removeUrl: 'http://192.168.1.54:2535/RemoveFile'
+      saveUrl: _Config.BaseUrl + '/AddChunkAttachment'
     };
   }
 
 
   addHeaders(args) {
-  
-const _user =JSON.parse(localStorage.getItem("user"));
-const _lang =localStorage.getItem("lang");
-  const { peygir_id } = this.props;
-    args.customFormData = [{ 'peygir_id': peygir_id }, { 'From': 'AddFile' }];
-    args.currentRequest.setRequestHeader("Authorization", _user.Authorization)
-    args.currentRequest.setRequestHeader("lang", _lang);
+    if (args.currentRequest !== undefined) {
+      const _user = JSON.parse(localStorage.getItem("user"));
+      const _lang = localStorage.getItem("lang");
+      const { peygir_id } = this.props;
+      args.customFormData = [{ 'peygir_id': peygir_id }, { 'From': 'AddFile' }];
+      args.currentRequest.setRequestHeader("Authorization", _user.Authorization)
+      args.currentRequest.setRequestHeader("lang", _lang);
+    }
   }
   onSuccess(args) {
     const { EditAttachment } = this.props;
     var archiveId = JSON.parse(args.response.Data).data.archiveId;
     var fileName = JSON.parse(args.response.Data).data.fileName;
-    newArchive={ archiveId: archiveId, fromParent:false,fileName:fileName };
+    newArchive = { archiveId: archiveId, fromParent: false, fileName: fileName };
     EditAttachment(newArchive);
   }
 
   onChunkUploading(args) {
-    const _user =JSON.parse(localStorage.getItem("user"));
-    const _lang =localStorage.getItem("lang");
-    if (args.currentChunkIndex !== 0) {
-      const { peygir_id } = this.props;
-      args.customFormData = [{ 'peygir_id': peygir_id }, { 'From': 'AddFile' }];
-      args.customFormData = [{ 'From': 'AddFile' }];
-      args.currentRequest.setRequestHeader("Authorization", _user.Authorization)
-      args.currentRequest.setRequestHeader("lang", _lang);
+    if (args.currentRequest !== undefined) {
+      const _user = JSON.parse(localStorage.getItem("user"));
+      const _lang = localStorage.getItem("lang");
+      if (args.currentChunkIndex !== 0) {
+        const { peygir_id } = this.props;
+        args.customFormData = [{ 'peygir_id': peygir_id }, { 'From': 'AddFile' }];
+        args.customFormData = [{ 'From': 'AddFile' }];
+        args.currentRequest.setRequestHeader("Authorization", _user.Authorization)
+        args.currentRequest.setRequestHeader("lang", _lang);
+      }
     }
   }
 
@@ -64,7 +66,7 @@ const _lang =localStorage.getItem("lang");
           "inProgress": "در حال پردازش",
           "invalidFileType": "فایل معتبر نمی باشد",
           "invalidMaxFileSize": "فایل انتخابی نباید بیشتر از  10 گیگابایت باشد",
-          "invalidMinFileSize": "فایل نباید کمتر از 250 کیلوبایت باشد",
+          "invalidMinFileSize": "فایل نباید کمتر از 1 کیلوبایت باشد",
           "readyToUploadMessage": "آماده برای آپلود",
           "remove": "حذف",
           "removedFailedMessage": "حذف با مشکل مواجه شد",
@@ -89,7 +91,7 @@ const _lang =localStorage.getItem("lang");
         removing={this.addHeaders.bind(this)}
         chunkUploading={this.onChunkUploading.bind(this)}
         locale='fa-IR'
-        minFileSize={10000}
+        minFileSize={1000}
         maxFileSize={10000000000}
       />
     </div>;

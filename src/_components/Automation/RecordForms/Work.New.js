@@ -97,10 +97,9 @@ class NewWork extends Component {
             if (name === "worker_id") {
                 let worker_id = val.value;
                 let workerLabel = val.label;
-                thisSaveParams.workers = [{ worker_id: worker_id, manager: val.value }];
+                thisSaveParams.workers = [{ worker: worker_id, manager: val.value }];
                 const { SayManagerOnWorkerWtype } = this.props;
                 this.setState({ workerSelectedOption: { value: worker_id, label: workerLabel } });
-
                 SayManagerOnWorkerWtype(val.value, WorkerParams.wt_id).then(data => {
                     if (data.status) {
                         this.setState({ managerSelectedOption: { value: data.data.managerId, label: data.data.managerUName } });
@@ -387,6 +386,7 @@ class NewWork extends Component {
     saveWorkHandle = () => {
         const { lang, SaveWorkInfo, InsertNewWorkInfo } = this.props;
         var formname = lang == "fa" ? FormInfo.fm_pub_sabt_kar.form_name : FormInfo.fm_pub_sabt_kar.en_form_name;
+
         if (this.state.peygir_idText === 0) {
             if (thisSaveParams.data["wt_id"] === undefined) {
                 toast.error(this.context.t("msg_No_Select_WorkType"));
@@ -440,7 +440,6 @@ class NewWork extends Component {
             });
         }
         else if (finalSaveParams.peygir_id !== 0) {
-            console.log(finalSaveParams);
             SaveWorkInfo(finalSaveParams, this.context.t("msg_Operation_Success")).then(data => {
                 if (data.status) {
                     thisSaveParams = {

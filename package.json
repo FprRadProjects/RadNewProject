@@ -17,6 +17,7 @@
     "bootstrap-rtl": "^3.3.4",
     "bootstrap-v4-rtl": "^4.1.1-1",
     "config": "^3.0.1",
+    "custom-error": "^0.2.1",
     "d3": "^3.5.17",
     "fullcalendar-jalaali": "^1.0.1",
     "glob": "^7.1.2",
