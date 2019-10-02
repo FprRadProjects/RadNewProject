@@ -29,7 +29,7 @@ class RibbonNewWork extends Component {
   
     render() {
         const { saveWorkHandle, ShortKeys, DeletedElements, EditedElements, attachmentsToggle,
-            newWorkHandle } = this.props;
+            newWorkHandle,editWorkHandle } = this.props;
 
         return (
             <div>
@@ -67,7 +67,22 @@ class RibbonNewWork extends Component {
                                             EditedElements={EditedElements}
                                             Text="CreateWork"
                                         />
+                                     
                                         <RibbonButton FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            Id="edit"
+                                            handleClick={editWorkHandle.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="Edit"
+                                        />
+                                        <RibbonButton FormId={FormInfo.fm_pub_sabt_kar.id}
+                                            DeletedElements={DeletedElements}
+                                            Id="confirmation"
+                                            handleClick={this.handleClick.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="WorkConfirmation"
+                                        />
+                                           <RibbonButton FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             Id="follow"
                                             handleClick={this.handleClick.bind(this)}
@@ -80,20 +95,6 @@ class RibbonNewWork extends Component {
                                             handleClick={this.handleClick.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="TimeSpent"
-                                        />
-                                        <RibbonButton FormId={FormInfo.fm_pub_sabt_kar.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="edit"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="Edit"
-                                        />
-                                        <RibbonButton FormId={FormInfo.fm_pub_sabt_kar.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="confirmation"
-                                            handleClick={this.handleClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="WorkConfirmation"
                                         />
                                     </div>
                                 </div>

@@ -164,7 +164,7 @@ class MyAwesomeMenu extends Component {
                             Set_ShortKey_TemplateForm(Params);
                         }
                         else
-                        toast.error(this.context.t("Information_Is_Duplicate"))
+                        toast.error(this.context.t("msg_Information_Is_Duplicate"))
 
                     }
                 }

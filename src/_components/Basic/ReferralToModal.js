@@ -124,6 +124,7 @@ class ReferralToModal extends Component {
                                 <Button color="secondary" className="mb-2 mr-2" onClick={ConfirmWorkers.bind(this, this.state.SelectedWorkerRows)}>{this.context.t("ConfirmAndClose")}</Button>
                                 <GridComponent columns={columns} booleanColumns={booleanColumns}
                                     rows={this.state.SelectedWorkerRows} totalCount={0}
+                                    rowId="id_user"
                                     UrlParams={Params}
                                     GetRowInfo={this.GetSelectedReferral.bind(this)} columnwidth={154}
                                     currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}

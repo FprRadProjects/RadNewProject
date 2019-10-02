@@ -92,6 +92,7 @@ class EditTextElementListModal extends Component {
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                 rows={SelectEditTextElements_rows} totalCount={0}
+                                rowId="Id"
                                 UrlParams={Params} fetchData={GetEditTextElementsList.bind(this)}
                                 GetRowInfo={this.SetSelectEditTextRowData} columnwidth={155}
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}

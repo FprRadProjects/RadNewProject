@@ -92,6 +92,7 @@ class HideElementListModal extends Component {
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                 rows={SelectHideElements_rows} totalCount={0}
+                                rowId="Id"
                                 UrlParams={Params} fetchData={GetHideElementsList.bind(this)}
                                 GetRowInfo={this.SetSelectHideRowData} columnwidth={155}
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}

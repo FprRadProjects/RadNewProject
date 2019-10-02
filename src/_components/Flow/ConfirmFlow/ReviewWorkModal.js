@@ -112,6 +112,7 @@ class ReviewWorkModal extends Component {
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                 rows={ReviewWorkList_rows} totalCount={ReviewWorkList_totalCount}
+                                rowId="peygir_id"
                                 UrlParams={Params} 
                                 GetRowInfo={this.SelectRow.bind(this)} columnwidth={150}
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}

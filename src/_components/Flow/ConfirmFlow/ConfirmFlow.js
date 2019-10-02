@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { toast } from 'react-toastify';
 
-import { common_Actions, WorkActions_action } from "../../../_actions";
+import { WorkBasic_action, WorkActions_action } from "../../../_actions";
 import { FormInfo } from "../../../locales";
 import { SelectFlowResultModal } from '../../Flow/ConfirmFlow/SelectFlowResultModal';
 import { ReviewWorkModal } from '../../Flow/ConfirmFlow/ReviewWorkModal';
@@ -14,7 +14,6 @@ class ConfirmFlow extends Component {
     constructor(props) {
         super(props);
         const { flowResultSelectModal } = this.props;
-        console.log(flowResultSelectModal)
         this.state = {
             ...this.state,
             FlowResultSelectmodal: flowResultSelectModal === undefined || !flowResultSelectModal ? false : true,
@@ -46,10 +45,10 @@ class ConfirmFlow extends Component {
                             ReviewWorkModal: true,
                         });
                     }
-                if(FetchWorkInfo!==undefined)
-                FetchWorkInfo(peygir_id);
-                if(RefreshParentForm!==undefined)
-                RefreshParentForm(Params);
+                    if (FetchWorkInfo !== undefined)
+                        FetchWorkInfo(peygir_id);
+                    if (RefreshParentForm !== undefined)
+                        RefreshParentForm(Params);
                 }
             });;
         }
@@ -63,8 +62,8 @@ class ConfirmFlow extends Component {
                 this.setState({
                     ReviewWorkModal: false,
                 });
-                if(RefreshParentForm!==undefined)
-                RefreshParentForm(Params);
+                if (RefreshParentForm !== undefined)
+                    RefreshParentForm(Params);
             }
         });
     }
@@ -102,6 +101,9 @@ const mapDispatchToProps = dispatch => ({
     },
     ConfirmReviewWork: (peygir_id, msg) => {
         return dispatch(WorkActions_action.ConfirmReviewWork(peygir_id, msg))
+    },
+    FetchWorkInfo: (peygir_id) => {
+        dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
     },
 
 

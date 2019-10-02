@@ -3714,6 +3714,7 @@ ul.notification-dropdown.onhover-show-div li .notification-icon {
     box-shadow: none;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
     margin-bottom: 11px;
+    cursor:pointer;
 }
 
 .page-wrapper .page-body-wrapper .page-sidebar .sidebar-menu li>a>.fa-angle-down {
@@ -35668,7 +35669,7 @@ i.icon.view-secretariat {
 .r-main-box [class*=RootBase-root] {
     border: none;
 }
-
+/* 
 [class*=RootBase-root] * {
     direction: rtl;
     font-family: IRANSans_Fa!important;
@@ -35693,7 +35694,7 @@ i.icon.view-secretariat {
     padding-top: 0!important;
     padding-bottom: 0!important;
 
-} */
+} 
 
 [class*=MuiListItem-button] {
     text-align: right!important;
@@ -35764,10 +35765,6 @@ i.icon.view-secretariat {
     justify-content: space-between!important;
 }
 
-[class*=MuiSvgIcon-root] {
-    font-size: 16px!important;
-}
-
 [class*=Pagination-next] path {
     transform: rotateY(180deg) translateX(-25px);
 }
@@ -35821,7 +35818,7 @@ i.icon.view-secretariat {
     box-shadow: none;
     outline: none;
     border-color: rgba(224, 224, 224, 1);
-}
+} 
 
 .btn {
     font-size: 13px!important;
@@ -35839,7 +35836,7 @@ i.icon.view-secretariat {
 th[class*=MuiTableCell-root] {
     border-bottom: 2px solid #dee2e6
 }
-
+*/
 .JDatePicker .JC-Nav {
     cursor: pointer;
 }
@@ -36143,8 +36140,6 @@ min-height: 32px;
     background-color: #f0ad4e;
     border-color: #eea236;
 }
-
-
 
 
 

@@ -62,6 +62,7 @@ class SelectFlowResultModal extends Component {
                         <ModalBody>
                             <GridComponent columns={columns} booleanColumns={booleanColumns}
                                 rows={SelectFlowResultList_rows} totalCount={SelectFlowResultList_totalCount}
+                                rowId="id"
                                 UrlParams={Params} 
                                 GetRowInfo={this.SetSelectResultRowData} columnwidth={235}
                                 currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}

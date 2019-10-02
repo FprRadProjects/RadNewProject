@@ -64,7 +64,7 @@ class AttachmentsReview extends Component {
         });
     }
     render() {
-        const { modal, toggle, peygir_id, parentPeygirId } = this.props;
+        const { modal, toggle, peygir_id, parentPeygirId,Close } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -79,7 +79,7 @@ class AttachmentsReview extends Component {
 
                 <div>
                     <Modal isOpen={modal} toggle={toggle} backdrop={this.state.backdrop} className={this.state.modalClass} >
-                        <ModalHeader toggle={toggle}>{this.context.t("frm_Attachment_Review")}</ModalHeader>
+                        <ModalHeader toggle={Close}>{this.context.t("frm_Attachment_Review")}</ModalHeader>
                         <ModalBody>
                             <div className="attachment-container">
                                 <div className="row ">
@@ -101,7 +101,7 @@ class AttachmentsReview extends Component {
                                                 </thead>
                                                 <tbody>
 
-                                                    {this.state.FinalAttachmentList !== undefined && Object.keys(this.state.FinalAttachmentList).map((keyName, index) => {
+                                                    {this.state.FinalAttachmentList !== undefined && this.state.FinalAttachmentList !== null && Object.keys(this.state.FinalAttachmentList).map((keyName, index) => {
                                                         return <tr>
                                                             <td>{this.state.FinalAttachmentList[keyName].archiveId}</td>
                                                             <td>{this.state.FinalAttachmentList[keyName].fileName}</td>

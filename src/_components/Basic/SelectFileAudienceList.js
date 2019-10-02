@@ -67,6 +67,7 @@ class SelectFileAudienceList extends Component {
                         <ModalBody>
                         <ApiModalGridComponent columns={columns} booleanColumns={booleanColumns}
                                           rows={SelectFileAudience_rows} totalCount={SelectFileAudience_totalCount} columnwidth={135}
+                                          rowId="mokhatab_id"  
                                           UrlParams={FileAudienceGridParams} fetchData={GetSelectFileAudienceList.bind(this)} SelectRow ={this.SetSelectFileAudienceRowData.bind(this)}
                                           currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
