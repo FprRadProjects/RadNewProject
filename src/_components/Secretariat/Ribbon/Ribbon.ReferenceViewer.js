@@ -16,6 +16,7 @@ import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 
 import { toast } from 'react-toastify';
 import { NewReferral } from '../RecordsPage/Referral.New';
+import { FormBuilderComponent } from '../../Frameworks/Controls/FromBuilder/FormBuilderComponent';
 
 
 class RibbonReferenceViewer extends Component {
@@ -26,6 +27,7 @@ class RibbonReferenceViewer extends Component {
             ...this.state,
             ReferenceViewermodal: false,
             Referralmodal: false,
+            FlowFormBuilderModal:false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal"
         };
@@ -61,6 +63,13 @@ class RibbonReferenceViewer extends Component {
     toggleReferral() {
         this.setState(prevState => ({
             Referralmodal: !prevState.Referralmodal
+        }));
+
+    }
+
+    toggleFormBuilder() {
+        this.setState(prevState => ({
+            FlowFormBuilderModal: !prevState.FlowFormBuilderModal
         }));
 
     }
@@ -117,6 +126,13 @@ class RibbonReferenceViewer extends Component {
         }
         else
             toast.warn(this.context.t("msg_No_Select_Row"));
+
+    }
+
+    FlowFormBuilderHandle() {
+        this.setState({
+            FlowFormBuilderModal: true,
+        });
 
     }
 
@@ -183,6 +199,14 @@ class RibbonReferenceViewer extends Component {
                                             EditedElements={EditedElements}
                                             Text="Save"
                                         />
+                                        <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
+                                            DeletedElements={DeletedElements}
+                                            Id="flow-form-builder"
+                                            handleClick={this.FlowFormBuilderHandle.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="FlowFormBuilder"
+                                        />
+
                                     </div>
                                 </div>
                             </div>
@@ -232,8 +256,15 @@ class RibbonReferenceViewer extends Component {
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-referral") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.ReferralHandle.bind(this)}
-                                        AccessInfo={FormInfo.fm_dabir_eghdam}
-                                        ShortKey={ShortKeys[keyName]} Id="referral" tooltip={this.context.t("Referral")} />
+                                            AccessInfo={FormInfo.fm_dabir_eghdam}
+                                            ShortKey={ShortKeys[keyName]} Id="referral" tooltip={this.context.t("Referral")} />
+                                    )
+                                }
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-flow-form-builder") {
+                                    return (
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.FlowFormBuilderHandle.bind(this)}
+                                            AccessInfo={FormInfo.fm_dabir_eghdam}
+                                            ShortKey={ShortKeys[keyName]} Id="flow-form-builder" tooltip={this.context.t("FlowFormBuilder")} />
                                     )
                                 }
                             })}
@@ -256,6 +287,15 @@ class RibbonReferenceViewer extends Component {
                 {this.state.Referralmodal &&
                     <NewReferral modal={this.state.Referralmodal}
                         toggle={this.toggleReferral.bind(this)}
+                        RefreshParentForm={RefreshParentForm}
+                        Params={Params}
+                    />
+
+
+                }
+                {this.state.FlowFormBuilderModal &&
+                    <FormBuilderComponent modal={this.state.FlowFormBuilderModal}
+                        toggle={this.toggleFormBuilder.bind(this)}
                         RefreshParentForm={RefreshParentForm}
                         Params={Params}
                     />

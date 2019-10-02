@@ -35017,10 +35017,6 @@ i.icon.view-secretariat {
     font-size: 13px;
 }
 
-[class*=MuiInput-underline]:before, [class*=MuiInput-underline]:after, .jss5:before, .jss5:after {
-    display: none;
-    content: none;
-}
 
 .r-modal [class*=MuiFormControl-marginNormal-], .jss2 {
     margin: .5rem 0!important;
@@ -36147,3 +36143,283 @@ min-height: 32px;
     background-color: #f0ad4e;
     border-color: #eea236;
 }
+
+
+
+
+
+
+
+
+.r-formbuilder {
+    direction: ltr;
+}
+
+
+
+.r-formbuilder input, .r-formbuilder textarea, .r-formbuilder button, .r-formbuilder select {
+    /* direction: rtl; */
+    border-radius: 0!important;
+    resize: none;
+  }
+  
+ 
+  
+  .r-formbuilder .react-grid-layout {
+    border: 1px solid #eee;
+  }
+  
+  
+  
+  .r-formbuilder .react-grid-item {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px 0 5px;
+  }
+  
+  .r-formbuilder .react-grid-item:not(.react-grid-placeholder) {
+    background: transparent;
+    border: 1px dashed #cce;
+  }
+  
+  .r-formbuilder .react-grid-item.resizing {
+    opacity: 0.9;
+  }
+  
+  .r-formbuilder .react-grid-item.static {
+    background: #cce;
+  }
+  
+  .r-formbuilder .react-grid-item .text {
+    font-size: 12px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: auto;
+  }
+  
+  .r-formbuilder .react-grid-item .minMax {
+    font-size: 12px;
+  }
+  
+  .r-formbuilder .react-grid-item .add {
+    cursor: pointer;
+  }
+  
+  .r-formbuilder .react-grid-dragHandleExample {
+    cursor: move;
+    /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+  }
+  
+  .r-formbuilder .r-formbuilder__layout {
+    min-height: 90px;
+  }
+  
+  .r-formbuilder .toolbox {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    overflow-y: scroll;
+    /* direction: rtl; */
+    padding: 5px;
+    min-height: 33px;
+  }
+  
+  .r-formbuilder .hide-button {
+    cursor: pointer;
+    position: absolute;
+    font-size: 16px;
+    top: 0px;
+    right: 0;
+    line-height: 0.5;
+    background-color: #c30000;
+    color: #fff;
+    padding: 3px 2px;
+  }
+  
+  .r-formbuilder .toolbox__title {
+    font-size: 24px;
+    margin-bottom: 15px;
+    display: block;
+  }
+  
+  .r-formbuilder .toolbox__items {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .r-formbuilder .toolbox__items__item {
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+    min-width: 40px;
+    padding: 5px 10px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    border: 1px solid black;
+    background-color: #ddd;
+    font-size: 14px;
+  }
+  
+  .r-formbuilder .droppable-element {
+    width: 150px;
+    background: #ddd;
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 10px;
+  }
+  
+  .r-formbuilder .input-group {
+    position: relative;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+  }
+  
+  .r-formbuilder .input-group-append, .r-formbuilder .input-group-prepend {
+    display: flex;
+  }
+  .r-formbuilder .input-group-text{
+      border-radius: 0!important;
+  }
+
+  .r-formbuilder  [class*=MuiInput-input-], .r-formbuilder .date-input-with-dialog-input{
+      border-radius: 0!important;
+  }
+  .r-formbuilder [class*=MuiInput-input-]:focus{
+      outline: none!important;
+      
+  }
+  .r-formbuilder  [class*=MuiFormControl-]{
+      width: 100%;
+      border-radius: 0;
+  }
+    /* .r-formbuilder [class*=MuiFormControl-] div, .r-formbuilder .date-input-with-dialog-main div{
+        width: 100%;
+    } */
+    [class*=MuiInput-formControl-]{
+        width: 100%;
+    }
+  .r-formbuilder .form-control {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-radius: 0!important;
+
+  }
+  
+  .r-formbuilder .input-group>.custom-file, .r-formbuilder .input-group>.custom-select, .r-formbuilder .input-group>.form-control {
+    position: relative;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-bottom: 0;
+  }
+  
+  .r-formbuilder .form-check {
+    position: relative;
+    display: block;
+    padding-right: 30px;
+  }
+  
+  .r-formbuilder .form-check-input {
+    position: absolute;
+    margin-top: 2px;
+    margin-right: -25px;
+  }
+  
+  .r-formbuilder .form-check-label {
+    margin-bottom: 0;
+  }
+  
+  .r-formbuilder input[type=checkbox], .r-formbuilder input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+  }
+  
+  .r-formbuilder .btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 13px;
+    font-family: Tahoma;
+    line-height: 1.5;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  }
+  
+  .r-formbuilder  .btn-primary:not(:disabled):not(.disabled) {
+    color: #fff;
+    background-color: #0062cc;
+    border-color: #005cbf;
+  } 
+  
+  .r-formbuilder .r-formbuilder__group {
+    width: 100%;
+  }
+  
+  .r-formbuilder .r-formbuilder__group h5 {
+    position: relative;
+    height: 40px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .r-formbuilder .r-formbuilder__group h5::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    left: 0;
+    height: 1px;
+    width: 100%;
+    background-color: #333;
+    top: 100%;
+    transform: translateY(-50%);
+  }
+  
+  .r-formbuilder .r-formbuilder__img {
+    max-height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .r-formbuilder .r-formbuilder__img input[type="file"]{
+    display: none;
+  }
+  .r-formbuilder .r-formbuilder__img-holder{
+    width: 120px;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    border: 1px dashed #ced4da;
+    background-color: #f1f2f3;
+    cursor: pointer;
+  }
+  .r-formbuilder .r-formbuilder__img img {
+    max-width: 100%;
+  }

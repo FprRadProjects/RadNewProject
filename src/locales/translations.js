@@ -180,6 +180,7 @@ export const translations = {
         Create:"ایجاد",
         Implement:"انجام",
         Show:"نمایش",
+        FlowFormBuilder:"فرم ساز فرآیند",
         
         //---------------تاییدیه------------------شروع
         Yes: 'بلی',
@@ -269,6 +270,8 @@ export const translations = {
         frm_Create_Work: 'ثبت کار',
         frm_File_Audience: 'طرف حساب - مخاطب',
         frm_Follower_list: 'انتخاب پیرو',
+        frm_Flow_Form_Builder: 'فرم ساز فرآیند',
+
         //--------------نام فرم ها--------------پایان
     },
     en: {
@@ -450,6 +453,7 @@ export const translations = {
         Create:"Create",
         Implement:"Implement",
         Show:"Show",
+        FlowFormBuilder:"Flow Form Builder",
         //Start---------------Confirm-----------------
         Yes: 'Yes',
         No: 'No',
@@ -539,6 +543,7 @@ export const translations = {
         frm_Create_Work: 'Create Work',
         frm_File_Audience: 'File Audience',
         frm_Follower_list: 'Follower',
+        frm_Flow_Form_Builder: 'Flow Form Builder',
 
         //End-------------- FORM NAME --------------
 
