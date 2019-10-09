@@ -181,6 +181,8 @@ export const translations = {
         Implement:"انجام",
         Show:"نمایش",
         FlowFormBuilder:"فرم ساز فرآیند",
+        FormBuilderDesigner: "طراحی شکل فرم",
+        SaveFormDesigner:"ذخیره شکل فرم",
         
         //---------------تاییدیه------------------شروع
         Yes: 'بلی',
@@ -213,6 +215,8 @@ export const translations = {
         WorkFlowSummary: "خلاصه گردش کار",
         Referral: "ارجاع",
         Return_Control_To_Page:"بازگشت کنترل به صفحه",
+        RemoveImage:"حذف تصویر",
+        
         //--------------اقدام------------------پایان
         //---------------پیام ها----------------شروع
         required_username: 'نام کاربری لازم به ورود است',
@@ -236,6 +240,9 @@ export const translations = {
         msg_Form_Not_Access: 'عدم دسترسی به فرم ',
         msg_Id_DosNot_Contain_Value : 'شاخص حاوی مقدار نیست...',
         msg_Id_No_In_Editing_Mode : 'شاخص مورد نظر در مد ویرایش نمی باشد... ',
+        msg_No_Form_Builder : 'شاخص مورد نظر فاقد فرم ساز می باشد. ',
+        msg_Please_Enter_Your_Text : 'لطفا متن مورد نظر را وارد نمایید. ',
+        msg_Please_Enter_Group_Name : 'لطفا نام گروه را وارد نمایید. ',
 
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
@@ -458,6 +465,10 @@ export const translations = {
         Implement:"Implement",
         Show:"Show",
         FlowFormBuilder:"Flow Form Builder",
+        FormBuilderDesigner: "Form Builder Designer",
+        SaveFormDesigner:"Save Form Designer",
+
+
         //Start---------------Confirm-----------------
         Yes: 'Yes',
         No: 'No',
@@ -488,6 +499,7 @@ export const translations = {
         WorkFlowSummary: "Work Flow Summary",
         Referral: "Referral",
         Return_Control_To_Page:"Return control to page",
+        RemoveImage:"Remove Image",
 
         //End-----------------Actions----------------
 
@@ -512,6 +524,11 @@ export const translations = {
         msg_Form_Not_Access: 'Lack Of Access To The Form ',
         msg_Id_DosNot_Contain_Value : 'The Id Does Not Contain The Value... ',
         msg_Id_No_In_Editing_Mode : 'ID Is Not In Editing Mode... ',
+        msg_No_Form_Builder : 'This work has no form builder. ',
+        msg_Please_Enter_Your_Text : 'Please enter your text. ',
+        msg_Please_Enter_Group_Name : 'Please enter the group name. ',
+
+
   //End-----------------Messages----------------
         //Start-------------- FORM NAME --------------
         frm_System: 'System',

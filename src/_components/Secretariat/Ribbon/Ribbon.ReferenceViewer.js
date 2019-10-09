@@ -10,13 +10,15 @@ import {
     WorkBasic_action,
     design_Actions,
     WorkActions_action,
-    WorkAccess_action
+    WorkAccess_action,
+    FormBuilderBasic_action
 } from "../../../_actions";
+
 import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 
 import { toast } from 'react-toastify';
 import { NewReferral } from '../RecordsPage/Referral.New';
-import { FormBuilderComponent } from '../../Frameworks/Controls/FromBuilder/FormBuilderComponent';
+import { DesignedFormBuilder } from '../../Flow/FormBuilder/DesignedFormBuilder';
 
 
 class RibbonReferenceViewer extends Component {
@@ -27,9 +29,11 @@ class RibbonReferenceViewer extends Component {
             ...this.state,
             ReferenceViewermodal: false,
             Referralmodal: false,
-            FlowFormBuilderModal:false,
             backdrop: "static",
-            modalClass: "modal-dialog-centered modal-xl r-modal"
+            modalClass: "modal-dialog-centered modal-xl r-modal",
+            FlowFormBuilderModal: false,
+            FormBuilderCaptionId: null,
+            FormBuilderLayoutData: []
         };
 
     }
@@ -130,9 +134,26 @@ class RibbonReferenceViewer extends Component {
     }
 
     FlowFormBuilderHandle() {
-        this.setState({
-            FlowFormBuilderModal: true,
+        const { WorkInfo, FlowPeygirCaptionInfo, DesignedFormFieldList } = this.props;
+        FlowPeygirCaptionInfo(WorkInfo.showtree_id).then(data => {
+            if (data.status) {
+                if (data.data.hasFormBuilder) {
+                    DesignedFormFieldList(WorkInfo.peygir_id, WorkInfo.showtree_id).then(data1 => {
+                        if (data1.status) {
+                            this.setState({
+                                FlowFormBuilderModal: true,
+                                FormBuilderCaptionId: data.data.CaptionId,
+                                FormBuilderLayoutData: data1.data.rows
+                            });
+                        }
+                    });
+                }
+                else
+                    toast.error(this.context.t("msg_No_Form_Builder"));
+            }
+
         });
+
 
     }
 
@@ -151,7 +172,7 @@ class RibbonReferenceViewer extends Component {
 
     render() {
         const { WorkInfo, FetchData, Params, ShortKeys, DeletedElements, EditedElements, RefreshParentForm, ParentForm
-            , FetchWorkInfo, saveWorkHandle, ConfirmationHandle
+            , FetchWorkInfo, saveWorkHandle, ConfirmationHandle,
         } = this.props;
         return (
             <div>
@@ -164,14 +185,14 @@ class RibbonReferenceViewer extends Component {
                 <ControlPanel FormInfoId={FormInfo.fm_dabir_natije_erja.id}></ControlPanel>
 
                 <ul className="nav nav-tabs" id="ribbon-tab">
-                    <li className="nav-item"><a href="#referenceviewertab1" className="nav-link active" role="tab" data-toggle="tab">عملیات</a></li>
+                    <li className="nav-item"><a href="#referenceviewertab1" className="nav-link active" role="tab" data-toggle="tab">{this.context.t("Operations")}</a></li>
                 </ul>
                 <div className="tab-content">
                     <div className="gradient"></div>
                     <div className="tab-pane fade show active" id="referenceviewertab1" role="tabpanel">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
-                                <div className="tab-group-caption">ثبت</div>
+                                <div className="tab-group-caption">{this.context.t("Submit")}</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
@@ -195,19 +216,13 @@ class RibbonReferenceViewer extends Component {
                                             EditedElements={EditedElements}
                                             Text="Save"
                                         />
-                                        <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="flow-form-builder"
-                                            handleClick={this.FlowFormBuilderHandle.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="FlowFormBuilder"
-                                        />
+
 
                                     </div>
                                 </div>
                             </div>
                             <div className="tab-panel-group">
-                                <div className="tab-group-caption">عملیات</div>
+                                <div className="tab-group-caption">{this.context.t("Operations")}</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
                                         <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
@@ -218,7 +233,13 @@ class RibbonReferenceViewer extends Component {
                                             EditedElements={EditedElements}
                                             Text="Referral"
                                         />
-
+                                        <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
+                                            DeletedElements={DeletedElements}
+                                            Id="process-form-builder"
+                                            handleClick={this.FlowFormBuilderHandle.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="FlowFormBuilder"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -256,11 +277,11 @@ class RibbonReferenceViewer extends Component {
                                             ShortKey={ShortKeys[keyName]} Id="referral" tooltip={this.context.t("Referral")} />
                                     )
                                 }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-flow-form-builder") {
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-process-form-builder") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.FlowFormBuilderHandle.bind(this)}
                                             AccessInfo={FormInfo.fm_dabir_eghdam}
-                                            ShortKey={ShortKeys[keyName]} Id="flow-form-builder" tooltip={this.context.t("FlowFormBuilder")} />
+                                            ShortKey={ShortKeys[keyName]} Id="process-form-builder" tooltip={this.context.t("FlowFormBuilder")} />
                                     )
                                 }
                             })}
@@ -274,20 +295,21 @@ class RibbonReferenceViewer extends Component {
                     WorkInfo={WorkInfo}
                     Params={Params} RefreshParentForm={FetchData.bind(this)}
                     ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
-           
+
                 {this.state.Referralmodal &&
                     <NewReferral modal={this.state.Referralmodal}
                         toggle={this.toggleReferral.bind(this)}
                         RefreshParentForm={RefreshParentForm}
                         Params={Params}
                     />
-
-
                 }
                 {this.state.FlowFormBuilderModal &&
-                    <FormBuilderComponent modal={this.state.FlowFormBuilderModal}
+                    <DesignedFormBuilder modal={this.state.FlowFormBuilderModal}
+                        WorkInfo={WorkInfo}
                         toggle={this.toggleFormBuilder.bind(this)}
                         RefreshParentForm={RefreshParentForm}
+                        FormBuilderCaptionId={this.state.FormBuilderCaptionId}
+                        FormBuilderLayoutData={this.state.FormBuilderLayoutData}
                         Params={Params}
                     />
                 }
@@ -315,6 +337,14 @@ const mapDispatchToProps = dispatch => ({
     },
     CanSubOnWork: (peygir_id, id_tel, formname, from) => {
         return dispatch(WorkAccess_action.CanSubOnWork(peygir_id, id_tel, formname, from))
+    },
+
+    FlowPeygirCaptionInfo: (showtree_id) => {
+        return dispatch(FormBuilderBasic_action.FlowPeygirCaptionInfo(showtree_id))
+    },
+
+    DesignedFormFieldList: (peygir_id,showtree_id) => {
+        return dispatch(FormBuilderBasic_action.DesignedFormFieldList(peygir_id,showtree_id))
     },
 
 

@@ -49,6 +49,7 @@
     "react-scripts": "2.1.2",
     "react-select": "^2.4.1",
     "react-select-async-paginate": "^0.3.0",
+    "react-to-print": "^2.4.0",
     "react-toastify": "^4.5.2",
     "reactstrap": "^7.1.0",
     "redux": "^4.0.1",
