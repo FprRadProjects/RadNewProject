@@ -8,8 +8,13 @@ import NumberFormat from "react-number-format";
 import InputMask from "react-input-mask";
 import { JalaliField } from 'material-ui-hichestan-datetimepicker';
 import 'react-grid-layout/css/styles.css';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import {
+    FormBuilderActions_action
+} from "../../../_actions";
+import { RibbonDesignerFormBuilder } from '../Ribbon/Ribbon.DesignerFormBuilder';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
+
+var SaveParams = { caption_id: 0, Fields: [] };
 
 class ToolBoxItem extends Component {
     render() {
@@ -28,7 +33,7 @@ class ToolBox extends Component {
     render() {
         return (
             <div className="toolbox">
-                {/* <span className="toolbox__title">پنل فرم کار</span> */}
+                <span className="toolbox__title"><span>پنل فرم کار</span></span>
                 <div className="toolbox__items">
                     <div className="toolbox__items__item" onClick={this.props.onAddEmptyItem}>Divider</div>
                     <div className="toolbox__items__item" onClick={this.props.onAddHeaderText}>Label</div>
@@ -47,7 +52,7 @@ class ToolBox extends Component {
 }
 
 
-class FormBuilderComponent extends Component {
+class DesignerFormBuilder extends Component {
     constructor(props) {
         super(props);
 
@@ -59,10 +64,8 @@ class FormBuilderComponent extends Component {
             currentBreakpoint: "lg",
             compactType: "vertical",
             mounted: false,
-            layouts: { lg: this.props.initialLayout },
-            toolbox: { lg: generateToolBoxItems() },
-            changeJSON: {},
-            file: null
+            layouts: { lg: this.props.FormBuilderLayoutData },
+            toolbox: { lg: this.props.FormBuilderToolBoxData }
         };
 
         this.onAddEmptyItem = this.onAddEmptyItem.bind(this);
@@ -74,27 +77,10 @@ class FormBuilderComponent extends Component {
         rowHeight: 30,
         onLayoutChange: function () { },
         cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
-        initialLayout: generateLayout(),
     };
 
-    handleChange = colname => event => {
-        const { type, checked, value } = event.target;
-        const ftype = event.target.getAttribute('ftype');
-        let newState = Object.assign({}, this.state);
-        if (ftype == "bool")
-            newState.changeJSON[[colname]] = checked;
-        else if (ftype == "mon")
-            newState.changeJSON[[colname]] = value.replace(/,/g, '');
-        else if (ftype == "img") {
-            newState.changeJSON[[colname]] = value.replace(/,/g, '');
-            newState.file = URL.createObjectURL(event.target.files[0]);
-        }
-        else
-            newState.changeJSON[[colname]] = value;
-        this.setState(newState);
-        console.log(this.state.changeJSON);
-    };
     componentDidMount() {
+        SaveParams = { caption_id: 0, Fields: [] };
         this.setState({ mounted: true });
     }
     generateDOM() {
@@ -110,7 +96,7 @@ class FormBuilderComponent extends Component {
                 );
             }
             return (
-                <div key={l.i} flabel={l.flabel} ftype={l.ftype} fnum={l.fnum} frequired={l.frequired} ffields={l.ffields} ffieldstxt={l.ffieldstxt}>
+                <div key={l.i}>
                     <div className="hide-button" onClick={this.onPutItem.bind(this, l)}>
                         &times;
                     </div>
@@ -120,14 +106,9 @@ class FormBuilderComponent extends Component {
                                 <span className="input-group-text">{l.flabel}</span>
                             </div>
                             <input
-                                id={"formvals_" + l.ftype + l.fnum}
-                                name={"formvals_" + l.ftype + l.fnum}
-                                flabel={l.flabel}
-                                ftype={l.ftype}
-                                fnum={l.fnum}
                                 type="Number"
                                 className="form-control"
-                                onChange={this.handleChange(l.ftype + l.fnum)} />
+                            />
                         </div>
                         : (l.ftype === 'look'
                             ? <div className="input-group">
@@ -135,32 +116,20 @@ class FormBuilderComponent extends Component {
                                     <span className="input-group-text">{l.flabel}</span>
                                 </div>
                                 <select
-                                    id={"formvals_" + l.ftype + l.fnum}
-                                    name={"formvals_" + l.ftype + l.fnum}
-                                    flabel={l.flabel}
-                                    ftype={l.ftype}
-                                    fnum={l.fnum}
-                                    ffields={l.ffields}
-                                    ffieldstxt={l.ffieldstxt}
                                     className="form-control"
-                                    onChange={this.handleChange(l.ftype + l.fnum)}>
+                                >
                                     {listItems}
                                 </select>
                             </div>
                             : (l.ftype === 'img'
                                 ? <div className="r-formbuilder__img">
-                                    <input type="button" value="حذف تصوير" className="btn btn-primary" />
-                                    <div className="r-formbuilder__img-holder" onClick={() => this.inputElement.click()}>
+                                    <span className="input-group-text d-block">{l.flabel}</span>
+                                    <input type="button" value={this.context.t("RemoveImage")}  className="btn btn-block btn-danger" />
+                                    <div className="r-formbuilder__img-holder">
                                         <input
                                             type="file"
-                                            id={"formvals_" + l.ftype + l.fnum}
-                                            name={"formvals_" + l.ftype + l.fnum}
-                                            flabel={l.flabel}
-                                            ftype={l.ftype}
-                                            fnum={l.fnum}
-                                            ref={input => this.inputElement = input}
-                                            onChange={this.handleChange(l.ftype + l.fnum)} />
-                                        <img src={this.state.file} />
+                                        />
+                                        <img src="" />
                                     </div>
                                 </div>
                                 : (l.ftype === 'mon'
@@ -169,14 +138,8 @@ class FormBuilderComponent extends Component {
                                             <span className="input-group-text">{l.flabel}</span>
                                         </div>
                                         <NumberFormat
-                                            id={"formvals_" + l.ftype + l.fnum}
-                                            name={"formvals_" + l.ftype + l.fnum}
-                                            flabel={l.flabel}
-                                            ftype={l.ftype}
-                                            fnum={l.fnum}
                                             thousandSeparator={true}
                                             className="form-control"
-                                            onChange={this.handleChange(l.ftype + l.fnum)}
                                         />
                                     </div>
                                     : (l.ftype === 'saat'
@@ -186,22 +149,18 @@ class FormBuilderComponent extends Component {
                                             </div>
 
                                             <InputMask
-                                                id={"formvals_" + l.ftype + l.fnum}
-                                                name={"formvals_" + l.ftype + l.fnum}
-                                                flabel={l.flabel}
-                                                ftype={l.ftype}
-                                                fnum={l.fnum}
                                                 type={Text}
                                                 mask="99:99"
                                                 className="form-control"
-                                                onChange={this.handleChange(l.ftype + l.fnum)} />
+                                            />
                                         </div>
                                         : (l.ftype === 'str'
                                             ? <div className="input-group">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text">{l.flabel}</span>
                                                 </div>
-                                                <textarea id={"formvals_" + l.ftype + l.fnum} name={"formvals_" + l.ftype + l.fnum} className="form-control" onChange={this.handleChange(l.ftype + l.fnum)}></textarea>
+                                                <textarea className="form-control">
+                                                </textarea>
                                             </div>
                                             : (l.ftype === 'bool'
                                                 ? <div className="input-group">
@@ -211,10 +170,6 @@ class FormBuilderComponent extends Component {
                                                             className="form-check-input"
                                                             id={"formvals_" + l.ftype + l.fnum}
                                                             name={"formvals_" + l.ftype + l.fnum}
-                                                            flabel={l.flabel}
-                                                            ftype={l.ftype}
-                                                            fnum={l.fnum}
-                                                            onChange={this.handleChange(l.ftype + l.fnum)}
                                                         />
                                                         <label className="form-check-label" for={"formvals_" + l.ftype + l.fnum}>{l.flabel}</label>
                                                     </div>
@@ -224,31 +179,11 @@ class FormBuilderComponent extends Component {
                                                         <div className="input-group-prepend">
                                                             <span className="input-group-text">{l.flabel}</span>
                                                         </div>
-
-
-
                                                         <JalaliField
-                                                            id={"formvals_" + l.ftype + l.fnum}
-                                                            name={"formvals_" + l.ftype + l.fnum}
-                                                            flabel={l.flabel}
-                                                            ftype={l.ftype}
-                                                            fnum={l.fnum}
-                                                            onChange={this.handleChange(l.ftype + l.fnum)}
                                                             className="form-control"
                                                         />
-
-                                                        {/* <TextField
-                                                                id={"formvals_" + l.ftype + l.fnum}
-                                                                name={"formvals_" + l.ftype + l.fnum}
-                                                                flabel={l.flabel}
-                                                                ftype={l.ftype}
-                                                                fnum={l.fnum}
-                                                                onChange={this.handleChange(l.ftype + l.fnum)}
-                                                                className="form-control"
-                                                            /> */}
-
                                                     </div>
-                                                    : (l.ftype === 'head'
+                                                    : (l.ftype === 'label'
                                                         ? <span>{l.flabel}</span>
                                                         : (l.ftype === 'group'
                                                             ? <div className="r-formbuilder__group">
@@ -271,7 +206,7 @@ class FormBuilderComponent extends Component {
     }
 
     onAddEmptyItem() {
-        var start = 0, end = 100;
+        var start = 1000, end = 2000;
         var num = (Math.random() * (end - start) + start) ^ 0;
         this.setState(prevState => ({
             layouts: {
@@ -289,7 +224,8 @@ class FormBuilderComponent extends Component {
                         ffieldstxt: "",
                         flabel: "",
                         frequired: "",
-                        ftype: "empty"
+                        ftype: "empty",
+                        colname: "empty"
                     }
 
                 ]
@@ -298,10 +234,10 @@ class FormBuilderComponent extends Component {
     }
 
     onAddHeaderText() {
-        const enteredName = prompt('لطفا متن مورد نظر را وارد نمایید');
+        const enteredName = prompt(this.context.t("msg_Please_Enter_Your_Text"));
         if (enteredName === null)
             return;
-        var start = 0, end = 100;
+        var start = 1000, end = 2000;
         var num = (Math.random() * (end - start) + start) ^ 0;
         this.setState(prevState => ({
             layouts: {
@@ -319,7 +255,9 @@ class FormBuilderComponent extends Component {
                         ffieldstxt: "",
                         frequired: "",
                         flabel: enteredName,
-                        ftype: "head"
+                        ftype: "label",
+                        colname: "label"
+
                     }
 
                 ]
@@ -328,10 +266,10 @@ class FormBuilderComponent extends Component {
     }
 
     onAddGroupItem() {
-        const enteredName = prompt('لطفا نام گروه مورد نظر را وارد نمایید');
+        const enteredName = prompt(this.context.t("msg_Please_Enter_Group_Name"));
         if (enteredName === null)
             return;
-        var start = 0, end = 100;
+        var start = 1000, end = 2000;
         var num = (Math.random() * (end - start) + start) ^ 0;
         this.setState(prevState => ({
             layouts: {
@@ -349,7 +287,8 @@ class FormBuilderComponent extends Component {
                         ffieldstxt: "",
                         frequired: "",
                         flabel: enteredName,
-                        ftype: "group"
+                        ftype: "group",
+                        colname: "group"
                     }
 
                 ]
@@ -359,6 +298,7 @@ class FormBuilderComponent extends Component {
 
 
     onTakeItem = item => {
+        console.log(item)
         this.setState(prevState => ({
             toolbox: {
                 ...prevState.toolbox,
@@ -378,7 +318,7 @@ class FormBuilderComponent extends Component {
 
     onPutItem = item => {
         this.setState(prevState => {
-            if (item.ftype != "head" && item.ftype != "empty" && item.ftype != "group") {
+            if (item.ftype != "label" && item.ftype != "empty" && item.ftype != "group") {
                 return {
                     toolbox: {
                         ...prevState.toolbox,
@@ -411,11 +351,38 @@ class FormBuilderComponent extends Component {
     onLayoutChange = (layout, layouts) => {
         this.props.onLayoutChange(layout, layouts);
         this.setState({ layouts });
+        console.log(layouts)
     };
 
+    SaveFormDesignerHandle = (msg) => {
+        const { WorkInfo, DesignerSave, FormBuilderCaptionId } = this.props;
+        let obj = [];
+        Object.keys(this.state.layouts[this.state.currentBreakpoint]).map((item, index) => {
+            return obj[index++] =
+                {
+                    "colname": this.state.layouts[this.state.currentBreakpoint][item].colname,
+                    "i": this.state.layouts[this.state.currentBreakpoint][item].i,
+                    "x": this.state.layouts[this.state.currentBreakpoint][item].x.toString(),
+                    "y": this.state.layouts[this.state.currentBreakpoint][item].y,
+                    "w": this.state.layouts[this.state.currentBreakpoint][item].w,
+                    "h": this.state.layouts[this.state.currentBreakpoint][item].h,
+                    "flabel": this.state.layouts[this.state.currentBreakpoint][item].flabel
+                }
+                ;
+        })
+        console.log(obj)
+        SaveParams.Fields = obj;
+        SaveParams.caption_id = FormBuilderCaptionId;
+        console.log(SaveParams)
+        DesignerSave(SaveParams, msg).then(data => {
+            if (data.status) {
+
+            }
+        });
+    }
 
     render() {
-        const { modal, toggle } = this.props;
+        const { modal, toggle, WorkInfo, FormBuilderCaptionId, FormBuilderLayoutData, FormBuilderToolBoxData } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -431,6 +398,9 @@ class FormBuilderComponent extends Component {
                     className={this.state.modalClass} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={toggle}>{this.context.t("frm_Flow_Form_Builder")}</ModalHeader>
                     <ModalBody>
+                        <div className="r-main-box__ribbon">
+                            <RibbonDesignerFormBuilder SaveFormDesignerHandle={this.SaveFormDesignerHandle.bind(this)} FormBuilderCaptionId={FormBuilderCaptionId} />
+                        </div>
                         <div className="r-formbuilder">
                             <ToolBox
                                 items={this.state.toolbox[this.state.currentBreakpoint] || []}
@@ -457,8 +427,7 @@ class FormBuilderComponent extends Component {
                         </div>
                         <style>{modalBackDrop}</style>
                     </ModalBody>
-                    <ModalFooter>
-                    </ModalFooter>
+                   
                 </Modal>
             </div >
 
@@ -467,17 +436,20 @@ class FormBuilderComponent extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-
-
+    DesignerSave: (SaveParams, msg) => {
+        return dispatch(FormBuilderActions_action.DesignerSave(SaveParams, msg));
+    },
 });
-FormBuilderComponent.contextTypes = {
+DesignerFormBuilder.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
     const { alert } = state;
     const { loading } = state.loading;
-    const { lang } = state.i18nState
+    const { lang } = state.i18nState;
+
+
     return {
         alert,
         loading,
@@ -486,37 +458,7 @@ function mapStateToProps(state) {
 }
 
 
-const connectedFormBuilderComponent = connect(mapStateToProps, mapDispatchToProps)(FormBuilderComponent);
-export { connectedFormBuilderComponent as FormBuilderComponent };
+const connectedDesignerFormBuilder = connect(mapStateToProps, mapDispatchToProps)(DesignerFormBuilder);
+export { connectedDesignerFormBuilder as DesignerFormBuilder };
 
 
-
-function generateLayout() {
-    return (
-        [
-            // {i: '1', x: 0, y: 0, w: 2, h: 2, ftype: 'adad', fnum: '1', flabel: 'عدد', frequired: 'False', ffields: '', ffieldstxt: '' },
-            // {i: '2', x: 2, y: 0, w: 2, h: 2, ftype: 'saat', fnum: '1', flabel: 'ساعت', frequired: 'False', ffields: '', ffieldstxt: '' },
-            // {i: '3', x: 4, y: 0, w: 2, h: 2, ftype: 'img', fnum: '1', flabel: 'عکس', frequired: 'False', ffields: '', ffieldstxt: '' },
-            // {i: '4', x: 6, y: 0, w: 2, h: 2, ftype: 'mon', fnum: '1', flabel: 'قیمت', frequired: 'False', ffields: '', ffieldstxt: '' },
-            // {i: '5', x: 8, y: 0, w: 2, h: 2, ftype: 'look', fnum: '1', flabel: 'انتخابی', frequired: 'False', ffields: '26,27,28', ffieldstxt: 'آیتم1,آیتم2,آیتم3' },
-            // {i: '6', x: 10, y: 0, w: 2, h: 2, ftype: 'str', fnum: '1', flabel: 'متن', frequired: 'False', ffields: '', ffieldstxt: '' },
-            // {i: '7', x: 12, y: 0, w: 2, h: 2, ftype: 'bool', fnum: '1', flabel: 'تیک', frequired: 'False', ffields: '', ffieldstxt: '' },
-            // {i: '8', x: 14, y: 0, w: 2, h: 2, ftype: 'tar', fnum: '1', flabel: 'تاریخ', frequired: 'False', ffields: '', ffieldstxt: '' },
-        ]
-    );
-
-}
-function generateToolBoxItems() {
-    return (
-        [
-            { i: '1', x: '0', y: 'Infinity', w: 12, h: 2, ftype: 'adad', fnum: '1', flabel: 'Number', frequired: 'False', ffields: '', ffieldstxt: '' },
-            { i: '2', x: '0', y: 'Infinity', w: 12, h: 2, ftype: 'saat', fnum: '1', flabel: 'Time', frequired: 'False', ffields: '', ffieldstxt: '' },
-            { i: '3', x: '0', y: 'Infinity', w: 12, h: 4, ftype: 'img', fnum: '1', flabel: 'Picture', frequired: 'False', ffields: '', ffieldstxt: '' },
-            { i: '4', x: '0', y: 'Infinity', w: 12, h: 2, ftype: 'mon', fnum: '1', flabel: 'Money', frequired: 'False', ffields: '', ffieldstxt: '' },
-            { i: '5', x: '0', y: 'Infinity', w: 12, h: 2, ftype: 'look', fnum: '1', flabel: 'Select', frequired: 'False', ffields: '26,27,28', ffieldstxt: 'آیتم 1,آیتم 2,آیتم 3' },
-            { i: '6', x: '0', y: 'Infinity', w: 12, h: 2, ftype: 'str', fnum: '1', flabel: 'TextArea', frequired: 'False', ffields: '', ffieldstxt: '' },
-            { i: '7', x: '0', y: 'Infinity', w: 12, h: 2, ftype: 'bool', fnum: '1', flabel: 'CheckBox', frequired: 'False', ffields: '', ffieldstxt: '' },
-            { i: '8', x: '0', y: 'Infinity', w: 12, h: 2, ftype: 'tar', fnum: '1', flabel: 'Date', frequired: 'False', ffields: '', ffieldstxt: '' }
-        ]
-    );
-}
