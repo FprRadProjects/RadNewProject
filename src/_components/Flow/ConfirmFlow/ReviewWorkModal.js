@@ -119,8 +119,8 @@ class ReviewWorkModal extends Component {
                             />
                         </ModalBody>
                         <ModalFooter>
+                        <Button color="primary" onClick={this.EditReviewWorkConfirm.bind(this)}>{this.context.t("Edit")}</Button>{' '}
                             <Button color="primary" onClick={SuccesReviewWorkConfirm.bind(this)}>{this.context.t("ConfirmAndClose")}</Button>{' '}
-                            <Button color="primary" onClick={this.EditReviewWorkConfirm.bind(this)}>{this.context.t("Edit")}</Button>{' '}
                         </ModalFooter>
                     </Modal>
                 </div>

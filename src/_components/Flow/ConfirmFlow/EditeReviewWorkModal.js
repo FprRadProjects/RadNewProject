@@ -130,7 +130,7 @@ class EditeReviewWorkModal extends Component {
                         <ModalBody>
                             {rowData !== undefined && rowData != null &&
                                 <div>
-                                    <div className="row">
+                                    <div className="row ">
                                         <div className="col-md-3">
                                             <div className="form-group">
                                                 <label><b>{this.context.t("WorkID")}</b></label>
@@ -158,7 +158,7 @@ class EditeReviewWorkModal extends Component {
                                     </div>
 
                                     <hr className="mt-1 mb-4" />
-                                    <div className="row">
+                                    <div className="row bg-gray mg-b-5">
                                         <div className="col-md-4">
                                             <div className="form-group">
                                                 <label>{this.context.t("ActionDate")}</label>

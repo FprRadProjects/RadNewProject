@@ -26,7 +26,7 @@ class LabelCalendar extends Component {
         {(DeletedElements === undefined || DeletedElements["LabelCalendar-" + Id] === undefined ||
           DeletedElements["LabelCalendar-" + Id].IsShow
         ) &&
-          <div className={ColClassName === undefined ? "col-6" : ColClassName} id={"LabelCalendar-" + Id} Description={Text} formid={FormId} element={"LabelCalendar-" + Id}>
+          <div className={ColClassName === undefined ? "col-6" : ColClassName} id={"LabelCalendar-" + Id} Description={Text} formid={FormId===undefined?0:FormId} element={"LabelCalendar-" + Id}>
             <div className={className1 === undefined ? "form-group row" : className1} id={"LabelCalendarDiv1-" + Id} Description={Text} formid={FormId} element={"LabelCalendar-" + Id} >
               <label formid={FormId} className={LabelclassName === undefined ? "col-2 col-form-label" : LabelclassName} id={"LabelCalendarLbl-" + Id} element={"LabelCalendar-" + Id}
                 erowid={(EditedElements === undefined || EditedElements["LabelCalendarLbl-" + Id] === undefined) ?
@@ -39,7 +39,7 @@ class LabelCalendar extends Component {
               <div formid={FormId} className={className2 === undefined ? "col-10" : className2} id={"LabelCalendarDiv2-" + Id} element={"LabelCalendar-" + Id} Description={Text}>
                 <CalendarDatePicker formid={FormId} fieldname={name}
                   className={InputclassName === undefined ? "form-control my-2  ltr" : InputclassName} element={"LabelCalendar-" + Id}
-                  Description={Text} id={"LabelCalendarInput-" + Id} isDisabled={isDisabled}
+                  Description={Text} id={"LabelCalendarInput-" + Id} isDisabled={isDisabled===undefined?false:isDisabled}
                   setDate={this.state.setDate} CalendarChange={CalendarChange.bind(this)} />
                 
               </div>
