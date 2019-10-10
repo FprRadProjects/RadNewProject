@@ -36198,6 +36198,9 @@ min-height: 32px;
     color: red!important;
 
 }
+.r-formbuilder .input-group-text{
+    padding: 0 .5rem;
+}
 .r-formbuilder .is-requierd .input-group-text:after{
     content: "*";
     color: red;
@@ -36359,8 +36362,21 @@ min-height: 32px;
 
 .r-formbuilder .input-group-text {
     border-radius: 0!important;
+    font-size:unset;
 }
-
+.r-formbuilder [class*=MuiInput-formControl-]{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.r-formbuilder .date-input-with-dialog-main{
+    display: flex;
+    align-items: center;
+}
+.r-formbuilder .date-input-with-dialog-calendar,.r-formbuilder .date-input-with-dialog-empty{
+top:50%;
+transform: translateY(-50%)
+}
 .r-formbuilder [class*=MuiInput-input-], .r-formbuilder .date-input-with-dialog-input {
     border-radius: 0!important;
 }
@@ -36374,6 +36390,14 @@ min-height: 32px;
     border-radius: 0;
 }
 
+.r-formbuilder [class*=MuiInput-underline-]:before,
+.r-formbuilder [class*=MuiInput-underline-]:after{
+    display: none;
+}
+
+.r-formbuilder .JDatePicker{
+    width:100%;
+}
 /* .r-formbuilder [class*=MuiFormControl-] div, .r-formbuilder .date-input-with-dialog-main div{
         width: 100%;
     } */
@@ -36382,12 +36406,17 @@ min-height: 32px;
     width: 100%;
 }
 
+
+.r-formbuilder [class*=MuiInput-input], .r-formbuilder .date-input-with-dialog-input{
+padding: 0 .5rem!important;
+}
+
 .r-formbuilder .form-control {
     display: block;
     width: 100%;
-    padding: .375rem .75rem;
+    padding: 0 .5rem;
     font-size: 1rem;
-    line-height: 1.5;
+    line-height: 1;
     color: #495057;
     background-color: #fff;
     background-clip: padding-box;
@@ -36407,18 +36436,20 @@ min-height: 32px;
 
 .r-formbuilder .form-check {
     position: relative;
-    display: block;
+    display: flex;
+    align-items: center;
     padding-right: 30px;
 }
 
 .r-formbuilder .form-check-input {
     position: absolute;
-    margin-top: 2px;
+    margin-top: 0;
     margin-right: -25px;
 }
 
 .r-formbuilder .form-check-label {
     margin-bottom: 0;
+    padding: 0;
 }
 
 .r-formbuilder input[type=checkbox], .r-formbuilder input[type=radio] {
@@ -36508,6 +36539,9 @@ min-height: 32px;
 .r-formbuilder .r-formbuilder__img img {
     max-height: 100%;
     max-width: 100%;
+}
+.r-formbuilder .r-formbuilder__img .input-group-text{
+    padding: .5rem;
 }
 
 
