@@ -15,7 +15,11 @@ import { RibbonDesignerFormBuilder } from '../Ribbon/Ribbon.DesignerFormBuilder'
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 var SaveParams = { caption_id: 0, Fields: [] };
-
+var layoutSize = {
+    A5landscape: { layoutsize: 'A5', layout: 'landscape' }, A5partial: { layoutsize: 'A5', layout: 'partial' },
+    A4landscape: { layoutsize: 'A4', layout: 'landscape' }, A4partial: { layoutsize: 'A4', layout: 'partial' },
+    A3landscape: { layoutsize: 'A3', layout: 'landscape' }, A3partial: { layoutsize: 'A3', layout: 'partial' }
+};
 class ToolBoxItem extends Component {
     render() {
         return (
@@ -30,7 +34,9 @@ class ToolBoxItem extends Component {
 }
 
 class ToolBox extends Component {
+
     render() {
+
         return (
             <div className="toolbox">
                 <span className="toolbox__title"><span>پنل فرم کار</span></span>
@@ -124,7 +130,7 @@ class DesignerFormBuilder extends Component {
                             : (l.ftype === 'img'
                                 ? <div className="r-formbuilder__img">
                                     <span className="input-group-text d-block">{l.flabel}</span>
-                                    <input type="button" value={this.context.t("RemoveImage")}  className="btn btn-block btn-danger" />
+                                    <input type="button" value={this.context.t("RemoveImage")} className="btn btn-block btn-danger" />
                                     <div className="r-formbuilder__img-holder">
                                         <input
                                             type="file"
@@ -380,8 +386,16 @@ class DesignerFormBuilder extends Component {
             }
         });
     }
+   
+    
+    ResizeCall = () => {
+       this.forceUpdate();
+    }
 
     render() {
+        var layoutsize = this.state.pageLayout === undefined ? '' : this.state.pageLayout.layoutsize;
+        var layout = this.state.pageLayout === undefined ? '' : this.state.pageLayout.layout;
+
         const { modal, toggle, WorkInfo, FormBuilderCaptionId, FormBuilderLayoutData, FormBuilderToolBoxData } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
@@ -394,6 +408,7 @@ class DesignerFormBuilder extends Component {
         }`;
         return (
             <div>
+              
                 <Modal isOpen={modal} toggle={toggle} keyboard={false}
                     className={this.state.modalClass} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={toggle}>{this.context.t("frm_Flow_Form_Builder")}</ModalHeader>
@@ -409,25 +424,36 @@ class DesignerFormBuilder extends Component {
                                 onAddHeaderText={this.onAddHeaderText}
                                 onAddGroupItem={this.onAddGroupItem}
                             />
-                            <ResponsiveReactGridLayout
-                                {...this.props}
-                                className="r-formbuilder__layout"
-                                layouts={this.state.layouts}
-                                onLayoutChange={this.onLayoutChange}
-                                // WidthProvider option
-                                measureBeforeMount={false}
-                                // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
-                                // and set `measureBeforeMount={true}`.
-                                useCSSTransforms={this.state.mounted}
-                                isDraggable={true}
-                                isResizable={true}
-                            >
-                                {this.generateDOM()}
-                            </ResponsiveReactGridLayout>
+                              <input type="Button" onClick={this.ChangeLayout.bind(this, "A5landscape")} value="A5landscape"></input>
+                <input type="Button" onClick={this.ChangeLayout.bind(this, "A5partial")} value="A5partial"></input>
+                <input type="Button" onClick={this.ChangeLayout.bind(this, "A4landscape")} value="A4landscape"></input>
+                <input type="Button" onClick={this.ChangeLayout.bind(this, "A4partial")} value="A4partial"></input>
+                <input type="Button" onClick={this.ChangeLayout.bind(this, "A3landscape")} value="A3landscape"></input>
+                <input type="Button" onClick={this.ChangeLayout.bind(this, "A3partial")} value="A3partial"></input>
+
+                            <page layoutsize={layoutsize} layout={layout}>
+                                <ResponsiveReactGridLayout 
+                                onResize={this.ResizeCall.bind(this)}
+                                    {...this.props}
+                                    className="r-formbuilder__layout"
+                                    layouts={this.state.layouts}
+                                    onLayoutChange={this.onLayoutChange}
+                                    // WidthProvider option
+                                    measureBeforeMount={false}
+                                    // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
+                                    // and set `measureBeforeMount={true}`.
+                                    useCSSTransforms={this.state.mounted}
+                                    isDraggable={true}
+                                    isResizable={true}
+                                >
+                                    {this.generateDOM()}
+                                </ResponsiveReactGridLayout>
+                            </page >
+
                         </div>
                         <style>{modalBackDrop}</style>
                     </ModalBody>
-                   
+
                 </Modal>
             </div >
 

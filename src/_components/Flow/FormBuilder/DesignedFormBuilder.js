@@ -348,6 +348,7 @@ class DesignedFormBuilder extends Component {
                         </div>
 
                         <div className="r-formbuilder" ref={el => (this.componentRef = el)}>
+                        <page layoutsize="A5" layout="partial">
                             <ResponsiveReactGridLayout
                                 {...this.props}
                                 className="r-formbuilder__layout designed"
@@ -357,6 +358,7 @@ class DesignedFormBuilder extends Component {
                             >
                                 {this.generateDOM()}
                             </ResponsiveReactGridLayout>
+                            </page>
                         </div>
                         <style>{modalBackDrop}</style>
                     </ModalBody>

@@ -36279,6 +36279,9 @@ min-height: 32px;
 
 .r-formbuilder .r-formbuilder__layout {
     min-height: 90px;
+    margin-right:auto;
+    margin-left:auto;
+    border:1px dashed #ddd;
 }
 
 .r-formbuilder .toolbox {
@@ -36372,6 +36375,7 @@ min-height: 32px;
 .r-formbuilder .date-input-with-dialog-main{
     display: flex;
     align-items: center;
+    min-width: unset;
 }
 .r-formbuilder .date-input-with-dialog-calendar,.r-formbuilder .date-input-with-dialog-empty{
 top:50%;
@@ -36580,3 +36584,30 @@ body.print .is-requierd .r-formbuilder__img-holder {
 body.print .r-formbuilder__img .btn-danger{
     display:none!important;
 }
+
+
+
+page[layoutsize="A4"][layout="partial"] > .r-formbuilder__layout {  
+    width: 21cm!important;
+    height: 29.7cm!important; 
+  }
+  page[layoutsize="A4"][layout="landscape"] > .r-formbuilder__layout {
+    width: 29.7cm!important;
+    height: 21cm!important;  
+  }
+  page[layoutsize="A3"][layout="partial"] > .r-formbuilder__layout {
+    width: 29.7cm!important;
+    height: 42cm!important;
+  }
+  page[layoutsize="A3"][layout="landscape"] > .r-formbuilder__layout {
+    width: 42cm!important;
+    height: 29.7cm!important;  
+  }
+  page[layoutsize="A5"][layout="partial"]  > .r-formbuilder__layout{
+    width: 14.8cm!important;
+    height: 21cm!important;
+  }
+  page[layoutsize="A5"][layout="landscape"]  > .r-formbuilder__layout{
+    width: 21cm!important;
+    height: 14.8cm!important;  
+  }
