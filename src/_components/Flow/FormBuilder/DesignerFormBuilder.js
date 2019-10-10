@@ -391,7 +391,13 @@ class DesignerFormBuilder extends Component {
     ResizeCall = () => {
        this.forceUpdate();
     }
+    ChangeLayout = (val, event) => {
+        this.setState({
+            pageLayout: layoutSize[val],
+            
+        });
 
+    }
     render() {
         var layoutsize = this.state.pageLayout === undefined ? '' : this.state.pageLayout.layoutsize;
         var layout = this.state.pageLayout === undefined ? '' : this.state.pageLayout.layout;
@@ -444,7 +450,7 @@ class DesignerFormBuilder extends Component {
                                     // and set `measureBeforeMount={true}`.
                                     useCSSTransforms={this.state.mounted}
                                     isDraggable={true}
-                                    isResizable={true}
+                                    isResizable={false}
                                 >
                                     {this.generateDOM()}
                                 </ResponsiveReactGridLayout>
