@@ -357,7 +357,7 @@ class DesignerFormBuilder extends Component {
     onLayoutChange = (layout, layouts) => {
         this.props.onLayoutChange(layout, layouts);
         this.setState({ layouts });
-        
+        console.log(layouts)
     };
 
     SaveFormDesignerHandle = (msg) => {
@@ -391,13 +391,15 @@ class DesignerFormBuilder extends Component {
     ChangeLayout = (val, event) => {
         this.setState({
             pageLayout: layoutSize[val],
-            layouts:null
             
         });
 
-
     }
       
+    onResize = (val, event) => {
+       this.forceUpdate();
+
+    }
     render() {
         var layoutsize = this.state.pageLayout === undefined ? 'A4' : this.state.pageLayout.layoutsize;
         var layout = this.state.pageLayout === undefined ? 'partial' : this.state.pageLayout.layout;
@@ -441,12 +443,15 @@ class DesignerFormBuilder extends Component {
 
                             <page layoutsize={layoutsize} layout={layout}>
                                 <ResponsiveReactGridLayout
+                                rowWidth={this.state.rowWidth} 
+                                rowHeight={this.state.rowHeight} 
+                                onResize={this.onResize} 
                                     {...this.props}
                                     className="r-formbuilder__layout"
                                     layouts={this.state.layouts}
                                     onLayoutChange={this.onLayoutChange}
                                     // WidthProvider option
-                                    measureBeforeMount={true}
+                                    measureBeforeMount={false}
                                     // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
                                     // and set `measureBeforeMount={true}`.
                                     useCSSTransforms={this.state.mounted}

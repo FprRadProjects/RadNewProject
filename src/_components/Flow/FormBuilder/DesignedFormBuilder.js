@@ -45,19 +45,22 @@ class DesignedFormBuilder extends Component {
         cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
     };
 
-    handleChange = colname => event => {
-        const { checked, value } = event.target;
-        const ftype = event.target.getAttribute('ftype');
-        let newState = Object.assign({}, this.state);
+    handleChange = (ftype, fnum) => event => {
+        var colname = ftype + fnum;
+        const { checked, value,formatted } = event.target;
+        //  const ftype = event.target.getAttribute('ftype');
         var item = {}
         if (ftype == "bool")
             item = { "columname": colname, "value": checked }
         else if (ftype == "mon")
             item = { "columname": colname, "value": value.replace(/,/g, '') }
+        else if (ftype == "tar") {
+            item = { "columname": colname, "value": formatted }
+            console.log(formatted)
+            this.setState({[colname]:formatted });
+        }
         else
             item = { "columname": colname, "value": value }
-
-        this.setState(newState);
 
         for (var i = 0; i < valuesJSON.length; i++)
             if (valuesJSON[i]["columname"] == colname)
@@ -77,9 +80,9 @@ class DesignedFormBuilder extends Component {
 
 
         const { WorkInfo, DesignedDelImg } = this.props;
-// console.log(colname)
-//         if (ImagesFormData.has(colname))
-//             ImagesFormData.delete(colname);
+        // console.log(colname)
+        //         if (ImagesFormData.has(colname))
+        //             ImagesFormData.delete(colname);
 
         const hasImage = event.target.getAttribute('hasImage');
         if (hasImage == "true") {
@@ -169,7 +172,7 @@ class DesignedFormBuilder extends Component {
                 );
             }
             return (
-                <div className={l.faccess == "0" ? "is-disabled" : l.frequired ? "is-requierd" : ""} style={{zIndex: (1000-parseInt(l.y))}} key={l.i} flabel={l.flabel} ftype={l.ftype} fnum={l.fnum} frequired={l.frequired} ffields={l.ffields} ffieldstxt={l.ffieldstxt}>
+                <div className={l.faccess == "0" ? "is-disabled" : l.frequired ? "is-requierd" : ""} style={{ zIndex: (1000 - parseInt(l.y)) }} key={l.i} flabel={l.flabel} ftype={l.ftype} fnum={l.fnum} frequired={l.frequired} ffields={l.ffields} ffieldstxt={l.ffieldstxt}>
                     {l.ftype === 'adad'
                         ? <div className="input-group">
                             <div className="input-group-prepend">
@@ -184,7 +187,7 @@ class DesignedFormBuilder extends Component {
                                 type="Number"
                                 className="form-control"
                                 value={l.fvalue}
-                                onChange={this.handleChange(l.ftype + l.fnum)} />
+                                onChange={this.handleChange(l.ftype, l.fnum)} />
                         </div>
                         : (l.ftype === 'look'
                             ? <div className="input-group">
@@ -200,7 +203,7 @@ class DesignedFormBuilder extends Component {
                                     ffields={l.ffields}
                                     ffieldstxt={l.ffieldstxt}
                                     className="form-control"
-                                    onChange={this.handleChange(l.ftype + l.fnum)}>
+                                    onChange={this.handleChange(l.ftype, l.fnum)}>
                                     {listItems}
                                 </select>
                             </div>
@@ -235,7 +238,7 @@ class DesignedFormBuilder extends Component {
                                             value={l.fvalue}
                                             thousandSeparator={true}
                                             className="form-control"
-                                            onChange={this.handleChange(l.ftype + l.fnum)}
+                                            onChange={this.handleChange(l.ftype, l.fnum)}
                                         />
                                     </div>
                                     : (l.ftype === 'saat'
@@ -254,7 +257,7 @@ class DesignedFormBuilder extends Component {
                                                 mask="99:99"
                                                 value={l.fvalue}
                                                 className="form-control"
-                                                onChange={this.handleChange(l.ftype + l.fnum)} />
+                                                onChange={this.handleChange(l.ftype, l.fnum)} />
                                         </div>
                                         : (l.ftype === 'str'
                                             ? <div className="input-group">
@@ -265,7 +268,7 @@ class DesignedFormBuilder extends Component {
                                                     id={"formvals_" + l.ftype + l.fnum}
                                                     name={"formvals_" + l.ftype + l.fnum}
                                                     className="form-control"
-                                                    onChange={this.handleChange(l.ftype + l.fnum)}
+                                                    onChange={this.handleChange(l.ftype, l.fnum)}
                                                 >
                                                     {l.fvalue}
                                                 </textarea>
@@ -283,7 +286,7 @@ class DesignedFormBuilder extends Component {
                                                             value={l.fvalue}
                                                             fnum={l.fnum}
                                                             defaultChecked={l.fvalue == "true" ? "checked" : ""}
-                                                            onChange={this.handleChange(l.ftype + l.fnum)}
+                                                            onChange={this.handleChange(l.ftype, l.fnum)}
                                                         />
                                                         <label className="form-check-label" for={"formvals_" + l.ftype + l.fnum}>{l.flabel}</label>
                                                     </div>
@@ -299,8 +302,8 @@ class DesignedFormBuilder extends Component {
                                                             flabel={l.flabel}
                                                             ftype={l.ftype}
                                                             fnum={l.fnum}
-                                                            value={l.fvalue}
-                                                            onChange={this.handleChange(l.ftype + l.fnum)}
+                                                            value={this.state[l.colname]!==undefined && this.state[l.colname]!==null? this.state[l.colname]:l.fvalue}
+                                                            onChange={this.handleChange(l.ftype, l.fnum)}
                                                             className="form-control"
                                                         />
                                                     </div>
@@ -348,16 +351,16 @@ class DesignedFormBuilder extends Component {
                         </div>
 
                         <div className="r-formbuilder" ref={el => (this.componentRef = el)}>
-                        <page layoutsize="A5" layout="partial">
-                            <ResponsiveReactGridLayout
-                                {...this.props}
-                                className="r-formbuilder__layout designed"
-                                layouts={this.state.layouts}
-                                isDraggable={false}
-                                isResizable={false}
-                            >
-                                {this.generateDOM()}
-                            </ResponsiveReactGridLayout>
+                            <page layoutsize="A5" layout="partial">
+                                <ResponsiveReactGridLayout
+                                    {...this.props}
+                                    className="r-formbuilder__layout designed"
+                                    layouts={this.state.layouts}
+                                    isDraggable={false}
+                                    isResizable={false}
+                                >
+                                    {this.generateDOM()}
+                                </ResponsiveReactGridLayout>
                             </page>
                         </div>
                         <style>{modalBackDrop}</style>
