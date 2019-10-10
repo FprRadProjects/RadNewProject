@@ -16,9 +16,9 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 var SaveParams = { caption_id: 0, Fields: [] };
 var layoutSize = {
-    A5landscape: { layoutsize: 'A5', layout: 'landscape' }, A5partial: { layoutsize: 'A5', layout: 'partial' },
-    A4landscape: { layoutsize: 'A4', layout: 'landscape' }, A4partial: { layoutsize: 'A4', layout: 'partial' },
-    A3landscape: { layoutsize: 'A3', layout: 'landscape' }, A3partial: { layoutsize: 'A3', layout: 'partial' }
+    A5landscape: { layoutsize: 'A5',rowWidth : '29.7cm',rowHeight: '21cm', layout: 'landscape' }, A5partial: { layoutsize: 'A5',rowWidth : '21cm',rowHeight: '29.7cm', layout: 'partial' },
+    A4landscape: { layoutsize: 'A4',rowWidth : '21cm',rowHeight: '14.8cm', layout: 'landscape' }, A4partial: { layoutsize: 'A4',rowWidth : '21cm',rowHeight: '14.8cm', layout: 'partial' },
+    A3landscape: { layoutsize: 'A3',rowWidth : '42cm',rowHeight: '29.7cm', layout: 'landscape' }, A3partial: { layoutsize: 'A3',rowWidth : '29.7cm',rowHeight: '42cm', layout: 'partial' }
 };
 class ToolBoxItem extends Component {
     render() {
@@ -357,7 +357,7 @@ class DesignerFormBuilder extends Component {
     onLayoutChange = (layout, layouts) => {
         this.props.onLayoutChange(layout, layouts);
         this.setState({ layouts });
-        console.log(layouts)
+        
     };
 
     SaveFormDesignerHandle = (msg) => {
@@ -387,21 +387,23 @@ class DesignerFormBuilder extends Component {
         });
     }
    
-    
-    ResizeCall = () => {
-       this.forceUpdate();
-    }
+  
     ChangeLayout = (val, event) => {
         this.setState({
             pageLayout: layoutSize[val],
+            layouts:null
             
         });
 
-    }
-    render() {
-        var layoutsize = this.state.pageLayout === undefined ? '' : this.state.pageLayout.layoutsize;
-        var layout = this.state.pageLayout === undefined ? '' : this.state.pageLayout.layout;
 
+    }
+      
+    render() {
+        var layoutsize = this.state.pageLayout === undefined ? 'A4' : this.state.pageLayout.layoutsize;
+        var layout = this.state.pageLayout === undefined ? 'partial' : this.state.pageLayout.layout;
+        var rowWidth = this.state.pageLayout === undefined ? '21cm' : this.state.pageLayout.rowWidth;
+        var rowHeight = this.state.pageLayout === undefined ? '29.7cm' : this.state.pageLayout.rowHeight;
+        
         const { modal, toggle, WorkInfo, FormBuilderCaptionId, FormBuilderLayoutData, FormBuilderToolBoxData } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
@@ -438,8 +440,7 @@ class DesignerFormBuilder extends Component {
                 <input type="Button" onClick={this.ChangeLayout.bind(this, "A3partial")} value="A3partial"></input>
 
                             <page layoutsize={layoutsize} layout={layout}>
-                                <ResponsiveReactGridLayout 
-                                onResize={this.ResizeCall.bind(this)}
+                                <ResponsiveReactGridLayout
                                     {...this.props}
                                     className="r-formbuilder__layout"
                                     layouts={this.state.layouts}
@@ -450,7 +451,7 @@ class DesignerFormBuilder extends Component {
                                     // and set `measureBeforeMount={true}`.
                                     useCSSTransforms={this.state.mounted}
                                     isDraggable={true}
-                                    isResizable={false}
+                                    isResizable={true}
                                 >
                                     {this.generateDOM()}
                                 </ResponsiveReactGridLayout>
