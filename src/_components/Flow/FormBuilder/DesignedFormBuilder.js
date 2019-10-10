@@ -77,17 +77,17 @@ class DesignedFormBuilder extends Component {
 
 
         const { WorkInfo, DesignedDelImg } = this.props;
-
-        if (ImagesFormData.has(colname))
-            ImagesFormData.delete(colname);
+// console.log(colname)
+//         if (ImagesFormData.has(colname))
+//             ImagesFormData.delete(colname);
 
         const hasImage = event.target.getAttribute('hasImage');
         if (hasImage == "true") {
-            var formData = new FormData();
-            ImagesFormData.append("peygir_id", WorkInfo.peygir_id);
-            ImagesFormData.append("showtree_id", WorkInfo.showtree_id);
-            ImagesFormData.append("colname", colname);
-            DesignedDelImg(formData, msg).then(data => {
+            var DelImgFormData = new FormData();
+            DelImgFormData.append("peygir_id", WorkInfo.peygir_id);
+            DelImgFormData.append("showtree_id", WorkInfo.showtree_id);
+            DelImgFormData.append("colname", colname);
+            DesignedDelImg(DelImgFormData, msg).then(data => {
                 if (data.status) {
                 }
             })
