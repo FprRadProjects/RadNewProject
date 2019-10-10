@@ -101,7 +101,6 @@ class DesignedFormBuilder extends Component {
         SaveValuesParams.Fields = valuesJSON;
         SaveValuesParams.caption_id = FormBuilderCaptionId;
         SaveValuesParams.peygir_id = WorkInfo.peygir_id;
-        console.log(SaveValuesParams);
         DesignedSaveValues(SaveValuesParams, msg).then(data => {
             if (data.status) {
             }
