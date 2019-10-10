@@ -282,7 +282,7 @@ class DesignedFormBuilder extends Component {
                                                             ftype={l.ftype}
                                                             value={l.fvalue}
                                                             fnum={l.fnum}
-                                                            checked={l.fvalue == "1" ? "checked" : ""}
+                                                            defaultChecked={l.fvalue == "true" ? "checked" : ""}
                                                             onChange={this.handleChange(l.ftype + l.fnum)}
                                                         />
                                                         <label className="form-check-label" for={"formvals_" + l.ftype + l.fnum}>{l.flabel}</label>
