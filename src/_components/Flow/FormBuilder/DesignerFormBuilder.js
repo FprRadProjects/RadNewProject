@@ -445,12 +445,12 @@ class DesignerFormBuilder extends Component {
                                     layouts={this.state.layouts}
                                     onLayoutChange={this.onLayoutChange}
                                     // WidthProvider option
-                                    measureBeforeMount={false}
+                                    measureBeforeMount={true}
                                     // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
                                     // and set `measureBeforeMount={true}`.
                                     useCSSTransforms={this.state.mounted}
                                     isDraggable={true}
-                                    isResizable={false}
+                                    isResizable={true}
                                 >
                                     {this.generateDOM()}
                                 </ResponsiveReactGridLayout>

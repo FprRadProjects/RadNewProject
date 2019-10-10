@@ -36213,11 +36213,15 @@ min-height: 32px;
     border-color: red!important;
 } */
 
-.r-formbuilder input, .r-formbuilder textarea, .r-formbuilder button, .r-formbuilder select {
+.r-formbuilder input,  .r-formbuilder button, .r-formbuilder select {
     /* direction: rtl; */
     border-radius: 0!important;
-    resize: none;
     height:unset!important;
+}
+.r-formbuilder textarea{
+    border-radius: 0!important;
+    resize: none;
+    max-height: 100%;
 }
 
 /* .r-formbuilder .react-grid-layout {
@@ -36236,8 +36240,17 @@ min-height: 32px;
 .designed .react-grid-item {
     padding: 0 5px;
     border: 0!important;
+    transform-style: flat;
+-webkit-transform-style: flat;
+-moz-transform-style: flat;
+position: absolute;
+z-index: 1;
 }
 
+.r-formbuilder .JDatePicker{
+    position: absolute;
+    z-index: 2;
+}
 .r-formbuilder .react-grid-item:not(.react-grid-placeholder) {
     background: transparent;
     border: 1px dashed #cce;

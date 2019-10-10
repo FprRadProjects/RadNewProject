@@ -169,7 +169,7 @@ class DesignedFormBuilder extends Component {
                 );
             }
             return (
-                <div className={l.faccess == "0" ? "is-disabled" : l.frequired ? "is-requierd" : ""} key={l.i} flabel={l.flabel} ftype={l.ftype} fnum={l.fnum} frequired={l.frequired} ffields={l.ffields} ffieldstxt={l.ffieldstxt}>
+                <div className={l.faccess == "0" ? "is-disabled" : l.frequired ? "is-requierd" : ""} style={{zIndex: (1000-parseInt(l.y))}} key={l.i} flabel={l.flabel} ftype={l.ftype} fnum={l.fnum} frequired={l.frequired} ffields={l.ffields} ffieldstxt={l.ffieldstxt}>
                     {l.ftype === 'adad'
                         ? <div className="input-group">
                             <div className="input-group-prepend">
