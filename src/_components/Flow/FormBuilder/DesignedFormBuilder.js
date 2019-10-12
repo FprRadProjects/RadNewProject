@@ -36,7 +36,9 @@ class DesignedFormBuilder extends Component {
             layouts: { lg: this.props.FormBuilderLayoutData },
             FlowFormBuilderModal: this.props.FlowFormBuilderModal,
             FormBuilderCaptionId: this.props.FormBuilderCaptionId,
-            FormBuilderLayoutData: this.props.FormBuilderLayoutData
+            FormBuilderLayoutData: this.props.FormBuilderLayoutData,
+            DesignPageLayout: this.props.DesignPageLayout,
+            DesignPageSize:  this.props.DesignPageSize
         };
     }
     static defaultProps = {
@@ -47,7 +49,7 @@ class DesignedFormBuilder extends Component {
 
     handleChange = (ftype, fnum) => event => {
         var colname = ftype + fnum;
-        const { checked, value,formatted } = event.target;
+        const { checked, value, formatted } = event.target;
         //  const ftype = event.target.getAttribute('ftype');
         var item = {}
         if (ftype == "bool")
@@ -57,7 +59,7 @@ class DesignedFormBuilder extends Component {
         else if (ftype == "tar") {
             item = { "columname": colname, "value": formatted }
             console.log(formatted)
-            this.setState({[colname]:formatted });
+            this.setState({ [colname]: formatted });
         }
         else
             item = { "columname": colname, "value": value }
@@ -144,7 +146,9 @@ class DesignedFormBuilder extends Component {
                     DesignedFormFieldList(WorkInfo.peygir_id, WorkInfo.showtree_id).then(data1 => {
                         if (data1.status) {
                             this.setState({
-                                layouts: { lg: data1.data.rows }
+                                layouts: { lg: data1.data.rows },
+                                DesignPageLayout: data.data.DesignPageLayout,
+                                DesignPageSize: data.data.DesignPageSize
                             });
                         }
                     });
@@ -302,7 +306,7 @@ class DesignedFormBuilder extends Component {
                                                             flabel={l.flabel}
                                                             ftype={l.ftype}
                                                             fnum={l.fnum}
-                                                            value={this.state[l.colname]!==undefined && this.state[l.colname]!==null? this.state[l.colname]:l.fvalue}
+                                                            value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                                             onChange={this.handleChange(l.ftype, l.fnum)}
                                                             className="form-control"
                                                         />
@@ -330,8 +334,8 @@ class DesignedFormBuilder extends Component {
     }
 
     render() {
-        
-        const { modal, toggle, FormBuilderCaptionId,DesignPageLayout,DesignPageSize } = this.props;
+
+        const { modal, toggle, FormBuilderCaptionId } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -351,14 +355,15 @@ class DesignedFormBuilder extends Component {
                             <RibbonDesignedFormBuilder rebuildHandle={this.rebuildHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} PrintRef={this.componentRef} SaveHandle={this.SaveHandle.bind(this)} FormBuilderCaptionId={FormBuilderCaptionId} />
                         </div>
 
-                        <div className="r-formbuilder" ref={el => (this.componentRef = el)}>
-                            <page layoutsize={DesignPageSize} layout={DesignPageLayout}>
+                        <div className="r-formbuilder" >
+                            <page layoutsize={this.state.DesignPageSize} layout={this.state.DesignPageLayout} >
                                 <ResponsiveReactGridLayout
                                     {...this.props}
                                     className="r-formbuilder__layout designed"
                                     layouts={this.state.layouts}
                                     isDraggable={false}
                                     isResizable={false}
+                                    ref={el => (this.componentRef = el)}
                                 >
                                     {this.generateDOM()}
                                 </ResponsiveReactGridLayout>

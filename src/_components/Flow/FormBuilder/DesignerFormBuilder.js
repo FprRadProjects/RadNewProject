@@ -14,11 +14,11 @@ import {
 import { RibbonDesignerFormBuilder } from '../Ribbon/Ribbon.DesignerFormBuilder';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-var SaveParams = { caption_id: 0,layout: "partial",size: "A4", Fields: [] };
+var SaveParams = { caption_id: 0, layout: "partial", size: "A4", Fields: [] };
 var layoutPageSize = {
-    A5landscape: { layoutsize: 'A5',rowWidth : '29.7cm',rowHeight: '21cm', layout: 'landscape' }, A5partial: { layoutsize: 'A5',rowWidth : '21cm',rowHeight: '29.7cm', layout: 'partial' },
-    A4landscape: { layoutsize: 'A4',rowWidth : '21cm',rowHeight: '14.8cm', layout: 'landscape' }, A4partial: { layoutsize: 'A4',rowWidth : '21cm',rowHeight: '14.8cm', layout: 'partial' },
-    A3landscape: { layoutsize: 'A3',rowWidth : '42cm',rowHeight: '29.7cm', layout: 'landscape' }, A3partial: { layoutsize: 'A3',rowWidth : '29.7cm',rowHeight: '42cm', layout: 'partial' }
+    A5landscape: { layoutsize: 'A5', rowWidth: '29.7cm', rowHeight: '21cm', layout: 'landscape' }, A5partial: { layoutsize: 'A5', rowWidth: '21cm', rowHeight: '29.7cm', layout: 'partial' },
+    A4landscape: { layoutsize: 'A4', rowWidth: '21cm', rowHeight: '14.8cm', layout: 'landscape' }, A4partial: { layoutsize: 'A4', rowWidth: '21cm', rowHeight: '14.8cm', layout: 'partial' },
+    A3landscape: { layoutsize: 'A3', rowWidth: '42cm', rowHeight: '29.7cm', layout: 'landscape' }, A3partial: { layoutsize: 'A3', rowWidth: '29.7cm', rowHeight: '42cm', layout: 'partial' }
 };
 class ToolBoxItem extends Component {
     render() {
@@ -61,19 +61,37 @@ class ToolBox extends Component {
 class DesignerFormBuilder extends Component {
     constructor(props) {
         super(props);
-
+        console.log(this.props.DesignPageSize);
+        var currentBreakpointState = "";
+        if (this.props.DesignPageLayout == "landscape") {
+            if (this.props.DesignPageSize == "A4") {
+                currentBreakpointState = "lg";
+            }
+            else if (this.props.DesignPageSize == "A5") {
+                currentBreakpointState = "sm";
+            }
+        }
+        else if (this.props.DesignPageLayout == "partial") {
+            if (this.props.DesignPageSize == "A4") {
+                currentBreakpointState = "sm";
+            }
+            else if (this.props.DesignPageSize == "A5") {
+                currentBreakpointState = "xs";
+            }
+        }
+console.log(currentBreakpointState);
         this.state = {
             ...this.state,
             modal: false,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal",
-            currentBreakpoint: "lg",
+            currentBreakpoint: currentBreakpointState,
             compactType: "vertical",
             mounted: false,
-            layouts: { lg: this.props.FormBuilderLayoutData },
-            toolbox: { lg: this.props.FormBuilderToolBoxData },
-            DesignPageLayout:this.props.DesignPageLayout,
-            DesignPageSize: this.props.DesignPageSize 
+            layouts: { [currentBreakpointState]: this.props.FormBuilderLayoutData },
+            toolbox: { [currentBreakpointState]: this.props.FormBuilderToolBoxData },
+            DesignPageLayout: this.props.DesignPageLayout,
+            DesignPageSize: this.props.DesignPageSize
         };
 
         this.onAddEmptyItem = this.onAddEmptyItem.bind(this);
@@ -379,33 +397,59 @@ class DesignerFormBuilder extends Component {
         })
         SaveParams.Fields = obj;
         SaveParams.caption_id = FormBuilderCaptionId;
-        SaveParams.layout= this.state.DesignPageLayout;
-        SaveParams.size = this.state.DesignPageSize;
+        SaveParams.pagelayout = this.state.DesignPageLayout;
+        SaveParams.pagesize = this.state.DesignPageSize;
+        console.log(SaveParams)
         DesignerSave(SaveParams, msg).then(data => {
             if (data.status) {
 
             }
         });
     }
-   
-  
+
+
     ChangeLayout = (val, event) => {
-        this.setState({
+        var cwec = this.state.currentBreakpoint;
+     
+        var bp = "";
+        if (layoutPageSize[val].layout == "landscape") {
+            if (layoutPageSize[val].layoutsize == "A4") {
+                bp = "lg";
+            }
+            else if (layoutPageSize[val].layoutsize == "A5") {
+                bp = "sm";
+            }
+        }
+        else if (layoutPageSize[val].layout == "partial") {
+            if (layoutPageSize[val].layoutsize == "A4") {
+                bp = "sm";
+            }
+            else if (layoutPageSize[val].layoutsize == "A5") {
+                bp = "xs";
+            }
+        }
+        console.log(bp);
+        console.log(this.state.layouts);
+        console.log(this.state.toolbox);
+
+        this.setState(prevState => ({
             DesignPageLayout: layoutPageSize[val].layout,
             DesignPageSize: layoutPageSize[val].layoutsize,
-            
-        });
+            currentBreakpoint: bp,
+            layouts:{[bp]: prevState.layouts[cwec]},
+            toolbox:{[bp]: prevState.toolbox[cwec]},
+        }));
 
     }
-      
+
     onResize = (val, event) => {
-       this.forceUpdate();
+        this.forceUpdate();
 
     }
     render() {
         var layoutsize = this.state.DesignPageSize === undefined ? 'A4' : this.state.DesignPageSize;
         var layout = this.state.DesignPageLayout === undefined ? 'partial' : this.state.DesignPageLayout;
-        
+
         const { modal, toggle, WorkInfo, FormBuilderCaptionId, FormBuilderLayoutData, FormBuilderToolBoxData } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
@@ -418,7 +462,7 @@ class DesignerFormBuilder extends Component {
         }`;
         return (
             <div>
-              
+
                 <Modal isOpen={modal} toggle={toggle} keyboard={false}
                     className={this.state.modalClass} backdrop={this.state.backdrop}>
                     <ModalHeader toggle={toggle}>{this.context.t("frm_Flow_Form_Builder")}</ModalHeader>
@@ -434,18 +478,18 @@ class DesignerFormBuilder extends Component {
                                 onAddHeaderText={this.onAddHeaderText}
                                 onAddGroupItem={this.onAddGroupItem}
                             />
-                              <input type="Button" onClick={this.ChangeLayout.bind(this, "A5landscape")} value="A5landscape"></input>
-                <input type="Button" onClick={this.ChangeLayout.bind(this, "A5partial")} value="A5partial"></input>
-                <input type="Button" onClick={this.ChangeLayout.bind(this, "A4landscape")} value="A4landscape"></input>
-                <input type="Button" onClick={this.ChangeLayout.bind(this, "A4partial")} value="A4partial"></input>
-                <input type="Button" onClick={this.ChangeLayout.bind(this, "A3landscape")} value="A3landscape"></input>
-                <input type="Button" onClick={this.ChangeLayout.bind(this, "A3partial")} value="A3partial"></input>
+                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A5landscape")} value="A5landscape"></input>
+                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A5partial")} value="A5partial"></input>
+                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A4landscape")} value="A4landscape"></input>
+                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A4partial")} value="A4partial"></input>
+                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A3landscape")} value="A3landscape"></input>
+                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A3partial")} value="A3partial"></input>
 
                             <page layoutsize={layoutsize} layout={layout}>
                                 <ResponsiveReactGridLayout
-                                rowWidth={this.state.rowWidth} 
-                                rowHeight={this.state.rowHeight} 
-                                onResize={this.onResize} 
+                                    rowWidth={this.state.rowWidth}
+                                    rowHeight={this.state.rowHeight}
+                                    onResize={this.onResize}
                                     {...this.props}
                                     className="r-formbuilder__layout"
                                     layouts={this.state.layouts}
