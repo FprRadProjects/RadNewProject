@@ -330,7 +330,8 @@ class DesignedFormBuilder extends Component {
     }
 
     render() {
-        const { modal, toggle, FormBuilderCaptionId } = this.props;
+        
+        const { modal, toggle, FormBuilderCaptionId,DesignPageLayout,DesignPageSize } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -351,7 +352,7 @@ class DesignedFormBuilder extends Component {
                         </div>
 
                         <div className="r-formbuilder" ref={el => (this.componentRef = el)}>
-                            <page layoutsize="A5" layout="partial">
+                            <page layoutsize={DesignPageSize} layout={DesignPageLayout}>
                                 <ResponsiveReactGridLayout
                                     {...this.props}
                                     className="r-formbuilder__layout designed"

@@ -27,7 +27,9 @@ class RibbonDesignedFormBuilder extends Component {
             DesignerFormBuilderModal: false,
             FormBuilderCaptionId: null,
             FormBuilderLayoutData: [],
-            FormBuilderToolBoxData: []
+            FormBuilderToolBoxData: [],
+            DesignPageLayout:"partial",
+            DesignPageSize: "A4"
         };
 
     }
@@ -52,12 +54,15 @@ class RibbonDesignedFormBuilder extends Component {
                 if (data.data.hasFormBuilder) {
                     DesignerFieldList(data.data.CaptionId).then(data1 => {
                         if (data1.status) {
-                            console.log(data1)
+                            console.log(data1.data.DesignPageLayout)
+                            console.log(data1.data.DesignPageSize)
                             this.setState({
                                 DesignerFormBuilderModal: true,
                                 FormBuilderCaptionId: data.data.CaptionId,
                                 FormBuilderLayoutData: data1.data.Designed,
-                                FormBuilderToolBoxData: data1.data.ToolsBox
+                                FormBuilderToolBoxData: data1.data.ToolsBox,
+                                DesignPageLayout: data1.data.DesignPageLayout,
+                                DesignPageSize: data1.data.DesignPageSize
                             });
                             console.log(this.state.FormBuilderLayoutData)
                         }
@@ -193,6 +198,8 @@ class RibbonDesignedFormBuilder extends Component {
                         FormBuilderCaptionId={this.state.FormBuilderCaptionId}
                         FormBuilderLayoutData={this.state.FormBuilderLayoutData}
                         FormBuilderToolBoxData={this.state.FormBuilderToolBoxData}
+                        DesignPageLayout={this.state.DesignPageLayout}
+                        DesignPageSize={this.state.DesignPageSize}
                         Params={Params}
                     />
                 }

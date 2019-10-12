@@ -33,7 +33,9 @@ class RibbonReferenceViewer extends Component {
             modalClass: "modal-dialog-centered modal-xl r-modal",
             FlowFormBuilderModal: false,
             FormBuilderCaptionId: null,
-            FormBuilderLayoutData: []
+            FormBuilderLayoutData: [],
+            DesignPageLayout:"partial",
+            DesignPageSize: "A4"
         };
 
     }
@@ -143,7 +145,9 @@ class RibbonReferenceViewer extends Component {
                             this.setState({
                                 FlowFormBuilderModal: true,
                                 FormBuilderCaptionId: data.data.CaptionId,
-                                FormBuilderLayoutData: data1.data.rows
+                                FormBuilderLayoutData: data1.data.rows,
+                                DesignPageLayout: data.data.DesignPageLayout,
+                                DesignPageSize: data.data.DesignPageSize
                             });
                         }
                     });
@@ -310,6 +314,9 @@ class RibbonReferenceViewer extends Component {
                         RefreshParentForm={RefreshParentForm}
                         FormBuilderCaptionId={this.state.FormBuilderCaptionId}
                         FormBuilderLayoutData={this.state.FormBuilderLayoutData}
+                        DesignPageLayout={this.state.DesignPageLayout}
+                        DesignPageSize={this.state.DesignPageSize}
+                        
                         Params={Params}
                     />
                 }

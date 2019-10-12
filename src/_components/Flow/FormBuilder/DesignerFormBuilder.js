@@ -14,8 +14,8 @@ import {
 import { RibbonDesignerFormBuilder } from '../Ribbon/Ribbon.DesignerFormBuilder';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-var SaveParams = { caption_id: 0, Fields: [] };
-var layoutSize = {
+var SaveParams = { caption_id: 0,layout: "partial",size: "A4", Fields: [] };
+var layoutPageSize = {
     A5landscape: { layoutsize: 'A5',rowWidth : '29.7cm',rowHeight: '21cm', layout: 'landscape' }, A5partial: { layoutsize: 'A5',rowWidth : '21cm',rowHeight: '29.7cm', layout: 'partial' },
     A4landscape: { layoutsize: 'A4',rowWidth : '21cm',rowHeight: '14.8cm', layout: 'landscape' }, A4partial: { layoutsize: 'A4',rowWidth : '21cm',rowHeight: '14.8cm', layout: 'partial' },
     A3landscape: { layoutsize: 'A3',rowWidth : '42cm',rowHeight: '29.7cm', layout: 'landscape' }, A3partial: { layoutsize: 'A3',rowWidth : '29.7cm',rowHeight: '42cm', layout: 'partial' }
@@ -71,7 +71,9 @@ class DesignerFormBuilder extends Component {
             compactType: "vertical",
             mounted: false,
             layouts: { lg: this.props.FormBuilderLayoutData },
-            toolbox: { lg: this.props.FormBuilderToolBoxData }
+            toolbox: { lg: this.props.FormBuilderToolBoxData },
+            DesignPageLayout:this.props.DesignPageLayout,
+            DesignPageSize: this.props.DesignPageSize 
         };
 
         this.onAddEmptyItem = this.onAddEmptyItem.bind(this);
@@ -357,7 +359,6 @@ class DesignerFormBuilder extends Component {
     onLayoutChange = (layout, layouts) => {
         this.props.onLayoutChange(layout, layouts);
         this.setState({ layouts });
-        console.log(layouts)
     };
 
     SaveFormDesignerHandle = (msg) => {
@@ -376,10 +377,10 @@ class DesignerFormBuilder extends Component {
                 }
                 ;
         })
-        console.log(obj)
         SaveParams.Fields = obj;
         SaveParams.caption_id = FormBuilderCaptionId;
-        console.log(SaveParams)
+        SaveParams.layout= this.state.DesignPageLayout;
+        SaveParams.size = this.state.DesignPageSize;
         DesignerSave(SaveParams, msg).then(data => {
             if (data.status) {
 
@@ -390,7 +391,8 @@ class DesignerFormBuilder extends Component {
   
     ChangeLayout = (val, event) => {
         this.setState({
-            pageLayout: layoutSize[val],
+            DesignPageLayout: layoutPageSize[val].layout,
+            DesignPageSize: layoutPageSize[val].layoutsize,
             
         });
 
@@ -401,10 +403,8 @@ class DesignerFormBuilder extends Component {
 
     }
     render() {
-        var layoutsize = this.state.pageLayout === undefined ? 'A4' : this.state.pageLayout.layoutsize;
-        var layout = this.state.pageLayout === undefined ? 'partial' : this.state.pageLayout.layout;
-        var rowWidth = this.state.pageLayout === undefined ? '21cm' : this.state.pageLayout.rowWidth;
-        var rowHeight = this.state.pageLayout === undefined ? '29.7cm' : this.state.pageLayout.rowHeight;
+        var layoutsize = this.state.DesignPageSize === undefined ? 'A4' : this.state.DesignPageSize;
+        var layout = this.state.DesignPageLayout === undefined ? 'partial' : this.state.DesignPageLayout;
         
         const { modal, toggle, WorkInfo, FormBuilderCaptionId, FormBuilderLayoutData, FormBuilderToolBoxData } = this.props;
         const modalBackDrop = `
