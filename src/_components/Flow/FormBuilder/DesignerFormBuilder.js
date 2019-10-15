@@ -642,7 +642,7 @@ class DesignerFormBuilder extends Component {
                 }
                 ;
         })
-         console.log(obj)
+        console.log(obj)
         // let objsetting = [];
         // Object.keys(Settings).map((item, index) => {
         //     return objsetting[index++] =
@@ -672,8 +672,8 @@ class DesignerFormBuilder extends Component {
 
 
     ChangeLayout = event => {
-        const {  value } = event.target;
-      
+        const { value } = event.target;
+
         var cwec = this.state.currentBreakpoint;
 
         var bp = "";
@@ -740,15 +740,15 @@ class DesignerFormBuilder extends Component {
                                 onAddHeaderText={this.onAddHeaderText}
                                 onAddGroupItem={this.onAddGroupItem}
                             />
-                            <select onChange={this.ChangeLayout.bind(this)}>
-                            <option key={1} value={"A5landscape"} Text={"A5 Landscape"} selected={layoutsize+layout == "A5landscape" ? "selected" : ""}>{"A5 Landscape"}</option>
-                            <option key={1} value={"A5partial"} Text={"A5 Partial"} selected={layoutsize+layout == "A5partial" ? "selected" : ""}>{"A5 Partial"}</option>
-                            
-                            <option key={1} value={"A4landscape"} Text={"A4 Landscape"} selected={layoutsize+layout == "A4landscape" ? "selected" : ""}>{"A4 Landscape"}</option>
-                            <option key={1} value={"A4partial"} Text={"A4 Partial"} selected={layoutsize+layout == "A4partial" ? "selected" : ""}>{"A4 Partial"}</option>
-                            </select>
-                            <label>{this.context.t("PageLayoutSize")}</label>
-                            
+                            <div className="form-group paper-select">
+                                <label>{this.context.t("PageLayoutSize")}</label>
+                                <select className="form-control " onChange={this.ChangeLayout.bind(this)}>
+                                    <option key={1} value={"A5landscape"} Text={"A5 Landscape"} selected={layoutsize + layout == "A5landscape" ? "selected" : ""}>{"A5 Landscape"}</option>
+                                    <option key={1} value={"A5partial"} Text={"A5 Partial"} selected={layoutsize + layout == "A5partial" ? "selected" : ""}>{"A5 Partial"}</option>
+                                    <option key={1} value={"A4landscape"} Text={"A4 Landscape"} selected={layoutsize + layout == "A4landscape" ? "selected" : ""}>{"A4 Landscape"}</option>
+                                    <option key={1} value={"A4partial"} Text={"A4 Partial"} selected={layoutsize + layout == "A4partial" ? "selected" : ""}>{"A4 Partial"}</option>
+                                </select>
+                            </div>
                             <page layoutsize={layoutsize} layout={layout}>
                                 <ResponsiveReactGridLayout
                                     rowWidth={this.state.rowWidth}

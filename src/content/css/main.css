@@ -36853,3 +36853,17 @@ page[layoutsize="A5"][layout="landscape"]>.r-formbuilder__layout {
     min-height: 14.8cm!important;
     overflow-y: scroll;
 }
+
+.r-formbuilder .paper-select{
+    direction: rtl;
+    margin-right:  auto;
+    margin-left:  auto;
+    display: table;
+}
+.r-formbuilder .paper-select select{
+    border: 1px solid #ddd;
+    direction: rtl;
+    width:auto;
+    display: inline-block;
+    margin-right: 10px;
+}
