@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import _ from "lodash";
+import $ from 'jquery';
 import PropTypes, { bool } from "prop-types"
 import { connect } from "react-redux";
 import { Responsive, WidthProvider } from "react-grid-layout";
@@ -332,7 +333,24 @@ class DesignedFormBuilder extends Component {
             );
         });
     }
-
+    FormBuilderPrinterHandle = () => {
+        const content = $('.r-formbuilder').html();
+       console.log(content)
+        var mywindow = window.open('', 'Print', 'height=600,width=800');
+    
+        mywindow.document.write('<html><head><title>Print</title>');
+        mywindow.document.write('');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(content);
+        mywindow.document.write('</body></html>');
+    
+        mywindow.document.close();
+        mywindow.focus()
+        mywindow.print();
+        mywindow.close();
+        return true;
+        // document.body.innerHTML = oldPage
+    }
     render() {
 
         const { modal, toggle, FormBuilderCaptionId } = this.props;
@@ -352,12 +370,16 @@ class DesignedFormBuilder extends Component {
                     <ModalHeader toggle={toggle}>{this.context.t("frm_Flow_Form_Builder")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonDesignedFormBuilder rebuildHandle={this.rebuildHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} PrintRef={this.componentRef} SaveHandle={this.SaveHandle.bind(this)} FormBuilderCaptionId={FormBuilderCaptionId} />
+                            <RibbonDesignedFormBuilder rebuildHandle={this.rebuildHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} PrintRef={this.componentRef} SaveHandle={this.SaveHandle.bind(this)} FormBuilderCaptionId={FormBuilderCaptionId}
+                            FormBuilderPrinterHandle={this.FormBuilderPrinterHandle.bind(this)}
+                            
+                            />
                         </div>
 
                         <div className="r-formbuilder" >
                             <page layoutsize={this.state.DesignPageSize} layout={this.state.DesignPageLayout} >
                                 <ResponsiveReactGridLayout
+                                id="printme"
                                     {...this.props}
                                     className="r-formbuilder__layout designed"
                                     layouts={this.state.layouts}

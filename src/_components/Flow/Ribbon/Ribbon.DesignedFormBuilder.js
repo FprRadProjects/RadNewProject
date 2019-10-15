@@ -89,8 +89,8 @@ class RibbonDesignedFormBuilder extends Component {
 
     render() {
         const { WorkInfo, Params, ShortKeys, DeletedElements, EditedElements, RefreshParentForm,
-            FormBuilderCaptionId, SaveHandle, PrintRef, ConfirmationHandle, rebuildHandle
-        } = this.props;
+            FormBuilderCaptionId, SaveHandle, FormBuilderPrinterHandle, ConfirmationHandle, rebuildHandle
+       ,PrintRef } = this.props;
         return (
             <div>
                 <div className="r-main-box__toggle">
@@ -149,6 +149,14 @@ class RibbonDesignedFormBuilder extends Component {
                                             handleClick={this.FormBuilderDesignerHandle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="FormBuilderDesigner"
+                                        />
+                                        <RibbonButton FormId={FormInfo.fm_web_flow_formsaz.id}
+                                            DeletedElements={DeletedElements}
+                                            Id="form-builder-designer"
+                                            FormBuilderCaptionId={FormBuilderCaptionId}
+                                            handleClick={FormBuilderPrinterHandle.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="print"
                                         />
                                         <ReactToPrint
                                             trigger={() => <a href="#"><i className="icon save"></i><label>پرینت</label></a>}
