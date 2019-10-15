@@ -38,13 +38,13 @@ class DesignedFormBuilder extends Component {
             FormBuilderCaptionId: this.props.FormBuilderCaptionId,
             FormBuilderLayoutData: this.props.FormBuilderLayoutData,
             DesignPageLayout: this.props.DesignPageLayout,
-            DesignPageSize:  this.props.DesignPageSize
+            DesignPageSize: this.props.DesignPageSize
         };
     }
     static defaultProps = {
         className: "layout",
         rowHeight: 30,
-        cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+        cols: { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 },
     };
 
     handleChange = (ftype, fnum) => event => {
@@ -180,7 +180,13 @@ class DesignedFormBuilder extends Component {
                     {l.ftype === 'adad'
                         ? <div className="input-group">
                             <div className="input-group-prepend">
-                                <span className="input-group-text">{l.flabel}</span>
+                                <span style={{
+                                    color: l.fcolor,
+                                    fontWeight: l.ffontweight,
+                                    fontStyle: l.ffontstyle,
+                                    fontSize: l.ffontsize,
+                                    fontFamily: l.ffontfamily
+                                }} className="input-group-text">{l.flabel}</span>
                             </div>
                             <input
                                 id={"formvals_" + l.ftype + l.fnum}
@@ -196,7 +202,13 @@ class DesignedFormBuilder extends Component {
                         : (l.ftype === 'look'
                             ? <div className="input-group">
                                 <div className="input-group-prepend">
-                                    <span className="input-group-text">{l.flabel}</span>
+                                    <span style={{
+                                        color: l.fcolor,
+                                        fontWeight: l.ffontweight,
+                                        fontStyle: l.ffontstyle,
+                                        fontSize: l.ffontsize,
+                                        fontFamily: l.ffontfamily
+                                    }} className="input-group-text">{l.flabel}</span>
                                 </div>
                                 <select
                                     id={"formvals_" + l.ftype + l.fnum}
@@ -213,7 +225,13 @@ class DesignedFormBuilder extends Component {
                             </div>
                             : (l.ftype === 'img'
                                 ? <div className="r-formbuilder__img">
-                                    <span className="input-group-text d-block">{l.flabel}</span>
+                                    <span style={{
+                                        color: l.fcolor,
+                                        fontWeight: l.ffontweight,
+                                        fontStyle: l.ffontstyle,
+                                        fontSize: l.ffontsize,
+                                        fontFamily: l.ffontfamily
+                                    }} className="input-group-text d-block">{l.flabel}</span>
                                     <input type="button" value={this.context.t("RemoveImage")} hasImage={l.fimg != null ? "true" : "false"} onClick={this.handleRemoveImage.bind(this, l.colname, this.context.t("msg_Operation_Success"))} className="btn btn-block btn-danger" />
                                     <div className="r-formbuilder__img-holder" onClick={() => this.refs[l.colname].click()}>
                                         <input
@@ -231,7 +249,13 @@ class DesignedFormBuilder extends Component {
                                 : (l.ftype === 'mon'
                                     ? <div className="input-group">
                                         <div className="input-group-prepend">
-                                            <span className="input-group-text">{l.flabel}</span>
+                                            <span style={{
+                                                color: l.fcolor,
+                                                fontWeight: l.ffontweight,
+                                                fontStyle: l.ffontstyle,
+                                                fontSize: l.ffontsize,
+                                                fontFamily: l.ffontfamily
+                                            }} className="input-group-text">{l.flabel}</span>
                                         </div>
                                         <NumberFormat
                                             id={"formvals_" + l.ftype + l.fnum}
@@ -248,7 +272,13 @@ class DesignedFormBuilder extends Component {
                                     : (l.ftype === 'saat'
                                         ? <div className="input-group">
                                             <div className="input-group-prepend">
-                                                <span className="input-group-text">{l.flabel}</span>
+                                                <span style={{
+                                                    color: l.fcolor,
+                                                    fontWeight: l.ffontweight,
+                                                    fontStyle: l.ffontstyle,
+                                                    fontSize: l.ffontsize,
+                                                    fontFamily: l.ffontfamily
+                                                }} className="input-group-text">{l.flabel}</span>
                                             </div>
 
                                             <InputMask
@@ -266,7 +296,13 @@ class DesignedFormBuilder extends Component {
                                         : (l.ftype === 'str'
                                             ? <div className="input-group">
                                                 <div className="input-group-prepend">
-                                                    <span className="input-group-text">{l.flabel}</span>
+                                                    <span style={{
+                                                        color: l.fcolor,
+                                                        fontWeight: l.ffontweight,
+                                                        fontStyle: l.ffontstyle,
+                                                        fontSize: l.ffontsize,
+                                                        fontFamily: l.ffontfamily
+                                                    }} className="input-group-text">{l.flabel}</span>
                                                 </div>
                                                 <textarea
                                                     id={"formvals_" + l.ftype + l.fnum}
@@ -292,13 +328,25 @@ class DesignedFormBuilder extends Component {
                                                             defaultChecked={l.fvalue == "true" ? "checked" : ""}
                                                             onChange={this.handleChange(l.ftype, l.fnum)}
                                                         />
-                                                        <label className="form-check-label" for={"formvals_" + l.ftype + l.fnum}>{l.flabel}</label>
+                                                        <label className="form-check-label" style={{
+                                                            color: l.fcolor,
+                                                            fontWeight: l.ffontweight,
+                                                            fontStyle: l.ffontstyle,
+                                                            fontSize: l.ffontsize,
+                                                            fontFamily: l.ffontfamily
+                                                        }} for={"formvals_" + l.ftype + l.fnum}>{l.flabel}</label>
                                                     </div>
                                                 </div>
                                                 : (l.ftype === 'tar'
                                                     ? <div className="input-group">
                                                         <div className="input-group-prepend">
-                                                            <span className="input-group-text">{l.flabel}</span>
+                                                            <span style={{
+                                                                color: l.fcolor,
+                                                                fontWeight: l.ffontweight,
+                                                                fontStyle: l.ffontstyle,
+                                                                fontSize: l.ffontsize,
+                                                                fontFamily: l.ffontfamily
+                                                            }} className="input-group-text">{l.flabel}</span>
                                                         </div>
                                                         <JalaliField
                                                             id={"formvals_" + l.ftype + l.fnum}
@@ -312,10 +360,22 @@ class DesignedFormBuilder extends Component {
                                                         />
                                                     </div>
                                                     : (l.ftype === 'label'
-                                                        ? <span>{l.flabel}</span>
+                                                        ? <span style={{
+                                                            color: l.fcolor,
+                                                            fontWeight: l.ffontweight,
+                                                            fontStyle: l.ffontstyle,
+                                                            fontSize: l.ffontsize,
+                                                            fontFamily: l.ffontfamily
+                                                        }}>{l.flabel}</span>
                                                         : (l.ftype === 'group'
                                                             ? <div className="r-formbuilder__group">
-                                                                <h5>{l.flabel}</h5>
+                                                                <h5 style={{
+                                                                    color: l.fcolor,
+                                                                    fontWeight: l.ffontweight,
+                                                                    fontStyle: l.ffontstyle,
+                                                                    fontSize: l.ffontsize,
+                                                                    fontFamily: l.ffontfamily
+                                                                }}>{l.flabel}</h5>
                                                             </div>
                                                             : null
                                                         )
@@ -363,7 +423,8 @@ class DesignedFormBuilder extends Component {
                                     layouts={this.state.layouts}
                                     isDraggable={false}
                                     isResizable={false}
-                                    ref={el => (this.componentRef = el)}
+                                    ref={el => (this.componentRef = el)} 
+                                    
                                 >
                                     {this.generateDOM()}
                                 </ResponsiveReactGridLayout>

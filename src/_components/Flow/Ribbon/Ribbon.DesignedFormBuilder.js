@@ -154,6 +154,7 @@ class RibbonDesignedFormBuilder extends Component {
                                             trigger={() => <a href="#"><i className="icon save"></i><label>پرینت</label></a>}
                                             content={() => PrintRef}
                                             bodyClass="print"
+                                            pageStyle={""}
                                         />
                                     </div>
                                 </div>
