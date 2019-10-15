@@ -130,6 +130,18 @@ $(document).on('click', '.toggle-diagram-sidebar', function (e) {
     return false;
 });
 
+$(document).on('click', '.fontsize-button select', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+});
+$(document).on('click', '.fontfamily-button select', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+});
+$(document).on('click', '.color-button', function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+});
 
 $('.r-main-box__controlpanel--action').on('click', function (e) {
     console.log($(this).next().hasClass("show"));

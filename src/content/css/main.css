@@ -36192,33 +36192,34 @@ min-height: 32px;
     direction: ltr;
 }
 
-
-.r-formbuilder__layout .is-requierd .input-group-text{
+.r-formbuilder__layout .is-requierd .input-group-text {
     border-color: red!important;
     color: red!important;
-
 }
-.r-formbuilder__layout .input-group-text{
+
+.r-formbuilder__layout .input-group-text {
     padding: 0 .5rem;
 }
-.r-formbuilder__layout .is-requierd .input-group-text:after{
+
+.r-formbuilder__layout .is-requierd .input-group-text:after {
     content: "*";
     color: red;
     position: absolute;
-    top:0;
-    right:5px;
-
+    top: 0;
+    right: 5px;
 }
+
 /* .r-formbuilder .is-requierd .form-control{
     border-color: red!important;
 } */
 
-.r-formbuilder__layout input,  .r-formbuilder__layout button, .r-formbuilder__layout select {
+.r-formbuilder__layout input, .r-formbuilder__layout button, .r-formbuilder__layout select {
     /* direction: rtl; */
     border-radius: 0!important;
-    height:unset!important;
+    height: unset!important;
 }
-.r-formbuilder__layout textarea{
+
+.r-formbuilder__layout textarea {
     border-radius: 0!important;
     resize: none;
     max-height: 100%;
@@ -36233,24 +36234,27 @@ min-height: 32px;
     display: flex;
     align-items: stretch;
     justify-content: center;
-    padding: 0 15px 0 5px;
+    padding: 0;
     direction: rtl;
+    margin-left: -10px;
+    margin-top: 20px;
 }
 
 .r-formbuilder__layout.designed .react-grid-item {
     padding: 0 5px;
     border: 0!important;
     transform-style: flat;
--webkit-transform-style: flat;
--moz-transform-style: flat;
-position: absolute;
-z-index: 1;
+    -webkit-transform-style: flat;
+    -moz-transform-style: flat;
+    position: absolute;
+    z-index: 1;
 }
 
-.r-formbuilder .JDatePicker{
+.r-formbuilder .JDatePicker {
     position: absolute;
     z-index: 2;
 }
+
 .r-formbuilder .react-grid-item:not(.react-grid-placeholder) {
     background: transparent;
     border: 1px dashed #cce;
@@ -36292,9 +36296,9 @@ z-index: 1;
 
 .r-formbuilder__layout {
     min-height: 90px;
-    margin-right:auto;
-    margin-left:auto;
-    border:1px dashed #ddd;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px dashed #ddd;
 }
 
 .r-formbuilder .toolbox {
@@ -36304,19 +36308,217 @@ z-index: 1;
     /* direction: rtl; */
     padding: 5px;
     min-height: 33px;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2)
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2)
+}
+
+.r-formbuilder-colorpicker-lnk {
+    background: #fff;
+    border-radius: 1px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.r-formbuilder-colorpicker-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+}
+
+.r-formbuilder-colorpicker-popover {
+    position: absolute;
+    display: none;
+    z-index: 2;
+    top: 100%;
+    right: 0;
+}
+
+.r-formbuilder-colorpicker-cover {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.r-formbuilder-controlpanel {
+    position: absolute;
+    top: -22px;
+    right: -1px;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    border: 1px dashed #ddd;
+    border-bottom: 0;
+    z-index: 99999;
 }
 
 .r-formbuilder__layout .hide-button {
     cursor: pointer;
-    position: absolute;
-    font-size: 16px;
-    top: 0px;
-    right: 0;
+    font-size: 14px;
     line-height: 0.5;
     background-color: #c30000;
     color: #fff;
-    padding: 3px 2px;
+    height: 16px;
+    width: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3px;
+    border-radius: 2px;
+}
+
+.r-formbuilder__layout .fontsize-button {
+    height: 16px;
+    width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.r-formbuilder__layout .fontsize-button select {
+    display: block;
+    height: 16px!important;
+    font-size: 11px;
+    color: #4d4d4d;
+    padding: 0 3px 0 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 2px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #e7eced;
+    background-image: url(../images/arrow-down.png);
+    background-repeat: no-repeat;
+    background-position: left 2px top 50%;
+    background-size: .65em auto;
+}
+
+.r-formbuilder__layout .fontsize-button select::-ms-expand {
+    display: none;
+}
+
+.r-formbuilder__layout .fontsize-button select:focus {
+    box-shadow: none!important;
+    outline: none;
+}
+
+.r-formbuilder__layout .fontsize-button select option {
+    font-weight: normal;
+}
+
+.r-formbuilder__layout .fontfamily-button {
+    height: 16px;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.r-formbuilder__layout .color-button {
+    height: 16px;
+    width: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* position: relative; */
+}
+.r-formbuilder__layout .color-button .chrome-picker {
+    width: auto!important;
+    direction: ltr;
+}
+.r-formbuilder__layout .fontfamily-button select {
+    display: block;
+    height: 16px!important;
+    font-size: 11px;
+    color: #4d4d4d;
+    padding: 0 3px 0 15px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 2px;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #e7eced;
+    background-image: url(../images/arrow-down.png);
+    background-repeat: no-repeat;
+    background-position: left 2px top 50%;
+    background-size: .65em auto;
+}
+
+.r-formbuilder__layout .fontfamily-button select::-ms-expand {
+    display: none;
+}
+
+.r-formbuilder__layout .fontfamily-button select:focus {
+    box-shadow: none!important;
+    outline: none;
+}
+
+.r-formbuilder__layout .fontfamily-button select option {
+    font-weight: normal;
+}
+
+.r-formbuilder__layout .bold-button, .r-formbuilder__layout .italic-button {
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 0.5;
+    background-color: #ddd;
+    color: #333;
+    height: 16px;
+    width: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+.r-formbuilder__layout .bold-button {
+    background-image: url(../images/bold-1.png);
+    background-size: contain;
+}
+
+.r-formbuilder__layout .italic-button {
+    background-image: url(../images/italic-1.png);
+    background-size: contain;
+}
+
+.r-formbuilder__layout .setting-dropdown .dropdown-menu {
+    transform: none!important;
+    top: 100%!important;
+    margin-top: -1px!important;
+    border-radius: 0;
+}
+
+.r-formbuilder__layout .setting-dropdown .dropdown-item {
+    padding: 0 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #4d4d4d!important;
+}
+.r-formbuilder__layout .setting-dropdown .dropdown-item:active {
+    background: #ddd!important;
+    color: #4d4d4d!important;
+}
+
+.r-formbuilder__layout .setting-dropdown .dropdown-item>label {
+    margin-bottom: 0;
+    font-size: 13px;
+}
+
+.r-formbuilder__layout .setting-button {
+    width: 16px;
+    height: 16px!important;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    color: #4d4d4d;
 }
 
 .r-formbuilder .toolbox__title {
@@ -36329,12 +36531,14 @@ z-index: 1;
     text-align: center;
     text-align: center;
 }
-.r-formbuilder .toolbox__title  span{
+
+.r-formbuilder .toolbox__title span {
     background-color: #f00;
     border-radius: 0 0 8px 8px;
     padding: 5px 50px;
     color: #fff;
 }
+
 .r-formbuilder .toolbox__items {
     display: flex;
     align-items: center;
@@ -36379,22 +36583,26 @@ z-index: 1;
 
 .r-formbuilder__layout .input-group-text {
     border-radius: 0!important;
-    font-size:unset;
+    font-size: unset;
 }
-.r-formbuilder__layout [class*=MuiInput-formControl-]{
+
+.r-formbuilder__layout [class*=MuiInput-formControl-] {
     height: 100%;
     display: flex;
     align-items: center;
 }
-.r-formbuilder__layout .date-input-with-dialog-main{
+
+.r-formbuilder__layout .date-input-with-dialog-main {
     display: flex;
     align-items: center;
     min-width: unset;
 }
-.r-formbuilder__layout .date-input-with-dialog-calendar,.r-formbuilder__layout .date-input-with-dialog-empty{
-top:50%;
-transform: translateY(-50%)
+
+.r-formbuilder__layout .date-input-with-dialog-calendar, .r-formbuilder__layout .date-input-with-dialog-empty {
+    top: 50%;
+    transform: translateY(-50%)
 }
+
 .r-formbuilder__layout [class*=MuiInput-input-], .r-formbuilder__layout .date-input-with-dialog-input {
     border-radius: 0!important;
 }
@@ -36408,25 +36616,24 @@ transform: translateY(-50%)
     border-radius: 0;
 }
 
-.r-formbuilder__layout [class*=MuiInput-underline-]:before,
-.r-formbuilder__layout [class*=MuiInput-underline-]:after{
+.r-formbuilder__layout [class*=MuiInput-underline-]:before, .r-formbuilder__layout [class*=MuiInput-underline-]:after {
     display: none;
 }
 
-.r-formbuilder__layout .JDatePicker{
-    width:100%;
+.r-formbuilder__layout .JDatePicker {
+    width: 100%;
 }
+
 /* .r-formbuilder [class*=MuiFormControl-] div, .r-formbuilder .date-input-with-dialog-main div{
         width: 100%;
     } */
 
-    .r-formbuilder__layout [class*=MuiInput-formControl-] {
+.r-formbuilder__layout [class*=MuiInput-formControl-] {
     width: 100%;
 }
 
-
-.r-formbuilder__layout [class*=MuiInput-input], .r-formbuilder__layout .date-input-with-dialog-input{
-padding: 0 .5rem!important;
+.r-formbuilder__layout [class*=MuiInput-input], .r-formbuilder__layout .date-input-with-dialog-input {
+    padding: 0 .5rem!important;
 }
 
 .r-formbuilder__layout .form-control {
@@ -36528,11 +36735,13 @@ padding: 0 .5rem!important;
     justify-content: flex-start;
     align-items: center;
 }
-.r-formbuilder__img  .input-group-text{
+
+.r-formbuilder__img .input-group-text {
     width: 100%;
     display: block;
     position: relative;
 }
+
 .r-formbuilder__img input[type="file"] {
     display: none;
 }
@@ -36550,89 +36759,97 @@ padding: 0 .5rem!important;
 }
 
 .r-formbuilder__layout .is-requierd .r-formbuilder__img-holder {
-    border:1px solid red;
+    border: 1px solid red;
 }
 
 .r-formbuilder__img img {
     max-height: 100%;
     max-width: 100%;
 }
-.r-formbuilder__img .input-group-text{
+
+.r-formbuilder__img .input-group-text {
     padding: .5rem;
 }
 
-
-.r-formbuilder__layout .is-disabled input,
-.r-formbuilder__layout .is-disabled select,
-.r-formbuilder__layout .is-disabled div{
-    pointer-events:none!important;
+.r-formbuilder__layout .is-disabled input, .r-formbuilder__layout .is-disabled select, .r-formbuilder__layout .is-disabled div {
+    pointer-events: none!important;
 }
-.r-formbuilder__layout .is-disabled{
+
+.r-formbuilder__layout .is-disabled {
     cursor: not-allowed!important;
 }
 
-body.print{
+body.print {
     background: none!important;
     padding: 0!important;
 }
-body.print:before,body.print:after{
+
+body.print:before, body.print:after {
     display: none!important;
 }
-body.print .is-requierd .input-group-text{
+
+body.print .is-requierd .input-group-text {
     border-color: #ced4da!important;
-    color:unset!important;
+    color: unset!important;
     /* border:0!important;
 background: none!important; */
 }
+
 /* body.print  .r-formbuilder .form-control
 {
 border:0!important;
 } */
-body.print .is-requierd .input-group-text:after{
+
+body.print .is-requierd .input-group-text:after {
     display: none!important;
 }
+
 body.print .is-requierd .r-formbuilder__img-holder {
     border: 1px solid #ced4da!important;
 }
-body.print .r-formbuilder__img .btn-danger{
-    display:none!important;
+
+body.print .r-formbuilder__img .btn-danger {
+    display: none!important;
 }
 
-
-
-page[layoutsize="A4"][layout="partial"] > .r-formbuilder__layout {  
+page[layoutsize="A4"][layout="partial"]>.r-formbuilder__layout {
     width: 21cm!important;
-    max-height: 29.7cm!important; 
-    min-height: 29.7cm!important; 
+    max-height: 29.7cm!important;
+    min-height: 29.7cm!important;
     overflow-y: scroll;
-  }
-  page[layoutsize="A4"][layout="landscape"] > .r-formbuilder__layout {
+}
+
+page[layoutsize="A4"][layout="landscape"]>.r-formbuilder__layout {
     width: 29.7cm!important;
-    max-height: 21cm!important;  
-    min-height: 21cm!important;  
+    max-height: 21cm!important;
+    min-height: 21cm!important;
     overflow-y: scroll;
-  }
-  page[layoutsize="A3"][layout="partial"] > .r-formbuilder__layout {
+}
+
+page[layoutsize="A3"][layout="partial"]>.r-formbuilder__layout {
     width: 29.7cm!important;
     max-height: 42cm!important;
     min-height: 42cm!important;
     overflow-y: scroll;
-  }
-  page[layoutsize="A3"][layout="landscape"] > .r-formbuilder__layout {
+}
+
+page[layoutsize="A3"][layout="landscape"]>.r-formbuilder__layout {
     width: 42cm!important;
-    max-height: 29.7cm!important;  
-    min-height: 29.7cm!important;  
+    max-height: 29.7cm!important;
+    min-height: 29.7cm!important;
     overflow-y: scroll;
-  }
-  page[layoutsize="A5"][layout="partial"]  > .r-formbuilder__layout{
+}
+
+page[layoutsize="A5"][layout="partial"]>.r-formbuilder__layout {
     width: 14.8cm!important;
     max-height: 21cm!important;
     min-height: 21cm!important;
     overflow-y: scroll;
-  }
-  page[layoutsize="A5"][layout="landscape"]  > .r-formbuilder__layout{
+}
+
+page[layoutsize="A5"][layout="landscape"]>.r-formbuilder__layout {
     width: 21cm!important;
-    max-height: 14.8cm!important;  
-    min-height: 14.8cm!important;  
+    max-height: 14.8cm!important;
+    min-height: 14.8cm!important;
     overflow-y: scroll;
-  }
+}
