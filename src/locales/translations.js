@@ -183,6 +183,12 @@ export const translations = {
         FlowFormBuilder:"فرم ساز فرآیند",
         FormBuilderDesigner: "طراحی شکل فرم",
         SaveFormDesigner:"ذخیره شکل فرم",
+        FontSize:"اندازه قلم",
+        FontFamily:"فونت",
+        Italic:"ایتالیک",
+        Bold:"پررنگ",
+        Color:"رنگ",
+        PageLayoutSize:"اندازه صفحه",
         
         //---------------تاییدیه------------------شروع
         Yes: 'بلی',
@@ -216,6 +222,7 @@ export const translations = {
         Referral: "ارجاع",
         Return_Control_To_Page:"بازگشت کنترل به صفحه",
         RemoveImage:"حذف تصویر",
+        Print:"چاپ",
         
         //--------------اقدام------------------پایان
         //---------------پیام ها----------------شروع
@@ -467,7 +474,12 @@ export const translations = {
         FlowFormBuilder:"Flow Form Builder",
         FormBuilderDesigner: "Form Builder Designer",
         SaveFormDesigner:"Save Form Designer",
-
+        FontSize:"Font Size",
+        FontFamily:"Font Family",
+        Italic:"Italic",
+        Bold:"Bold",
+        Color:"Color",
+        PageLayoutSize:"Page Size",
 
         //Start---------------Confirm-----------------
         Yes: 'Yes',
@@ -500,6 +512,7 @@ export const translations = {
         Referral: "Referral",
         Return_Control_To_Page:"Return control to page",
         RemoveImage:"Remove Image",
+        Print:"Print",
 
         //End-----------------Actions----------------
 

@@ -150,16 +150,8 @@ class RibbonDesignedFormBuilder extends Component {
                                             EditedElements={EditedElements}
                                             Text="FormBuilderDesigner"
                                         />
-                                        <RibbonButton FormId={FormInfo.fm_web_flow_formsaz.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="form-builder-designer"
-                                            FormBuilderCaptionId={FormBuilderCaptionId}
-                                            handleClick={FormBuilderPrinterHandle.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="print"
-                                        />
                                         <ReactToPrint
-                                            trigger={() => <a href="#"><i className="icon save"></i><label>پرینت</label></a>}
+                                            trigger={() => <a href="#"><i className="icon save"></i><label>{this.context.t("Print")}</label></a>}
                                             content={() => PrintRef}
                                             bodyClass="print"
                                             pageStyle={""}

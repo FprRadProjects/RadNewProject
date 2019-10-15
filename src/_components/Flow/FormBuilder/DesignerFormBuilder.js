@@ -167,6 +167,7 @@ class DesignerFormBuilder extends Component {
                     <option key={index} value={val} Text={ffieldstxtArray[index]}>{ffieldstxtArray[index]}</option>
                 );
             }
+            console.log(l);
             // console.log(l.colname)
             //console.log(this.state["displayColorPicker" + l.colname])
 
@@ -184,17 +185,17 @@ class DesignerFormBuilder extends Component {
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li class="dropdown-item" onClick={this.onBoldItem.bind(this, l.colname)}>
-                                        <label>پررنگ</label>
+                                        <label>{this.context.t("Bold")}</label>
                                         <div className="bold-button" >
                                         </div>
                                     </li>
                                     <li class="dropdown-item" onClick={this.onItalicItem.bind(this, l.colname)}>
-                                        <label>ایتالیک</label>
+                                        <label>{this.context.t("Italic")}</label>
                                         <div className="italic-button" >
                                         </div>
                                     </li>
                                     <li class="dropdown-item">
-                                        <label>اندازه قلم</label>
+                                        <label>{this.context.t("FontSize")}</label>
                                         <div className="fontsize-button">
                                             <select onClick={this.onFontSizeItem.bind(this, l.colname)}>
                                                 <option value="12px" selected={l.ffontsize == "12px" ? "selected" : ""}>12</option>
@@ -206,7 +207,7 @@ class DesignerFormBuilder extends Component {
                                         </div>
                                     </li>
                                     <li class="dropdown-item">
-                                        <label>فونت</label>
+                                        <label>{this.context.t("FontFamily")}</label>
                                         <div className="fontfamily-button">
                                             <select onClick={this.onFontFamilyItem.bind(this, l.colname)}>
                                                 <option value="IRANSans_Fa" selected={l.ffontfamily == "IRANSans_Fa" ? "selected" : ""}>IRANSans</option>
@@ -216,7 +217,7 @@ class DesignerFormBuilder extends Component {
                                         </div>
                                     </li>
                                     <li class="dropdown-item">
-                                        <label>رنگ</label>
+                                        <label>{this.context.t("Color")}</label>
                                         <div className="color-button">
                                             <div className="r-formbuilder-colorpicker-lnk" onClick={this.handleClick.bind(this, l.colname)}>
                                                 <div className="r-formbuilder-colorpicker-color" style={{ background: this.state["color" + l.colname] !== undefined && this.state["color" + l.colname] !== null ? this.state["color" + l.colname] : l.fcolor }} />
@@ -670,33 +671,31 @@ class DesignerFormBuilder extends Component {
     }
 
 
-    ChangeLayout = (val, event) => {
+    ChangeLayout = event => {
+        const {  value } = event.target;
+      
         var cwec = this.state.currentBreakpoint;
 
         var bp = "";
-        if (layoutPageSize[val].layout == "landscape") {
-            if (layoutPageSize[val].layoutsize == "A4") {
+        if (layoutPageSize[value].layout == "landscape") {
+            if (layoutPageSize[value].layoutsize == "A4") {
                 bp = "lg";
             }
-            else if (layoutPageSize[val].layoutsize == "A5") {
+            else if (layoutPageSize[value].layoutsize == "A5") {
                 bp = "sm";
             }
         }
-        else if (layoutPageSize[val].layout == "partial") {
-            if (layoutPageSize[val].layoutsize == "A4") {
+        else if (layoutPageSize[value].layout == "partial") {
+            if (layoutPageSize[value].layoutsize == "A4") {
                 bp = "sm";
             }
-            else if (layoutPageSize[val].layoutsize == "A5") {
+            else if (layoutPageSize[value].layoutsize == "A5") {
                 bp = "xs";
             }
         }
-        console.log(bp);
-        console.log(this.state.layouts);
-        console.log(this.state.toolbox);
-
         this.setState(prevState => ({
-            DesignPageLayout: layoutPageSize[val].layout,
-            DesignPageSize: layoutPageSize[val].layoutsize,
+            DesignPageLayout: layoutPageSize[value].layout,
+            DesignPageSize: layoutPageSize[value].layoutsize,
             currentBreakpoint: bp,
             layouts: { [bp]: prevState.layouts[cwec] },
             toolbox: { [bp]: prevState.toolbox[cwec] },
@@ -741,13 +740,15 @@ class DesignerFormBuilder extends Component {
                                 onAddHeaderText={this.onAddHeaderText}
                                 onAddGroupItem={this.onAddGroupItem}
                             />
-                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A5landscape")} value="A5landscape"></input>
-                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A5partial")} value="A5partial"></input>
-                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A4landscape")} value="A4landscape"></input>
-                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A4partial")} value="A4partial"></input>
-                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A3landscape")} value="A3landscape"></input>
-                            <input type="Button" onClick={this.ChangeLayout.bind(this, "A3partial")} value="A3partial"></input>
-
+                            <select onChange={this.ChangeLayout.bind(this)}>
+                            <option key={1} value={"A5landscape"} Text={"A5 Landscape"} selected={layoutsize+layout == "A5landscape" ? "selected" : ""}>{"A5 Landscape"}</option>
+                            <option key={1} value={"A5partial"} Text={"A5 Partial"} selected={layoutsize+layout == "A5partial" ? "selected" : ""}>{"A5 Partial"}</option>
+                            
+                            <option key={1} value={"A4landscape"} Text={"A4 Landscape"} selected={layoutsize+layout == "A4landscape" ? "selected" : ""}>{"A4 Landscape"}</option>
+                            <option key={1} value={"A4partial"} Text={"A4 Partial"} selected={layoutsize+layout == "A4partial" ? "selected" : ""}>{"A4 Partial"}</option>
+                            </select>
+                            <label>{this.context.t("PageLayoutSize")}</label>
+                            
                             <page layoutsize={layoutsize} layout={layout}>
                                 <ResponsiveReactGridLayout
                                     rowWidth={this.state.rowWidth}
