@@ -34993,6 +34993,11 @@ i.icon.financial-form {
 i.icon.process-form-builder {
     background-image: url(../images/Ribbon/process-form-builder.svg);
 }
+/*تاریخچه فرمساز فرآیند */
+
+i.icon.history-process-form-builder {
+    background-image: url(../images/Ribbon/process-form-builder.svg);
+}
 
 /* طراحی شکل فرم */
 

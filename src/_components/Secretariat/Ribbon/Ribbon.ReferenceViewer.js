@@ -19,6 +19,7 @@ import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 import { toast } from 'react-toastify';
 import { NewReferral } from '../RecordsPage/Referral.New';
 import { DesignedFormBuilder } from '../../Flow/FormBuilder/DesignedFormBuilder';
+import { DesignedHistoryFormBuilder } from '../../Flow/FormBuilder/DesignedHistoryFormBuilder';
 
 
 class RibbonReferenceViewer extends Component {
@@ -32,9 +33,10 @@ class RibbonReferenceViewer extends Component {
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal",
             FlowFormBuilderModal: false,
+            HistoryFlowFormBuilderModal: false,
             FormBuilderCaptionId: null,
             FormBuilderLayoutData: [],
-            DesignPageLayout:"partial",
+            DesignPageLayout: "partial",
             DesignPageSize: "A4"
         };
 
@@ -72,7 +74,12 @@ class RibbonReferenceViewer extends Component {
         }));
 
     }
+    toggleHistoryFormBuilder() {
+        this.setState(prevState => ({
+            HistoryFlowFormBuilderModal: !prevState.HistoryFlowFormBuilderModal
+        }));
 
+    }
     toggleFormBuilder() {
         this.setState(prevState => ({
             FlowFormBuilderModal: !prevState.FlowFormBuilderModal
@@ -134,7 +141,35 @@ class RibbonReferenceViewer extends Component {
             toast.warn(this.context.t("msg_No_Select_Row"));
 
     }
+    HistoryFlowFormBuilderHandle() {
+        const { WorkInfo, FlowPeygirCaptionInfo, DesignedHistoryFormFieldList } = this.props;
+        FlowPeygirCaptionInfo(WorkInfo.showtree_id).then(data => {
+            if (data.status) {
+                if (data.data.hasFormBuilder) {
+                    DesignedHistoryFormFieldList(WorkInfo.peygir_id, WorkInfo.showtree_id).then(data1 => {
+                        if (data1.status) {
+                            this.setState({
+                                HistoryFlowFormBuilderModal: true,
+                                FormBuilderCaptionId: data.data.CaptionId,
+                                FormBuilderLayoutData: data1.data.rows,
+                                DesignPageLayout: data.data.DesignPageLayout,
+                                DesignPageSize: data.data.DesignPageSize
+                            });
+                        }
+                    });
+                }
+                else
+                    toast.error(this.context.t("msg_No_Form_Builder"));
+            }
 
+        });
+
+
+
+
+
+
+    }
     FlowFormBuilderHandle() {
         const { WorkInfo, FlowPeygirCaptionInfo, DesignedFormFieldList } = this.props;
         FlowPeygirCaptionInfo(WorkInfo.showtree_id).then(data => {
@@ -244,6 +279,13 @@ class RibbonReferenceViewer extends Component {
                                             EditedElements={EditedElements}
                                             Text="FlowFormBuilder"
                                         />
+                                        <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
+                                            DeletedElements={DeletedElements}
+                                            Id="history-process-form-builder"
+                                            handleClick={this.HistoryFlowFormBuilderHandle.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="HistoryFlowFormBuilder"
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -288,6 +330,13 @@ class RibbonReferenceViewer extends Component {
                                             ShortKey={ShortKeys[keyName]} Id="process-form-builder" tooltip={this.context.t("FlowFormBuilder")} />
                                     )
                                 }
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-history-process-form-builder") {
+                                    return (
+                                        <ShortKeyButton FormId={FormInfo.fm_dabir_natije_erja.id} key={index} handleClick={this.HistoryFlowFormBuilderHandle.bind(this)}
+                                            AccessInfo={FormInfo.fm_dabir_eghdam}
+                                            ShortKey={ShortKeys[keyName]} Id="history-process-form-builder" tooltip={this.context.t("HistoryFlowFormBuilder")} />
+                                    )
+                                }
                             })}
                         </ul>
                     </MenuProvider>
@@ -316,7 +365,18 @@ class RibbonReferenceViewer extends Component {
                         FormBuilderLayoutData={this.state.FormBuilderLayoutData}
                         DesignPageLayout={this.state.DesignPageLayout}
                         DesignPageSize={this.state.DesignPageSize}
-                        
+
+                        Params={Params}
+                    />
+                }
+                {this.state.HistoryFlowFormBuilderModal &&
+                    <DesignedHistoryFormBuilder modal={this.state.HistoryFlowFormBuilderModal}
+                        toggle={this.toggleHistoryFormBuilder.bind(this)}
+                        FormBuilderCaptionId={this.state.FormBuilderCaptionId}
+                        FormBuilderLayoutData={this.state.FormBuilderLayoutData}
+                        DesignPageLayout={this.state.DesignPageLayout}
+                        DesignPageSize={this.state.DesignPageSize}
+
                         Params={Params}
                     />
                 }
@@ -350,8 +410,11 @@ const mapDispatchToProps = dispatch => ({
         return dispatch(FormBuilderBasic_action.FlowPeygirCaptionInfo(showtree_id))
     },
 
-    DesignedFormFieldList: (peygir_id,showtree_id) => {
-        return dispatch(FormBuilderBasic_action.DesignedFormFieldList(peygir_id,showtree_id))
+    DesignedFormFieldList: (peygir_id, showtree_id) => {
+        return dispatch(FormBuilderBasic_action.DesignedFormFieldList(peygir_id, showtree_id))
+    },
+    DesignedHistoryFormFieldList: (peygir_id, showtree_id) => {
+        return dispatch(FormBuilderBasic_action.DesignedHistoryFormFieldList(peygir_id, showtree_id))
     },
 
 
