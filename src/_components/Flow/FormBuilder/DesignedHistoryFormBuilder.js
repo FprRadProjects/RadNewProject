@@ -488,11 +488,13 @@ function mapStateToProps(state) {
     const { alert } = state;
     const { loading } = state.loading;
     const { lang } = state.i18nState;
+    const { WorkInfo } = state.Auto_WorkBasic;
 
     return {
         alert,
         loading,
         lang,
+        WorkInfo
     };
 }
 

@@ -155,6 +155,7 @@ class RibbonDesignedFormBuilder extends Component {
                                             content={() => PrintRef}
                                             bodyClass="print"
                                             pageStyle={""}
+                                            copyStyles={true}
                                         />
                                     </div>
                                 </div>

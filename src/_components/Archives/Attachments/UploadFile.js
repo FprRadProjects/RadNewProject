@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux"
 import { L10n } from '@syncfusion/ej2-base';
 import "@syncfusion/ej2-base/styles/material.css";
 import "@syncfusion/ej2-react-inputs/styles/material.css";
 import { UploaderComponent } from '@syncfusion/ej2-react-inputs';
+import { toast } from 'react-toastify';
+import PropTypes from "prop-types"
 
 var newArchive = {};
 class UploadFile extends Component {
@@ -32,25 +35,39 @@ class UploadFile extends Component {
     }
   }
   onSuccess(args) {
-    const { EditAttachment } = this.props;
-    var archiveId = JSON.parse(args.response.Data).data.archiveId;
-    var fileName = JSON.parse(args.response.Data).data.fileName;
-    newArchive = { archiveId: archiveId, fromParent: false, fileName: fileName };
-    EditAttachment(newArchive);
+    const { EditAttachment, AllowAttach } = this.props;
+    if (AllowAttach) {
+      if (JSON.parse(args.response.Data).status) {
+        var archiveId = JSON.parse(args.response.Data).data.archiveId;
+        var fileName = JSON.parse(args.response.Data).data.fileName;
+        newArchive = { archiveId: archiveId, fromParent: false, fileName: fileName };
+        EditAttachment(newArchive);
+      }
+      else
+        toast.error(JSON.parse(args.response.Data).error);
+    }
+    else
+      toast.error(this.context.t("msg_Lacks_Access_To_ADD_Attachments"));
+
   }
 
   onChunkUploading(args) {
-    if (args.currentRequest !== undefined) {
-      const _user = JSON.parse(localStorage.getItem("user"));
-      const _lang = localStorage.getItem("lang");
-      if (args.currentChunkIndex !== 0) {
-        const { peygir_id } = this.props;
-        args.customFormData = [{ 'peygir_id': peygir_id }, { 'From': 'AddFile' }];
-        args.customFormData = [{ 'From': 'AddFile' }];
-        args.currentRequest.setRequestHeader("Authorization", _user.Authorization)
-        args.currentRequest.setRequestHeader("lang", _lang);
+    const { AllowAttach } = this.props;
+    if (AllowAttach) {
+      if (args.currentRequest !== undefined) {
+        const _user = JSON.parse(localStorage.getItem("user"));
+        const _lang = localStorage.getItem("lang");
+        if (args.currentChunkIndex !== 0) {
+          const { peygir_id } = this.props;
+          args.customFormData = [{ 'peygir_id': peygir_id }, { 'From': 'AddFile' }];
+          args.customFormData = [{ 'From': 'AddFile' }];
+          args.currentRequest.setRequestHeader("Authorization", _user.Authorization)
+          args.currentRequest.setRequestHeader("lang", _lang);
+        }
       }
     }
+    else
+      toast.error(this.context.t("msg_Lacks_Access_To_ADD_Attachments"));
   }
 
   componentWillMount() {
@@ -97,5 +114,20 @@ class UploadFile extends Component {
     </div>;
   }
 }
+UploadFile.contextTypes = {
+  t: PropTypes.func.isRequired
+}
+function mapStateToProps(state) {
 
-export default UploadFile;
+  const { alert } = state;
+  const { loading } = state.loading;
+  const { lang } = state.i18nState
+  return {
+      alert,
+      loading,
+      lang,
+  };
+}
+
+const connectedUploadFile = connect(mapStateToProps, null)(UploadFile);
+export { connectedUploadFile as UploadFile };

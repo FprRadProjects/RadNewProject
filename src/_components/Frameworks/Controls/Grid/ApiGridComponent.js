@@ -407,6 +407,7 @@ class ApiGridComponent extends React.PureComponent {
         })
         this.setState({
             // loading: true,
+            currentPage:0,
             filters: newFilters,
             totalCount: this.props.totalCount !== undefined ? this.props.totalCount : 0,
         });

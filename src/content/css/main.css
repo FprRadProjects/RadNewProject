@@ -36785,35 +36785,45 @@ min-height: 32px;
 }
 
 body.print {
+    font-family:'Tahoma' !important;
     background: none!important;
     padding: 0!important;
 }
 
 body.print:before, body.print:after {
+    font-family:'Tahoma' !important;
     display: none!important;
 }
-
+body.print .input-group-text {
+    font-family:'Tahoma' !important;
+}
 body.print .is-requierd .input-group-text {
+    font-family:'Tahoma' !important;
     border-color: #ced4da!important;
     color: unset!important;
     /* border:0!important;
 background: none!important; */
 }
-
+body.print  [class*=MuiFormControl-] *,body.print  .date-input-with-dialog-main *{
+    font-family:'Tahoma' !important;
+}
 /* body.print  .r-formbuilder .form-control
 {
 border:0!important;
 } */
 
 body.print .is-requierd .input-group-text:after {
+    font-family:'Tahoma' !important;
     display: none!important;
 }
 
 body.print .is-requierd .r-formbuilder__img-holder {
+    font-family:'Tahoma' !important;
     border: 1px solid #ced4da!important;
 }
 
 body.print .r-formbuilder__img .btn-danger {
+    font-family:'Tahoma' !important;
     display: none!important;
 }
 

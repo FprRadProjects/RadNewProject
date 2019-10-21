@@ -4,10 +4,10 @@ import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
 import { toast } from 'react-toastify';
 import { ArchiveActions_action } from "../../../_actions";
+import { UploadFile } from "./UploadFile";
 
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import UploadFile from './UploadFile';
 
 class AttachmentsReview extends Component {
     constructor(props) {
@@ -64,7 +64,7 @@ class AttachmentsReview extends Component {
         });
     }
     render() {
-        const { modal, toggle, peygir_id, parentPeygirId,Close } = this.props;
+        const { modal, toggle, peygir_id, AllowAttach,Close } = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -85,7 +85,7 @@ class AttachmentsReview extends Component {
                                 <div className="row ">
                                     <div className="col-6">
                                         <div className="attachment-side">
-                                            <UploadFile peygir_id={peygir_id} EditAttachment={this.EditAttachment.bind(this)}></UploadFile>
+                                            <UploadFile peygir_id={peygir_id} EditAttachment={this.EditAttachment.bind(this)} AllowAttach={AllowAttach!==undefined?AllowAttach:true}></UploadFile>
                                         </div>
                                     </div>
                                     <div className="col-6">

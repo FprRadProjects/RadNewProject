@@ -53,18 +53,32 @@ class DesignedFormBuilder extends Component {
         const { checked, value, formatted } = event.target;
         //  const ftype = event.target.getAttribute('ftype');
         var item = {}
-        if (ftype == "bool")
+        if (ftype == "bool") {
             item = { "columname": colname, "value": checked }
-        else if (ftype == "mon")
+            this.setState({ [colname]: checked });
+        }
+        else if (ftype == "mon") {
             item = { "columname": colname, "value": value.replace(/,/g, '') }
+            this.setState({ [colname]: value.replace(/,/g, '') });
+        }
         else if (ftype == "tar") {
             item = { "columname": colname, "value": formatted }
-            console.log(formatted)
             this.setState({ [colname]: formatted });
+        } else if (ftype == "saat") {
+            var splitValue = value.split(':');
+            if (splitValue[0] > 23 || splitValue[1] > 59) {
+                toast.error(this.context.t("msg_Invalid_Time_Value"));
+                return false;
+            }
+            else {
+                this.setState({ [colname]: value });
+                item = { "columname": colname, "value": value }
+            }
         }
-        else
+        else {
             item = { "columname": colname, "value": value }
-
+            this.setState({ [colname]: value });
+        }
         for (var i = 0; i < valuesJSON.length; i++)
             if (valuesJSON[i]["columname"] == colname)
                 valuesJSON.splice(i, 1);
@@ -106,6 +120,7 @@ class DesignedFormBuilder extends Component {
         const { WorkInfo, DesignedSaveValues, DesignedSaveImg, FormBuilderCaptionId } = this.props;
         SaveValuesParams.Fields = valuesJSON;
         SaveValuesParams.caption_id = FormBuilderCaptionId;
+        console.log(WorkInfo)
         SaveValuesParams.peygir_id = WorkInfo.peygir_id;
         DesignedSaveValues(SaveValuesParams, msg).then(data => {
             if (data.status) {
@@ -173,7 +188,8 @@ class DesignedFormBuilder extends Component {
                         key={index}
                         value={val}
                         Text={ffieldstxtArray[index]}
-                        selected={l.fvalue == val ? "selected" : ""}>{ffieldstxtArray[index]}</option>
+                    // selected={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] == val ? "selected" : "" : l.fvalue == val ? "selected" : ""}
+                    >{ffieldstxtArray[index]}</option>
                 );
             }
             return (
@@ -197,7 +213,7 @@ class DesignedFormBuilder extends Component {
                                 fnum={l.fnum}
                                 type="Number"
                                 className="form-control"
-                                value={l.fvalue}
+                                value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                 onChange={this.handleChange(l.ftype, l.fnum)} />
                         </div>
                         : (l.ftype === 'look'
@@ -214,6 +230,8 @@ class DesignedFormBuilder extends Component {
                                 <select
                                     id={"formvals_" + l.ftype + l.fnum}
                                     name={"formvals_" + l.ftype + l.fnum}
+                                    defaultValue={l.fvalue}
+                                    // value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                     flabel={l.flabel}
                                     ftype={l.ftype}
                                     fnum={l.fnum}
@@ -264,7 +282,7 @@ class DesignedFormBuilder extends Component {
                                             flabel={l.flabel}
                                             ftype={l.ftype}
                                             fnum={l.fnum}
-                                            value={l.fvalue}
+                                            value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                             thousandSeparator={true}
                                             className="form-control"
                                             onChange={this.handleChange(l.ftype, l.fnum)}
@@ -290,7 +308,7 @@ class DesignedFormBuilder extends Component {
                                                 fnum={l.fnum}
                                                 type={Text}
                                                 mask="99:99"
-                                                value={l.fvalue}
+                                                value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                                 className="form-control"
                                                 onChange={this.handleChange(l.ftype, l.fnum)} />
                                         </div>
@@ -310,8 +328,10 @@ class DesignedFormBuilder extends Component {
                                                     name={"formvals_" + l.ftype + l.fnum}
                                                     className="form-control"
                                                     onChange={this.handleChange(l.ftype, l.fnum)}
+                                                    value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
+
                                                 >
-                                                    {l.fvalue}
+                                                    {this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                                 </textarea>
                                             </div>
                                             : (l.ftype === 'bool'
@@ -327,6 +347,7 @@ class DesignedFormBuilder extends Component {
                                                             value={l.fvalue}
                                                             fnum={l.fnum}
                                                             defaultChecked={l.fvalue == "true" ? "checked" : ""}
+                                                            checked={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] == "true" ? "checked" : "" : l.fvalue == "true" ? "checked" : ""}
                                                             onChange={this.handleChange(l.ftype, l.fnum)}
                                                         />
                                                         <label className="form-check-label" style={{
@@ -355,6 +376,7 @@ class DesignedFormBuilder extends Component {
                                                             flabel={l.flabel}
                                                             ftype={l.ftype}
                                                             fnum={l.fnum}
+                                                            defaultValue={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                                             value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                                             onChange={this.handleChange(l.ftype, l.fnum)}
                                                             className="form-control"
@@ -395,15 +417,15 @@ class DesignedFormBuilder extends Component {
     }
     FormBuilderPrinterHandle = () => {
         const content = $('.r-formbuilder').html();
-       console.log(content)
+        console.log(content)
         var mywindow = window.open('', 'Print', 'height=600,width=800');
-    
+
         mywindow.document.write('<html><head><title>Print</title>');
         mywindow.document.write('');
         mywindow.document.write('</head><body >');
         mywindow.document.write(content);
         mywindow.document.write('</body></html>');
-    
+
         mywindow.document.close();
         mywindow.focus()
         mywindow.print();
@@ -431,22 +453,22 @@ class DesignedFormBuilder extends Component {
                     <ModalBody>
                         <div className="r-main-box__ribbon">
                             <RibbonDesignedFormBuilder rebuildHandle={this.rebuildHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} PrintRef={this.componentRef} SaveHandle={this.SaveHandle.bind(this)} FormBuilderCaptionId={FormBuilderCaptionId}
-                            FormBuilderPrinterHandle={this.FormBuilderPrinterHandle.bind(this)}
-                            
+                                FormBuilderPrinterHandle={this.FormBuilderPrinterHandle.bind(this)}
+
                             />
                         </div>
 
                         <div className="r-formbuilder" >
                             <page layoutsize={this.state.DesignPageSize} layout={this.state.DesignPageLayout} >
                                 <ResponsiveReactGridLayout
-                                id="printme"
+                                    id="printme"
                                     {...this.props}
                                     className="r-formbuilder__layout designed"
                                     layouts={this.state.layouts}
                                     isDraggable={false}
                                     isResizable={false}
-                                    ref={el => (this.componentRef = el)} 
-                                    
+                                    ref={el => (this.componentRef = el)}
+
                                 >
                                     {this.generateDOM()}
                                 </ResponsiveReactGridLayout>
@@ -488,11 +510,13 @@ function mapStateToProps(state) {
     const { alert } = state;
     const { loading } = state.loading;
     const { lang } = state.i18nState;
+    const { WorkInfo } = state.Auto_WorkBasic;
 
     return {
         alert,
         loading,
         lang,
+        WorkInfo
     };
 }
 

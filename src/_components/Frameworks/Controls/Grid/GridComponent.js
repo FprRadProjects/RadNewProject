@@ -401,6 +401,7 @@ class GridComponent extends React.PureComponent {
             };
         })
         this.setState({
+            currentPage:0,
             filters:newFilters
         });
     }

@@ -165,6 +165,7 @@ class TreeGridComponent extends React.PureComponent {
     changeFilters(filters) {
         this.setState({
             filters,
+            currentPage:0,
         });
     }
 

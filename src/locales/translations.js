@@ -28,7 +28,7 @@ export const translations = {
         grouping:"عنوان ستون را برای گروه بندی بر اساس آن ستون بکشید",
         NoData:"اطلاعات موجود نیست",
         RowsPerPage:"تعداد سطر در هر صفحه",
-        ShowColumnChooser:"نمایش سطون ها",
+        ShowColumnChooser:"نمایش ستون ها",
         SortingHint:"مرتب سازی",
         GrigFilter:"جستجو...",
         empty:"خالی",
@@ -251,7 +251,9 @@ export const translations = {
         msg_No_Form_Builder : 'شاخص مورد نظر فاقد فرم ساز می باشد. ',
         msg_Please_Enter_Your_Text : 'لطفا متن مورد نظر را وارد نمایید. ',
         msg_Please_Enter_Group_Name : 'لطفا نام گروه را وارد نمایید. ',
-
+        msg_Invalid_Time_Value : 'مقدار ساعت نامعتبر می باشد. ',
+        msg_Lacks_Access_To_ADD_Attachments : 'فاقد مجوز الصاق ضمائم. ',
+        
         //--------------پیام ها----------------پایان
         //--------------نام فرم ها--------------شروع
         frm_System: 'سیستم',
@@ -542,6 +544,8 @@ export const translations = {
         msg_No_Form_Builder : 'This work has no form builder. ',
         msg_Please_Enter_Your_Text : 'Please enter your text. ',
         msg_Please_Enter_Group_Name : 'Please enter the group name. ',
+        msg_Invalid_Time_Value : 'Time Value Is Not Valid. ',
+        msg_Lacks_Access_To_ADD_Attachments : 'Lacks Access To The ADD Attachments. ',
 
 
   //End-----------------Messages----------------

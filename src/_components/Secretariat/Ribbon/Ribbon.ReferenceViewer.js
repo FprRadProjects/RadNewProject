@@ -358,7 +358,6 @@ class RibbonReferenceViewer extends Component {
                 }
                 {this.state.FlowFormBuilderModal &&
                     <DesignedFormBuilder modal={this.state.FlowFormBuilderModal}
-                        WorkInfo={WorkInfo}
                         toggle={this.toggleFormBuilder.bind(this)}
                         RefreshParentForm={RefreshParentForm}
                         FormBuilderCaptionId={this.state.FormBuilderCaptionId}
@@ -371,7 +370,7 @@ class RibbonReferenceViewer extends Component {
                 }
                 {this.state.HistoryFlowFormBuilderModal &&
                     <DesignedHistoryFormBuilder modal={this.state.HistoryFlowFormBuilderModal}
-                        toggle={this.toggleHistoryFormBuilder.bind(this)}
+                    toggle={this.toggleHistoryFormBuilder.bind(this)}
                         FormBuilderCaptionId={this.state.FormBuilderCaptionId}
                         FormBuilderLayoutData={this.state.FormBuilderLayoutData}
                         DesignPageLayout={this.state.DesignPageLayout}

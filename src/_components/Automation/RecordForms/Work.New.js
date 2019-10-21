@@ -1230,6 +1230,7 @@ class NewWork extends Component {
                 {
                     this.state.AttachmentReviewmodal &&
                     <AttachmentsReview modal={this.state.AttachmentReviewmodal}
+                        AllowAttach={this.state.alowattCheckBox}
                         AttachmentList={this.state.AttachmentList}
                         ChangeAttachments={this.ChangeAttachments.bind(this)}
                         toggle={this.attachmentsToggle.bind(this)}

@@ -389,6 +389,7 @@ class MultiSelectGridComponent extends React.PureComponent {
         })
         this.setState({
             // loading: true,
+            currentPage:0,
             filters: newFilters,
         });
     }
