@@ -386,13 +386,13 @@ class DesignerFormBuilder extends Component {
                                                             }}>{l.flabel}</span>
                                                             : (l.ftype === 'group'
                                                                 ? <div className="r-formbuilder__group">
-                                                                    <h5 style={{
+                                                                    <span style={{
                                                                         color: this.state["color" + l.colname] !== undefined && this.state["color" + l.colname] !== null ? this.state["color" + l.colname] : l.fcolor,
                                                                         fontWeight: this.state["bold" + l.colname] !== undefined && this.state["bold" + l.colname] !== null ? this.state["bold" + l.colname] : l.ffontweight,
                                                                         fontStyle: this.state["italic" + l.colname] !== undefined && this.state["italic" + l.colname] !== null ? this.state["italic" + l.colname] : l.ffontstyle,
                                                                         fontSize: this.state["fontsize" + l.colname] !== undefined && this.state["fontsize" + l.colname] !== null ? this.state["fontsize" + l.colname] : l.ffontsize,
                                                                         fontFamily: this.state["fontfamily" + l.colname] !== undefined && this.state["fontfamily" + l.colname] !== null ? this.state["fontfamily" + l.colname] : l.ffontfamily
-                                                                    }}>{l.flabel}</h5>
+                                                                    }}>{l.flabel}</span>
                                                                 </div>
                                                                 : null
                                                             )
@@ -430,7 +430,7 @@ class DesignerFormBuilder extends Component {
                         flabel: "",
                         frequired: "",
                         ftype: "empty",
-                        colname: "empty"
+                        colname: "empty"+num.toString()
                     }
 
                 ]
@@ -454,14 +454,14 @@ class DesignerFormBuilder extends Component {
                         x: 0,
                         y: Infinity,
                         w: 12,
-                        h: 2,
+                        h: 1,
                         fnum: "",
                         ffields: "",
                         ffieldstxt: "",
                         frequired: "",
                         flabel: enteredName,
                         ftype: "label",
-                        colname: "label"
+                        colname: "label"+num.toString()
 
                     }
 
@@ -486,14 +486,14 @@ class DesignerFormBuilder extends Component {
                         x: 0,
                         y: Infinity,
                         w: 12,
-                        h: 2,
+                        h: 1,
                         fnum: "",
                         ffields: "",
                         ffieldstxt: "",
                         frequired: "",
                         flabel: enteredName,
                         ftype: "group",
-                        colname: "group"
+                        colname: "group"+num.toString()
                     }
 
                 ]

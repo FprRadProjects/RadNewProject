@@ -5,7 +5,7 @@ import {AutoBasicInfo_action} from "../../_actions";
 import PropTypes from "prop-types"
 import {ApiModalGridComponent} from "../Frameworks";
 var currencyColumns = [];
-var hiddenColumnNames = ['flow_id','showtree_id'];
+var hiddenColumnNames = ['showtree_id','flow'];
 var booleanColumns = [];
 var FollowerGridParams = {
     "page": 0,
@@ -49,7 +49,7 @@ class SelectFollowerList extends Component {
         {name: 'c_date', title: this.context.t("CreatedDate")},
         {name: 'c_time', title: this.context.t("CreatedTime")},
         {name: 'tarikh', title: this.context.t("DoneDate")},
-        {name: 'flow_id', title: this.context.t("Flow")},
+        {name: 'flow', title: this.context.t("Flow")},
         {name: 'showtree_id', title: this.context.t("LeadID")},
 
     ];

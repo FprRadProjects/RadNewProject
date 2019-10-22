@@ -36719,7 +36719,7 @@ min-height: 32px;
     align-items: center;
 }
 
-.r-formbuilder__group h5::after {
+.r-formbuilder__group span::after {
     content: "";
     position: absolute;
     right: 0;
@@ -36794,8 +36794,11 @@ body.print:before, body.print:after {
     font-family:'Tahoma' !important;
     display: none!important;
 }
-body.print .input-group-text {
+body.print .input-group-text,body.print .form-check-label {
     font-family:'Tahoma' !important;
+}
+body.print .date-input-with-dialog-input-buttons{
+    display:none !important;
 }
 body.print .is-requierd .input-group-text {
     font-family:'Tahoma' !important;

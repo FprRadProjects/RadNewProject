@@ -173,7 +173,8 @@ class DesignedHistoryFormBuilder extends Component {
                         key={index}
                         value={val}
                         Text={ffieldstxtArray[index]}
-                        selected={l.fvalue == val ? "selected" : ""}>{ffieldstxtArray[index]}</option>
+                        // selected={l.fvalue == val ? "selected" : ""}
+                        >{ffieldstxtArray[index]}</option>
                 );
             }
             return (
@@ -190,6 +191,7 @@ class DesignedHistoryFormBuilder extends Component {
                                 }} className="input-group-text">{l.flabel}</span>
                             </div>
                             <input
+                                disabled={"disabled"}
                                 id={"formvals_" + l.ftype + l.fnum}
                                 name={"formvals_" + l.ftype + l.fnum}
                                 flabel={l.flabel}
@@ -212,6 +214,8 @@ class DesignedHistoryFormBuilder extends Component {
                                     }} className="input-group-text">{l.flabel}</span>
                                 </div>
                                 <select
+                                    defaultValue={l.fvalue}
+                                    disabled={"disabled"}
                                     id={"formvals_" + l.ftype + l.fnum}
                                     name={"formvals_" + l.ftype + l.fnum}
                                     flabel={l.flabel}
@@ -233,9 +237,9 @@ class DesignedHistoryFormBuilder extends Component {
                                         fontSize: l.ffontsize,
                                         fontFamily: l.ffontfamily
                                     }} className="input-group-text d-block">{l.flabel}</span>
-                                    <input type="button" value={this.context.t("RemoveImage")} hasImage={l.fimg != null ? "true" : "false"} onClick={this.handleRemoveImage.bind(this, l.colname, this.context.t("msg_Operation_Success"))} className="btn btn-block btn-danger" />
-                                    <div className="r-formbuilder__img-holder" onClick={() => this.refs[l.colname].click()}>
+                                    <div className="r-formbuilder__img-holder" >
                                         <input
+                                            disabled={"disabled"}
                                             type="file"
                                             id={"formvals_" + l.ftype + l.fnum}
                                             name={"formvals_" + l.ftype + l.fnum}
@@ -259,6 +263,7 @@ class DesignedHistoryFormBuilder extends Component {
                                             }} className="input-group-text">{l.flabel}</span>
                                         </div>
                                         <NumberFormat
+                                            disabled={"disabled"}
                                             id={"formvals_" + l.ftype + l.fnum}
                                             name={"formvals_" + l.ftype + l.fnum}
                                             flabel={l.flabel}
@@ -283,6 +288,7 @@ class DesignedHistoryFormBuilder extends Component {
                                             </div>
 
                                             <InputMask
+                                                disabled={"disabled"}
                                                 id={"formvals_" + l.ftype + l.fnum}
                                                 name={"formvals_" + l.ftype + l.fnum}
                                                 flabel={l.flabel}
@@ -306,6 +312,7 @@ class DesignedHistoryFormBuilder extends Component {
                                                     }} className="input-group-text">{l.flabel}</span>
                                                 </div>
                                                 <textarea
+                                                    disabled={"disabled"}
                                                     id={"formvals_" + l.ftype + l.fnum}
                                                     name={"formvals_" + l.ftype + l.fnum}
                                                     className="form-control"
@@ -318,6 +325,7 @@ class DesignedHistoryFormBuilder extends Component {
                                                 ? <div className="input-group">
                                                     <div className="form-check">
                                                         <input
+                                                            disabled={"disabled"}
                                                             type="checkbox"
                                                             className="form-check-input"
                                                             id={"formvals_" + l.ftype + l.fnum}
@@ -326,7 +334,7 @@ class DesignedHistoryFormBuilder extends Component {
                                                             ftype={l.ftype}
                                                             value={l.fvalue}
                                                             fnum={l.fnum}
-                                                            defaultChecked={l.fvalue == "true" ? "checked" : ""}
+                                                            defaultChecked={l.fvalue == "1" ? "checked" : ""}
                                                             onChange={this.handleChange(l.ftype, l.fnum)}
                                                         />
                                                         <label className="form-check-label" style={{
@@ -350,11 +358,13 @@ class DesignedHistoryFormBuilder extends Component {
                                                             }} className="input-group-text">{l.flabel}</span>
                                                         </div>
                                                         <JalaliField
+                                                            disabled={"disabled"}
                                                             id={"formvals_" + l.ftype + l.fnum}
                                                             name={"formvals_" + l.ftype + l.fnum}
                                                             flabel={l.flabel}
                                                             ftype={l.ftype}
                                                             fnum={l.fnum}
+                                                            defaultValue={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                                             value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                                             onChange={this.handleChange(l.ftype, l.fnum)}
                                                             className="form-control"
@@ -370,13 +380,13 @@ class DesignedHistoryFormBuilder extends Component {
                                                         }}>{l.flabel}</span>
                                                         : (l.ftype === 'group'
                                                             ? <div className="r-formbuilder__group">
-                                                                <h5 style={{
+                                                                <span style={{
                                                                     color: l.fcolor,
                                                                     fontWeight: l.ffontweight,
                                                                     fontStyle: l.ffontstyle,
                                                                     fontSize: l.ffontsize,
                                                                     fontFamily: l.ffontfamily
-                                                                }}>{l.flabel}</h5>
+                                                                }}>{l.flabel}</span>
                                                             </div>
                                                             : null
                                                         )
@@ -395,15 +405,15 @@ class DesignedHistoryFormBuilder extends Component {
     }
     FormBuilderPrinterHandle = () => {
         const content = $('.r-formbuilder').html();
-       console.log(content)
+        console.log(content)
         var mywindow = window.open('', 'Print', 'height=600,width=800');
-    
+
         mywindow.document.write('<html><head><title>Print</title>');
         mywindow.document.write('');
         mywindow.document.write('</head><body >');
         mywindow.document.write(content);
         mywindow.document.write('</body></html>');
-    
+
         mywindow.document.close();
         mywindow.focus()
         mywindow.print();
@@ -431,22 +441,22 @@ class DesignedHistoryFormBuilder extends Component {
                     <ModalBody>
                         <div className="r-main-box__ribbon">
                             <RibbonDesignedHistoryFormBuilder rebuildHandle={this.rebuildHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} PrintRef={this.componentRef} SaveHandle={this.SaveHandle.bind(this)} FormBuilderCaptionId={FormBuilderCaptionId}
-                            FormBuilderPrinterHandle={this.FormBuilderPrinterHandle.bind(this)}
-                            
+                                FormBuilderPrinterHandle={this.FormBuilderPrinterHandle.bind(this)}
+
                             />
                         </div>
 
                         <div className="r-formbuilder" >
                             <page layoutsize={this.state.DesignPageSize} layout={this.state.DesignPageLayout} >
                                 <ResponsiveReactGridLayout
-                                id="printme"
+                                    id="printme"
                                     {...this.props}
                                     className="r-formbuilder__layout designed"
                                     layouts={this.state.layouts}
                                     isDraggable={false}
                                     isResizable={false}
-                                    ref={el => (this.componentRef = el)} 
-                                    
+                                    ref={el => (this.componentRef = el)}
+
                                 >
                                     {this.generateDOM()}
                                 </ResponsiveReactGridLayout>

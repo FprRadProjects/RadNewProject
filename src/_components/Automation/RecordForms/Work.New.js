@@ -412,6 +412,10 @@ class NewWork extends Component {
                 toast.error(this.context.t("msg_ActionDate_Not_Valid"));
                 return false;
             }
+            if (thisSaveParams.data["tarikhaction"].tarikhaction=== undefined) {
+                toast.error(this.context.t("msg_ActionDate_Not_Valid"));
+                return false;
+            }
             if (thisSaveParams.data["tarikhaction"].tarikhaction.length < 10) {
                 toast.error(this.context.t("msg_ActionDate_Not_Valid"));
                 return false;
@@ -504,7 +508,7 @@ class NewWork extends Component {
     }
     SelectFollowerRow(row) {
         if (row !== undefined) {
-            if ((row.flow_id === null || row.flow_id == 0) && row.flow_id !== undefined) {
+            if ((row.flow_id === null || row.flow == 0) && row.flow_id !== undefined) {
                 this.setState({ FollowerText: row.peygir_id + " - " + row.wtype + " - " + this.context.t("Serial") + " : " + row.nos_id });
                 thisSaveParams.data["p_id"] = { "p_id": row.peygir_id };
                 this.setState({ SelectedFollowerId: row.peygir_id });

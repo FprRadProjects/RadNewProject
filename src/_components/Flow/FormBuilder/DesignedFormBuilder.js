@@ -34,6 +34,7 @@ class DesignedFormBuilder extends Component {
             currentBreakpoint: "lg",
             compactType: "vertical",
             mounted: false,
+            Values:[],
             layouts: { lg: this.props.FormBuilderLayoutData },
             FlowFormBuilderModal: this.props.FlowFormBuilderModal,
             FormBuilderCaptionId: this.props.FormBuilderCaptionId,
@@ -51,19 +52,22 @@ class DesignedFormBuilder extends Component {
     handleChange = (ftype, fnum) => event => {
         var colname = ftype + fnum;
         const { checked, value, formatted } = event.target;
+
         //  const ftype = event.target.getAttribute('ftype');
         var item = {}
         if (ftype == "bool") {
-            item = { "columname": colname, "value": checked }
-            this.setState({ [colname]: checked });
+            item = { "columname": colname, "value": checked?"1":"0" }
+            this.setState(prevState => ({ Values:{...prevState.Values, [colname]: checked} }));
         }
         else if (ftype == "mon") {
             item = { "columname": colname, "value": value.replace(/,/g, '') }
-            this.setState({ [colname]: value.replace(/,/g, '') });
+            this.setState(prevState => ({ Values:{...prevState.Values, [colname]: value.replace(/,/g, '')} }));
+            // this.setState({ [colname]: value.replace(/,/g, '') });
         }
         else if (ftype == "tar") {
             item = { "columname": colname, "value": formatted }
-            this.setState({ [colname]: formatted });
+            this.setState(prevState => ({ Values:{...prevState.Values, [colname]: formatted} }));
+            // this.setState({ [colname]: formatted });
         } else if (ftype == "saat") {
             var splitValue = value.split(':');
             if (splitValue[0] > 23 || splitValue[1] > 59) {
@@ -71,13 +75,15 @@ class DesignedFormBuilder extends Component {
                 return false;
             }
             else {
-                this.setState({ [colname]: value });
+            this.setState(prevState => ({ Values:{...prevState.Values, [colname]: value} }));
+            // this.setState({ [colname]: value });
                 item = { "columname": colname, "value": value }
             }
         }
         else {
             item = { "columname": colname, "value": value }
-            this.setState({ [colname]: value });
+            this.setState(prevState => ({ Values:{...prevState.Values, [colname]: value} }));
+            // this.setState({ [colname]: value });
         }
         for (var i = 0; i < valuesJSON.length; i++)
             if (valuesJSON[i]["columname"] == colname)
@@ -116,13 +122,13 @@ class DesignedFormBuilder extends Component {
         var el = document.getElementById(colname);
         el.src = "";
     };
-    SaveHandle = (msg) => {
+    SaveHandle = () => {
         const { WorkInfo, DesignedSaveValues, DesignedSaveImg, FormBuilderCaptionId } = this.props;
         SaveValuesParams.Fields = valuesJSON;
         SaveValuesParams.caption_id = FormBuilderCaptionId;
         console.log(WorkInfo)
         SaveValuesParams.peygir_id = WorkInfo.peygir_id;
-        DesignedSaveValues(SaveValuesParams, msg).then(data => {
+        DesignedSaveValues(SaveValuesParams, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
             }
         });
@@ -131,12 +137,11 @@ class DesignedFormBuilder extends Component {
         for (var item of ImagesFormData.keys())
             hasImages = true;
 
-        console.log(hasImages)
         if (hasImages) {
             ImagesFormData.append("peygir_id", WorkInfo.peygir_id);
             ImagesFormData.append("caption_id", FormBuilderCaptionId);
             ImagesFormData.append("showtree_id", WorkInfo.showtree_id);
-            DesignedSaveImg(ImagesFormData, msg).then(data => {
+            DesignedSaveImg(ImagesFormData, this.context.t("msg_Operation_Success")).then(data => {
                 if (data.status) {
                 }
             });
@@ -162,6 +167,7 @@ class DesignedFormBuilder extends Component {
                     DesignedFormFieldList(WorkInfo.peygir_id, WorkInfo.showtree_id).then(data1 => {
                         if (data1.status) {
                             this.setState({
+                                Values:[],
                                 layouts: { lg: data1.data.rows },
                                 DesignPageLayout: data.data.DesignPageLayout,
                                 DesignPageSize: data.data.DesignPageSize
@@ -188,7 +194,7 @@ class DesignedFormBuilder extends Component {
                         key={index}
                         value={val}
                         Text={ffieldstxtArray[index]}
-                    // selected={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] == val ? "selected" : "" : l.fvalue == val ? "selected" : ""}
+                    selected={this.state.Values[l.colname] !== undefined && this.state.Values[l.colname] !== null ? this.state.Values[l.colname] == val ? "selected" : "" : l.fvalue == val ? "selected" : ""}
                     >{ffieldstxtArray[index]}</option>
                 );
             }
@@ -213,7 +219,7 @@ class DesignedFormBuilder extends Component {
                                 fnum={l.fnum}
                                 type="Number"
                                 className="form-control"
-                                value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
+                                value={this.state.Values[l.colname] !== undefined && this.state.Values[l.colname] !== null ? this.state.Values[l.colname] : l.fvalue}
                                 onChange={this.handleChange(l.ftype, l.fnum)} />
                         </div>
                         : (l.ftype === 'look'
@@ -231,7 +237,7 @@ class DesignedFormBuilder extends Component {
                                     id={"formvals_" + l.ftype + l.fnum}
                                     name={"formvals_" + l.ftype + l.fnum}
                                     defaultValue={l.fvalue}
-                                    // value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
+                                    // value={this.state.Values[l.colname] !== undefined && this.state.Values[l.colname] !== null ? this.state.Values[l.colname] : l.fvalue}
                                     flabel={l.flabel}
                                     ftype={l.ftype}
                                     fnum={l.fnum}
@@ -282,7 +288,7 @@ class DesignedFormBuilder extends Component {
                                             flabel={l.flabel}
                                             ftype={l.ftype}
                                             fnum={l.fnum}
-                                            value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
+                                            value={this.state.Values[l.colname] !== undefined && this.state.Values[l.colname] !== null ? this.state.Values[l.colname] : l.fvalue}
                                             thousandSeparator={true}
                                             className="form-control"
                                             onChange={this.handleChange(l.ftype, l.fnum)}
@@ -308,7 +314,7 @@ class DesignedFormBuilder extends Component {
                                                 fnum={l.fnum}
                                                 type={Text}
                                                 mask="99:99"
-                                                value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
+                                                value={this.state.Values[l.colname] !== undefined && this.state.Values[l.colname] !== null ? this.state.Values[l.colname] : l.fvalue}
                                                 className="form-control"
                                                 onChange={this.handleChange(l.ftype, l.fnum)} />
                                         </div>
@@ -328,10 +334,10 @@ class DesignedFormBuilder extends Component {
                                                     name={"formvals_" + l.ftype + l.fnum}
                                                     className="form-control"
                                                     onChange={this.handleChange(l.ftype, l.fnum)}
-                                                    value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
+                                                    value={this.state.Values[l.colname] !== undefined && this.state.Values[l.colname] !== null ? this.state.Values[l.colname] : l.fvalue}
 
                                                 >
-                                                    {this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
+                                                    {this.state.Values[l.colname] !== undefined && this.state.Values[l.colname] !== null ? this.state.Values[l.colname] : l.fvalue}
                                                 </textarea>
                                             </div>
                                             : (l.ftype === 'bool'
@@ -346,8 +352,7 @@ class DesignedFormBuilder extends Component {
                                                             ftype={l.ftype}
                                                             value={l.fvalue}
                                                             fnum={l.fnum}
-                                                            defaultChecked={l.fvalue == "true" ? "checked" : ""}
-                                                            checked={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] == "true" ? "checked" : "" : l.fvalue == "true" ? "checked" : ""}
+                                                            defaultChecked={l.fvalue == "1" ? "checked" : ""}
                                                             onChange={this.handleChange(l.ftype, l.fnum)}
                                                         />
                                                         <label className="form-check-label" style={{
@@ -376,8 +381,8 @@ class DesignedFormBuilder extends Component {
                                                             flabel={l.flabel}
                                                             ftype={l.ftype}
                                                             fnum={l.fnum}
-                                                            defaultValue={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
-                                                            value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
+                                                            defaultValue={this.state.Values[l.colname] !== undefined && this.state.Values[l.colname] !== null ? this.state.Values[l.colname] : l.fvalue}
+                                                            value={this.state.Values[l.colname] !== undefined && this.state.Values[l.colname] !== null ? this.state.Values[l.colname] : l.fvalue}
                                                             onChange={this.handleChange(l.ftype, l.fnum)}
                                                             className="form-control"
                                                         />
@@ -392,13 +397,13 @@ class DesignedFormBuilder extends Component {
                                                         }}>{l.flabel}</span>
                                                         : (l.ftype === 'group'
                                                             ? <div className="r-formbuilder__group">
-                                                                <h5 style={{
+                                                                <span style={{
                                                                     color: l.fcolor,
                                                                     fontWeight: l.ffontweight,
                                                                     fontStyle: l.ffontstyle,
                                                                     fontSize: l.ffontsize,
                                                                     fontFamily: l.ffontfamily
-                                                                }}>{l.flabel}</h5>
+                                                                }}>{l.flabel}</span>
                                                             </div>
                                                             : null
                                                         )
