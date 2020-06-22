@@ -3,28 +3,37 @@ import { Route, Link } from 'react-router-dom'
 import PropTypes from "prop-types"
 import { connect } from 'react-redux';
 import { history } from "../../_helpers";
+import { withCookies } from 'react-cookie';
 
 import {
-    BasicInfo_action
+    BasicInfo_action, userActions
 } from "../../_actions";
 class NavItem extends Component {
     onClick = (e) => {
-        const { UserAccessForm, AccessInfo, AccessType, OnClickHandler, lang, Id } = this.props;
+        const { UserAccessForm, AccessInfo, AccessType, OnClickHandler, lang, Id, cookies } = this.props;
+        if (cookies.get('login') == null)
+            userActions.logout();
         if (AccessInfo !== undefined) {
             let formName = lang == "fa" ? AccessInfo.form_name : AccessInfo.en_form_name;
             let AccessParams = { "sysname": AccessInfo.sys_name, "type": AccessType !== undefined ? AccessType : "show", formname: formName };
             UserAccessForm(AccessParams).then(data => {
-                if (data.status) {
-                    if (OnClickHandler !== undefined)
-                        OnClickHandler();
+                if (data != null) {
+                    if (data.status) {
+                        if (OnClickHandler !== undefined)
+                            OnClickHandler();
+                        else {
+                            var linkId = document.getElementById(Id);
+                            linkId.click();
+                        }
+                    }
                     else {
-                        var linkId = document.getElementById(Id);
-                        linkId.click();
+                        e.preventDefault();
+                        e.stopPropagation();
                     }
                 }
                 else {
-                    e.preventDefault();
-                    e.stopPropagation();
+
+                    userActions.logout();
                 }
             });
         }
@@ -68,12 +77,13 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     const { lang } = state.i18nState
     return {
         lang,
+        cookies: ownProps.cookies,
     };
 }
 
-const connectedNavItem = connect(mapStateToProps, mapDispatchToProps)(NavItem);
+const connectedNavItem = withCookies(connect(mapStateToProps, mapDispatchToProps)(NavItem));
 export { connectedNavItem as NavItem };

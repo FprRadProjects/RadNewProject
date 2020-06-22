@@ -6,16 +6,21 @@ import { App } from './App/App';
 import I18n from "redux-i18n"
 import './_webservices/utils/interceptors';
 
-import {translations} from "../src/locales/translations"
+import { translations } from "../src/locales/translations"
 
-window.RenderApp=(config)=>{
+import { CookiesProvider } from 'react-cookie';
+
+window.RenderApp = (config) => {
     render
-    (
-    <Provider store={store}>
-        <I18n translations={translations}  >
-            <App  _config={config}/>
-        </I18n>
-    </Provider>,
-    document.getElementById('root')
-)};
+        (
+            <CookiesProvider>
+                <Provider store={store}>
+                    <I18n translations={translations}  >
+                        <App _config={config} />
+                    </I18n>
+                </Provider>
+            </CookiesProvider>,
+            document.getElementById('root')
+        )
+};
 

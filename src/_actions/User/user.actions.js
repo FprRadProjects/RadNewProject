@@ -1,7 +1,9 @@
 import { userConstants } from '../../_constants';
 import { userService } from '../../_webservices';
-import { alertActions } from '..';
+import { alertActions} from '..';
+import { cookieAction} from '../index';
 import { toast } from 'react-toastify';
+
 import {
     loadingActions
 } from "../index";
@@ -13,6 +15,7 @@ export const userActions = {
     UserIsAdmin
 };
 
+
 function login(username, password) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
@@ -21,6 +24,7 @@ function login(username, password) {
                 user => {
                     if(user.status) {
                         dispatch(success(JSON.stringify(user.data)));
+                        cookieAction.setCookie("login",user.data.Authorization);
                         window.open('/',"_self");
                     }
                     else {
@@ -40,6 +44,7 @@ function login(username, password) {
 
 function logout() {
     userService.logout();
+    cookieAction.removeCookie("login");
     return { type: userConstants.LOGOUT };
 }
 
