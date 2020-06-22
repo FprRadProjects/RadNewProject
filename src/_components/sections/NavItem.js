@@ -43,6 +43,7 @@ class NavItem extends Component {
                     linkId.click();
                     userActions.logout();
                 }
+                
             }
         }
         else {
