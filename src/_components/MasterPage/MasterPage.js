@@ -43,7 +43,6 @@ class MasterPage extends React.Component {
             users, lang, loading, GetTemplateForm,
             Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm,
             Delete_ShortKeyElements_Template,cookies } = this.props;
-            console.log("dashboard" + cookies.get('login'));
         const loaddddd = <div className="loader-wrapper">
             <div className="loader">
                 <div className="line"></div>
