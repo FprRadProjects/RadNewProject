@@ -48,7 +48,7 @@ class MasterPage extends React.Component {
                 <div className="line"></div>
                 <div className="line"></div>
                 <div className="line"></div>
-                <div className="line"></div>
+                <div className="line"></div> 
                 <h4>لطفا صبر کنید</h4>
             </div>
         </div>;
