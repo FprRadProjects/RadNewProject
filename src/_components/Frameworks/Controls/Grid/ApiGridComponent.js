@@ -67,6 +67,9 @@ const theme = createMuiTheme({
                 height: "30px!important",
                 cursor: "pointer !important"
             },
+            selected: {
+                backgroundColor: "rgba(202, 192, 192, 0.88) !important",
+            },
         },
         TableInvisibleRow: {
             row: {

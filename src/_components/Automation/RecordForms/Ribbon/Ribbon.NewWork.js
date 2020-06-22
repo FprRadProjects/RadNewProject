@@ -23,13 +23,13 @@ class RibbonNewWork extends Component {
         const { GetTemplateForm } = this.props;
         GetTemplateForm(FormInfo.fm_pub_sabt_kar.id);
     }
-    handleClick() {
-
+   
+    handleClick=()=>{
+        
     }
-  
     render() {
         const { saveWorkHandle, ShortKeys, DeletedElements, EditedElements, attachmentsToggle,
-            newWorkHandle,editWorkHandle } = this.props;
+            newWorkHandle,editWorkHandle,ConfirmationHandle } = this.props;
 
         return (
             <div>
@@ -78,7 +78,7 @@ class RibbonNewWork extends Component {
                                         <RibbonButton FormId={FormInfo.fm_pub_sabt_kar.id}
                                             DeletedElements={DeletedElements}
                                             Id="confirmation"
-                                            handleClick={this.handleClick.bind(this)}
+                                            handleClick={ConfirmationHandle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="WorkConfirmation"
                                         />
@@ -211,7 +211,7 @@ class RibbonNewWork extends Component {
                     </div>
                 </div>
                 <nav className="radialnav">
-                    <a href="#" className="ellipsis"></a>
+                    <a href="javascript:void(0)" className="ellipsis"></a>
                     <MenuProvider id="menu_id">
                         <ul className="menu">
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
@@ -248,7 +248,7 @@ class RibbonNewWork extends Component {
                                 }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-confirmation") {
                                     return (
-                                        <ShortKeyButton FormId={FormInfo.fm_pub_sabt_kar.id} key={index} handleClick={this.handleClick.bind(this)}
+                                        <ShortKeyButton FormId={FormInfo.fm_pub_sabt_kar.id} key={index} handleClick={ConfirmationHandle.bind(this)}
                                             ShortKey={ShortKeys[keyName]} Id="confirmation" />
                                     )
                                 }

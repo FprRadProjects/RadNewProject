@@ -22,7 +22,7 @@ class LeftCounts extends Component {
         return (
             <ul className="nav main-menu">
                 <li className="task-email" id="Email_li">
-                    <a href="#" onClick={this.clicked.bind(this)}>
+                    <a href="javascript:void(0)" onClick={this.clicked.bind(this)}>
                         <i className="icon" element="Email_li"  ></i>
                         <label className="title" id="Emails" element="Email_li" >
                             {this.context.t("Emails")}</label>
@@ -31,7 +31,7 @@ class LeftCounts extends Component {
                 </li>
                 <li className="task-letter" id="Secretariat_li">
 
-                    <a href="#" onClick={this.clicked.bind(this)} >
+                    <a href="javascript:void(0)" onClick={this.clicked.bind(this)} >
                         <i className="icon" element="Secretariat_li" ></i>
                         <label className="title" id="Secretariat" element="Secretariat_li">
                             {this.context.t("Secretariat")}
@@ -40,7 +40,7 @@ class LeftCounts extends Component {
 
                 </li>
                     <li className="task-message" id="Messages_li">
-                    <a href="#" onClick={this.clicked.bind(this)}>
+                    <a href="javascript:void(0)" onClick={this.clicked.bind(this)}>
                         <i className="icon" element="Messages_li" ></i>
                         <label className="title" element="Messages_li" id="Messages">
                             {this.context.t("Messages")}
@@ -49,7 +49,7 @@ class LeftCounts extends Component {
                 </li>
                    <li className="task-sms" id="SMS_li">
 
-                    <a href="#">
+                    <a href="javascript:void(0)">
                         <i className="icon" element="SMS_li"></i>
                         <label className="title" id="SMS" element="SMS_li">
                             {this.context.t("SMS")}
@@ -57,7 +57,7 @@ class LeftCounts extends Component {
                         <span className="badge pull-right" >{Counts !== undefined ? Counts.Sms : 0}</span></a>
                 </li>
                 <li className="task-check" id="Cheques_li">
-                    <a href="#">
+                    <a href="javascript:void(0)">
                         <i className="icon" element="Cheques_li" ></i>
                         <label className="title" id="Cheques" element="Cheques_li">
                             {this.context.t("Cheques")}
@@ -66,7 +66,7 @@ class LeftCounts extends Component {
                 </li>
 
                 <li className="task-note" id="Notes_li">
-                    <a href="#">
+                    <a href="javascript:void(0)">
                         <i className="icon" element="Notes_li" ></i>
                         <label className="title" id="Notes" element="Notes_li">
                             {this.context.t("Notes")}
@@ -75,7 +75,7 @@ class LeftCounts extends Component {
                 </li>
                 <li className="task-work" id="Works_li">
 
-                    <a href="#">
+                    <a href="javascript:void(0)">
                         <i className="icon" element="Works_li" ></i>
                         <label className="title" id="Works" element="Works_li">
                             {this.context.t("Works")}

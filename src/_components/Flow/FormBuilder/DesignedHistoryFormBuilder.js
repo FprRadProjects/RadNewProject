@@ -48,86 +48,7 @@ class DesignedHistoryFormBuilder extends Component {
         cols: { lg: 12, md: 12, sm: 12, xs: 12, xxs: 12 },
     };
 
-    handleChange = (ftype, fnum) => event => {
-        var colname = ftype + fnum;
-        const { checked, value, formatted } = event.target;
-        //  const ftype = event.target.getAttribute('ftype');
-        var item = {}
-        if (ftype == "bool")
-            item = { "columname": colname, "value": checked }
-        else if (ftype == "mon")
-            item = { "columname": colname, "value": value.replace(/,/g, '') }
-        else if (ftype == "tar") {
-            item = { "columname": colname, "value": formatted }
-            console.log(formatted)
-            this.setState({ [colname]: formatted });
-        }
-        else
-            item = { "columname": colname, "value": value }
-
-        for (var i = 0; i < valuesJSON.length; i++)
-            if (valuesJSON[i]["columname"] == colname)
-                valuesJSON.splice(i, 1);
-
-        valuesJSON.push(item);
-
-    };
-    handleImagesChange = (colname, event) => {
-        if (ImagesFormData.has(colname))
-            ImagesFormData.delete(colname);
-        ImagesFormData.append(colname, event.target.files[0]);
-        var el = document.getElementById(colname);
-        el.src = URL.createObjectURL(event.target.files[0]);
-    };
-    handleRemoveImage = (colname, msg, event) => {
-
-
-        const { WorkInfo, DesignedDelImg } = this.props;
-        // console.log(colname)
-        //         if (ImagesFormData.has(colname))
-        //             ImagesFormData.delete(colname);
-
-        const hasImage = event.target.getAttribute('hasImage');
-        if (hasImage == "true") {
-            var DelImgFormData = new FormData();
-            DelImgFormData.append("peygir_id", WorkInfo.peygir_id);
-            DelImgFormData.append("showtree_id", WorkInfo.showtree_id);
-            DelImgFormData.append("colname", colname);
-            DesignedDelImg(DelImgFormData, msg).then(data => {
-                if (data.status) {
-                }
-            })
-        }
-
-        var el = document.getElementById(colname);
-        el.src = "";
-    };
-    SaveHandle = (msg) => {
-        const { WorkInfo, DesignedSaveValues, DesignedSaveImg, FormBuilderCaptionId } = this.props;
-        SaveValuesParams.Fields = valuesJSON;
-        SaveValuesParams.caption_id = FormBuilderCaptionId;
-        SaveValuesParams.peygir_id = WorkInfo.peygir_id;
-        DesignedSaveValues(SaveValuesParams, msg).then(data => {
-            if (data.status) {
-            }
-        });
-
-        var hasImages = false;
-        for (var item of ImagesFormData.keys())
-            hasImages = true;
-
-        console.log(hasImages)
-        if (hasImages) {
-            ImagesFormData.append("peygir_id", WorkInfo.peygir_id);
-            ImagesFormData.append("caption_id", FormBuilderCaptionId);
-            ImagesFormData.append("showtree_id", WorkInfo.showtree_id);
-            DesignedSaveImg(ImagesFormData, msg).then(data => {
-                if (data.status) {
-                }
-            });
-
-        }
-    }
+  
     componentDidMount() {
         SaveValuesParams = { peygir_id: 0, caption_id: 0, Fields: [] };
         ImagesFormData = new FormData();
@@ -135,30 +56,9 @@ class DesignedHistoryFormBuilder extends Component {
         this.setState({ mounted: true });
     }
 
-    ConfirmationHandle = (e) => {
+ 
 
-    }
-
-    rebuildHandle = (e) => {
-        const { WorkInfo, FlowPeygirCaptionInfo, DesignedFormFieldList } = this.props;
-        FlowPeygirCaptionInfo(WorkInfo.showtree_id).then(data => {
-            if (data.status) {
-                if (data.data.hasFormBuilder) {
-                    DesignedFormFieldList(WorkInfo.peygir_id, WorkInfo.showtree_id).then(data1 => {
-                        if (data1.status) {
-                            this.setState({
-                                layouts: { lg: data1.data.rows },
-                                DesignPageLayout: data.data.DesignPageLayout,
-                                DesignPageSize: data.data.DesignPageSize
-                            });
-                        }
-                    });
-                }
-                else
-                    toast.error(this.context.t("msg_No_Form_Builder"));
-            }
-        });
-    }
+  
 
     generateDOM() {
         return _.map(this.state.layouts[this.state.currentBreakpoint], l => {
@@ -173,7 +73,6 @@ class DesignedHistoryFormBuilder extends Component {
                         key={index}
                         value={val}
                         Text={ffieldstxtArray[index]}
-                        // selected={l.fvalue == val ? "selected" : ""}
                         >{ffieldstxtArray[index]}</option>
                 );
             }
@@ -199,8 +98,7 @@ class DesignedHistoryFormBuilder extends Component {
                                 fnum={l.fnum}
                                 type="Number"
                                 className="form-control"
-                                value={l.fvalue}
-                                onChange={this.handleChange(l.ftype, l.fnum)} />
+                                value={l.fvalue} />
                         </div>
                         : (l.ftype === 'look'
                             ? <div className="input-group">
@@ -223,8 +121,7 @@ class DesignedHistoryFormBuilder extends Component {
                                     fnum={l.fnum}
                                     ffields={l.ffields}
                                     ffieldstxt={l.ffieldstxt}
-                                    className="form-control"
-                                    onChange={this.handleChange(l.ftype, l.fnum)}>
+                                    className="form-control">
                                     {listItems}
                                 </select>
                             </div>
@@ -247,7 +144,7 @@ class DesignedHistoryFormBuilder extends Component {
                                             ftype={l.ftype}
                                             fnum={l.fnum}
                                             ref={l.colname}
-                                            onChange={this.handleImagesChange.bind(this, l.ftype + l.fnum)} />
+                                            />
                                         <img id={l.colname} src={l.fimg != null ? _Config.BaseUrl + l.fimg : ""} />
                                     </div>
                                 </div>
@@ -272,7 +169,6 @@ class DesignedHistoryFormBuilder extends Component {
                                             value={l.fvalue}
                                             thousandSeparator={true}
                                             className="form-control"
-                                            onChange={this.handleChange(l.ftype, l.fnum)}
                                         />
                                     </div>
                                     : (l.ftype === 'saat'
@@ -297,8 +193,7 @@ class DesignedHistoryFormBuilder extends Component {
                                                 type={Text}
                                                 mask="99:99"
                                                 value={l.fvalue}
-                                                className="form-control"
-                                                onChange={this.handleChange(l.ftype, l.fnum)} />
+                                                className="form-control" />
                                         </div>
                                         : (l.ftype === 'str'
                                             ? <div className="input-group">
@@ -316,7 +211,6 @@ class DesignedHistoryFormBuilder extends Component {
                                                     id={"formvals_" + l.ftype + l.fnum}
                                                     name={"formvals_" + l.ftype + l.fnum}
                                                     className="form-control"
-                                                    onChange={this.handleChange(l.ftype, l.fnum)}
                                                 >
                                                     {l.fvalue}
                                                 </textarea>
@@ -335,7 +229,6 @@ class DesignedHistoryFormBuilder extends Component {
                                                             value={l.fvalue}
                                                             fnum={l.fnum}
                                                             defaultChecked={l.fvalue == "1" ? "checked" : ""}
-                                                            onChange={this.handleChange(l.ftype, l.fnum)}
                                                         />
                                                         <label className="form-check-label" style={{
                                                             color: l.fcolor,
@@ -366,7 +259,6 @@ class DesignedHistoryFormBuilder extends Component {
                                                             fnum={l.fnum}
                                                             defaultValue={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
                                                             value={this.state[l.colname] !== undefined && this.state[l.colname] !== null ? this.state[l.colname] : l.fvalue}
-                                                            onChange={this.handleChange(l.ftype, l.fnum)}
                                                             className="form-control"
                                                         />
                                                     </div>
@@ -403,24 +295,7 @@ class DesignedHistoryFormBuilder extends Component {
             );
         });
     }
-    FormBuilderPrinterHandle = () => {
-        const content = $('.r-formbuilder').html();
-        console.log(content)
-        var mywindow = window.open('', 'Print', 'height=600,width=800');
-
-        mywindow.document.write('<html><head><title>Print</title>');
-        mywindow.document.write('');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write(content);
-        mywindow.document.write('</body></html>');
-
-        mywindow.document.close();
-        mywindow.focus()
-        mywindow.print();
-        mywindow.close();
-        return true;
-        // document.body.innerHTML = oldPage
-    }
+   
     render() {
 
         const { modal, toggle, FormBuilderCaptionId } = this.props;
@@ -440,10 +315,7 @@ class DesignedHistoryFormBuilder extends Component {
                     <ModalHeader toggle={toggle}>{this.context.t("frm_Flow_Form_Builder")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonDesignedHistoryFormBuilder rebuildHandle={this.rebuildHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} PrintRef={this.componentRef} SaveHandle={this.SaveHandle.bind(this)} FormBuilderCaptionId={FormBuilderCaptionId}
-                                FormBuilderPrinterHandle={this.FormBuilderPrinterHandle.bind(this)}
-
-                            />
+                            <RibbonDesignedHistoryFormBuilder  PrintRef={this.componentRef} />
                         </div>
 
                         <div className="r-formbuilder" >
@@ -487,7 +359,7 @@ const mapDispatchToProps = dispatch => ({
 
     DesignedFormFieldList: (peygir_id, showtree_id) => {
         return dispatch(FormBuilderBasic_action.DesignedFormFieldList(peygir_id, showtree_id))
-    },
+    }
 });
 
 DesignedHistoryFormBuilder.contextTypes = {

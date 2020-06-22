@@ -140,7 +140,7 @@ class RibbonWorkDiagram extends Component {
                     ParentForm={FormInfo.fm_par_diagram} />}
                 </div>
                 <nav className="radialnav">
-                    <a href="#" className="ellipsis"></a>
+                    <a href="javascript:void(0)" className="ellipsis"></a>
                     <MenuProvider id="menu_id">
                         <ul className="menu">
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {

@@ -13,20 +13,29 @@ class NavItem extends Component {
         if (AccessInfo !== undefined) {
             let formName = lang == "fa" ? AccessInfo.form_name : AccessInfo.en_form_name;
             let AccessParams = { "sysname": AccessInfo.sys_name, "type": AccessType !== undefined ? AccessType : "show", formname: formName };
-            UserAccessForm(AccessParams).then(data => {
-                if (data.status) {
-                    if (OnClickHandler !== undefined)
-                        OnClickHandler();
-                    else {
-                        var linkId = document.getElementById(Id);
-                        linkId.click();
+            if (AccessInfo.sys_name !== 'web_fm_mainpage') {
+                UserAccessForm(AccessParams).then(data => {
+                    if (data.status) {
+                        if (OnClickHandler !== undefined)
+                            OnClickHandler();
+                        else {
+                            var linkId = document.getElementById(Id);
+                            linkId.click();
+                        }
                     }
-                }
+                    else {
+                        e.preventDefault();
+                        e.stopPropagation();
+                    }
+                });
+            } else {
+                if (OnClickHandler !== undefined)
+                    OnClickHandler();
                 else {
-                    e.preventDefault();
-                    e.stopPropagation();
+                    var linkId = document.getElementById(Id);
+                    linkId.click();
                 }
-            });
+            }
         }
         else {
             if (OnClickHandler !== undefined)

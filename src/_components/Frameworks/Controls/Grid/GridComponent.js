@@ -2,9 +2,9 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from "prop-types"
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 
 import {
-    PagingState,
     SortingState,
     IntegratedFiltering,
     GroupingState,
@@ -18,9 +18,8 @@ import {
 } from '@devexpress/dx-react-grid';
 import {
     Grid,
-    Table,
+    VirtualTable,
     TableHeaderRow,
-    PagingPanel,
     TableGroupRow,
     GroupingPanel,
     DragDropProvider,
@@ -39,6 +38,7 @@ import '@material-ui/icons/ChevronLeft'
 import { Loading } from '../../../../theme-sources/bootstrap4/components/loading';
 import { CurrencyTypeProvider } from '../../../../theme-sources/bootstrap4/components/currency-type-provider';
 import connect from "react-redux/es/connect/connect";
+const Root = props => <Grid.Root {...props} style={{ height: '100%' }} />;
 
 const theme = createMuiTheme({
     overrides: {
@@ -69,6 +69,9 @@ const theme = createMuiTheme({
             root: {
                 height: "30px!important",
                 cursor:"pointer !important"
+            },
+            selected: {
+                backgroundColor: "rgba(202, 192, 192, 0.88) !important",
             },
         },
         TableInvisibleRow: {
@@ -301,7 +304,7 @@ class GridComponent extends React.PureComponent {
     }
 
     TableRow = ({ row, ...restProps }) => (
-        <Table.Row
+        <VirtualTable.Row
             {...restProps}
             onClick={(e) => {
                 this.props.GetRowInfo(row);
@@ -328,8 +331,8 @@ class GridComponent extends React.PureComponent {
             filters: [],
             sorting: [],
             grouping: [],
-            pageSize: 10,
-            pageSizes: [5, 10, 15],
+            // pageSize: 10,
+            // pageSizes: [5, 10, 15],
             currencyColumns: currencyColumns,
             booleanColumns: booleanColumns,
             currentPage: 0,
@@ -345,8 +348,8 @@ class GridComponent extends React.PureComponent {
         };
         this.loadData();
         this.changeSorting = this.changeSorting.bind(this);
-        this.changeCurrentPage = this.changeCurrentPage.bind(this);
-        this.changePageSize = this.changePageSize.bind(this);
+        // this.changeCurrentPage = this.changeCurrentPage.bind(this);
+        // this.changePageSize = this.changePageSize.bind(this);
         this.changeGroup = this.changeGroup.bind(this);
         this.changeFilters = this.changeFilters.bind(this);
         this.hiddenColumnNamesChange = (hiddenColumnNames) => {
@@ -427,17 +430,17 @@ class GridComponent extends React.PureComponent {
     }
 
 
-    changePageSize(pageSize) {
-        const { totalCount, currentPage: stateCurrentPage } = this.state;
-        const totalPages = Math.ceil(totalCount / pageSize);
-        const currentPage = Math.min(stateCurrentPage, totalPages - 1);
+    // changePageSize(pageSize) {
+    //     const { totalCount, currentPage: stateCurrentPage } = this.state;
+    //     const totalPages = Math.ceil(totalCount / pageSize);
+    //     const currentPage = Math.min(stateCurrentPage, totalPages - 1);
 
-        this.setState({
-            loading: true,
-            pageSize,
-            currentPage,
-        });
-    }
+    //     this.setState({
+    //         loading: true,
+    //         // pageSize,
+    //         currentPage,
+    //     });
+    // }
 
     queryString() {
         const { sorting, pageSize, currentPage, filters } = this.state;
@@ -489,7 +492,7 @@ class GridComponent extends React.PureComponent {
         const {
             currencyColumns,
             sorting,
-            pageSizes,
+            // pageSizes,
             filters,
             loading,
             tableColumnExtensions,
@@ -500,7 +503,7 @@ class GridComponent extends React.PureComponent {
             columnOrder,
             booleanFilterOperations,
             currencyFilterOperations,
-            pageSize
+            // pageSize
         } = this.state;
         if (this.props.rows !== undefined)
             rows = this.props.rows;
@@ -523,21 +526,23 @@ class GridComponent extends React.PureComponent {
         const tableHeaderMessages = {
             sortingHint: this.context.t("SortingHint"),
         };
-        const pagingPanelMessages = {
-            rowsPerPage: this.context.t("RowsPerPage"),
-            info: this.context.t("Count") + " {from} " + this.context.t("Of") + " {to} " + "({count} " + this.context.t("Items") + ")",
-        };
+        // const pagingPanelMessages = {
+        //     rowsPerPage: this.context.t("RowsPerPage"),
+        //     info: this.context.t("Count") + " {from} " + this.context.t("Of") + " {to} " + "({count} " + this.context.t("Items") + ")",
+        // };
         const columnChooserMessages = {
             showColumnChooser: this.context.t("ShowColumnChooser"),
         };
         return (
             <MuiThemeProvider theme={theme} >
-          
+              <Paper style={{ height: '500px' }}>
+
                 <Grid
                     rows={rows}
                     columns={columns}
                     getRowId={this.getRowId.bind(this)}
-                >
+                    rootComponent={Root}
+                    >
                     <DragDropProvider />
                     <CurrencyTypeProvider
                         for={currencyColumns}
@@ -561,22 +566,23 @@ class GridComponent extends React.PureComponent {
                         filters={filters}
                         onFiltersChange={this.changeFilters}
                     />
-                    <PagingState
+                    {/* <PagingState
                         defaultCurrentPage={0}
                         defaultPageSize={pageSize}
-                    />
+                    /> */}
                     
                     <SelectionState
                         selection={selection}
                         onSelectionChange={this.changeSelection}
                     />
-                    <IntegratedPaging />
+                    {/* <IntegratedPaging /> */}
                     <IntegratedSelection />
                     <IntegratedFiltering />
-                    <Table 
+                    <VirtualTable 
                         columnExtensions={tableColumnExtensions}
                         messages={tableMessages}
-                    />
+                        height="auto"
+                        />
                     <TableColumnReordering
                         order={columnOrder}
                         onOrderChange={this.changeColumnOrder}
@@ -590,11 +596,11 @@ class GridComponent extends React.PureComponent {
                     highlightRow={true} 
                     showSelectionColumn={false}  />
                     <TableHeaderRow showSortingControls messages={tableHeaderMessages} />
-
+{/* 
                     <PagingPanel
                         pageSizes={pageSizes}
                         messages={pagingPanelMessages}
-                    />
+                    /> */}
                     <TableGroupRow />
                     <TableColumnVisibility
                         hiddenColumnNames={hiddenColumnNames}
@@ -609,6 +615,8 @@ class GridComponent extends React.PureComponent {
                         messages={groupingPanelMessages} />
                 </Grid>
                 {loading && <Loading />}
+                
+    </Paper>
             </MuiThemeProvider>
         );
     }

@@ -10,13 +10,16 @@ import InputMask from "react-input-mask";
 import { JalaliField } from 'material-ui-hichestan-datetimepicker';
 import { RibbonDesignedFormBuilder } from '../Ribbon';
 import 'react-grid-layout/css/styles.css';
+import { FormInfo } from "../../../locales";
 import {
     FormBuilderActions_action,
-    FormBuilderBasic_action
+    FormBuilderBasic_action, WorkActions_action,WorkBasic_action
 } from "../../../_actions";
+import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 import { toast } from 'react-toastify';
 const _Config = JSON.parse(localStorage.getItem("_Config"));
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
+var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: null };
 
 var SaveValuesParams = { peygir_id: 0, caption_id: 0, Fields: [] };
 var ImagesFormData = new FormData();
@@ -35,6 +38,7 @@ class DesignedFormBuilder extends Component {
             compactType: "vertical",
             mounted: false,
             Values:[],
+            FlowResultSelectmodal: false,
             layouts: { lg: this.props.FormBuilderLayoutData },
             FlowFormBuilderModal: this.props.FlowFormBuilderModal,
             FormBuilderCaptionId: this.props.FormBuilderCaptionId,
@@ -130,23 +134,24 @@ class DesignedFormBuilder extends Component {
         SaveValuesParams.peygir_id = WorkInfo.peygir_id;
         DesignedSaveValues(SaveValuesParams, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
+                var hasImages = false;
+                for (var item of ImagesFormData.keys())
+                    hasImages = true;
+        
+                if (hasImages) {
+                    ImagesFormData.append("peygir_id", WorkInfo.peygir_id);
+                    ImagesFormData.append("caption_id", FormBuilderCaptionId);
+                    ImagesFormData.append("showtree_id", WorkInfo.showtree_id);
+                    DesignedSaveImg(ImagesFormData, this.context.t("msg_Operation_Success")).then(data => {
+                        if (data.status) {
+                        }
+                    });
+        
+                }
             }
         });
 
-        var hasImages = false;
-        for (var item of ImagesFormData.keys())
-            hasImages = true;
-
-        if (hasImages) {
-            ImagesFormData.append("peygir_id", WorkInfo.peygir_id);
-            ImagesFormData.append("caption_id", FormBuilderCaptionId);
-            ImagesFormData.append("showtree_id", WorkInfo.showtree_id);
-            DesignedSaveImg(ImagesFormData, this.context.t("msg_Operation_Success")).then(data => {
-                if (data.status) {
-                }
-            });
-
-        }
+       
     }
     componentDidMount() {
         SaveValuesParams = { peygir_id: 0, caption_id: 0, Fields: [] };
@@ -154,9 +159,31 @@ class DesignedFormBuilder extends Component {
         valuesJSON = [];
         this.setState({ mounted: true });
     }
-
+    CloseleSelectFlowResult = (e) => {
+        this.setState({
+            FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
+        });
+    }
     ConfirmationHandle = (e) => {
-
+        const { WorkInfo, InitConfirmWork, lang, FetchWorkInfo, Params,
+            RefreshParentForm } = this.props;
+        ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
+        var formname = lang == "fa" ? FormInfo.fm_web_flow_formsaz.form_name : FormInfo.fm_web_flow_formsaz.en_form_name;
+        ConfirmParams["Form"] = formname;
+        InitConfirmWork(ConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
+            if (data.status) {
+                if (data.code === 2 && data.data !== null) {
+                    this.setState({
+                        FlowResultSelectmodal: true,
+                    });
+                }
+                else {
+                    FetchWorkInfo(WorkInfo.peygir_id);
+                    if (RefreshParentForm !== undefined)
+                        RefreshParentForm(Params);
+                }
+            }
+        });
     }
 
     rebuildHandle = (e) => {
@@ -420,27 +447,9 @@ class DesignedFormBuilder extends Component {
             );
         });
     }
-    FormBuilderPrinterHandle = () => {
-        const content = $('.r-formbuilder').html();
-        console.log(content)
-        var mywindow = window.open('', 'Print', 'height=600,width=800');
-
-        mywindow.document.write('<html><head><title>Print</title>');
-        mywindow.document.write('');
-        mywindow.document.write('</head><body >');
-        mywindow.document.write(content);
-        mywindow.document.write('</body></html>');
-
-        mywindow.document.close();
-        mywindow.focus()
-        mywindow.print();
-        mywindow.close();
-        return true;
-        // document.body.innerHTML = oldPage
-    }
     render() {
 
-        const { modal, toggle, FormBuilderCaptionId } = this.props;
+        const { WorkInfo,modal, toggle, FormBuilderCaptionId ,RefreshParentForm,Params} = this.props;
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -457,9 +466,10 @@ class DesignedFormBuilder extends Component {
                     <ModalHeader toggle={toggle}>{this.context.t("frm_Flow_Form_Builder")}</ModalHeader>
                     <ModalBody>
                         <div className="r-main-box__ribbon">
-                            <RibbonDesignedFormBuilder rebuildHandle={this.rebuildHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} PrintRef={this.componentRef} SaveHandle={this.SaveHandle.bind(this)} FormBuilderCaptionId={FormBuilderCaptionId}
-                                FormBuilderPrinterHandle={this.FormBuilderPrinterHandle.bind(this)}
-
+                            <RibbonDesignedFormBuilder rebuildHandle={this.rebuildHandle.bind(this)} 
+                            ConfirmationHandle={this.ConfirmationHandle.bind(this)} 
+                            PrintRef={this.componentRef} SaveHandle={this.SaveHandle.bind(this)} 
+                            FormBuilderCaptionId={FormBuilderCaptionId}
                             />
                         </div>
 
@@ -478,6 +488,11 @@ class DesignedFormBuilder extends Component {
                                     {this.generateDOM()}
                                 </ResponsiveReactGridLayout>
                             </page>
+                            {this.state.FlowResultSelectmodal &&
+                                    <ConfirmFlow ParentForm={FormInfo.fm_web_flow_formsaz}
+                                        flowResultSelectModal={this.state.FlowResultSelectmodal}
+                                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
+                                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
                         </div>
                         <style>{modalBackDrop}</style>
                     </ModalBody>
@@ -504,6 +519,12 @@ const mapDispatchToProps = dispatch => ({
 
     DesignedFormFieldList: (peygir_id, showtree_id) => {
         return dispatch(FormBuilderBasic_action.DesignedFormFieldList(peygir_id, showtree_id))
+    },   
+    InitConfirmWork: (Params, msg) => {
+        return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
+    },
+    FetchWorkInfo: (peygir_id) => {
+        dispatch(WorkBasic_action.FetchWorkInfo(peygir_id))
     },
 });
 

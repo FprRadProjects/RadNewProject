@@ -6,10 +6,6 @@ import 'react-contexify/dist/ReactContexify.min.css';
 import connect from "react-redux/es/connect/connect";
 import { toast } from 'react-toastify';
 
-import {
-    BasicInfo_action
-} from "../../../../_actions";
-
 class MyAwesomeMenu extends Component {
     constructor(props) {
         super(props);
@@ -156,11 +152,11 @@ class MyAwesomeMenu extends Component {
                         Params.Element = "ShortKey" + this.state.event.target.attributes.id.value;
                         const ShortKeys=Design!==undefined? Design["ShortKeys"+formId]:undefined;
                         if (ShortKeys === undefined) {
-                            this.state.event.target.attributes.element.value = Params.Element;
+                            // this.state.event.target.attributes.element.value = Params.Element;
                             Set_ShortKey_TemplateForm(Params);
                         }
                         else if (ShortKeys[Params.Element] === undefined) {
-                            this.state.event.target.attributes.element.value = Params.Element;
+                            // this.state.event.target.attributes.element.value = Params.Element;
                             Set_ShortKey_TemplateForm(Params);
                         }
                         else

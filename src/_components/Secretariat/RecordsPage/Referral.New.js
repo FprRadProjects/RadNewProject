@@ -51,8 +51,8 @@ class NewReferral extends Component {
             DescriptionTextArea: "",
             SelectedWorkers: [],
             AttachmentList: [],
-            attachFromParentCheckBox:1,
-            infoFromParentCheckBox:1,
+            attachFromParentCheckBox: 1,
+            infoFromParentCheckBox: 1,
             backdrop: "static",
             modalClass: "modal-dialog-centered modal-xl r-modal r-referral-modal"
         };
@@ -79,6 +79,7 @@ class NewReferral extends Component {
             });
     }
     CalendarChange = (value, name) => {
+        this.setState({ setDefaultDate: value });
         thisSaveParams.data[[name]] = { [name]: value }
     }
     changeHandle = (e, val) => {
@@ -269,8 +270,8 @@ class NewReferral extends Component {
         finalSaveParams.data = obj;
         InsertNewWorkInfo(finalSaveParams, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
-                if(RefreshParentForm!==undefined)
-                RefreshParentForm(Params);
+                if (RefreshParentForm !== undefined)
+                    RefreshParentForm(Params);
                 toggle();
                 thisSaveParams = {
                     form: "",
@@ -325,7 +326,7 @@ class NewReferral extends Component {
                             <RibbonNewReferral saveReferralHandle={this.saveReferralHandle.bind(this)} attachmentsToggle={this.attachmentsToggle.bind(this)} />
                         </div>
                         <div className="referral-modal">
-                            <BoxGroup 
+                            <BoxGroup
                                 Text={this.context.t("WorkInfoBox")}
                                 FormId={FormInfo.fm_dabir_eghdam.id}
                                 Id="WorkInfoBox"
@@ -337,7 +338,7 @@ class NewReferral extends Component {
                                     <div className="row">
 
                                         <LabelCombobox
-                                            Text={this.context.t("ReferralType")} 
+                                            Text={this.context.t("ReferralType")}
                                             name="wt_id"
                                             Id="ReferralType" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_dabir_eghdam.id}
@@ -350,7 +351,7 @@ class NewReferral extends Component {
 
                                 </div>
                             </BoxGroup>
-                            <BoxGroup 
+                            <BoxGroup
                                 Text={this.context.t("UsersInfoBox")}
                                 FormId={FormInfo.fm_dabir_eghdam.id}
                                 Id="UsersInfoBox"
@@ -361,8 +362,8 @@ class NewReferral extends Component {
                                 <div className="col-11">
                                     <div className="row">
                                         <LabelPopUpInputText
-                                            Text={this.context.t("ReferralTo")} 
-                                             name="Workers"
+                                            Text={this.context.t("ReferralTo")}
+                                            name="Workers"
                                             Id="ReferralTo" ButtonClick={this.OpenReferralTo.bind(this)}
                                             FormId={FormInfo.fm_dabir_eghdam.id}
                                             DeletedElements={DeletedElements}
@@ -373,9 +374,9 @@ class NewReferral extends Component {
                                             changeHandle={this.changeHandle.bind(this)}
                                             ButtonText={this.context.t("SelectPopup")}
                                         ></LabelPopUpInputText>
-                                        <LabelCombobox  LabelclassName="col-2 col-form-label"
+                                        <LabelCombobox LabelclassName="col-2 col-form-label"
                                             ColClassName="col-6"
-                                            Text={this.context.t("Priority")} 
+                                            Text={this.context.t("Priority")}
                                             ComboclassName="my-2" name="olaviyat_id"
                                             Id="Priority" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_dabir_eghdam.id}
@@ -388,7 +389,7 @@ class NewReferral extends Component {
                                 </div>
                             </BoxGroup>
 
-                            <BoxGroup 
+                            <BoxGroup
                                 Text={this.context.t("DateTimeInfoBox")}
                                 FormId={FormInfo.fm_dabir_eghdam.id}
                                 Id="DateTimeInfoBox"
@@ -398,9 +399,9 @@ class NewReferral extends Component {
                             >
                                 <div className="col-11">
                                     <div className="row">
-                                        <LabelCalendar  LabelclassName="col-2 col-form-label"
+                                        <LabelCalendar LabelclassName="col-2 col-form-label"
                                             ColClassName="col-6"
-                                            Text={this.context.t("ReferralDurationDate")} 
+                                            Text={this.context.t("ReferralDurationDate")}
                                             InputclassName="form-control my-2  ltr" name="tarikhaction"
                                             Id="ReferralDurationDate" CalendarChange={this.CalendarChange.bind(this)}
                                             FormId={FormInfo.fm_dabir_eghdam.id}
@@ -408,9 +409,9 @@ class NewReferral extends Component {
                                             EditedElements={EditedElements}
                                             setDate={this.state.setDefaultDate}
                                         ></LabelCalendar>
-                                        <LabelInputText  LabelclassName="col-2 col-form-label"
+                                        <LabelInputText LabelclassName="col-2 col-form-label"
                                             ColClassName="col-6"
-                                            Text={this.context.t("ReferralDurationTime")} 
+                                            Text={this.context.t("ReferralDurationTime")}
                                             InputclassName="form-control my-2  ltr" name="deadtime"
                                             Id="ReferralDurationTime" changeHandle={this.changeHandle.bind(this)}
                                             FormId={FormInfo.fm_dabir_eghdam.id}
@@ -434,12 +435,12 @@ class NewReferral extends Component {
                             >
                                 <div className="col-11">
                                     <div className="row">
-                                        <LabelPopUpInputText  LabelclassName="col-1 col-form-label"
+                                        <LabelPopUpInputText LabelclassName="col-1 col-form-label"
                                             ColClassName="col-12"
-                                            Text={this.context.t("WorkDescription")} 
+                                            Text={this.context.t("WorkDescription")}
                                             className2="col-11"
                                             className3="input-group my-2"
-                                             name="tozihat"
+                                            name="tozihat"
                                             Id="Description" ButtonClick={this.OpenSelectDefaultText.bind(this)}
                                             FormId={FormInfo.fm_dabir_eghdam.id}
                                             DeletedElements={DeletedElements}
@@ -490,7 +491,7 @@ class NewReferral extends Component {
                                         >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("ImportInformationFromLetter")}
                                                         name="infoFromParent"
                                                         Id="ImportInformationFromLetter"
@@ -501,7 +502,7 @@ class NewReferral extends Component {
                                                         checked={this.state.infoFromParentCheckBox}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("ImportAttachmentFromLetter")}
                                                         name="attachFromParent"
                                                         Id="ImportAttachmentFromLetter"
@@ -529,7 +530,7 @@ class NewReferral extends Component {
                                         >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("CopyWorkForm")}
                                                         name="cpy_form_kar"
                                                         Id="CopyWorkForm"
@@ -540,7 +541,7 @@ class NewReferral extends Component {
                                                         checked={this.state.cpy_form_karCheckBox}
                                                     ></LabelCheckBox>
 
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("NoWorkFlow")}
                                                         name="withoutFlow"
                                                         Id="NoWorkFlow"
@@ -569,7 +570,7 @@ class NewReferral extends Component {
                                         >
                                             <div className="card-body">
                                                 <div className="checkbox-group">
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("SendSmsToUser")}
                                                         name="smsToWorker"
                                                         Id="SendSmsToUser"
@@ -579,7 +580,7 @@ class NewReferral extends Component {
                                                         EditedElements={EditedElements}
                                                         checked={this.state.smsToWorkerCheckBox}
                                                     ></LabelCheckBox>
-                                                    <LabelCheckBox 
+                                                    <LabelCheckBox
                                                         Text={this.context.t("SendEmailToUser")}
                                                         name="emailToWorker"
                                                         Id="SendEmailToUser" checkBoxChangeHandler={this.checkBoxChangeHandler.bind(this)}

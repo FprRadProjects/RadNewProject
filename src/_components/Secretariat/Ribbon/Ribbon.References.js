@@ -8,7 +8,6 @@ import { RibbonButton, ShortKeyButton, ControlPanel } from "../../Frameworks";
 import { WorkDiagramViewer } from "../../Automation";
 import {
     design_Actions,
-
     BasicInfo_action, WorkActions_action
     , WorkAccess_action, WorkBasic_action, FormBuilderBasic_action
 } from "../../../_actions";
@@ -232,7 +231,7 @@ class RibbonReferences extends Component {
 
 
         const { SelectedRow, FetchData, Params, ShortKeys, DeletedElements, EditedElements,
-            workDiagram, WorkInfo } = this.props;
+            workDiagram, WorkInfo,RefreshParentForm } = this.props;
 
         return (
             <div>
@@ -508,7 +507,7 @@ class RibbonReferences extends Component {
                     </div>*/}
                 </div>
                 <nav className="radialnav">
-                    <a href="#" className="ellipsis"></a>
+                    <a href="javascript:void(0)" className="ellipsis"></a>
                     <MenuProvider id="menu_id">
                         <ul className="menu">
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
@@ -599,7 +598,6 @@ class RibbonReferences extends Component {
                         DesignPageLayout={this.state.DesignPageLayout}
                         DesignPageSize={this.state.DesignPageSize}
 
-                        Params={Params}
                     />
                 }
 
@@ -610,8 +608,8 @@ class RibbonReferences extends Component {
                         FormBuilderLayoutData={this.state.FormBuilderLayoutData}
                         DesignPageLayout={this.state.DesignPageLayout}
                         DesignPageSize={this.state.DesignPageSize}
-
                         Params={Params}
+                        RefreshParentForm={FetchData.bind(this)}
                     />
                 }
 

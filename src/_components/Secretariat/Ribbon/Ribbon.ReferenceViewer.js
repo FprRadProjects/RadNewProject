@@ -190,10 +190,7 @@ class RibbonReferenceViewer extends Component {
                 else
                     toast.error(this.context.t("msg_No_Form_Builder"));
             }
-
         });
-
-
     }
 
     rebuildHandle() {
@@ -294,7 +291,7 @@ class RibbonReferenceViewer extends Component {
                     </div>
                 </div>
                 <nav className="radialnav">
-                    <a href="#" className="ellipsis"></a>
+                    <a href="javascript:void(0)" className="ellipsis"></a>
                     <MenuProvider id="menu_id">
                         <ul className="menu">
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
@@ -359,23 +356,22 @@ class RibbonReferenceViewer extends Component {
                 {this.state.FlowFormBuilderModal &&
                     <DesignedFormBuilder modal={this.state.FlowFormBuilderModal}
                         toggle={this.toggleFormBuilder.bind(this)}
-                        RefreshParentForm={RefreshParentForm}
                         FormBuilderCaptionId={this.state.FormBuilderCaptionId}
                         FormBuilderLayoutData={this.state.FormBuilderLayoutData}
                         DesignPageLayout={this.state.DesignPageLayout}
                         DesignPageSize={this.state.DesignPageSize}
-
                         Params={Params}
+                        RefreshParentForm={RefreshParentForm}
                     />
                 }
                 {this.state.HistoryFlowFormBuilderModal &&
                     <DesignedHistoryFormBuilder modal={this.state.HistoryFlowFormBuilderModal}
                     toggle={this.toggleHistoryFormBuilder.bind(this)}
                         FormBuilderCaptionId={this.state.FormBuilderCaptionId}
+                        RefreshParentForm={RefreshParentForm}
                         FormBuilderLayoutData={this.state.FormBuilderLayoutData}
                         DesignPageLayout={this.state.DesignPageLayout}
                         DesignPageSize={this.state.DesignPageSize}
-
                         Params={Params}
                     />
                 }

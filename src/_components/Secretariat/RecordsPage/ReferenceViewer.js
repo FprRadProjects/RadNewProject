@@ -599,9 +599,7 @@ const mapDispatchToProps = dispatch => ({
     SaveWorkInfo: (SaveParams, msg) => {
         return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
     },
-    InitConfirmWork: (Params, msg) => {
-        return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
-    },
+  
 
 
 

@@ -7,6 +7,7 @@ import { AttachmentsReview } from "../../Archives";
 import { SelectDefaultTextModal, SelectFileAudienceList, SelectFollowerList } from "../../Basic/";
 import { SelectProjectModal } from "../../Project/";
 import { FormInfo } from "../../../locales";
+import { ConfirmFlow } from '../../Flow/ConfirmFlow';
 
 import {
     AutoBasicInfo_action,
@@ -25,7 +26,7 @@ var thisSaveParams = {
     attachFromParent: 0, infoFromParent: 0, replication: "", emailToWorker: 0,
     emailToAudience: 0, smsToWorker: 0, smsToAudience: 0, archivesList: []
 };
-
+var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: null };
 var projectParams = { Id_Taraf: 0 };
 var WorkerParams = { page: 0, pagesize: 10, id_role: 0, wt_id: 0, orderby: "id_user", direction: "desc", filter: [] };
 var workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
@@ -36,6 +37,7 @@ class NewWork extends Component {
         super(props);
         this.state = {
             ...this.state,
+            FlowResultSelectmodal: false,
             modal: false,
             peygir_idText: 0,
             SelectedWorkers: [],
@@ -412,7 +414,7 @@ class NewWork extends Component {
                 toast.error(this.context.t("msg_ActionDate_Not_Valid"));
                 return false;
             }
-            if (thisSaveParams.data["tarikhaction"].tarikhaction=== undefined) {
+            if (thisSaveParams.data["tarikhaction"].tarikhaction === undefined) {
                 toast.error(this.context.t("msg_ActionDate_Not_Valid"));
                 return false;
             }
@@ -591,6 +593,9 @@ class NewWork extends Component {
 
     }
     newWorkHandle = () => {
+        workTypeParams = { FlowId: 0, WorkGroupId: 0, HasFormGen: 0 }
+        const { SelectWorkTypeList} = this.props;
+        SelectWorkTypeList(workTypeParams);
         this.setState({ isDisabled: false })
         this.setState({ peygir_idText: 0 })
         this.setState({ ProjectSelectedOption: { value: 0, label: this.context.t("SetSelect") } });
@@ -647,6 +652,31 @@ class NewWork extends Component {
 
         };
     }
+    ConfirmationHandle = (e) => {
+        const { InitConfirmWork, lang } = this.props;
+        if (this.state.peygir_idText === 0) {
+            toast.warn(this.context.t("msg_Id_DosNot_Contain_Value"));
+            return false;
+        }
+        ConfirmParams["peygir_id"] = this.state.peygir_idText;
+        var formname = lang == "fa" ? FormInfo.fm_pub_sabt_kar.form_name : FormInfo.fm_pub_sabt_kar.en_form_name;
+        ConfirmParams["Form"] = formname;
+        InitConfirmWork(ConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
+            if (data.status) {
+                if (data.code === 2 && data.data !== null) {
+                    this.setState({
+                        FlowResultSelectmodal: true,
+                    });
+                }
+
+            }
+        });
+    }
+    CloseleSelectFlowResult = (e) => {
+        this.setState({
+            FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
+        });
+    }
     render() {
         const { modal, toggle, SelectWorkTypeList_rows, SelectPriorityList_rows,
             SelectWorkFlowList_rows, SelectWorkGroupList_rows, SelectRoleList_rows,
@@ -679,6 +709,7 @@ class NewWork extends Component {
                     <ModalBody>
                         <div className="r-main-box__ribbon">
                             <RibbonNewWork
+                                ConfirmationHandle={this.ConfirmationHandle.bind(this)}
                                 saveWorkHandle={this.saveWorkHandle.bind(this)}
                                 newWorkHandle={this.newWorkHandle.bind(this)}
                                 editWorkHandle={this.editWorkHandle.bind(this)}
@@ -1248,6 +1279,12 @@ class NewWork extends Component {
                         id_tel={this.state.SelectedFileId}
                     />
                 }
+                {this.state.FlowResultSelectmodal &&
+                    <ConfirmFlow ParentForm={FormInfo.fm_pub_sabt_kar}
+                        flowResultSelectModal={this.state.FlowResultSelectmodal}
+                        CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
+                        peygir_id={this.state.peygir_idText} />
+                }
             </div >
         );
     }
@@ -1302,6 +1339,9 @@ const mapDispatchToProps = dispatch => ({
     },
     SaveWorkInfo: (SaveParams, msg) => {
         return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
+    },
+    InitConfirmWork: (Params, msg) => {
+        return dispatch(WorkActions_action.InitConfirmWork(Params, msg))
     },
 });
 NewWork.contextTypes = {

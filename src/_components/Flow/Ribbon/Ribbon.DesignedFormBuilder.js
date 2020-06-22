@@ -3,8 +3,7 @@ import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
 import { MenuProvider } from "react-contexify";
-import { RibbonButton, ShortKeyButton, ControlPanel } from "../../Frameworks";
-import ReactToPrint from 'react-to-print';
+import { RibbonButton, ShortKeyButton, ControlPanel,RibbonPrintButton,ShortKeyPrintButton } from "../../Frameworks";
 import {
     Act_Reference,
     design_Actions,
@@ -35,7 +34,7 @@ class RibbonDesignedFormBuilder extends Component {
     }
     componentDidMount() {
         const { GetTemplateForm } = this.props;
-        GetTemplateForm(FormInfo.fm_dabir_natije_erja.id);
+        GetTemplateForm(FormInfo.fm_web_flow_formsaz.id);
     }
 
 
@@ -89,7 +88,7 @@ class RibbonDesignedFormBuilder extends Component {
 
     render() {
         const { WorkInfo, Params, ShortKeys, DeletedElements, EditedElements, RefreshParentForm,
-            FormBuilderCaptionId, SaveHandle, FormBuilderPrinterHandle, ConfirmationHandle, rebuildHandle
+             SaveHandle, ConfirmationHandle, rebuildHandle
        ,PrintRef } = this.props;
         return (
             <div>
@@ -135,7 +134,7 @@ class RibbonDesignedFormBuilder extends Component {
                                 <div className="tab-group-caption">{this.context.t("Operations")}</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
-                                        <RibbonButton FormId={FormInfo.fm_dabir_natije_erja.id}
+                                        <RibbonButton FormId={FormInfo.fm_web_flow_formsaz.id}
                                             DeletedElements={DeletedElements}
                                             Id="refresh-information"
                                             handleClick={rebuildHandle.bind(this)}
@@ -145,18 +144,26 @@ class RibbonDesignedFormBuilder extends Component {
                                         <RibbonButton FormId={FormInfo.fm_web_flow_formsaz.id}
                                             DeletedElements={DeletedElements}
                                             Id="form-builder-designer"
-                                            FormBuilderCaptionId={FormBuilderCaptionId}
                                             handleClick={this.FormBuilderDesignerHandle.bind(this)}
                                             EditedElements={EditedElements}
                                             Text="FormBuilderDesigner"
                                         />
-                                        <ReactToPrint
-                                            trigger={() => <a href="#"><i className="icon save"></i><label>{this.context.t("Print")}</label></a>}
+                                         <RibbonPrintButton 
+                                            FormId={FormInfo.fm_web_flow_formsaz.id}
+                                            DeletedElements={DeletedElements}
+                                            Id="form-builder-print"
+                                            EditedElements={EditedElements}
+                                            Text={this.context.t("Print")}
+                                            PrintRef={PrintRef}
+                                        />
+                                        
+                                        {/* <ReactToPrint
+                                            trigger={() => <a href="javascript:void(0)"><i className="icon save"></i><label>{this.context.t("Print")}</label></a>}
                                             content={() => PrintRef}
                                             bodyClass="print"
                                             pageStyle={""}
                                             copyStyles={true}
-                                        />
+                                        /> */}
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +172,7 @@ class RibbonDesignedFormBuilder extends Component {
                     </div>
                 </div>
                 <nav className="radialnav">
-                    <a href="#" className="ellipsis"></a>
+                    <a href="javascript:void(0)" className="ellipsis"></a>
                     <MenuProvider id="menu_id">
                         <ul className="menu">
                             {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
@@ -187,7 +194,12 @@ class RibbonDesignedFormBuilder extends Component {
                                             ShortKey={ShortKeys[keyName]} Id="refresh-information" tooltip={this.context.t("RefreshInformation")} />
                                     )
                                 }
-
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-form-builder-print") {
+                                    return (
+                                        <ShortKeyPrintButton FormId={FormInfo.fm_web_flow_formsaz.id} key={index}  PrintRef={PrintRef}
+                                            ShortKey={ShortKeys[keyName]} Id="form-builder-print" tooltip={this.context.t("Print")} />
+                                    )
+                                }
                             })}
                         </ul>
                     </MenuProvider>

@@ -45,6 +45,10 @@ class ConfirmFlow extends Component {
                             ReviewWorkModal: true,
                         });
                     }
+                    console.log("222222222")
+                    console.log(Params)
+                    console.log(FetchWorkInfo)
+                    console.log(RefreshParentForm)
                     if (FetchWorkInfo !== undefined)
                         FetchWorkInfo(peygir_id);
                     if (RefreshParentForm !== undefined)
@@ -62,6 +66,8 @@ class ConfirmFlow extends Component {
                 this.setState({
                     ReviewWorkModal: false,
                 });
+                console.log("11111111111")
+                console.log(Params)
                 if (RefreshParentForm !== undefined)
                     RefreshParentForm(Params);
             }
