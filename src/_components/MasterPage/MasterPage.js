@@ -23,6 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Loader from 'react-loader-advanced';
 import { workManagement } from "../Secretariat/DashBoards/workManagement";
 import {ReportView} from "../Frameworks/Stimulsoft";
+import { withCookies } from 'react-cookie';
 
 class MasterPage extends React.Component {
     constructor(props) {
@@ -41,7 +42,7 @@ class MasterPage extends React.Component {
         const {
             users, lang, loading, GetTemplateForm,
             Set_ShortKey_TemplateForm, Set_EditText_TemplateForm, Set_Hide_TemplateForm,
-            Delete_ShortKeyElements_Template } = this.props;
+            Delete_ShortKeyElements_Template,cookies } = this.props;
         const loaddddd = <div className="loader-wrapper">
             <div className="loader">
                 <div className="line"></div>
@@ -105,7 +106,7 @@ class MasterPage extends React.Component {
     }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
     const { alert } = state;
     const { loading } = state.loading;
     const { users } = state;
@@ -115,6 +116,7 @@ function mapStateToProps(state) {
         loading,
         users,
         lang,
+        cookies: ownProps.cookies,
     };
 }
 
@@ -152,4 +154,4 @@ const mapDispatchToProps = dispatch => ({
     },
 
 });
-export default  connect(mapStateToProps, mapDispatchToProps)(MasterPage)
+export default  withCookies(connect(mapStateToProps, mapDispatchToProps)(MasterPage))

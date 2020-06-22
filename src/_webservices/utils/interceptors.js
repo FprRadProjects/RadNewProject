@@ -7,7 +7,7 @@ axios.interceptors.request.use(
         const newuser = JSON.parse(apiToken);
 
 
-        if (apiToken) {
+        if (apiToken != undefined) {
             if (apiToken !== null) {
                 config.headers.common['Authorization'] = `${newuser.Authorization}`
             }

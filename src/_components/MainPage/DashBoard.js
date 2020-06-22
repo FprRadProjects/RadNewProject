@@ -9,6 +9,8 @@ import {connect} from 'react-redux';
 import {ModalFilter} from './ModalFilter';
 import {FormInfo} from '../../locales/';
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import { withCookies } from 'react-cookie';
+
 /*import {MenuProvider} from "react-contexify";
 import renderHTML from "react-render-html";
 */
@@ -77,7 +79,8 @@ class DashBoard extends Component {
     }
 
     render() {
-        const {GetEvents, GetCounts, alert, loading,ShortKeys} = this.props;
+        const {GetEvents, GetCounts, alert, loading,ShortKeys,cookies} = this.props;
+        
         const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
@@ -171,7 +174,8 @@ function mapStateToProps(state) {
         alert,
         loading,
         lang,
-        ShortKeys
+        ShortKeys,
+        
     };
 }
 
@@ -187,7 +191,7 @@ const mapDispatchToProps = dispatch => ({
     },
 
 });
-const connectedDashBoard = connect(mapStateToProps, mapDispatchToProps)(DashBoard);
+const connectedDashBoard = withCookies(connect(mapStateToProps, mapDispatchToProps)(DashBoard));
 export {connectedDashBoard as DashBoard};
 
 

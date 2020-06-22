@@ -51,7 +51,8 @@ class LoginPage extends React.Component {
 
     render() {
         document.title = this.context.t("SoftWare_Name")
-        const { loggingIn, alert, lang, CompanyName, loading } = this.props;
+        const { loggingIn, alert, lang, CompanyName, loading, cookies } = this.props;
+        console.log(cookies.get('login'));
         const { username, password, submitted } = this.state;
         const loaddddd = <div className="loader-wrapper">
             <div className="loader">
@@ -62,7 +63,7 @@ class LoginPage extends React.Component {
                 <h4>لطفا صبر کنید</h4>
             </div>
         </div>;
-        const _Config =JSON.parse(localStorage.getItem("_Config"));
+        const _Config = JSON.parse(localStorage.getItem("_Config"));
         return (
 
 
@@ -131,7 +132,7 @@ class LoginPage extends React.Component {
 LoginPage.contextTypes = {
     t: PropTypes.func.isRequired
 }
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
 
     const { loading } = state.loading;
     const { loggingIn } = state.authentication;
@@ -145,7 +146,8 @@ function mapStateToProps(state) {
         alert,
         lang,
         translations,
-        CompanyName
+        CompanyName,
+        cookies: ownProps.cookies,
     };
 }
 
