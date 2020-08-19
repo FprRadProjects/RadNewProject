@@ -84,7 +84,8 @@ const ShowWorkViewer = (props, context) => {
         { name: 'proje_code', title: context.t("ProjectCode") },
         { name: 'natije', title: context.t("Result") },
     ];
-    useEffect(() => {
+
+    function FetchData() {
         if (props.SelectedRow !== undefined) {
             Params.tarafId = props.SelectedRow.id_tel;
             Params.peygirId = props.SelectedRow.peygir_id;
@@ -98,12 +99,16 @@ const ShowWorkViewer = (props, context) => {
             );
 
         }
+    }
+
+    useEffect(() => {
+        FetchData();
         return () => {
 
         }
     }, []);
-
     const SelectRow = (row) => {
+        console.log(row)
         setSelectedRow(row);
     }
 
@@ -127,6 +132,7 @@ const ShowWorkViewer = (props, context) => {
                         totalCount={totalCount}
                         columnwidth={150}
                         rowId="peygir_id"
+                        FetchData={FetchData}
                         UrlParams={Params}
                         SelectRow={SelectRow}
                         booleanColumns={booleanColumns}
