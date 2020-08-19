@@ -36,6 +36,7 @@ import { Loading } from '../../../../theme-sources/bootstrap4/components/loading
 import { CurrencyTypeProvider } from '../../../../theme-sources/bootstrap4/components/currency-type-provider';
 import connect from "react-redux/es/connect/connect";
 import { HighlightedCell } from '../../../../theme-sources/material-ui/components/highlighted-cell';
+import { json } from 'd3';
 
 const theme = createMuiTheme({
     overrides: {
@@ -284,10 +285,10 @@ const BooleanEditor = ({ value, onValueChange }) => (
         <option value={null}>
             خالی
         </option>
-        <option value={0}>
+        <option value={false}>
             انتخاب نشده
         </option>
-        <option value={1}>
+        <option value={true}>
             انتخاب شده
         </option>
     </select>
@@ -301,8 +302,8 @@ const ApiGridComponentWithHook = (props, context) => {
     const [params, setParams] = useState({});
     const [columns, setColumns] = useState([{ name: 'peygir_id', title: context.t("WorkID") }]);
 
-    const currencyColumns = useState(props.currencyColumns);
-    const booleanColumns = useState(props.booleanColumns);
+    const currencyColumns = props.currencyColumns;
+    const booleanColumns = props.booleanColumns;
     const booleanFilterOperations = useState(['boolean']);
     const currencyFilterOperations = useState(['equals']);
     const [sorting, setSorting] = useState([]);
@@ -347,7 +348,7 @@ const ApiGridComponentWithHook = (props, context) => {
 
 
     function changePageSize(pageSize) {
-        setTotalCount(totalCount !== undefined ? totalCount : 0);
+
         const totalPages = Math.ceil(totalCount / pageSize);
         const newCurrentPage = Math.min(currentPage, totalPages - 1);
         setPageSize(pageSize);
@@ -358,7 +359,7 @@ const ApiGridComponentWithHook = (props, context) => {
 
     function changeSorting(sorting) {
         setSorting(sorting);
-        setTotalCount(totalCount !== undefined ? totalCount : 0);
+
         const columnSorting = sorting[0];
         if (columnSorting) {
             const sortingDirectionString = columnSorting.direction === 'desc' ? ' desc' : 'asc';
@@ -370,7 +371,7 @@ const ApiGridComponentWithHook = (props, context) => {
 
     function changeCurrentPage(currentPage) {
         setCurrentPage(currentPage);
-        setTotalCount(totalCount !== undefined ? totalCount : 0);
+
         params.pageIndex = (currentPage + 1);
         props.FetchData(params);
     }
@@ -389,20 +390,20 @@ const ApiGridComponentWithHook = (props, context) => {
             return {
                 columnName: filters[item].columnName,
                 value: filters[item].value.replace("ی", "ي"),
-                operation: filters[item].operation
+                operation: props.booleanColumns.includes(filters[item].columnName) ? filters[item].operation[0] : filters[item].operation
             };
         });
+        console.log(filters);
         setCurrentPage(0);
-        setFilters(newFilters);
+        setFilters(filters);
         params.pageIndex = 1;
         params.filter = newFilters;
-        setTotalCount(totalCount !== undefined ? totalCount : 0);
         props.FetchData(params);
     }
 
     function changeOrder(orders) {
         setOrders(orders);
-        setTotalCount(totalCount !== undefined ? totalCount : 0);
+
     }
 
     return (
