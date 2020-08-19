@@ -220,7 +220,6 @@ class MyAwesomeMenu extends Component {
                         <Button color="secondary" onClick={this.toggle.bind(this)}>{this.context.t("Cancel")}</Button>
                     </ModalFooter>
                 </Modal>
-
             </div>
         );
     }

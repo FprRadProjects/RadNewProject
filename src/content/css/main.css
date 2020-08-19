@@ -34834,6 +34834,12 @@ i.icon.refresh-information {
 
 /* نتیجه ارجاع */
 
+i.icon.show-work {
+    background-image: url(../images/Ribbon/referral-result.svg);
+}
+
+/* نتیجه ارجاع */
+
 i.icon.referral-result {
     background-image: url(../images/Ribbon/referral-result.svg);
 }

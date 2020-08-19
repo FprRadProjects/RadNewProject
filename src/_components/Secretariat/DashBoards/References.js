@@ -153,11 +153,11 @@ class References extends Component {
                                 <style>{modalBackDrop}</style>
                             </ModalFooter>
                         </Modal>
-                        <ApiGridComponent columns={columns} booleanColumns={booleanColumns}
+                        <ApiGridComponent columns={columns} 
                             rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
                             rowId="peygir_id"
                             UrlParams={Params} fetchData={FetchData.bind(this)} SelectRow={this.SelectRow.bind(this)}
-                            currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                            booleanColumns={booleanColumns} currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
                         />
                     </div>
                 </div>

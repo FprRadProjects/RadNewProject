@@ -21,7 +21,7 @@ class LabelCheckBox extends Component {
     const { DeletedElements, EditedElements,  LabelclassName, Text,  name, defaultChecked,
       checkBoxChangeHandler, Id, FormId, isDisabled } = this.props;
     return (
-      <MenuProvider id="menu_id">
+      <MenuProvider id="menu_id" className="checkbox">
         {(DeletedElements === undefined || DeletedElements["LabelCheckBox-" + Id] === undefined ||
           DeletedElements["LabelCheckBox-" + Id].IsShow
         ) && <div className="checkbox" id={"LabelCheckBox-" + Id} Description={Text} formid={FormId} element={"LabelCheckBox-" + Id}>

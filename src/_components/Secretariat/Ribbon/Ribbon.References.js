@@ -14,6 +14,7 @@ import {
 import { toast } from 'react-toastify';
 import { DesignedHistoryFormBuilder } from '../../Flow/FormBuilder/DesignedHistoryFormBuilder';
 import { DesignedFormBuilder } from '../../Flow/FormBuilder/DesignedFormBuilder';
+import ShowWorkViewer from '../RecordsPage/ShowWorkViewer';
 
 class RibbonReferences extends Component {
     constructor(props) {
@@ -31,7 +32,8 @@ class RibbonReferences extends Component {
             FormBuilderCaptionId: null,
             FormBuilderLayoutData: [],
             DesignPageLayout: "partial",
-            DesignPageSize: "A4"
+            DesignPageSize: "A4",
+            ShowWorkModal: false
         };
 
     }
@@ -94,6 +96,13 @@ class RibbonReferences extends Component {
 
         this.setState(prevState => ({
             ReferenceViewermodal: !prevState.ReferenceViewermodal
+        }));
+
+    }
+    toggleShowWork() {
+
+        this.setState(prevState => ({
+            ShowWorkModal: !prevState.ShowWorkModal
         }));
 
     }
@@ -227,11 +236,22 @@ class RibbonReferences extends Component {
 
     }
 
+
+    OpenShowWork() {
+        const { SelectedRow } = this.props;
+        if (SelectedRow !== undefined) {
+            this.setState({
+                ShowWorkModal: !this.state.ShowWorkModal
+            });
+        } else
+            toast.warn(this.context.t("msg_No_Select_Row"));
+    }
+
+
     render() {
 
-
         const { SelectedRow, FetchData, Params, ShortKeys, DeletedElements, EditedElements,
-            workDiagram, WorkInfo,RefreshParentForm } = this.props;
+            workDiagram, WorkInfo, RefreshParentForm } = this.props;
 
         return (
             <div>
@@ -254,6 +274,17 @@ class RibbonReferences extends Component {
                                 <div className="tab-group-caption">{this.context.t("Features")}</div>
                                 <div className="tab-group-content">
                                     <div className="tab-content-segment">
+
+                                        {/* نمایش کار */}
+                                        <RibbonButton FormId={FormInfo.fm_par_modiriyatkarha.id}
+                                            AccessInfo={FormInfo.fm_par_modiriyatkarha}
+                                            DeletedElements={DeletedElements}
+                                            Id="show-work"
+                                            handleClick={this.OpenShowWork.bind(this)}
+                                            EditedElements={EditedElements}
+                                            Text="frm_Show_File_Work"
+                                        />
+
                                         {/* بازخوانی اطلاعات */}
                                         <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                             DeletedElements={DeletedElements}
@@ -518,6 +549,12 @@ class RibbonReferences extends Component {
                                             ShortKey={ShortKeys[keyName]} Id="referral-result" tooltip={this.context.t("ReferralResult")} />
                                     )
                                 }
+                                else if (ShortKeys[keyName].Element === "ShortKeyicon-show-work") {
+                                    return (
+                                        <ShortKeyButton FormId={FormInfo.fm_par_modiriyatkarha.id} key={index} handleClick={this.OpenShowWork.bind(this)}
+                                            ShortKey={ShortKeys[keyName]} Id="show-work" tooltip={this.context.t("frm_Show_File_Work")} />
+                                    )
+                                }
                                 else if (ShortKeys[keyName].Element === "ShortKeyicon-refresh-information") {
                                     return (
                                         <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.refreshClick.bind(this)}
@@ -612,6 +649,12 @@ class RibbonReferences extends Component {
                         RefreshParentForm={FetchData.bind(this)}
                     />
                 }
+
+                {this.state.ShowWorkModal && <ShowWorkViewer
+                    modal={this.state.ShowWorkModal}
+                    toggle={this.toggleShowWork.bind(this)}
+                    SelectedRow={SelectedRow}
+                />}
 
             </div>
         );
