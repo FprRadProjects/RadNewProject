@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useContext } from 'react'
 import { connect } from "react-redux"
 import {
     Act_Reference,
@@ -12,6 +12,7 @@ import PropTypes from "prop-types"
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FormInfo } from "../../../locales";
 import { RibbonReferences } from '../Ribbon/Ribbon.References';
+import { ApiGridComponentWithHook } from '../../Frameworks/Controls/Grid';
 
 var currencyColumns = [];
 var hiddenColumnNames = ['done', 'id_tel', 'olaviyat', 'cuser',
@@ -36,91 +37,91 @@ var Params = {
 
 };
 
-class References extends Component {
+function References(props, context) {
 
-    constructor(props) {
+    const [selectedRow, setSelectedRow] = useState([]);
+    const [filter, setFilter] = useState(false);
+    const [rows, setRows] = useState([]);
+    const [totalCount, setTotalCount] = useState(0);
+    const [backdrop, setBackdrop] = useState("static");
+    const [modalClass, setModalClass] = useState("modal-dialog-centered modal-lg r-filter-modal");
 
-        super(props);
-        this.state = {
-            ...this.state,
-            toggleFilter: false,
-            backdrop: "static",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal"
-        };
+    function FetchGridData() {  
+        let formName = props.lang == "fa" ? FormInfo.fm_dabir_kartabl_erjaat.form_name : FormInfo.fm_dabir_kartabl_erjaat.en_form_name;
+    Params.Form = formName;
+        props.FetchData(Params)
+    }
+   
+    useEffect(() => {
         localStorage.setItem("MasterFormInfo", JSON.stringify(FormInfo.fm_dabir_kartabl_erjaat));
+        FetchGridData();
+        return () => {
 
+        }
+    }, []);
+
+    function toggleFilter() {
+        setFilter(!filter);
+    }
+    function SelectRow(row) {
+        setSelectedRow(row);
     }
 
-    toggleFilter() {
-        this.setState(prevState => ({
-            toggleFilter: !prevState.toggleFilter
-        }));
-    }
-    SelectRow(row) {
-        this.setState({ SelectedRow: row });
-    }
+
+    const columns = [
+        { name: 'flow', title: context.t("Flow") },
+        { name: 'peygir_id', title: context.t("WorkID") },
+        { name: 'wtype', title: context.t("WorkType") },
+        { name: 'tarikhaction', title: context.t("ActionDate") },
+        { name: 'deadtime', title: context.t("DeadTime") },
+        { name: 'worker', title: context.t("worker") },
+        { name: 'modir', title: context.t("manager") },
+        { name: 'name', title: context.t("PartyAccountName") },
+        { name: 'coname', title: context.t("CompanyName") },
+        { name: 'mnos', title: context.t("Serial_Lead") },
+        { name: 'mwt', title: context.t("Work_Lead") },
+        { name: 'nos_id', title: context.t("Serial") },
+        { name: 'custom_serial', title: context.t("CustomSerial") },
+        { name: 'mozo', title: context.t("Subject") },
+        { name: 'zam', title: context.t("Attachments") },
+        { name: 'vaziyat', title: context.t("Status") },
+        { name: 'code', title: context.t("Code") },
+        { name: 'shomare', title: context.t("FileNumber") },
+        { name: 'ashkhasname', title: context.t("Audience") },
+        { name: 'ptype', title: context.t("Project") },
+        { name: 'has_peyvast', title: context.t("HasAttachment") },
+        { name: 'flow_code', title: context.t("FlowCode") },
+        { name: 'madrak_name', title: context.t("CertificateName") },
+        { name: 'f_s_status', title: context.t("Flow_Delivery_Status") },
+        { name: 'f_r_status', title: context.t("Flow_Received_Status") },
+        /*HIDDEN*/
+        { name: 'done', title: context.t("done") },
+        { name: 'id_tel', title: context.t("PartyAccountID") },
+        { name: 'olaviyat', title: context.t("Priority") },
+        { name: 'cuser', title: context.t("creator") },
+        { name: 'c_date', title: context.t("CreatedDate") },
+        { name: 'tarikh', title: context.t("DoneDate") },
+        { name: 'ftarikh', title: context.t("ManagerDoneDate") },
+        { name: 'mtarikh', title: context.t("LeadDate") },
+        { name: 'see_date', title: context.t("SeenDate") },
+        { name: 'fok', title: context.t("ManagerDone") },
+        { name: 'c_time', title: context.t("CreatedTime") },
+        { name: 'wt_id', title: context.t("WorkTypeID") },
+        { name: 'suggest_time', title: context.t("SuggestTime") },
+        { name: 'see_time', title: context.t("SeenTime") },
+        { name: 'saat', title: context.t("DoneTime") },
+        { name: 'fsaat', title: context.t("ManagerDoneTime") },
+        { name: 'proje_nos_id', title: context.t("ProjectSerial") },
+        { name: 'p_proje_nose_id', title: context.t("LeadProjectSerial") },
+        { name: 'showtree_id', title: context.t("LeadID") },
+        { name: 'muser', title: context.t("LeadWorker") },
+        { name: 'proje_code', title: context.t("ProjectCode") },
+        { name: 'natije', title: context.t("Result") },
+    ];
   
-    render() {
-     
-        const columns = [
-            { name: 'flow', title: this.context.t("Flow") },
-            { name: 'peygir_id', title: this.context.t("WorkID") },
-            { name: 'wtype', title: this.context.t("WorkType") },
-            { name: 'tarikhaction', title: this.context.t("ActionDate") },
-            { name: 'deadtime', title: this.context.t("DeadTime") },
-            { name: 'worker', title: this.context.t("worker") },
-            { name: 'modir', title: this.context.t("manager") },
-            { name: 'name', title: this.context.t("PartyAccountName") },
-            { name: 'coname', title: this.context.t("CompanyName") },
-            { name: 'mnos', title: this.context.t("Serial_Lead") },
-            { name: 'mwt', title: this.context.t("Work_Lead") },
-            { name: 'nos_id', title: this.context.t("Serial") },
-            { name: 'custom_serial', title: this.context.t("CustomSerial") },
-            { name: 'mozo', title: this.context.t("Subject") },
-            { name: 'zam', title: this.context.t("Attachments") },
-            { name: 'vaziyat', title: this.context.t("Status") },
-            { name: 'code', title: this.context.t("Code") },
-            { name: 'shomare', title: this.context.t("FileNumber") },
-            { name: 'ashkhasname', title: this.context.t("Audience") },
-            { name: 'ptype', title: this.context.t("Project") },
-            { name: 'has_peyvast', title: this.context.t("HasAttachment") },
-            { name: 'flow_code', title: this.context.t("FlowCode") },
-            { name: 'madrak_name', title: this.context.t("CertificateName") },
-            { name: 'f_s_status', title: this.context.t("Flow_Delivery_Status") },
-            { name: 'f_r_status', title: this.context.t("Flow_Received_Status") },
-            /*HIDDEN*/
-            { name: 'done', title: this.context.t("done") },
-            { name: 'id_tel', title: this.context.t("PartyAccountID") },
-            { name: 'olaviyat', title: this.context.t("Priority") },
-            { name: 'cuser', title: this.context.t("creator") },
-            { name: 'c_date', title: this.context.t("CreatedDate") },
-            { name: 'tarikh', title: this.context.t("DoneDate") },
-            { name: 'ftarikh', title: this.context.t("ManagerDoneDate") },
-            { name: 'mtarikh', title: this.context.t("LeadDate") },
-            { name: 'see_date', title: this.context.t("SeenDate") },
-            { name: 'fok', title: this.context.t("ManagerDone") },
-            { name: 'c_time', title: this.context.t("CreatedTime") },
-            { name: 'wt_id', title: this.context.t("WorkTypeID") },
-            { name: 'suggest_time', title: this.context.t("SuggestTime") },
-            { name: 'see_time', title: this.context.t("SeenTime") },
-            { name: 'saat', title: this.context.t("DoneTime") },
-            { name: 'fsaat', title: this.context.t("ManagerDoneTime") },
-            { name: 'proje_nos_id', title: this.context.t("ProjectSerial") },
-            { name: 'p_proje_nose_id', title: this.context.t("LeadProjectSerial") },
-            { name: 'showtree_id', title: this.context.t("LeadID") },
-            { name: 'muser', title: this.context.t("LeadWorker") },
-            { name: 'proje_code', title: this.context.t("ProjectCode") },
-            { name: 'natije', title: this.context.t("Result") },
-        ];
-        const {
-            FetchData, Dashboards_totalCount, Dashboards_rows
-            , lang
-        } = this.props;
-        let formName = lang == "fa" ? FormInfo.fm_dabir_kartabl_erjaat.form_name : FormInfo.fm_dabir_kartabl_erjaat.en_form_name;
-        Params.Form = formName;
 
 
-        const modalBackDrop = `
+    const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
             background: rgb(210,210,210);
@@ -130,52 +131,60 @@ class References extends Component {
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
         }`;
 
-        return (
-            <div className="row">
-                <div className="col-sm-12">
-                    <div className="r-main-box">
-                        <div className="r-main-box__ribbon sticky-top">
-                            <RibbonReferences FetchData={FetchData.bind(this)} Params={Params}
-                                SelectedRow={this.state.SelectedRow} />
-                            <div className="r-main-box__filter">
-                                <Button color="" className="r-main-box__filter--btn"
-                                    onClick={this.toggleFilter.bind(this)}></Button>
-                            </div>
+    return (
+        <div className="row">
+            <div className="col-sm-12">
+                <div className="r-main-box">
+                    <div className="r-main-box__ribbon sticky-top">
+                        <RibbonReferences FetchData={FetchGridData} Params={Params}
+                            SelectedRow={selectedRow} />
+                        <div className="r-main-box__filter">
+                            <Button color="" className="r-main-box__filter--btn"
+                                onClick={toggleFilter}></Button>
                         </div>
-                        <Modal isOpen={this.state.toggleFilter} toggle={this.toggleFilter.bind(this)}
-                            className={this.state.modalClass} backdrop={this.state.backdrop}>
-                            <ModalHeader toggle={this.toggleFilter.bind(this)}></ModalHeader>
-                            <ModalBody>
-                                <RadioFilter Params={Params} fetchData={FetchData.bind(this)} />
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="primary" onClick={this.toggleFilter.bind(this)}></Button>
-                                <style>{modalBackDrop}</style>
-                            </ModalFooter>
-                        </Modal>
-                        <ApiGridComponent columns={columns} 
-                            rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
-                            rowId="peygir_id"
-                            UrlParams={Params} fetchData={FetchData.bind(this)} SelectRow={this.SelectRow.bind(this)}
-                            booleanColumns={booleanColumns} currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
-                        />
                     </div>
+                    <Modal isOpen={filter} toggle={toggleFilter}
+                        className={modalClass} backdrop={backdrop}>
+                        <ModalHeader toggle={toggleFilter}></ModalHeader>
+                        <ModalBody>
+                            <RadioFilter Params={Params} fetchData={FetchGridData} />
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="primary" onClick={toggleFilter}></Button>
+                            <style>{modalBackDrop}</style>
+                        </ModalFooter>
+                    </Modal>
+
+                    <ApiGridComponentWithHook
+                        columns={columns}
+                        rows={props.Dashboards_rows!==undefined?props.Dashboards_rows:[]}
+                        totalCount={props.Dashboards_totalCount!==undefined?props.Dashboards_totalCount:0}
+                        columnwidth={150}
+                        rowId="peygir_id"
+                        FetchData={FetchGridData}
+                        UrlParams={Params}
+                        SelectRow={SelectRow}
+                        booleanColumns={booleanColumns}
+                        currencyColumns={currencyColumns}
+                        hiddenColumnNames={hiddenColumnNames}
+                    />
+{/*                     
+                    <ApiGridComponent columns={columns}
+                        rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
+                        rowId="peygir_id"
+                        UrlParams={Params} fetchData={FetchGridData} SelectRow={SelectRow}
+                        booleanColumns={booleanColumns} currencyColumns={currencyColumns} hiddenColumnNames={hiddenColumnNames}
+                    /> */}
                 </div>
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 
 const mapDispatchToProps = dispatch => ({
     FetchData: (Params) => {
-        dispatch(Act_Reference.FetchData(Params))
-    },
-    SetLog: (Form) => {
-        dispatch(BasicInfo_action.SetLog(Form))
-    },
-    SeenWork: (peygir_id) => {
-        dispatch(WorkActions_action.SeenWork(peygir_id))
+        return dispatch(Act_Reference.FetchData(Params))
     },
 });
 References.contextTypes = {
@@ -185,17 +194,10 @@ References.contextTypes = {
 function mapStateToProps(state) {
     const { Dashboards_rows } = state.dashboards;
     const { Dashboards_totalCount } = state.dashboards
-    const { alert } = state;
-    const { loading } = state.loading;
-    const { lang } = state.i18nState
-    const { WorkInfo } = state.Auto_WorkBasic;
     return {
         alert,
-        loading,
-        lang,
         Dashboards_rows,
         Dashboards_totalCount,
-        WorkInfo
     };
 }
 
