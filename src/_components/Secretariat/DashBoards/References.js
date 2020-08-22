@@ -41,8 +41,6 @@ function References(props, context) {
 
     const [selectedRow, setSelectedRow] = useState([]);
     const [filter, setFilter] = useState(false);
-    const [rows, setRows] = useState([]);
-    const [totalCount, setTotalCount] = useState(0);
     const [backdrop, setBackdrop] = useState("static");
     const [modalClass, setModalClass] = useState("modal-dialog-centered modal-lg r-filter-modal");
 
