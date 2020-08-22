@@ -353,7 +353,7 @@ const ApiGridComponentWithHook = (props, context) => {
         const newCurrentPage = Math.min(currentPage, totalPages - 1);
         setPageSize(pageSize);
         setCurrentPage(newCurrentPage);
-        params.pageSize = (pageSize);
+        params.pagesize = (pageSize);
         props.FetchData(params);
     }
 
@@ -372,7 +372,7 @@ const ApiGridComponentWithHook = (props, context) => {
     function changeCurrentPage(currentPage) {
         setCurrentPage(currentPage);
 
-        params.pageIndex = (currentPage + 1);
+        params.page = (currentPage + 1);
         props.FetchData(params);
     }
 
@@ -396,7 +396,7 @@ const ApiGridComponentWithHook = (props, context) => {
         console.log(filters);
         setCurrentPage(0);
         setFilters(filters);
-        params.pageIndex = 1;
+        params.page = 1;
         params.filter = newFilters;
         props.FetchData(params);
     }

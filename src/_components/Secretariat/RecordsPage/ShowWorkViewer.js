@@ -22,8 +22,8 @@ const hiddenColumnNames = ['done', 'id_tel', 'olaviyat', 'cuser',
 const booleanColumns = ['done', 'has_peyvast', 'done', 'fok'];
 
 const Params = {
-    pageIndex: 0,
-    pageSize: 10,
+    page: 0,
+    pagesize: 10,
     peygirId: 0,
     From: "WorkFlowItem",
     tarafId: 0,
