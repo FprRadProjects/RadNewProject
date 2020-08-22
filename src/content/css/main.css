@@ -30501,6 +30501,10 @@ body .page-wrapper .page-body-wrapper .page-sidebar.native-image-bg .sidebar-use
     margin-right: -2px;
 }
 
+.rtl .input-group {
+    direction: rtl;
+}
+
 .rtl .input-group>.input-group-append>.btn, .rtl .input-group>.input-group-append>.input-group-text {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
@@ -34999,6 +35003,7 @@ i.icon.financial-form {
 i.icon.process-form-builder {
     background-image: url(../images/Ribbon/process-form-builder.svg);
 }
+
 /*تاریخچه فرمساز فرآیند */
 
 i.icon.history-process-form-builder {
@@ -36435,10 +36440,12 @@ min-height: 32px;
     justify-content: center;
     /* position: relative; */
 }
+
 .r-formbuilder__layout .color-button .chrome-picker {
     width: auto!important;
     direction: ltr;
 }
+
 .r-formbuilder__layout .fontfamily-button select {
     display: block;
     height: 16px!important;
@@ -36511,6 +36518,7 @@ min-height: 32px;
     align-items: center;
     color: #4d4d4d!important;
 }
+
 .r-formbuilder__layout .setting-dropdown .dropdown-item:active {
     background: #ddd!important;
     color: #4d4d4d!important;
@@ -36791,48 +36799,53 @@ min-height: 32px;
 }
 
 body.print {
-    font-family:'Tahoma' !important;
+    font-family: 'Tahoma' !important;
     background: none!important;
     padding: 0!important;
 }
 
 body.print:before, body.print:after {
-    font-family:'Tahoma' !important;
+    font-family: 'Tahoma' !important;
     display: none!important;
 }
-body.print .input-group-text,body.print .form-check-label {
-    font-family:'Tahoma' !important;
+
+body.print .input-group-text, body.print .form-check-label {
+    font-family: 'Tahoma' !important;
 }
-body.print .date-input-with-dialog-input-buttons{
-    display:none !important;
+
+body.print .date-input-with-dialog-input-buttons {
+    display: none !important;
 }
+
 body.print .is-requierd .input-group-text {
-    font-family:'Tahoma' !important;
+    font-family: 'Tahoma' !important;
     border-color: #ced4da!important;
     color: unset!important;
     /* border:0!important;
 background: none!important; */
 }
-body.print  [class*=MuiFormControl-] *,body.print  .date-input-with-dialog-main *{
-    font-family:'Tahoma' !important;
+
+body.print [class*=MuiFormControl-] *, body.print .date-input-with-dialog-main * {
+    font-family: 'Tahoma' !important;
 }
+
 /* body.print  .r-formbuilder .form-control
 {
 border:0!important;
 } */
 
 body.print .is-requierd .input-group-text:after {
-    font-family:'Tahoma' !important;
+    font-family: 'Tahoma' !important;
     display: none!important;
 }
 
 body.print .is-requierd .r-formbuilder__img-holder {
-    font-family:'Tahoma' !important;
+    font-family: 'Tahoma' !important;
     border: 1px solid #ced4da!important;
 }
 
 body.print .r-formbuilder__img .btn-danger {
-    font-family:'Tahoma' !important;
+    font-family: 'Tahoma' !important;
     display: none!important;
 }
 
@@ -36878,16 +36891,25 @@ page[layoutsize="A5"][layout="landscape"]>.r-formbuilder__layout {
     overflow-y: scroll;
 }
 
-.r-formbuilder .paper-select{
+.r-formbuilder .paper-select {
     direction: rtl;
-    margin-right:  auto;
-    margin-left:  auto;
+    margin-right: auto;
+    margin-left: auto;
     display: table;
 }
-.r-formbuilder .paper-select select{
+
+.r-formbuilder .paper-select select {
     border: 1px solid #ddd;
     direction: rtl;
-    width:auto;
+    width: auto;
     display: inline-block;
     margin-right: 10px;
+}
+
+.show-work-viewer-modal .modal-content {
+    border: 0;
+}
+
+.show-work-viewer-modal .modal-footer {
+    padding: 0;
 }

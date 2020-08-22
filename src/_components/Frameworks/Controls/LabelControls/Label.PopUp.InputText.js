@@ -24,12 +24,12 @@ class LabelPopUpInputText extends Component {
     const { DeletedElements, EditedElements, className1, className2, className3, LabelclassName, Text, InputclassName, name,
       changeHandle, options, Id, ColClassName, FormId, Type, isDisabled, color, ButtonClick, ButtonText, isButtonDisabled, deleteHandler, hasDelete } = this.props;
     return (
-      <MenuProvider id="menu_id" className={ColClassName===undefined?"col-6":ColClassName}>
+      <MenuProvider id="menu_id" >
 
         {(DeletedElements === undefined || DeletedElements["LabelPopUpInputText-" + Id] === undefined ||
           DeletedElements["LabelPopUpInputText-" + Id].IsShow
         ) &&
-          <div id={"LabelPopUpInputText-" + Id} Description={Text} formid={FormId} element={"LabelPopUpInputText-" + Id}>
+          <div id={"LabelPopUpInputText-" + Id} Description={Text} className={ColClassName===undefined?"col-6":ColClassName} formid={FormId} element={"LabelPopUpInputText-" + Id}>
             <div className={className1===undefined?"form-group row":className1} id={"LabelPopUpInputTextDiv1-" + Id} Description={Text} formid={FormId} element={"LabelPopUpInputText-" + Id} >
               <label formid={FormId} className={LabelclassName===undefined?"col-2 col-form-label":LabelclassName} id={"LabelPopUpInputTextLbl-" + Id} element={"LabelPopUpInputText-" + Id}
                 erowid={(EditedElements === undefined || EditedElements["LabelPopUpInputTextLbl-" + Id] === undefined) ?
