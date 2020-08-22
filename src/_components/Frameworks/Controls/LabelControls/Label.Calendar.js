@@ -22,11 +22,11 @@ class LabelCalendar extends Component {
     const { DeletedElements, EditedElements, className1, LabelclassName, Text, className2, InputclassName, name, mask,
       CalendarChange, Id, FormId, ColClassName, isDisabled } = this.props;
     return (
-      <MenuProvider id="menu_id" className={ColClassName === undefined ? "col-6" : ColClassName}>
+      <MenuProvider id="menu_id" >
         {(DeletedElements === undefined || DeletedElements["LabelCalendar-" + Id] === undefined ||
           DeletedElements["LabelCalendar-" + Id].IsShow
         ) &&
-          <div id={"LabelCalendar-" + Id} Description={Text} formid={FormId===undefined?0:FormId} element={"LabelCalendar-" + Id}>
+          <div id={"LabelCalendar-" + Id} Description={Text} className={ColClassName === undefined ? "col-6" : ColClassName} formid={FormId===undefined?0:FormId} element={"LabelCalendar-" + Id}>
             <div className={className1 === undefined ? "form-group row" : className1} id={"LabelCalendarDiv1-" + Id} Description={Text} formid={FormId} element={"LabelCalendar-" + Id} >
               <label formid={FormId} className={LabelclassName === undefined ? "col-2 col-form-label" : LabelclassName} id={"LabelCalendarLbl-" + Id} element={"LabelCalendar-" + Id}
                 erowid={(EditedElements === undefined || EditedElements["LabelCalendarLbl-" + Id] === undefined) ?

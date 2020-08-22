@@ -33,11 +33,11 @@ class LabelCombobox extends Component {
     const { DeletedElements, EditedElements, className1, LabelclassName, Text, className2, ComboclassName, name,
       changeHandle, Id, FormId, ColClassName } = this.props;
     return (
-      <MenuProvider id="menu_id" className={ColClassName===undefined?"col-6":ColClassName}>
+      <MenuProvider id="menu_id" >
         {(DeletedElements === undefined || DeletedElements["labelCombobox-" + Id] === undefined ||
           DeletedElements["labelCombobox-" + Id].IsShow
         ) &&
-          <div  id={"labelCombobox-" + Id} Description={Text} formid={FormId} element={"labelCombobox-" + Id} >
+          <div  id={"labelCombobox-" + Id} Description={Text} className={ColClassName===undefined?"col-6":ColClassName} formid={FormId} element={"labelCombobox-" + Id} >
             <div className={className1===undefined?"form-group row":className1} id={"labelComboboxDiv1-" + Id} Description={Text} formid={FormId} element={"labelCombobox-" + Id} >
               <label formid={FormId} className={LabelclassName===undefined?"col-2 col-form-label":LabelclassName} id={"labelComboboxLbl-" + Id} element={"labelCombobox-" + Id}
                 erowid={(EditedElements === undefined || EditedElements["labelComboboxLbl-" + Id] === undefined) ?

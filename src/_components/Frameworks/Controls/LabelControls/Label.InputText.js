@@ -22,11 +22,11 @@ class LabelInputText extends Component {
     const { DeletedElements, EditedElements, className1, LabelclassName, Text, className2, InputclassName, name, mask,
       changeHandle, Id, FormId, isDisabled, ColClassName,maskChar } = this.props;
     return (
-      <MenuProvider id="menu_id" className={ColClassName===undefined?"col-6":ColClassName}>
+      <MenuProvider id="menu_id" >
         {(DeletedElements === undefined || DeletedElements["labelInputText-" + Id] === undefined ||
           DeletedElements["labelInputText-" + Id].IsShow
         ) &&
-          <div id={"labelInputText-" + Id} Description={Text} formid={FormId} element={"labelInputText-" + Id} >
+          <div id={"labelInputText-" + Id} Description={Text} formid={FormId} className={ColClassName===undefined?"col-6":ColClassName} element={"labelInputText-" + Id} >
 
             <div className={className1===undefined?"form-group row":className1} id={"labelInputTextDiv1-" + Id} Description={Text} formid={FormId} element={"labelInputText-" + Id} >
               <label formid={FormId} className={LabelclassName===undefined?"col-2 col-form-label":LabelclassName} id={"labelInputTextLbl-" + Id} element={"labelInputText-" + Id}
