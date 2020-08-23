@@ -22,7 +22,7 @@ class LabelPopUpInputText extends Component {
   render() {
 
     const { DeletedElements, EditedElements, className1, className2, className3, LabelclassName, Text, InputclassName, name,
-      changeHandle, options, Id, ColClassName, FormId, Type, isDisabled, color, ButtonClick, ButtonText, isButtonDisabled, deleteHandler, hasDelete } = this.props;
+      changeHandle, options, Id, ColClassName, FormId, Type, isDisabled, color, ButtonClick, ButtonText, isButtonDisabled, deleteHandler, hasDelete,isReadOnly } = this.props;
     return (
       <MenuProvider id="menu_id" >
 
@@ -53,19 +53,20 @@ class LabelPopUpInputText extends Component {
                   </div>
                   {Type === "Input" && changeHandle !== undefined && <input formid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text}
                     autoComplete="off" className={InputclassName===undefined?"form-control":InputclassName} name={name} value={this.state.value}
-                    onChange={changeHandle.bind(this)} disabled={isDisabled === undefined ? false : isDisabled} />}
+                    onChange={changeHandle.bind(this)} disabled={isDisabled === undefined ? false : isDisabled}  readOnly={isReadOnly === undefined ? false : isReadOnly}/>}
                   {Type === "Input"  && changeHandle === undefined && <input formid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text}
                     autoComplete="off" className={InputclassName===undefined?"form-control":InputclassName} name={name} value={this.state.value}
-                    disabled={isDisabled === undefined ? false : isDisabled} />}
+                    disabled={isDisabled === undefined ? false : isDisabled} readOnly={isReadOnly === undefined ? false : isReadOnly} />}
 
                   {Type === "TextArea" && changeHandle !== undefined &&
                     <textarea rows="3" className={InputclassName===undefined?"form-control":InputclassName}
                     formid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text} autoComplete="off"  name={name} value={this.state.value}
-                      onChange={changeHandle.bind(this)} disabled={isDisabled === undefined ? false : isDisabled}></textarea>
+                      onChange={changeHandle.bind(this)} disabled={isDisabled === undefined ? false : isDisabled}
+                      readOnly={isReadOnly === undefined ? false : isReadOnly}></textarea>
                   } {Type === "TextArea" && changeHandle === undefined &&
                     <textarea rows="3" className={InputclassName===undefined?"form-control":InputclassName}
                       formid={FormId} type="text" element={"LabelPopUpInputText-" + Id} id={"LabelPopUpInputTextInput-" + Id} Description={Text} autoComplete="off"  name={name} value={this.state.value}
-                      disabled={isDisabled === undefined ? false : isDisabled}></textarea>
+                      disabled={isDisabled === undefined ? false : isDisabled} readOnly={isReadOnly === undefined ? false : isReadOnly}></textarea>
                   }
                   {Type === "ComboBox" &&
                     <ComboSelectList isDisabled={isDisabled === undefined ? false : isDisabled}

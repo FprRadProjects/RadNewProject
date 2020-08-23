@@ -36912,4 +36912,8 @@ page[layoutsize="A5"][layout="landscape"]>.r-formbuilder__layout {
 
 .show-work-viewer-modal .modal-footer {
     padding: 0;
+    border: 1px solid rgba(224, 224, 224, 1);
 }
+
+.show-work-viewer-collapse{flex:1;padding: 10px 10px 5px;}
+.show-work-viewer-collapse .form-control[readonly]{background-color: #fff;}

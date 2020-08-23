@@ -20,7 +20,7 @@ class LabelInputText extends Component {
   render() {
 
     const { DeletedElements, EditedElements, className1, LabelclassName, Text, className2, InputclassName, name, mask,
-      changeHandle, Id, FormId, isDisabled, ColClassName,maskChar } = this.props;
+      changeHandle, Id, FormId, isDisabled, ColClassName,maskChar ,isReadOnly} = this.props;
     return (
       <MenuProvider id="menu_id" >
         {(DeletedElements === undefined || DeletedElements["labelInputText-" + Id] === undefined ||
@@ -41,7 +41,8 @@ class LabelInputText extends Component {
                 {changeHandle !== undefined && <InputMask formid={FormId} type="text" element={"labelInputText-" + Id} id={"labelInputTextInput-" + Id} mask={mask === undefined ? "" : mask} maskChar={maskChar === undefined ? "" : maskChar}  Description={Text} autoComplete="off" className={InputclassName===undefined?"form-control mt-2 mb-1":InputclassName} name={name} value={this.state.value}
                   onChange={changeHandle.bind(this)} disabled={isDisabled === undefined ? false : isDisabled} />}
                 {changeHandle === undefined && <InputMask formid={FormId} type="text" element={"labelInputText-" + Id} id={"labelInputTextInput-" + Id} mask={mask === undefined ? "" : mask}  maskChar={maskChar === undefined ? "" : maskChar}   Description={Text} autoComplete="off" className={InputclassName===undefined?"form-control mt-2 mb-1":InputclassName} name={name} value={this.state.value}
-                  disabled={isDisabled === undefined ? false : isDisabled} />}
+                   disabled={isDisabled === undefined ? false : isDisabled}
+                   readOnly={isReadOnly === undefined ? false : isReadOnly}/>}
               </div>
             </div>
           </div>
