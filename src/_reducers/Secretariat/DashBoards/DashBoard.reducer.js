@@ -2,6 +2,12 @@ import {BasicInfoConstant as BaseConstant, DashBoardConstant} from "../../../_co
 
 export function dashboards(state = {}, action) {
     switch (action.type) {
+        case DashBoardConstant.DASHBOARD_Delete_GRID_DATA: {
+            console.log(state)
+            return {
+            }
+        }
+
         case DashBoardConstant.DASHBOARD_GET_GRID_TOTAL_COUNT: {
             return {
                 ...state,

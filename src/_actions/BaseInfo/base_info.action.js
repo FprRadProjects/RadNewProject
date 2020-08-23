@@ -20,26 +20,43 @@ function GetSelectedFormId(FormId) {
     return dispatch => { dispatch(getSelectedFormId_Reducer(FormId)); }
 }
 function SetLog(Form) {
-    return dispatch => {
+   
+    var Params = new FormData();
+     Params.append("Form", Form);
 
-        let Params = new FormData();
-        Params.append("Form", Form);
-        paramsService.callservice(Params, "SetLog")
-            .then(
-                data => {
-                    if (!data.status && data.code !== 0) {
-                        toast.error(data.error);
-                    }
-                    else if (!data.status && data.code === 0) {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                },
-                error => {
-                    toast.error(error);
-                }
-            );
-    }
+    return paramsService.callservice(Params, "SetLog").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    );
+   
+    // return dispatch => {
+
+    //     let Params = new FormData();
+    //     Params.append("Form", Form);
+    //     paramsService.callservice(Params, "SetLog")
+    //         .then(
+    //             data => {
+    //                 if (!data.status && data.code !== 0) {
+    //                     toast.error(data.error);
+    //                 }
+    //                 else if (!data.status && data.code === 0) {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //             },
+    //             error => {
+    //                 toast.error(error);
+    //             }
+    //         );
+    // }
 }
 
 function UserAccessForm(param) {

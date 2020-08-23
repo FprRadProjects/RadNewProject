@@ -19,228 +19,363 @@ export const design_Actions = {
 
 
 function GetEditTextElementsList(param) {
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        paramsService.callservice(param, "GetEditTextElementsList")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(successGetEditTextElements(data.data));
-                        dispatch(loadingActions.HideLoading());
-                    } else if (data.code !== 0) {
-                        toast.error(data.error);
-                        dispatch(loadingActions.HideLoading());
-                    } else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
-                }
-            );
-    }
+
+    return paramsService.callservice(param, "GetEditTextElementsList").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    )
+
+
+
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     paramsService.callservice(param, "GetEditTextElementsList")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(successGetEditTextElements(data.data));
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else if (data.code !== 0) {
+    //                     toast.error(data.error);
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //             },
+    //             error => {
+    //                 dispatch(alertActions.error(error));
+    //                 dispatch(loadingActions.HideLoading());
+    //             }
+    //         );
+    // }
 }
 function GetHideElementsList(param) {
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        paramsService.callservice(param,"GetHideElementsList")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(successGetHideTemplate(data.data));
-                        dispatch(loadingActions.HideLoading());
-                    } else if (data.code !== 0) {
-                        toast.error(data.error);
-                        dispatch(loadingActions.HideLoading());
-                    } else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
-                }
-            );
-    }
+    return paramsService.callservice(param, "GetHideElementsList").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    )
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     paramsService.callservice(param,"GetHideElementsList")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(successGetHideTemplate(data.data));
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else if (data.code !== 0) {
+    //                     toast.error(data.error);
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //             },
+    //             error => {
+    //                 dispatch(alertActions.error(error));
+    //                 dispatch(loadingActions.HideLoading());
+    //             }
+    //         );
+    // }
 }
 function GetTemplateForm(FormId) {
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        let Params = new FormData();
-        Params.append("FormId", FormId);
-        paramsService.callservice(Params,"GetTemplateForm")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(successGetTemplate(data.data));
-                        dispatch(loadingActions.HideLoading());
-                    } else if (data.code !== 0) {
-                        toast.error(data.error);
-                        dispatch(loadingActions.HideLoading());
-                    } else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
-                }
-            );
-    }
+    let Params = new FormData();
+    Params.append("FormId", FormId);
+    return paramsService.callservice(Params, "GetTemplateForm").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    )
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     let Params = new FormData();
+    //     Params.append("FormId", FormId);
+    //     paramsService.callservice(Params,"GetTemplateForm")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(successGetTemplate(data.data));
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else if (data.code !== 0) {
+    //                     toast.error(data.error);
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //             },
+    //             error => {
+    //                 dispatch(alertActions.error(error));
+    //                 dispatch(loadingActions.HideLoading());
+    //             }
+    //         );
+    // }
 }
 
 function Set_EditText_TemplateForm(param) {
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        paramsService.callservice(param,"Set_EditTextElements_Template")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(design_Actions.GetTemplateForm(param.FormId))
-                    } else if (data.code !== 0) {
-                        toast.error(data.error);
-                        dispatch(loadingActions.HideLoading());
-                    } else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
-                }
-            );
-    }
+
+    return paramsService.callservice(param, "Set_EditTextElements_Template").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    )
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     paramsService.callservice(param, "Set_EditTextElements_Template")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(design_Actions.GetTemplateForm(param.FormId))
+    //                 } else if (data.code !== 0) {
+    //                     toast.error(data.error);
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //             },
+    //             error => {
+    //                 dispatch(alertActions.error(error));
+    //                 dispatch(loadingActions.HideLoading());
+    //             }
+    //         );
+    // }
 }
 function Set_Hide_TemplateForm(param) {
-    return dispatch => {
-        paramsService.callservice(param,"Set_HideElements_Template")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(design_Actions.GetTemplateForm(param.FormId))
-                    } else if (data.code !== 0) {
-                        toast.error(data.error);
-                    } else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                }
-            );
-    }
+
+
+    return paramsService.callservice(param, "Set_HideElements_Template").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    )
+
+    // return dispatch => {
+    //     paramsService.callservice(param, "Set_HideElements_Template")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(design_Actions.GetTemplateForm(param.FormId))
+    //                 } else if (data.code !== 0) {
+    //                     toast.error(data.error);
+    //                 } else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //             },
+    //             error => {
+    //                 dispatch(alertActions.error(error));
+    //             }
+    //         );
+    // }
 }
 function Set_ShortKey_TemplateForm(param) {
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        paramsService.callservice(param,"Set_ShortKeyElements_Template")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(design_Actions.GetTemplateForm(param.FormId))
-                    } else if (data.code !== 0) {
-                        toast.error(data.error);
-                        dispatch(loadingActions.HideLoading());
-                    } else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
-                }
-            );
-    }
+
+    return paramsService.callservice(param, "Set_ShortKeyElements_Template").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    )
+
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     paramsService.callservice(param, "Set_ShortKeyElements_Template")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(design_Actions.GetTemplateForm(param.FormId))
+    //                 } else if (data.code !== 0) {
+    //                     toast.error(data.error);
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //             },
+    //             error => {
+    //                 dispatch(alertActions.error(error));
+    //                 dispatch(loadingActions.HideLoading());
+    //             }
+    //         );
+    // }
 }
 
 function Delete_ShortKeyElements_Template(FormId, RowId) {
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
 
-        let Params = new FormData();
-        Params.append("FormId", FormId);
-        Params.append("RowId", RowId);
-        paramsService.callservice(Params,"Delete_ShortKeyElements_Template")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(design_Actions.GetTemplateForm(FormId))
-                    } else if (data.code !== 0) {
-                        toast.error(data.error);
-                        dispatch(loadingActions.HideLoading());
-                    } else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
-                }
-            );
-    }
+    let Params = new FormData();
+    Params.append("FormId", FormId);
+    Params.append("RowId", RowId);
+    return paramsService.callservice(Params, "Set_ShortKeyElements_Template").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    )
+
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+
+    //     let Params = new FormData();
+    //     Params.append("FormId", FormId);
+    //     Params.append("RowId", RowId);
+    //     paramsService.callservice(Params, "Delete_ShortKeyElements_Template")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(design_Actions.GetTemplateForm(FormId))
+    //                 } else if (data.code !== 0) {
+    //                     toast.error(data.error);
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //             },
+    //             error => {
+    //                 dispatch(alertActions.error(error));
+    //                 dispatch(loadingActions.HideLoading());
+    //             }
+    //         );
+    // }
 }
 
 function Delete_EditTextElements_Template(FormId, RowId) {
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        let Params = new FormData();
-        Params.append("FormId", FormId);
-        Params.append("RowId", RowId);
-        return paramsService.callservice(Params,"Delete_EditTextElements_Template")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(design_Actions.GetTemplateForm(FormId))
-                    } else if (data.code !== 0) {
-                        toast.error(data.error);
-                        dispatch(loadingActions.HideLoading());
-                    } else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                    return Promise.resolve(data)
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
-                }
-            );
-    }
+
+    let Params = new FormData();
+    Params.append("FormId", FormId);
+    Params.append("RowId", RowId);
+    return paramsService.callservice(Params, "Delete_EditTextElements_Template").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    )
+
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     let Params = new FormData();
+    //     Params.append("FormId", FormId);
+    //     Params.append("RowId", RowId);
+    //     return paramsService.callservice(Params, "Delete_EditTextElements_Template")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(design_Actions.GetTemplateForm(FormId))
+    //                 } else if (data.code !== 0) {
+    //                     toast.error(data.error);
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //                 return Promise.resolve(data)
+    //             },
+    //             error => {
+    //                 dispatch(alertActions.error(error));
+    //                 dispatch(loadingActions.HideLoading());
+    //             }
+    //         );
+    // }
 }
 function Delete_HideElements_Template(FormId, RowId) {
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        let Params = new FormData();
-        Params.append("FormId", FormId);
-        Params.append("RowId", RowId);
-        return paramsService.callservice(Params,"Delete_HideElements_Template")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(design_Actions.GetTemplateForm(FormId))
-                    } else if (data.code !== 0) {
-                        toast.error(data.error);
-                        dispatch(loadingActions.HideLoading());
-                    } else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                    return Promise.resolve(data)
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                    dispatch(loadingActions.HideLoading());
-                }
-            );
-    }
+    let Params = new FormData();
+    Params.append("FormId", FormId);
+    Params.append("RowId", RowId);
+    return paramsService.callservice(Params, "Delete_HideElements_Template").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    )
+   
+   
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     let Params = new FormData();
+    //     Params.append("FormId", FormId);
+    //     Params.append("RowId", RowId);
+    //     return paramsService.callservice(Params, "Delete_HideElements_Template")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(design_Actions.GetTemplateForm(FormId))
+    //                 } else if (data.code !== 0) {
+    //                     toast.error(data.error);
+    //                     dispatch(loadingActions.HideLoading());
+    //                 } else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //                 return Promise.resolve(data)
+    //             },
+    //             error => {
+    //                 dispatch(alertActions.error(error));
+    //                 dispatch(loadingActions.HideLoading());
+    //             }
+    //         );
+    // }
 }
 
 function successGetTemplate(data) {
