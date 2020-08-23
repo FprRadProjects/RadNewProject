@@ -60,9 +60,6 @@ function References(props, context) {
     useEffect(() => {
         localStorage.setItem("MasterFormInfo", JSON.stringify(FormInfo.fm_dabir_kartabl_erjaat));
         FetchGridData();
-        return () => {
-            props.DeleteData();
-        }
     }, []);
 
     function toggleFilter() {

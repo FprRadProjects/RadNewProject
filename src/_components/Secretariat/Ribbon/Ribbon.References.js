@@ -122,10 +122,10 @@ function RibbonReferences(props, context) {
     function setToMarkClick() {
         if (props.SelectedRow !== undefined) {
             WorkActions_action.InsertIntoWorkMark(props.SelectedRow.peygir_id, context.t("msg_Operation_Success")).then(data => {
-                console.log(data)
-                if (data.status) {
-                    props.FetchData(props.Params);
-                }
+                // console.log(data)
+                // if (data.status) {
+                //     props.FetchData(props.Params);
+                // }
             });
         }
         else
@@ -251,16 +251,6 @@ function RibbonReferences(props, context) {
                             <div className="tab-group-content">
                                 <div className="tab-content-segment">
 
-                                    {/* نمایش کار */}
-                                    <RibbonButton FormId={FormInfo.fm_par_modiriyatkarha.id}
-                                        AccessInfo={FormInfo.fm_par_modiriyatkarha}
-                                        DeletedElements={deletedElements}
-                                        Id="show-work"
-                                        handleClick={OpenShowWork}
-                                        EditedElements={editedElements}
-                                        Text="frm_Show_File_Work"
-                                    />
-
                                     {/* بازخوانی اطلاعات */}
                                     <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                         DeletedElements={deletedElements}
@@ -278,6 +268,16 @@ function RibbonReferences(props, context) {
                                         handleClick={OpenReferenceViewer}
                                         EditedElements={editedElements}
                                         Text="ReferralResult"
+                                    />
+
+                                    {/* نمایش کار */}
+                                    <RibbonButton FormId={FormInfo.fm_par_modiriyatkarha.id}
+                                        AccessInfo={FormInfo.fm_par_modiriyatkarha}
+                                        DeletedElements={deletedElements}
+                                        Id="show-work"
+                                        handleClick={OpenShowWork}
+                                        EditedElements={editedElements}
+                                        Text="frm_Show_File_Work"
                                     />
 
                                     <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
