@@ -21,13 +21,57 @@ export const WorkActions_action = {
     InsertIntoWorkMark,
     InsertNewWorkInfo
 };
-function DeleteFromWorkMark(peygir_id,msg) {
+function DeleteFromWorkMark(peygir_id, msg) {
+    var Params = new FormData();
+    Params.append('peygir_id', peygir_id);
+    return paramsService.callservice(Params, "DeleteFromWorkMark").then(
+        data => {
+            if (data.status) {
+                toast.success(msg);
+                return data
+            }
+            else if (data.code !== 0) {
+                toast.error(data.error)
+                return data
+            }
+            else {
+                userActions.logout();
+                window.open('/', "_self");
+            }
+        }
+    );
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     var params = new FormData();
+    //     params.append('peygir_id', peygir_id);
+    //     return paramsService.callservice(params, "DeleteFromWorkMark")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(loadingActions.HideLoading());
+    //                     toast.success(msg);
+    //                 }
+    //                 else if (data.code !== 0) {
+    //                     toast.error(data.error)
+    //                     dispatch(loadingActions.HideLoading());
+    //                 }
+    //                 else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //                 return Promise.resolve(data)
+    //             },
+    //             error => {
+    //                 toast.error(error)
+    //             }
+    //         );
+    // }
+}
+function InsertNewWorkInfo(Params, msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        var params = new FormData();
-        params.append('peygir_id', peygir_id);
-        return paramsService.callservice(params,"DeleteFromWorkMark")
+        return paramsService.callservice(Params, "InsertNewWorkInfo")
             .then(
                 data => {
                     if (data.status) {
@@ -40,7 +84,7 @@ function DeleteFromWorkMark(peygir_id,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                     return Promise.resolve(data)
                 },
@@ -50,69 +94,61 @@ function DeleteFromWorkMark(peygir_id,msg) {
             );
     }
 }
-function InsertNewWorkInfo(Params,msg) {
+function InsertIntoWorkMark(peygir_id, msg) {
+    var Params = new FormData();
+    Params.append('peygir_id', peygir_id);
+    return paramsService.callservice(Params, "InsertIntoWorkMark").then(
+        data => {
+            if (data.status) {
+                toast.success(msg);
+                return data
+            }
+            else if (data.code !== 0) {
+                toast.error(data.error)
+                return data
+            }
+            else {
+                userActions.logout();
+                window.open('/', "_self");
+            }
+        }
+    );
 
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        return paramsService.callservice(Params,"InsertNewWorkInfo")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(loadingActions.HideLoading());
-                        toast.success(msg);
-                    }
-                    else if (data.code !== 0) {
-                        toast.error(data.error)
-                        dispatch(loadingActions.HideLoading());
-                    }
-                    else {
-                        userActions.logout();
-                        window.open('/',"_self");
-                    }
-                    return Promise.resolve(data)
-                },
-                error => {
-                    toast.error(error)
-                }
-            );
-    }
+
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     var Params = new FormData();
+    //     Params.append('peygir_id', peygir_id);
+    //     return paramsService.callservice(Params,"InsertIntoWorkMark")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(loadingActions.HideLoading());
+    //                     toast.success(msg);
+    //                 }
+    //                 else if (data.code !== 0) {
+    //                     toast.error(data.error)
+    //                     dispatch(loadingActions.HideLoading());
+    //                 }
+    //                 else {
+    //                     userActions.logout();
+    //                     window.open('/',"_self");
+    //                 }
+    //                 return Promise.resolve(data)
+    //             },
+    //             error => {
+    //                 toast.error(error)
+    //             }
+    //         );
+    // }
 }
-function InsertIntoWorkMark(peygir_id,msg) {
+function ConfirmReviewWork(peygir_id, msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
         var Params = new FormData();
         Params.append('peygir_id', peygir_id);
-        return paramsService.callservice(Params,"InsertIntoWorkMark")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(loadingActions.HideLoading());
-                        toast.success(msg);
-                    }
-                    else if (data.code !== 0) {
-                        toast.error(data.error)
-                        dispatch(loadingActions.HideLoading());
-                    }
-                    else {
-                        userActions.logout();
-                        window.open('/',"_self");
-                    }
-                    return Promise.resolve(data)
-                },
-                error => {
-                    toast.error(error)
-                }
-            );
-    }
-}
-function ConfirmReviewWork(peygir_id,msg) {
-
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        var Params = new FormData();
-        Params.append('peygir_id', peygir_id);
-       return paramsService.callservice(Params,"ConfirmReviewWork")
+        return paramsService.callservice(Params, "ConfirmReviewWork")
             .then(
                 data => {
                     if (!data.status) {
@@ -121,7 +157,7 @@ function ConfirmReviewWork(peygir_id,msg) {
                         }
                         else {
                             userActions.logout();
-                            window.open('/',"_self");
+                            window.open('/', "_self");
                         }
                     }
                     else
@@ -136,10 +172,10 @@ function ConfirmReviewWork(peygir_id,msg) {
     }
 }
 
-function FinalFlowConfirmWork(Params,msg) {
+function FinalFlowConfirmWork(Params, msg) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return paramsService.callservice(Params,"FinalFlowConfirmWork")
+        return paramsService.callservice(Params, "FinalFlowConfirmWork")
             .then(
                 data => {
                     if (data.status) {
@@ -159,7 +195,7 @@ function FinalFlowConfirmWork(Params,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                     return Promise.resolve(data)
                 },
@@ -169,16 +205,16 @@ function FinalFlowConfirmWork(Params,msg) {
             );
     }
 }
-function InitConfirmWork(Params,msg) {
+function InitConfirmWork(Params, msg) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-       return paramsService.callservice(Params,"InitConfirmWork")
+        return paramsService.callservice(Params, "InitConfirmWork")
             .then(
                 data => {
                     if (data.status) {
                         if (data.code === 1 && data.data === null) {
-                        toast.success(msg);
-                    }
+                            toast.success(msg);
+                        }
                         else if (data.code === 2 && data.data !== null) {
                             dispatch(flowResultAddTotalCount(data.data.totalcount));
                             dispatch(flowResultAddRows(data.data.rows));
@@ -192,7 +228,7 @@ function InitConfirmWork(Params,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                     return Promise.resolve(data)
                 },
@@ -202,13 +238,13 @@ function InitConfirmWork(Params,msg) {
             );
     }
 }
-function RebuildWork(peygir_id,msg) {
+function RebuildWork(peygir_id, msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
         var Params = new FormData();
         Params.append('peygir_id', peygir_id);
-        return paramsService.callservice(Params,"RebuildWork")
+        return paramsService.callservice(Params, "RebuildWork")
             .then(
                 data => {
                     if (data.status) {
@@ -221,7 +257,7 @@ function RebuildWork(peygir_id,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                     return Promise.resolve(data)
                 },
@@ -233,36 +269,54 @@ function RebuildWork(peygir_id,msg) {
 }
 
 function SeenWork(peygir_id) {
-    return dispatch => {
-        var Params = new FormData();
-        Params.append('peygir_id', peygir_id);
-        paramsService.callservice(Params,"SeenWork")
-            .then(
-                data => {
-                    if (!data.status && data.code !== 0) {
-                        toast.error(data.error)
-                    } else if (!data.status && data.code === 0) {
-                        userActions.logout();
-                        window.open('/',"_self");
-                    }
-                },
-                error => {
-                    toast.error(error);
-                }
-            );
-    }
+
+    var Params = new FormData();
+    Params.append('peygir_id', peygir_id);
+
+    return paramsService.callservice(Params, "SeenWork").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    );
+
+
+    // return dispatch => {
+    //     var Params = new FormData();
+    //     Params.append('peygir_id', peygir_id);
+    //     paramsService.callservice(Params,"SeenWork")
+    //         .then(
+    //             data => {
+    //                 if (!data.status && data.code !== 0) {
+    //                     toast.error(data.error)
+    //                 } else if (!data.status && data.code === 0) {
+    //                     userActions.logout();
+    //                     window.open('/',"_self");
+    //                 }
+    //             },
+    //             error => {
+    //                 toast.error(error);
+    //             }
+    //         );
+    // }
 }
 
-function SaveWorkInfo(params,msg) {
+function SaveWorkInfo(params, msg) {
 
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
-        return paramsService.callservice(params,"SaveWorkInfo")
+        return paramsService.callservice(params, "SaveWorkInfo")
             .then(
                 data => {
                     if (data.status) {
                         dispatch(loadingActions.HideLoading());
-                       if(msg!=="") toast.success(msg);
+                        if (msg !== "") toast.success(msg);
                     }
                     else if (data.code !== 0) {
                         toast.error(data.error)
@@ -270,7 +324,7 @@ function SaveWorkInfo(params,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                     return Promise.resolve(data)
                 },
@@ -283,12 +337,12 @@ function SaveWorkInfo(params,msg) {
 }
 
 
-function DeleteWork(peygir_id,msg) {
+function DeleteWork(peygir_id, msg) {
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
         var Params = new FormData();
         Params.append('peygir_id', peygir_id);
-        paramsService.callservice(Params,"DeleteWork")
+        paramsService.callservice(Params, "DeleteWork")
             .then(
                 data => {
                     if (data.status) {
@@ -301,7 +355,7 @@ function DeleteWork(peygir_id,msg) {
                     }
                     else {
                         userActions.logout();
-                        window.open('/',"_self");
+                        window.open('/', "_self");
                     }
                 },
                 error => {

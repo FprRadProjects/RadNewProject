@@ -2,6 +2,7 @@ import {BasicInfoConstant as BaseConstant, ProjectInfoConstant as Constant} from
 
 export function projects(state = {}, action) {
     switch (action.type) {
+        
         case Constant.PROJECT_ET_GRID_TOTAL_COUNT: {
             return {
                 ...state,

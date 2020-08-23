@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useContext } from 'react'
 import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { FormInfo } from "../../../locales";
@@ -16,374 +16,350 @@ import { DesignedHistoryFormBuilder } from '../../Flow/FormBuilder/DesignedHisto
 import { DesignedFormBuilder } from '../../Flow/FormBuilder/DesignedFormBuilder';
 import ShowWorkViewer from '../RecordsPage/ShowWorkViewer';
 
-class RibbonReferences extends Component {
-    constructor(props) {
+function RibbonReferences(props, context) {
 
-        super(props);
-        this.state = {
-            ...this.state,
-            ReferenceViewermodal: false,
-            DiagramModal: false,
-            DiagramParams: { peygir_id: 0, From: "Branch" },
-            backdrop: "static",
-            modalClass: "modal-dialog-centered modal-lg r-filter-modal",
-            FlowFormBuilderModal: false,
-            HistoryFlowFormBuilderModal: false,
-            FormBuilderCaptionId: null,
-            FormBuilderLayoutData: [],
-            DesignPageLayout: "partial",
-            DesignPageSize: "A4",
-            ShowWorkModal: false
-        };
+    const [referenceViewermodal, setReferenceViewermodal] = useState(false);
+    const [diagramModal, setDiagramModal] = useState(false);
+    const [diagramParams, setDiagramParams] = useState({ peygir_id: 0, From: "Branch" });
+    const [backdrop, setBackdrop] = useState("static");
+    const [modalClass, setModalClass] = useState("modal-dialog-centered modal-lg r-filter-modal");
+    const [flowFormBuilderModal, setFlowFormBuilderModal] = useState(false);
+    const [historyFlowFormBuilderModal, setHistoryFlowFormBuilderModal] = useState(false);
+    const [formBuilderCaptionId, setFormBuilderCaptionId] = useState(null);
+    const [designPageLayout, setDesignPageLayout] = useState("partial");
+    const [designPageSize, setDesignPageSize] = useState("A4");
+    const [showWorkModal, setShowWorkModal] = useState(false);
+    const [shortKeys, setShortKeys] = useState([]);
+    const [deletedElements, setDeletedElements] = useState([]);
+    const [editedElements, setEditedElements] = useState([]);
+    const [formBuilderLayoutData, setFormBuilderLayoutData] = useState([]);
+    const [workDiagramData, setWorkDiagramData] = useState({});
 
-    }
-    componentDidMount() {
-        const { GetTemplateForm } = this.props;
-        GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id);
-    }
-    toggleFormBuilder() {
-        this.setState(prevState => ({
-            FlowFormBuilderModal: !prevState.FlowFormBuilderModal
-        }));
+    useEffect(() => {
+        let data = design_Actions.GetTemplateForm(FormInfo.fm_dabir_kartabl_erjaat.id).then(
+            data => {
+                setShortKeys(data.data.ShortKeys);
+                setDeletedElements(data.data.DeletedElements);
+                setEditedElements(data.data.EditedElements);
+            }
+        );
+    }, []);
 
-    }
-
-    toggleHistoryFormBuilder() {
-        this.setState(prevState => ({
-            HistoryFlowFormBuilderModal: !prevState.HistoryFlowFormBuilderModal
-        }));
-
+    function toggleFormBuilder() {
+        setFlowFormBuilderModal(!flowFormBuilderModal);
     }
 
-    OpenReferenceViewer() {
-        const { SelectedRow, SetLog, lang, SeenWork, GetWorkInfo } = this.props;
-        if (SelectedRow !== undefined) {
-            GetWorkInfo(SelectedRow).then(data => {
-                if (data.status) {
-                    let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
-                    SetLog(formName);
-                    SeenWork(SelectedRow.peygir_id);
-                    this.setState({
-                        ReferenceViewermodal: !this.state.ReferenceViewermodal
-                    });
-                }
+    function toggleHistoryFormBuilder() {
+        setHistoryFlowFormBuilderModal(!historyFlowFormBuilderModal);
+    }
 
-            });
+    function OpenReferenceViewer() {
+        if (props.SelectedRow !== undefined) {
+            // WorkBasic_action.GetWorkInfo(props.SelectedRow).then(data => {
+            // if (data.status) {
+            let formName = props.lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
+            BasicInfo_action.SetLog(formName);
+            WorkActions_action.SeenWork(props.SelectedRow.peygir_id);
+            setReferenceViewermodal(!referenceViewermodal);
+            // }
+
+            // });
         } else
-            toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(context.t("msg_No_Select_Row"));
     }
+    function WorkDiagramFun(Param) {
+        return WorkBasic_action.workDiagram(Param).then(data => {
+            if (data.status) {
+                setWorkDiagramData(data);
+            }
+        });
+    }
+    function OpenWorkDiagramViewer() {
+        if (props.SelectedRow !== undefined) {
+            setDiagramParams({ peygir_id: props.SelectedRow.peygir_id, From: "Branch" });
 
-    OpenWorkDiagramViewer() {
-        const { SelectedRow, SetLog, lang, SeenWork, workDiagram } = this.props;
-        if (SelectedRow !== undefined) {
-            this.setState({ DiagramParams: { peygir_id: SelectedRow.peygir_id, From: "Branch" } });
-            workDiagram({ peygir_id: SelectedRow.peygir_id, From: "Branch" }).then(data => {
+            WorkDiagramFun({ peygir_id: props.SelectedRow.peygir_id, From: "Branch" }).then(data => {
                 if (data.status) {
-                    let formName = lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
-                    SetLog(formName);
-                    SeenWork(SelectedRow.peygir_id);
-                    this.setState({
-                        DiagramModal: !this.state.DiagramModal
-                    });
+                    let formName = props.lang == "fa" ? FormInfo.fm_dabir_natije_erja.form_name : FormInfo.fm_dabir_natije_erja.en_form_name;
+                    BasicInfo_action.SetLog(formName);
+                    WorkActions_action.SeenWork(props.SelectedRow.peygir_id);
+                    setDiagramModal(!diagramModal);
                 }
             });
 
         } else
-            toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(context.t("msg_No_Select_Row"));
     }
 
-    toggleReferenceViewer() {
-
-        this.setState(prevState => ({
-            ReferenceViewermodal: !prevState.ReferenceViewermodal
-        }));
-
+    function toggleReferenceViewer() {
+        setReferenceViewermodal(!referenceViewermodal);
     }
-    toggleShowWork() {
-
-        this.setState(prevState => ({
-            ShowWorkModal: !prevState.ShowWorkModal
-        }));
-
+    function toggleShowWork() {
+        setShowWorkModal(!showWorkModal);
     }
 
-    toggleWorkDiagramViewer() {
-        this.setState(prevState => ({
-            DiagramModal: !prevState.DiagramModal
-        }));
+    function toggleWorkDiagramViewer() {
+        setDiagramModal(!diagramModal);
+    }
+    function handleClick() {
 
     }
-    handleClick() {
-
+    function refreshClick() {
+        props.Params.mark = "0";
+        props.Params.page = 0;
+        props.Params.filter = [];
+        props.Params.pagesize = 0;
+        props.Params.seen = 2;
+        props.Params.done = 0;
+        props.Params.date = 0;
+        props.Params.worker = 0;
+        props.Params.direction = "desc";
+        props.Params.orderby = "tarikhaction";
+        props.Params.calendar = "";
+        props.Params.calendar = "";
+        props.FetchData(props.Params);
     }
-    refreshClick() {
-        const { FetchData, Params } = this.props;
-        Params.mark = "0";
-        Params.page = 0;
-        Params.filter = [];
-        Params.pagesize = 0;
-        Params.seen = 2;
-        Params.done = 0;
-        Params.date = 0;
-        Params.worker = 0;
-        Params.direction = "desc";
-        Params.orderby = "tarikhaction";
-        Params.calendar = "";
-        Params.calendar = "";
-        FetchData(Params);
-    }
-    setToMarkClick() {
-        const { FetchData, Params, SelectedRow, InsertIntoWorkMark } = this.props;
-        if (SelectedRow !== undefined) {
-            InsertIntoWorkMark(SelectedRow.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
+    function setToMarkClick() {
+        if (props.SelectedRow !== undefined) {
+            WorkActions_action.InsertIntoWorkMark(props.SelectedRow.peygir_id, context.t("msg_Operation_Success")).then(data => {
+                console.log(data)
                 if (data.status) {
-                    FetchData(Params);
+                    props.FetchData(props.Params);
                 }
             });
         }
         else
-            toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(context.t("msg_No_Select_Row"));
     }
 
-    deleteFromMarkClick() {
-        const { FetchData, Params, SelectedRow, DeleteFromWorkMark } = this.props;
-        if (SelectedRow !== undefined) {
-            DeleteFromWorkMark(SelectedRow.peygir_id, this.context.t("msg_Operation_Success")).then(data => {
+    function deleteFromMarkClick() {
+        if (props.SelectedRow !== undefined) {
+            WorkActions_action.DeleteFromWorkMark(props.SelectedRow.peygir_id, context.t("msg_Operation_Success")).then(data => {
                 if (data.status) {
-                    FetchData(Params);
+                    props.FetchData(props.Params);
                 }
             });
         }
         else
-            toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(context.t("msg_No_Select_Row"));
 
     }
-    markViewerClick() {
-        const { FetchData, Params } = this.props;
-        Params.mark = "1";
-        Params.page = 0;
-        FetchData(Params);
+    function markViewerClick() {
+        props.Params.mark = "1";
+        props.Params.page = 0;
+        props.FetchData(props.Params);
     }
 
 
-    HistoryFlowFormBuilderHandle() {
-        const { SelectedRow, FlowPeygirCaptionInfo, DesignedHistoryFormFieldList, GetWorkInfo } = this.props;
-        if (SelectedRow !== undefined) {
-            GetWorkInfo(SelectedRow).then(data2 => {
-                if (data2.status) {
-                    FlowPeygirCaptionInfo(SelectedRow.showtree_id).then(data => {
-                        if (data.status) {
-                            if (data.data.hasFormBuilder) {
-                                DesignedHistoryFormFieldList(SelectedRow.peygir_id, SelectedRow.showtree_id).then(data1 => {
-                                    if (data1.status) {
-                                        this.setState({
-                                            HistoryFlowFormBuilderModal: true,
-                                            FormBuilderCaptionId: data.data.CaptionId,
-                                            FormBuilderLayoutData: data1.data.rows,
-                                            DesignPageLayout: data.data.DesignPageLayout,
-                                            DesignPageSize: data.data.DesignPageSize
-                                        });
-                                    }
-                                });
+    function HistoryFlowFormBuilderHandle() {
+        const { FlowPeygirCaptionInfo, DesignedHistoryFormFieldList } = props;
+        if (props.SelectedRow !== undefined) {
+            //GetWorkInfo(SelectedRow).then(data2 => {
+            //if (data2.status) {
+            FlowPeygirCaptionInfo(props.SelectedRow.showtree_id).then(data => {
+                if (data.status) {
+                    if (data.data.hasFormBuilder) {
+                        DesignedHistoryFormFieldList(props.SelectedRow.peygir_id, props.SelectedRow.showtree_id).then(data1 => {
+                            if (data1.status) {
+                                setHistoryFlowFormBuilderModal(true);
+                                setFormBuilderCaptionId(data.data.CaptionId);
+                                setFormBuilderLayoutData(data1.data.rows);
+                                setDesignPageLayout(data.data.DesignPageLayout);
+                                setDesignPageSize(data.data.DesignPageSize);
                             }
-                            else
-                                toast.error(this.context.t("msg_No_Form_Builder"));
-                        }
-
-                    });
-
+                        });
+                    }
+                    else
+                        toast.error(context.t("msg_No_Form_Builder"));
                 }
 
             });
 
+            //}
+
+            //});
+
         } else
-            toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(context.t("msg_No_Select_Row"));
 
 
     }
 
-    FlowFormBuilderHandle() {
-        const { SelectedRow, FlowPeygirCaptionInfo, DesignedFormFieldList, GetWorkInfo } = this.props;
-        if (SelectedRow !== undefined) {
-            GetWorkInfo(SelectedRow).then(data2 => {
-                if (data2.status) {
-                    FlowPeygirCaptionInfo(SelectedRow.showtree_id).then(data => {
-                        if (data.status) {
-                            if (data.data.hasFormBuilder) {
-                                DesignedFormFieldList(SelectedRow.peygir_id, SelectedRow.showtree_id).then(data1 => {
-                                    if (data1.status) {
-                                        this.setState({
-                                            FlowFormBuilderModal: true,
-                                            FormBuilderCaptionId: data.data.CaptionId,
-                                            FormBuilderLayoutData: data1.data.rows,
-                                            DesignPageLayout: data.data.DesignPageLayout,
-                                            DesignPageSize: data.data.DesignPageSize
-                                        });
-                                    }
-                                });
+    function FlowFormBuilderHandle() {
+        const { SelectedRow, FlowPeygirCaptionInfo, DesignedFormFieldList, GetWorkInfo } = props;
+        if (props.SelectedRow !== undefined) {
+            //GetWorkInfo(SelectedRow).then(data2 => {
+            //  if (data2.status) {
+            FormBuilderBasic_action.FlowPeygirCaptionInfo(props.SelectedRow.showtree_id).then(data => {
+                if (data.status) {
+                    if (data.data.hasFormBuilder) {
+                        FormBuilderBasic_action.DesignedFormFieldList(props.SelectedRow.peygir_id, SelectedRow.showtree_id).then(data1 => {
+                            if (data1.status) {
+                                setFlowFormBuilderModal(true);
+                                setFormBuilderCaptionId(data.data.CaptionId);
+                                setFormBuilderLayoutData(data1.data.rows);
+                                setDesignPageLayout(data.data.DesignPageLayout);
+                                setDesignPageSize(data.data.DesignPageSize);
                             }
-                            else
-                                toast.error(this.context.t("msg_No_Form_Builder"));
-                        }
-
-                    });
+                        });
+                    }
+                    else
+                        toast.error(context.t("msg_No_Form_Builder"));
                 }
 
             });
+            //     }
+
+            // });
         } else
-            toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(context.t("msg_No_Select_Row"));
 
 
     }
 
 
-    OpenShowWork() {
-        const { SelectedRow } = this.props;
-        if (SelectedRow !== undefined) {
-            this.setState({
-                ShowWorkModal: !this.state.ShowWorkModal
-            });
+    function OpenShowWork() {
+        if (props.SelectedRow !== undefined) {
+            setShowWorkModal(!showWorkModal);
         } else
-            toast.warn(this.context.t("msg_No_Select_Row"));
+            toast.warn(context.t("msg_No_Select_Row"));
     }
 
 
-    render() {
+    const { FetchData, Params,
+        workDiagram, WorkInfo } = props;
 
-        const { SelectedRow, FetchData, Params, ShortKeys, DeletedElements, EditedElements,
-            workDiagram, WorkInfo, RefreshParentForm } = this.props;
+    return (
+        <div>
+            <div className="r-main-box__toggle">
+                <label className="switch">
+                    <input type="checkbox" id="sidebar-toggle" />
+                    <span className="switch-state"></span>
+                </label>
+            </div>
+            <ControlPanel FormInfoId={FormInfo.fm_dabir_kartabl_erjaat.id}></ControlPanel>
 
-        return (
-            <div>
-                <div className="r-main-box__toggle">
-                    <label className="switch">
-                        <input type="checkbox" id="sidebar-toggle" />
-                        <span className="switch-state"></span>
-                    </label>
-                </div>
-                <ControlPanel FormInfoId={FormInfo.fm_dabir_kartabl_erjaat.id}></ControlPanel>
+            <ul className="nav nav-tabs" id="ribbon-tab">
+                <li className="nav-item"><a href="#referencestab1" className="nav-link active" role="tab" data-toggle="tab">{context.t("Operations")}</a></li>
+            </ul>
+            <div className="tab-content">
+                <div className="gradient"></div>
+                <div className="tab-pane fade show active" id="referencestab1">
+                    <div className="tab-panel">
+                        <div className="tab-panel-group">
+                            <div className="tab-group-caption">{context.t("Features")}</div>
+                            <div className="tab-group-content">
+                                <div className="tab-content-segment">
 
-                <ul className="nav nav-tabs" id="ribbon-tab">
-                    <li className="nav-item"><a href="#referencestab1" className="nav-link active" role="tab" data-toggle="tab">{this.context.t("Operations")}</a></li>
-                </ul>
-                <div className="tab-content">
-                    <div className="gradient"></div>
-                    <div className="tab-pane fade show active" id="referencestab1">
-                        <div className="tab-panel">
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">{this.context.t("Features")}</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
+                                    {/* نمایش کار */}
+                                    <RibbonButton FormId={FormInfo.fm_par_modiriyatkarha.id}
+                                        AccessInfo={FormInfo.fm_par_modiriyatkarha}
+                                        DeletedElements={deletedElements}
+                                        Id="show-work"
+                                        handleClick={OpenShowWork}
+                                        EditedElements={editedElements}
+                                        Text="frm_Show_File_Work"
+                                    />
 
-                                        {/* نمایش کار */}
-                                        <RibbonButton FormId={FormInfo.fm_par_modiriyatkarha.id}
-                                            AccessInfo={FormInfo.fm_par_modiriyatkarha}
-                                            DeletedElements={DeletedElements}
-                                            Id="show-work"
-                                            handleClick={this.OpenShowWork.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="frm_Show_File_Work"
-                                        />
+                                    {/* بازخوانی اطلاعات */}
+                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        DeletedElements={deletedElements}
+                                        Id="refresh-information"
+                                        handleClick={refreshClick}
+                                        EditedElements={editedElements}
+                                        Text="RefreshInformation"
+                                    />
 
-                                        {/* بازخوانی اطلاعات */}
-                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="refresh-information"
-                                            handleClick={this.refreshClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="RefreshInformation"
-                                        />
+                                    {/* نتیجه ارجاع */}
+                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        AccessInfo={FormInfo.fm_dabir_natije_erja}
+                                        DeletedElements={deletedElements}
+                                        Id="referral-result"
+                                        handleClick={OpenReferenceViewer}
+                                        EditedElements={editedElements}
+                                        Text="ReferralResult"
+                                    />
 
-                                        {/* نتیجه ارجاع */}
-                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
-                                            AccessInfo={FormInfo.fm_dabir_natije_erja}
-                                            DeletedElements={DeletedElements}
-                                            Id="referral-result"
-                                            handleClick={this.OpenReferenceViewer.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="ReferralResult"
-                                        />
+                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        DeletedElements={deletedElements}
+                                        Id="process-form-builder"
+                                        handleClick={FlowFormBuilderHandle}
+                                        EditedElements={editedElements}
+                                        Text="FlowFormBuilder"
+                                    />
 
-                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="process-form-builder"
-                                            handleClick={this.FlowFormBuilderHandle.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="FlowFormBuilder"
-                                        />
-
-                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="history-process-form-builder"
-                                            handleClick={this.HistoryFlowFormBuilderHandle.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="HistoryFlowFormBuilder"
-                                        />
-                                    </div>
+                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        DeletedElements={deletedElements}
+                                        Id="history-process-form-builder"
+                                        handleClick={HistoryFlowFormBuilderHandle}
+                                        EditedElements={editedElements}
+                                        Text="HistoryFlowFormBuilder"
+                                    />
                                 </div>
                             </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">{this.context.t("Marking")}</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        {/* نشانه ها */}
-                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="marks"
-                                            handleClick={this.markViewerClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="Marks"
-                                        />
+                        </div>
+                        <div className="tab-panel-group">
+                            <div className="tab-group-caption">{context.t("Marking")}</div>
+                            <div className="tab-group-content">
+                                <div className="tab-content-segment">
+                                    {/* نشانه ها */}
+                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        DeletedElements={deletedElements}
+                                        Id="marks"
+                                        handleClick={markViewerClick}
+                                        EditedElements={editedElements}
+                                        Text="Marks"
+                                    />
 
-                                        {/* حذف نشانه  */}
-                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="remove-mark"
-                                            handleClick={this.deleteFromMarkClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="RemoveMark"
-                                        />
+                                    {/* حذف نشانه  */}
+                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        DeletedElements={deletedElements}
+                                        Id="remove-mark"
+                                        handleClick={deleteFromMarkClick}
+                                        EditedElements={editedElements}
+                                        Text="RemoveMark"
+                                    />
 
-                                        {/* نشانه گذاری  */}
-                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
-                                            DeletedElements={DeletedElements}
-                                            Id="marking"
-                                            handleClick={this.setToMarkClick.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="Marking"
-                                        />
+                                    {/* نشانه گذاری  */}
+                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        DeletedElements={deletedElements}
+                                        Id="marking"
+                                        handleClick={setToMarkClick}
+                                        EditedElements={editedElements}
+                                        Text="Marking"
+                                    />
 
-                                    </div>
                                 </div>
                             </div>
-                            <div className="tab-panel-group">
-                                <div className="tab-group-caption">{this.context.t("Diagram")}</div>
-                                <div className="tab-group-content">
-                                    <div className="tab-content-segment">
-                                        {/* دیاگرام عطف 
+                        </div>
+                        <div className="tab-panel-group">
+                            <div className="tab-group-caption">{context.t("Diagram")}</div>
+                            <div className="tab-group-content">
+                                <div className="tab-content-segment">
+                                    {/* دیاگرام عطف 
                                         <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
-                                            DeletedElements={DeletedElements}
+                                            DeletedElements={deletedElements}
                                             Id="follow-up-diagram"
-                                            handleClick={this.OpenReferenceViewer.bind(this)}
-                                            EditedElements={EditedElements}
+                                            handleClick={OpenReferenceViewer}
+                                            EditedElements={editedElements}
                                             Text="FollowUpDiagram"
                                         /> */}
 
-                                        {/* دیاگرام  */}
-                                        <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
-                                            AccessInfo={FormInfo.fm_par_diagram}
-                                            DeletedElements={DeletedElements}
-                                            Id="diagram"
-                                            handleClick={this.OpenWorkDiagramViewer.bind(this)}
-                                            EditedElements={EditedElements}
-                                            Text="Diagram"
-                                        />
-                                    </div>
+                                    {/* دیاگرام  */}
+                                    <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
+                                        AccessInfo={FormInfo.fm_par_diagram}
+                                        DeletedElements={deletedElements}
+                                        Id="diagram"
+                                        handleClick={OpenWorkDiagramViewer}
+                                        EditedElements={editedElements}
+                                        Text="Diagram"
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {/* <div role="tabpanel" className="tab-pane fade" id="tab2">
+                </div>
+                {/* <div role="tabpanel" className="tab-pane fade" id="tab2">
                         <div className="tab-panel">
                             <div className="tab-panel-group">
                                 <div className="tab-group-caption">امکانات</div>
@@ -536,129 +512,128 @@ class RibbonReferences extends Component {
                             </div>
                         </div>
                     </div>*/}
-                </div>
-                <nav className="radialnav">
-                    <a href="javascript:void(0)" className="ellipsis"></a>
-                    <MenuProvider id="menu_id">
-                        <ul className="menu">
-                            {ShortKeys !== undefined && Object.keys(ShortKeys).map((keyName, index) => {
-                                if (ShortKeys[keyName].Element === "ShortKeyicon-referral-result") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.OpenReferenceViewer.bind(this)}
-                                            AccessInfo={FormInfo.fm_dabir_natije_erja}
-                                            ShortKey={ShortKeys[keyName]} Id="referral-result" tooltip={this.context.t("ReferralResult")} />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-show-work") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_par_modiriyatkarha.id} key={index} handleClick={this.OpenShowWork.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="show-work" tooltip={this.context.t("frm_Show_File_Work")} />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-refresh-information") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.refreshClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="refresh-information" tooltip={this.context.t("RefreshInformation")} />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-marks") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.markViewerClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="marks" tooltip={this.context.t("Marks")} />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-remove-mark") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.deleteFromMarkClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="remove-mark" tooltip={this.context.t("RemoveMark")} />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-marking") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.setToMarkClick.bind(this)}
-                                            ShortKey={ShortKeys[keyName]} Id="marking" tooltip={this.context.t("Marking")} />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-follow-up-diagram") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.handleClick.bind(this)}
-                                            AccessInfo={FormInfo.fm_par_diagram}
-                                            ShortKey={ShortKeys[keyName]} Id="follow-up-diagram" tooltip={this.context.t("FollowUpDiagram")} />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-diagram") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.OpenWorkDiagramViewer.bind(this)}
-                                            AccessInfo={FormInfo.fm_par_diagram}
-                                            ShortKey={ShortKeys[keyName]} Id="diagram" tooltip={this.context.t("Diagram")} />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-process-form-builder") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.FlowFormBuilderHandle.bind(this)}
-                                            AccessInfo={FormInfo.fm_dabir_eghdam}
-                                            ShortKey={ShortKeys[keyName]} Id="process-form-builder" tooltip={this.context.t("FlowFormBuilder")} />
-                                    )
-                                }
-                                else if (ShortKeys[keyName].Element === "ShortKeyicon-history-process-form-builder") {
-                                    return (
-                                        <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={this.HistoryFlowFormBuilderHandle.bind(this)}
-                                            AccessInfo={FormInfo.fm_dabir_eghdam}
-                                            ShortKey={ShortKeys[keyName]} Id="history-process-form-builder" tooltip={this.context.t("HistoryFlowFormBuilder")} />
-                                    )
-                                }
-                            })}
-
-                        </ul>
-                    </MenuProvider>
-
-                </nav>
-
-
-                {this.state.DiagramModal && <WorkDiagramViewer modal={this.state.DiagramModal}
-                    toggle={this.toggleWorkDiagramViewer.bind(this)}
-                    Params={this.state.DiagramParams} RefreshParentForm={workDiagram.bind(this)}
-                    SelectedRow={SelectedRow} />}
-
-
-
-                {this.state.ReferenceViewermodal && <ReferenceViewer modal={this.state.ReferenceViewermodal}
-                    toggle={this.toggleReferenceViewer.bind(this)}
-                    Params={Params} RefreshParentForm={FetchData.bind(this)}
-                    ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
-
-                {this.state.HistoryFlowFormBuilderModal &&
-                    <DesignedHistoryFormBuilder modal={this.state.HistoryFlowFormBuilderModal}
-                        toggle={this.toggleHistoryFormBuilder.bind(this)}
-                        FormBuilderCaptionId={this.state.FormBuilderCaptionId}
-                        FormBuilderLayoutData={this.state.FormBuilderLayoutData}
-                        DesignPageLayout={this.state.DesignPageLayout}
-                        DesignPageSize={this.state.DesignPageSize}
-
-                    />
-                }
-
-                {this.state.FlowFormBuilderModal &&
-                    <DesignedFormBuilder modal={this.state.FlowFormBuilderModal}
-                        toggle={this.toggleFormBuilder.bind(this)}
-                        FormBuilderCaptionId={this.state.FormBuilderCaptionId}
-                        FormBuilderLayoutData={this.state.FormBuilderLayoutData}
-                        DesignPageLayout={this.state.DesignPageLayout}
-                        DesignPageSize={this.state.DesignPageSize}
-                        Params={Params}
-                        RefreshParentForm={FetchData.bind(this)}
-                    />
-                }
-
-                {this.state.ShowWorkModal && <ShowWorkViewer
-                    modal={this.state.ShowWorkModal}
-                    toggle={this.toggleShowWork.bind(this)}
-                    SelectedRow={SelectedRow}
-                />}
-
             </div>
-        );
-    }
+            <nav className="radialnav">
+                <a href="javascript:void(0)" className="ellipsis"></a>
+                <MenuProvider id="menu_id">
+                    <ul className="menu">
+                        {shortKeys !== undefined && Object.keys(shortKeys).map((keyName, index) => {
+                            if (shortKeys[keyName].Element === "ShortKeyicon-referral-result") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={OpenReferenceViewer}
+                                        AccessInfo={FormInfo.fm_dabir_natije_erja}
+                                        ShortKey={shortKeys[keyName]} Id="referral-result" tooltip={context.t("ReferralResult")} />
+                                )
+                            }
+                            else if (shortKeys[keyName].Element === "ShortKeyicon-show-work") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_par_modiriyatkarha.id} key={index} handleClick={OpenShowWork}
+                                        ShortKey={shortKeys[keyName]} Id="show-work" tooltip={context.t("frm_Show_File_Work")} />
+                                )
+                            }
+                            else if (shortKeys[keyName].Element === "ShortKeyicon-refresh-information") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={refreshClick}
+                                        ShortKey={shortKeys[keyName]} Id="refresh-information" tooltip={context.t("RefreshInformation")} />
+                                )
+                            }
+                            else if (shortKeys[keyName].Element === "ShortKeyicon-marks") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={markViewerClick}
+                                        ShortKey={shortKeys[keyName]} Id="marks" tooltip={context.t("Marks")} />
+                                )
+                            }
+                            else if (shortKeys[keyName].Element === "ShortKeyicon-remove-mark") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={deleteFromMarkClick}
+                                        ShortKey={shortKeys[keyName]} Id="remove-mark" tooltip={context.t("RemoveMark")} />
+                                )
+                            }
+                            else if (shortKeys[keyName].Element === "ShortKeyicon-marking") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={setToMarkClick}
+                                        ShortKey={shortKeys[keyName]} Id="marking" tooltip={context.t("Marking")} />
+                                )
+                            }
+                            else if (shortKeys[keyName].Element === "ShortKeyicon-follow-up-diagram") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={handleClick}
+                                        AccessInfo={FormInfo.fm_par_diagram}
+                                        ShortKey={shortKeys[keyName]} Id="follow-up-diagram" tooltip={context.t("FollowUpDiagram")} />
+                                )
+                            }
+                            else if (shortKeys[keyName].Element === "ShortKeyicon-diagram") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={OpenWorkDiagramViewer}
+                                        AccessInfo={FormInfo.fm_par_diagram}
+                                        ShortKey={shortKeys[keyName]} Id="diagram" tooltip={context.t("Diagram")} />
+                                )
+                            }
+                            else if (shortKeys[keyName].Element === "ShortKeyicon-process-form-builder") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={FlowFormBuilderHandle}
+                                        AccessInfo={FormInfo.fm_dabir_eghdam}
+                                        ShortKey={shortKeys[keyName]} Id="process-form-builder" tooltip={context.t("FlowFormBuilder")} />
+                                )
+                            }
+                            else if (shortKeys[keyName].Element === "ShortKeyicon-history-process-form-builder") {
+                                return (
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={HistoryFlowFormBuilderHandle}
+                                        AccessInfo={FormInfo.fm_dabir_eghdam}
+                                        ShortKey={shortKeys[keyName]} Id="history-process-form-builder" tooltip={context.t("HistoryFlowFormBuilder")} />
+                                )
+                            }
+                        })}
+
+                    </ul>
+                </MenuProvider>
+
+            </nav>
+
+
+            {diagramModal && <WorkDiagramViewer modal={diagramModal}
+                toggle={toggleWorkDiagramViewer}
+                Params={diagramParams} data={workDiagramData} RefreshParentForm={WorkDiagramFun}
+                SelectedRow={props.SelectedRow} />}
+
+
+
+            {referenceViewermodal && <ReferenceViewer modal={referenceViewermodal}
+                toggle={toggleReferenceViewer}
+                Params={props.Params} RefreshParentForm={props.FetchData}
+                ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
+
+            {historyFlowFormBuilderModal &&
+                <DesignedHistoryFormBuilder modal={historyFlowFormBuilderModal}
+                    toggle={toggleHistoryFormBuilder}
+                    FormBuilderCaptionId={formBuilderCaptionId}
+                    FormBuilderLayoutData={formBuilderLayoutData}
+                    DesignPageLayout={designPageLayout}
+                    DesignPageSize={designPageSize}
+
+                />
+            }
+
+            {flowFormBuilderModal &&
+                <DesignedFormBuilder modal={flowFormBuilderModal}
+                    toggle={toggleFormBuilder}
+                    FormBuilderCaptionId={formBuilderCaptionId}
+                    FormBuilderLayoutData={formBuilderLayoutData}
+                    DesignPageLayout={designPageLayout}
+                    DesignPageSize={designPageSize}
+                    Params={props.Params}
+                    RefreshParentForm={props.FetchData}
+                />
+            }
+
+            {showWorkModal && <ShowWorkViewer
+                modal={showWorkModal}
+                toggle={toggleShowWork}
+                SelectedRow={props.SelectedRow}
+            />}
+
+        </div>
+    );
 }
 
 
@@ -682,9 +657,7 @@ const mapDispatchToProps = dispatch => ({
     InsertIntoWorkMark: (peygir_id, msg) => {
         return dispatch(WorkActions_action.InsertIntoWorkMark(peygir_id, msg))
     },
-    CheckAccess: (Params) => {
-        return dispatch(WorkAccess_action.CheckAccess(Params))
-    },
+
     GetWorkInfo: (Params) => {
         return dispatch(WorkBasic_action.GetWorkInfo(Params))
     },

@@ -15,34 +15,80 @@ export const FormBuilderBasic_action = {
 
 
 function FlowPeygirCaptionInfo(showtree_id) {
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        var Params = new FormData();
+    
+    var Params = new FormData();
         Params.append('showtree_id', showtree_id);
-      return  paramsService.callservice(Params, "Flow/FormBuilder/FlowPeygirCaptionInfo")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(loadingActions.HideLoading());
-                    }
-                    else if (data.code !== 0) {
-                        toast.error(data.error)
-                        dispatch(loadingActions.HideLoading());
-                    }
-                    else {
-                        userActions.logout();
-                        window.open('/', "_self");
-                    }
-                    return Promise.resolve(data)
-                },
-                error => {
-                    toast.error(error);
-                }
-            );
-    }
+    return paramsService.callservice(Params, "Flow/FormBuilder/FlowPeygirCaptionInfo").then(
+        data => {
+            if (data.status) {
+                return data
+            } else if (data.code !== 0) {
+                toast.error(data.error)
+            }
+            else {
+                userActions.logout();
+                window.open('/', "_self");
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    );
+    
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     var Params = new FormData();
+    //     Params.append('showtree_id', showtree_id);
+    //   return  paramsService.callservice(Params, "Flow/FormBuilder/FlowPeygirCaptionInfo")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(loadingActions.HideLoading());
+    //                 }
+    //                 else if (data.code !== 0) {
+    //                     toast.error(data.error)
+    //                     dispatch(loadingActions.HideLoading());
+    //                 }
+    //                 else {
+    //                     userActions.logout();
+    //                     window.open('/', "_self");
+    //                 }
+    //                 return Promise.resolve(data)
+    //             },
+    //             error => {
+    //                 toast.error(error);
+    //             }
+    //         );
+    // }
 }
 
 function DesignedFormFieldList(peygir_id,showtree_id) {
+    var Params = new FormData();
+    Params.append('peygir_id', peygir_id);
+    Params.append('showtree_id', showtree_id);
+    return paramsService.callservice(Params, "Flow/FormBuilder/DesignedFormFieldList").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            else if (data.code !== 0) {
+                toast.error(data.error)
+            }
+            else {
+                userActions.logout();
+                window.open('/', "_self");
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    );
+  
+  
     return dispatch => {
         dispatch(loadingActions.ShowLoading());
         var Params = new FormData();

@@ -61,28 +61,44 @@ function FetchGetReviewWorkInfo(peygir_id) {
 }
 function GetWorkInfo(row) {
     const peygir_id = row.peygir_id;
-    return dispatch => {
-        dispatch(loadingActions.ShowLoading());
-        var Params = new FormData();
-        Params.append('peygir_id', peygir_id);
-        return paramsService.callservice(Params, "WorkInfo")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(UserGetWorkInfo_Reducer(data.data));
-                    }
-                    else {
-                        toast.error(data.error);
-                    }
-                    dispatch(loadingActions.HideLoading());
-                    return Promise.resolve(data)
-                },
-                error => {
-                    dispatch(loadingActions.HideLoading());
-                    toast.error(error);
-                }
-            );
-    }
+    var Params = new FormData();
+    Params.append('peygir_id', peygir_id);
+    return paramsService.callservice(Params, "WorkInfo").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    );
+
+    // const peygir_id = row.peygir_id;
+    // return dispatch => {
+    //     dispatch(loadingActions.ShowLoading());
+    //     var Params = new FormData();
+    //     Params.append('peygir_id', peygir_id);
+    //     return paramsService.callservice(Params, "WorkInfo")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(UserGetWorkInfo_Reducer(data.data));
+    //                 }
+    //                 else {
+    //                     toast.error(data.error);
+    //                 }
+    //                 dispatch(loadingActions.HideLoading());
+    //                 return Promise.resolve(data)
+    //             },
+    //             error => {
+    //                 dispatch(loadingActions.HideLoading());
+    //                 toast.error(error);
+    //             }
+    //         );
+    // }
 }
 function FetchWorkInfo(peygir_id) {
     return dispatch => {
@@ -168,6 +184,21 @@ function ReviewWorkConfirmList(params) {
 }
 
 function workDiagram(Params) {
+
+    return paramsService.callservice(Params, "WorkDiagram").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            // else {
+
+            //     userActions.logout();
+            //     window.open('/',"_self");
+            // }
+        }
+    );
+   
+   
     return dispatch => {
         return paramsService.callservice(Params, "WorkDiagram")
             .then(

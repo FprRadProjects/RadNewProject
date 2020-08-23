@@ -43,18 +43,25 @@ function References(props, context) {
     const [filter, setFilter] = useState(false);
     const [backdrop, setBackdrop] = useState("static");
     const [modalClass, setModalClass] = useState("modal-dialog-centered modal-lg r-filter-modal");
+    const [rows, setRows] = useState([]);
+    const [totalCount, setTotalCount] = useState(0);
 
-    function FetchGridData() {  
+    function FetchGridData() {
         let formName = props.lang == "fa" ? FormInfo.fm_dabir_kartabl_erjaat.form_name : FormInfo.fm_dabir_kartabl_erjaat.en_form_name;
-    Params.Form = formName;
-        props.FetchData(Params)
+        Params.Form = formName;
+        let data = Act_Reference.FetchData(Params).then(
+            data => {
+                setRows(data.data.rows);
+                setTotalCount(data.data.totalcount);
+            }
+        );
     }
-   
+
     useEffect(() => {
         localStorage.setItem("MasterFormInfo", JSON.stringify(FormInfo.fm_dabir_kartabl_erjaat));
         FetchGridData();
         return () => {
-
+            props.DeleteData();
         }
     }, []);
 
@@ -116,7 +123,7 @@ function References(props, context) {
         { name: 'proje_code', title: context.t("ProjectCode") },
         { name: 'natije', title: context.t("Result") },
     ];
-  
+
 
 
     const modalBackDrop = `
@@ -155,8 +162,8 @@ function References(props, context) {
 
                     <ApiGridComponentWithHook
                         columns={columns}
-                        rows={props.Dashboards_rows!==undefined?props.Dashboards_rows:[]}
-                        totalCount={props.Dashboards_totalCount!==undefined?props.Dashboards_totalCount:0}
+                        rows={rows}
+                        totalCount={totalCount}
                         columnwidth={150}
                         rowId="peygir_id"
                         FetchData={FetchGridData}
@@ -166,7 +173,7 @@ function References(props, context) {
                         currencyColumns={currencyColumns}
                         hiddenColumnNames={hiddenColumnNames}
                     />
-{/*                     
+                    {/*                     
                     <ApiGridComponent columns={columns}
                         rows={Dashboards_rows} totalCount={Dashboards_totalCount} columnwidth={150}
                         rowId="peygir_id"
@@ -181,21 +188,22 @@ function References(props, context) {
 
 
 const mapDispatchToProps = dispatch => ({
-    FetchData: (Params) => {
-        return dispatch(Act_Reference.FetchData(Params))
-    },
+    // FetchData: (Params) => {
+    //     return dispatch(Act_Reference.FetchData(Params))
+    // },
+    // DeleteData: (Params) => {
+    //     return dispatch(Act_Reference.DeleteData(Params))
+    // },
 });
 References.contextTypes = {
     t: PropTypes.func.isRequired
 }
 
 function mapStateToProps(state) {
-    const { Dashboards_rows } = state.dashboards;
-    const { Dashboards_totalCount } = state.dashboards
+    const { lang } = state.i18nState;
     return {
-        alert,
-        Dashboards_rows,
-        Dashboards_totalCount,
+        lang,
+
     };
 }
 
