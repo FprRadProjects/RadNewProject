@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { Component } from 'react';
 import { connect } from "react-redux"
 import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
 import PropTypes from "prop-types"
@@ -23,66 +23,49 @@ var projectParams = {
 };
 var ConfirmParams = { form: "", page: 1, pagesize: 10, filter: [], Form: "", SaveParams: {} };
 var finalSaveParams = {}
-function ReferenceViewer(props, context) {
-    const [modal, setModal] = useState(false);
-    const [projectSelectmodal, setProjectSelectmodal] = useState(false);
-    const [subjectSelectmodal, setSubjectSelectmodal] = useState(false);
-    const [flowResultSelectmodal, setFlowResultSelectmodal] = useState(false);
-    const [reviewWorkModal, setReviewWorkModal] = useState(false);
-    const [subjectInputText, setSubjectInputText] = useState("");
-    const [resultTextArea, setResultTextArea] = useState("");
-    const [descriptionTextArea, setDescriptionTextArea] = useState("");
-    const [backdrop, setBackdrop] = useState("static");
-    const [modalClass, setModalClass] = useState("modal-dialog-centered modal-xl r-modal");
-    const [workInfo, setWorkInfo] = useState({});
-    const [projectList, setProjectList] = useState([]);
-    const [projectSelectedOption, setProjectSelectedOption] = useState({});
-    const [codeText, setCodeText] = useState("");
-    const [fileNumberText, setFileNumberText] = useState("");
-    const [durationDoneText, setDurationDoneText] = useState("");
-    function WorkInfoData() {
-        let data = WorkBasic_action.FetchWorkInfo(props.peygir_id).then(
-            data => {
-                setWorkInfo(data.data);
-            }
-        );
+class ReferenceViewer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            ...this.state,
+            modal: false,
+            ProjectSelectmodal: false,
+            SubjectSelectmodal: false,
+            FlowResultSelectmodal: false,
+            ReviewWorkModal: false,
+            SubjectInputText: "",
+            ResultTextArea: "",
+            DescriptionTextArea: "",
+            backdrop: "static",
+            modalClass: "modal-dialog-centered modal-xl r-modal"
+        };
+        this.SuccessSelectProject = this.SuccessSelectProject.bind(this);
+
     }
 
-    useEffect(() => {
+    componentDidMount() {
         SaveParams = { form: "", data: [] };
         finalSaveParams = {};
+        const { WorkInfo, GetSelectComboProject } = this.props;
         projectParams = {
-            "Id_Taraf": props.id_tel
+            "Id_Taraf": WorkInfo.id_tel
         };
-        ProjectsInfo_action.GetSelectComboProject(projectParams).then(
-            data => {
-                setProjectList(Object.keys(data.data.rows).map((item, index) => {
-                    return { value: data.data.rows[item].id, label: data.data.rows[item].ptype };
-                }));
-            });
-            setProjectSelectedOption({ value: workInfo.p_type_id, label: workInfo.ptype });
-            setSubjectInputText( workInfo.mozo !== null ? workInfo.mozo : "" );
-            setResultTextArea( workInfo.natije !== null ? workInfo.natije : "" );
-            setCodeText(  workInfo.code !== null ? workInfo.code : "" );
-            setFileNumberText(  workInfo.shomare !== null ? workInfo.shomare : "" );
-            setDurationDoneText(workInfo.modat_anjam_w !== null ? workInfo.modat_anjam_w : "" );
-        return () => { }
-    }, []);
+        GetSelectComboProject(projectParams);
 
+    }
+    componentWillReceiveProps(nextProps) {
+        const { WorkInfo } = nextProps;
+        this.setState({ ProjectSelectedOption: { value: WorkInfo.p_type_id, label: WorkInfo.ptype } });
+        this.setState({ SubjectInputText: WorkInfo.mozo !== null ? WorkInfo.mozo : "" });
+        this.setState({ ResultTextArea: WorkInfo.natije !== null ? WorkInfo.natije : "" });
+        this.setState({ CodeText: WorkInfo.code !== null ? WorkInfo.code : "" });
+        this.setState({ FileNumberText: WorkInfo.shomare !== null ? WorkInfo.shomare : "" });
+        this.setState({ DurationDoneText: WorkInfo.modat_anjam_w !== null ? WorkInfo.modat_anjam_w : "" });
 
-    // function componentWillReceiveProps(nextProps) {
-    //     const { WorkInfo } = nextProps;
-    //     this.setState({ ProjectSelectedOption: { value: WorkInfo.p_type_id, label: WorkInfo.ptype } });
-    //     this.setState({ SubjectInputText: WorkInfo.mozo !== null ? WorkInfo.mozo : "" });
-    //     this.setState({ ResultTextArea: WorkInfo.natije !== null ? WorkInfo.natije : "" });
-    //     this.setState({ CodeText: WorkInfo.code !== null ? WorkInfo.code : "" });
-    //     this.setState({ FileNumberText: WorkInfo.shomare !== null ? WorkInfo.shomare : "" });
-    //     this.setState({ DurationDoneText: WorkInfo.modat_anjam_w !== null ? WorkInfo.modat_anjam_w : "" });
+    }
 
-    // }
-
-    function OpenSelectProject() {
-        const { WorkInfo } = props;
+    OpenSelectProject = () => {
+        const { WorkInfo } = this.props;
         WorkAccess_action.CanSetProjectOnWork(WorkInfo.peygir_id).then(
             data => {
                 if (data.status) {
@@ -100,12 +83,12 @@ function ReferenceViewer(props, context) {
 
     }
 
-    function CloseSelectProject(e) {
+    CloseSelectProject = (e) => {
         this.setState({
             ProjectSelectmodal: !this.state.ProjectSelectmodal,
         });
     }
-    function SuccessSelectProject(row, e) {
+    SuccessSelectProject(row, e) {
         if (row !== undefined && row !== null) {
             if (this.state.ProjectSelectmodal) {  // this.refs.ProjectInput.value = row !== undefined ? row.ptype !== undefined ? row.ptype : WorkInfo.ptype : WorkInfo.ptype;
                 let Ptype = row !== undefined ? row.ptype !== undefined ? row.ptype : "" : "";
@@ -118,14 +101,14 @@ function ReferenceViewer(props, context) {
             });
         }
         else
-            toast.warn(context.t("msg_No_Select_Row"));
+            toast.warn(this.context.t("msg_No_Select_Row"));
 
 
     }
 
-    function OpenSelectDefaultText(e) {
+    OpenSelectDefaultText = (e) => {
         const { name } = e.target;
-        const { WorkInfo } = props;
+        const { WorkInfo } = this.props;
         WorkAccess_action.CanSetInfoOnWork(WorkInfo.peygir_id)
             .then(data => {
                 if (data.status)
@@ -140,14 +123,14 @@ function ReferenceViewer(props, context) {
                 toast.error(error)
             });
     }
-    function CloseSelectDefaultText(e) {
+    CloseSelectDefaultText = (e) => {
         this.setState({
             SubjectSelectmodal: !this.state.SubjectSelectmodal,
         });
     }
 
 
-    function SuccessSelectSubject(row, e) {
+    SuccessSelectSubject = (row, e) => {
         if (row !== undefined && row !== null) {
             if (this.state.SubjectSelectmodal)
                 if (this.state.type === "Subject") {
@@ -167,15 +150,15 @@ function ReferenceViewer(props, context) {
             });
         }
         else
-            toast.warn(context.t("msg_No_Select_Row"));
+            toast.warn(this.context.t("msg_No_Select_Row"));
 
     }
 
 
 
 
-    function changeHandle(e, val) {
-        const { WorkInfo } = props;
+    changeHandle = (e, val) => {
+        const { WorkInfo } = this.props;
         if (!WorkInfo.done) {
             SaveParams.data["peygir_id"] = { "peygir_id": WorkInfo.peygir_id };
             if (val !== undefined) {
@@ -198,17 +181,17 @@ function ReferenceViewer(props, context) {
             }
         }
     }
-    function clearSaveParams(e) {
+    clearSaveParams = (e) => {
         SaveParams = { form: "", data: [] };
     }
 
-    function saveWorkHandle(msg) {
+    saveWorkHandle = (msg) => {
         const { ParentForm, WorkInfo, SaveWorkInfo, lang, FetchWorkInfo,
             RefreshParentForm, Params
-        } = props;
+        } = this.props;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         if (SaveParams.data["peygir_id"] === undefined) {
-            toast.warn(context.t("msg_Information_Not_Available_For_Editing"));
+            toast.warn(this.context.t("msg_Information_Not_Available_For_Editing"));
             return false;
         }
         SaveParams.form = formname;
@@ -228,9 +211,9 @@ function ReferenceViewer(props, context) {
             }
         });
     }
-    function ConfirmationHandle(e) {
+    ConfirmationHandle = (e) => {
         const { WorkInfo, InitConfirmWork, ParentForm, lang, FetchWorkInfo, Params,
-            RefreshParentForm } = props;
+            RefreshParentForm } = this.props;
         ConfirmParams["peygir_id"] = WorkInfo.peygir_id;
         var formname = lang == "fa" ? ParentForm.form_name : ParentForm.en_form_name;
         ConfirmParams["Form"] = formname;
@@ -243,7 +226,7 @@ function ReferenceViewer(props, context) {
         })
         finalSaveParams.data = obj;
         ConfirmParams.SaveParams = finalSaveParams;
-        InitConfirmWork(ConfirmParams, context.t("msg_Operation_Success")).then(data => {
+        InitConfirmWork(ConfirmParams, this.context.t("msg_Operation_Success")).then(data => {
             if (data.status) {
                 if (data.code === 2 && data.data !== null) {
                     this.setState({
@@ -259,14 +242,15 @@ function ReferenceViewer(props, context) {
             }
         });
     }
-    function CloseleSelectFlowResult(e) {
+    CloseleSelectFlowResult = (e) => {
         this.setState({
             FlowResultSelectmodal: !this.state.FlowResultSelectmodal,
         });
     }
-    const { FetchData, toggle, WorkInfo, Params, RefreshParentForm, ParentForm, SelectProjectComboList_rows,
-        DeletedElements, EditedElements } = props;
-    const modalBackDrop = `
+    render() {
+        const { FetchData, modal, toggle, WorkInfo, Params, RefreshParentForm, ParentForm, SelectProjectComboList_rows,
+            DeletedElements, EditedElements } = this.props;
+        const modalBackDrop = `
         .modal-backdrop {
             opacity:.98!important;
             background: rgb(210,210,210);
@@ -275,318 +259,319 @@ function ReferenceViewer(props, context) {
             background: linear-gradient(135deg, rgba(210,210,210,1) 0%,rgba(229,235,238,1) 50%,rgba(216,216,216,1) 50.1%,rgba(216,216,216,1) 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d2d2d2', endColorstr='#d8d8d8',GradientType=1 );
         }`;
-    var None = [{ value: 0, label: context.t("NoSelection") }]
-    var ProjectList = SelectProjectComboList_rows !== undefined ? None.concat(SelectProjectComboList_rows) : None
+        var None = [{ value: 0, label: this.context.t("NoSelection") }]
+        var ProjectList = SelectProjectComboList_rows !== undefined ? None.concat(SelectProjectComboList_rows) : None
 
-    return (
-        <>
-            <Modal isOpen={modal} toggle={toggle} keyboard={false}
-                className={this.state.modalClass} backdrop={this.state.backdrop}>
-                <ModalHeader toggle={toggle}>{context.t("ReferralResult")}</ModalHeader>
-                <ModalBody>
-                    <div className="r-main-box__ribbon">
-                        <RibbonReferenceViewer saveWorkHandle={this.saveWorkHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} FetchData={FetchData.bind(this)} Params={Params} />
-                    </div>
+        return (
+            <div>
+                <Modal isOpen={modal} toggle={toggle} keyboard={false}
+                    className={this.state.modalClass} backdrop={this.state.backdrop}>
+                    <ModalHeader toggle={toggle}>{this.context.t("ReferralResult")}</ModalHeader>
+                    <ModalBody>
+                        <div className="r-main-box__ribbon">
+                            <RibbonReferenceViewer saveWorkHandle={this.saveWorkHandle.bind(this)} ConfirmationHandle={this.ConfirmationHandle.bind(this)} RefreshParentForm={RefreshParentForm} ParentForm={ParentForm} SaveParams={SaveParams} FetchData={FetchData.bind(this)} Params={Params} />
+                        </div>
 
-                    {/*<Button color="success"
-                                onClick={this.deleteHandle.bind(this)}>{context.t("Delete")}</Button>*/}
+                        {/*<Button color="success"
+                                onClick={this.deleteHandle.bind(this)}>{this.context.t("Delete")}</Button>*/}
 
-                    {WorkInfo !== undefined &&
-                        <div className="referral-result-modal">
-                            <BoxGroup
-                                Text={context.t("FileInfoBox")}
-                                FormId={FormInfo.fm_dabir_natije_erja.id}
-                                Id="FileInfoBox"
+                        {WorkInfo !== undefined &&
+                            <div className="referral-result-modal">
+                                <BoxGroup
+                                    Text={this.context.t("FileInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="FileInfoBox"
 
-                                IconClassName="row-icon audience"
-                                DeletedElements={DeletedElements}
-                                EditedElements={EditedElements}
-                            >
-                                <div className="col-11">
-                                    <div className="row">
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label" ColClassName="col-4"
-                                            Text={context.t("PartyAccountName")} className2="col-8"
-                                            InputclassName="form-control-plaintext" name="tarafname"
-                                            Id="PartyAccountName" FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements} isDisabled={true}
-                                            EditedElements={EditedElements} value={WorkInfo.name}
-                                        ></LabelInputText>
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label" ColClassName="col-4"
-                                            Text={context.t("CompanyName")} className2="col-8"
-                                            InputclassName="form-control-plaintext" name="coname"
-                                            Id="CompanyName" FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements} isDisabled={true}
-                                            EditedElements={EditedElements} value={WorkInfo.coname}
-                                        ></LabelInputText>
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label" ColClassName="col-4"
-                                            Text={context.t("Audience")} className2="col-8"
-                                            InputclassName="form-control-plaintext" name="ashkhasname"
-                                            Id="Audience" FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements} isDisabled={true}
-                                            EditedElements={EditedElements} value={WorkInfo.ashkhasname}
-                                        ></LabelInputText>
+                                    IconClassName="row-icon audience"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
+                                    <div className="col-11">
+                                        <div className="row">
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("PartyAccountName")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="tarafname"
+                                                Id="PartyAccountName" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.name}
+                                            ></LabelInputText>
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("CompanyName")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="coname"
+                                                Id="CompanyName" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.coname}
+                                            ></LabelInputText>
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("Audience")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="ashkhasname"
+                                                Id="Audience" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.ashkhasname}
+                                            ></LabelInputText>
 
+                                        </div>
                                     </div>
-                                </div>
 
-                            </BoxGroup>
+                                </BoxGroup>
 
-                            <BoxGroup
-                                Text={context.t("WorkInfoBox")}
-                                FormId={FormInfo.fm_dabir_natije_erja.id}
-                                Id="WorkInfoBox"
+                                <BoxGroup
+                                    Text={this.context.t("WorkInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="WorkInfoBox"
 
-                                IconClassName="row-icon flow"
-                                DeletedElements={DeletedElements}
-                                EditedElements={EditedElements}
-                            >
-                                <div className="col-11">
-                                    <div className="row">
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label" ColClassName="col-4"
-                                            Text={context.t("WorkID")} className2="col-8"
-                                            InputclassName="form-control-plaintext" name="peygir_id"
-                                            Id="WorkID" FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements} isDisabled={true}
-                                            EditedElements={EditedElements} value={WorkInfo.peygir_id}
-                                        ></LabelInputText>
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label" ColClassName="col-4"
-                                            Text={context.t("Flow")} className2="col-8"
-                                            InputclassName="form-control-plaintext" name="Flow"
-                                            Id="Flow" FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements} isDisabled={true}
-                                            EditedElements={EditedElements} value={WorkInfo.flow}
-                                        ></LabelInputText>
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label" ColClassName="col-4"
-                                            Text={context.t("WorkType")} className2="col-8"
-                                            InputclassName="form-control-plaintext" name="wtype"
-                                            Id="WorkType" FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements} isDisabled={true}
-                                            EditedElements={EditedElements} value={WorkInfo.wtype}
-                                        ></LabelInputText>
+                                    IconClassName="row-icon flow"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
+                                    <div className="col-11">
+                                        <div className="row">
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("WorkID")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="peygir_id"
+                                                Id="WorkID" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.peygir_id}
+                                            ></LabelInputText>
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("Flow")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="Flow"
+                                                Id="Flow" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.flow}
+                                            ></LabelInputText>
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("WorkType")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="wtype"
+                                                Id="WorkType" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.wtype}
+                                            ></LabelInputText>
+                                        </div>
                                     </div>
-                                </div>
-                            </BoxGroup>
-                            <BoxGroup
-                                Text={context.t("UsersInfoBox")}
-                                FormId={FormInfo.fm_dabir_natije_erja.id}
-                                Id="UsersInfoBox"
+                                </BoxGroup>
+                                <BoxGroup
+                                    Text={this.context.t("UsersInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="UsersInfoBox"
 
-                                IconClassName="row-icon creator"
-                                DeletedElements={DeletedElements}
-                                EditedElements={EditedElements}
-                            >
-                                <div className="col-11">
-                                    <div className="row">
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label" ColClassName="col-4"
-                                            Text={context.t("creator")} className2="col-8"
-                                            InputclassName="form-control-plaintext" name="cuser"
-                                            Id="creator" FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements} isDisabled={true}
-                                            EditedElements={EditedElements} value={WorkInfo.cuser}
-                                        ></LabelInputText>
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label" ColClassName="col-4"
-                                            Text={context.t("CreatedDate")} className2="col-8"
-                                            InputclassName="form-control-plaintext" name="c_date"
-                                            Id="CreatedDate" FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements} isDisabled={true}
-                                            EditedElements={EditedElements} value={WorkInfo.c_date}
-                                        ></LabelInputText>
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label" ColClassName="col-4"
-                                            Text={context.t("CreatedTime")} className2="col-8"
-                                            InputclassName="form-control-plaintext" name="c_time"
-                                            Id="CreatedTime" FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements} isDisabled={true}
-                                            EditedElements={EditedElements} value={WorkInfo.c_time}
-                                        ></LabelInputText>
+                                    IconClassName="row-icon creator"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
+                                    <div className="col-11">
+                                        <div className="row">
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("creator")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="cuser"
+                                                Id="creator" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.cuser}
+                                            ></LabelInputText>
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("CreatedDate")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="c_date"
+                                                Id="CreatedDate" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.c_date}
+                                            ></LabelInputText>
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label" ColClassName="col-4"
+                                                Text={this.context.t("CreatedTime")} className2="col-8"
+                                                InputclassName="form-control-plaintext" name="c_time"
+                                                Id="CreatedTime" FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements} isDisabled={true}
+                                                EditedElements={EditedElements} value={WorkInfo.c_time}
+                                            ></LabelInputText>
+                                        </div>
                                     </div>
-                                </div>
-                            </BoxGroup>
-                            <BoxGroup
-                                Text={context.t("DescriptionsInfoBox")}
-                                FormId={FormInfo.fm_dabir_natije_erja.id}
-                                Id="DescriptionsInfoBox"
+                                </BoxGroup>
+                                <BoxGroup
+                                    Text={this.context.t("DescriptionsInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="DescriptionsInfoBox"
 
-                                IconClassName="row-icon description"
-                                DeletedElements={DeletedElements}
-                                EditedElements={EditedElements}
-                            >
-                                <div className="col-11">
-                                    <div className="row">
-                                        <LabelPopUpInputText
-                                            LabelclassName="col-1 col-form-label"
-                                            ColClassName="col-12"
-                                            Text={context.t("Description")} className2="col-11"
-                                            className3="input-group  mt-2 mb-2"
-                                            InputclassName="form-control" name="natije"
-                                            Id="Description"
-                                            FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements}
-                                            EditedElements={EditedElements}
-                                            value={WorkInfo.tozihat}
-                                            Type="TextArea"
-                                            isDisabled={true}
-                                        ></LabelPopUpInputText>
+                                    IconClassName="row-icon description"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
+                                    <div className="col-11">
+                                        <div className="row">
+                                            <LabelPopUpInputText
+                                                LabelclassName="col-1 col-form-label"
+                                                ColClassName="col-12"
+                                                Text={this.context.t("Description")} className2="col-11"
+                                                className3="input-group  mt-2 mb-2"
+                                                InputclassName="form-control" name="natije"
+                                                Id="Description"
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                value={WorkInfo.tozihat}
+                                                Type="TextArea"
+                                                isDisabled={true}
+                                            ></LabelPopUpInputText>
+                                        </div>
                                     </div>
-                                </div>
-                            </BoxGroup>
-                            <BoxGroup
-                                Text={context.t("DetailsInfoBox")}
-                                FormId={FormInfo.fm_dabir_natije_erja.id}
-                                Id="DetailsInfoBox"
-                                IconClassName="row-icon project"
-                                DeletedElements={DeletedElements}
-                                EditedElements={EditedElements}
-                            >
-                                <div className="col-11">
-                                    <div className="row">
-                                        <LabelPopUpInputText
-                                            LabelclassName="col-3 col-form-label"
-                                            ColClassName="col-4"
-                                            Text={context.t("Project")} className2="col-9"
-                                            InputclassName="form-control" name="p_type_id"
-                                            Id="Project" ButtonClick={this.OpenSelectProject.bind(this)}
-                                            FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements}
-                                            EditedElements={EditedElements}
-                                            value={this.state.ProjectSelectedOption}
-                                            Type="ComboBox"
-                                            options={ProjectList}
-                                            isDisabled={WorkInfo.done ? true : false}
-                                            isButtonDisabled={WorkInfo.done ? true : false}
-                                            changeHandle={this.changeHandle.bind(this)}
-                                            ButtonText={context.t("SelectPopup")}
-                                        ></LabelPopUpInputText>
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label"
-                                            ColClassName="col-4"
-                                            Text={context.t("FileNumber")} className2="col-8"
-                                            InputclassName="form-control my-2 ltr" name="shomare"
-                                            Id="FileNumber" changeHandle={this.changeHandle.bind(this)}
-                                            FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements}
-                                            EditedElements={EditedElements}
-                                            isDisabled={WorkInfo.done ? true : false}
-                                            value={this.state.FileNumberText}
-                                        ></LabelInputText>
-                                        <LabelInputText
-                                            LabelclassName="col-4 col-form-label"
-                                            ColClassName="col-4"
-                                            Text={context.t("Code")} className2="col-8"
-                                            InputclassName="form-control my-2 ltr" name="code"
-                                            Id="Code" changeHandle={this.changeHandle.bind(this)}
-                                            FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements}
-                                            isDisabled={WorkInfo.done ? true : false}
-                                            EditedElements={EditedElements}
-                                            value={this.state.CodeText}
-                                        ></LabelInputText>
-                                        <LabelInputText
-                                            LabelclassName="col-3 col-form-label"
-                                            ColClassName="col-4"
-                                            Text={context.t("Duration_Of_Work_Short")} className2="col-9"
-                                            InputclassName="form-control mb-2 ltr" name="modat_anjam_w"
-                                            Id="Duration_Of_Work_Short" changeHandle={this.changeHandle.bind(this)}
-                                            FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements}
-                                            EditedElements={EditedElements} mask="99999999"
-                                            maskChar=""
-                                            isDisabled={WorkInfo.done ? true : false}
-                                            value={this.state.DurationDoneText}
-                                        ></LabelInputText>
+                                </BoxGroup>
+                                <BoxGroup
+                                    Text={this.context.t("DetailsInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="DetailsInfoBox"
+                                    IconClassName="row-icon project"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
+                                    <div className="col-11">
+                                        <div className="row">
+                                            <LabelPopUpInputText
+                                                LabelclassName="col-3 col-form-label"
+                                                ColClassName="col-4"
+                                                Text={this.context.t("Project")} className2="col-9"
+                                                InputclassName="form-control" name="p_type_id"
+                                                Id="Project" ButtonClick={this.OpenSelectProject.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                value={this.state.ProjectSelectedOption}
+                                                Type="ComboBox"
+                                                options={ProjectList}
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                isButtonDisabled={WorkInfo.done ? true : false}
+                                                changeHandle={this.changeHandle.bind(this)}
+                                                ButtonText={this.context.t("SelectPopup")}
+                                            ></LabelPopUpInputText>
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label"
+                                                ColClassName="col-4"
+                                                Text={this.context.t("FileNumber")} className2="col-8"
+                                                InputclassName="form-control my-2 ltr" name="shomare"
+                                                Id="FileNumber" changeHandle={this.changeHandle.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                value={this.state.FileNumberText}
+                                            ></LabelInputText>
+                                            <LabelInputText
+                                                LabelclassName="col-4 col-form-label"
+                                                ColClassName="col-4"
+                                                Text={this.context.t("Code")} className2="col-8"
+                                                InputclassName="form-control my-2 ltr" name="code"
+                                                Id="Code" changeHandle={this.changeHandle.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                EditedElements={EditedElements}
+                                                value={this.state.CodeText}
+                                            ></LabelInputText>
+                                            <LabelInputText
+                                                LabelclassName="col-3 col-form-label"
+                                                ColClassName="col-4"
+                                                Text={this.context.t("Duration_Of_Work_Short")} className2="col-9"
+                                                InputclassName="form-control mb-2 ltr" name="modat_anjam_w"
+                                                Id="Duration_Of_Work_Short" changeHandle={this.changeHandle.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements} mask="99999999"
+                                                maskChar=""
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                value={this.state.DurationDoneText}
+                                            ></LabelInputText>
 
-                                        <LabelPopUpInputText
-                                            ColClassName="col-8"
-                                            Text={context.t("Subject")}
-                                            className3="input-group mb-2"
-                                            InputclassName="form-control" name="mozo"
-                                            Id="Subject" ButtonClick={this.OpenSelectDefaultText.bind(this)}
-                                            FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements}
-                                            EditedElements={EditedElements}
-                                            value={this.state.SubjectInputText}
+                                            <LabelPopUpInputText
+                                                ColClassName="col-8"
+                                                Text={this.context.t("Subject")}
+                                                className3="input-group mb-2"
+                                                InputclassName="form-control" name="mozo"
+                                                Id="Subject" ButtonClick={this.OpenSelectDefaultText.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                value={this.state.SubjectInputText}
 
-                                            Type="Input"
-                                            isDisabled={WorkInfo.done ? true : false}
-                                            isButtonDisabled={WorkInfo.done ? true : false}
-                                            changeHandle={this.changeHandle.bind(this)}
-                                            ButtonText={context.t("SelectPopup")}
-                                        ></LabelPopUpInputText>
+                                                Type="Input"
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                isButtonDisabled={WorkInfo.done ? true : false}
+                                                changeHandle={this.changeHandle.bind(this)}
+                                                ButtonText={this.context.t("SelectPopup")}
+                                            ></LabelPopUpInputText>
+                                        </div>
                                     </div>
-                                </div>
-                            </BoxGroup>
-                            <BoxGroup
-                                Text={context.t("ResultInfoBox")}
-                                FormId={FormInfo.fm_dabir_natije_erja.id}
-                                Id="ResultInfoBox"
+                                </BoxGroup>
+                                <BoxGroup
+                                    Text={this.context.t("ResultInfoBox")}
+                                    FormId={FormInfo.fm_dabir_natije_erja.id}
+                                    Id="ResultInfoBox"
 
-                                IconClassName="row-icon result"
-                                DeletedElements={DeletedElements}
-                                EditedElements={EditedElements}
-                            >
-                                <div className="col-11">
-                                    <div className="row">
+                                    IconClassName="row-icon result"
+                                    DeletedElements={DeletedElements}
+                                    EditedElements={EditedElements}
+                                >
+                                    <div className="col-11">
+                                        <div className="row">
 
-                                        <LabelPopUpInputText LabelclassName="col-1 col-form-label"
-                                            ColClassName="col-12"
-                                            Text={context.t("WorkResult")} className2="col-11"
-                                            className3="input-group mt-2 mb-2"
-                                            InputclassName="form-control" name="natije"
-                                            Id="Result" ButtonClick={this.OpenSelectDefaultText.bind(this)}
-                                            FormId={FormInfo.fm_dabir_natije_erja.id}
-                                            DeletedElements={DeletedElements}
-                                            EditedElements={EditedElements}
-                                            value={this.state.ResultTextArea}
+                                            <LabelPopUpInputText LabelclassName="col-1 col-form-label"
+                                                ColClassName="col-12"
+                                                Text={this.context.t("WorkResult")} className2="col-11"
+                                                className3="input-group mt-2 mb-2"
+                                                InputclassName="form-control" name="natije"
+                                                Id="Result" ButtonClick={this.OpenSelectDefaultText.bind(this)}
+                                                FormId={FormInfo.fm_dabir_natije_erja.id}
+                                                DeletedElements={DeletedElements}
+                                                EditedElements={EditedElements}
+                                                value={this.state.ResultTextArea}
 
-                                            Type="TextArea"
-                                            isDisabled={WorkInfo.done ? true : false}
-                                            isButtonDisabled={WorkInfo.done ? true : false}
-                                            changeHandle={this.changeHandle.bind(this)}
-                                            ButtonText={context.t("SelectPopup")}
-                                        ></LabelPopUpInputText>
+                                                Type="TextArea"
+                                                isDisabled={WorkInfo.done ? true : false}
+                                                isButtonDisabled={WorkInfo.done ? true : false}
+                                                changeHandle={this.changeHandle.bind(this)}
+                                                ButtonText={this.context.t("SelectPopup")}
+                                            ></LabelPopUpInputText>
+                                        </div>
                                     </div>
-                                </div>
-                            </BoxGroup>
+                                </BoxGroup>
 
 
-                            {this.state.ProjectSelectmodal &&
-                                <SelectProjectModal modal={this.state.ProjectSelectmodal}
-                                    toggle={this.CloseSelectProject.bind(this)}
-                                    Successtoggle={this.SuccessSelectProject.bind(this)}
-                                    id_tel={WorkInfo.id_tel} />}
-                            {this.state.SubjectSelectmodal &&
-                                <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}
-                                    toggle={this.CloseSelectDefaultText.bind(this)}
-                                    Successtoggle={this.SuccessSelectSubject.bind(this)}
-                                    id_tel={WorkInfo.id_tel} />}
-                            {this.state.FlowResultSelectmodal &&
-                                <ConfirmFlow ParentForm={ParentForm}
-                                    flowResultSelectModal={this.state.FlowResultSelectmodal}
-                                    Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
-                                    peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
-                        </div>}
-                    <style>{modalBackDrop}</style>
-                </ModalBody>
-                {/* <ModalFooter>
+                                {this.state.ProjectSelectmodal &&
+                                    <SelectProjectModal modal={this.state.ProjectSelectmodal}
+                                        toggle={this.CloseSelectProject.bind(this)}
+                                        Successtoggle={this.SuccessSelectProject.bind(this)}
+                                        id_tel={WorkInfo.id_tel} />}
+                                {this.state.SubjectSelectmodal &&
+                                    <SelectDefaultTextModal modal={this.state.SubjectSelectmodal}
+                                        toggle={this.CloseSelectDefaultText.bind(this)}
+                                        Successtoggle={this.SuccessSelectSubject.bind(this)}
+                                        id_tel={WorkInfo.id_tel} />}
+                                {this.state.FlowResultSelectmodal &&
+                                    <ConfirmFlow ParentForm={ParentForm}
+                                        flowResultSelectModal={this.state.FlowResultSelectmodal}
+                                        Params={Params} CloseleSelectFlowResult={this.CloseleSelectFlowResult.bind(this)}
+                                        peygir_id={WorkInfo.peygir_id} RefreshParentForm={RefreshParentForm} />}
+                            </div>}
+                        <style>{modalBackDrop}</style>
+                    </ModalBody>
+                    {/* <ModalFooter>
                         <Button  className="ml-2"
-                            onClick={this.saveHandle.bind(this, context.t("msg_Operation_Success"))}>{context.t("Save")}</Button>
+                            onClick={this.saveHandle.bind(this, this.context.t("msg_Operation_Success"))}>{this.context.t("Save")}</Button>
                         <Button color="warning" className="ml-2"
-                            onClick={this.rebuildHandle.bind(this)}>{context.t("Rebuild")}</Button>
+                            onClick={this.rebuildHandle.bind(this)}>{this.context.t("Rebuild")}</Button>
                         <Button color="success" className="ml-2"
-                            onClick={this.ConfirmationHandle.bind(this)}>{context.t("Confirmation")}</Button>
+                            onClick={this.ConfirmationHandle.bind(this)}>{this.context.t("Confirmation")}</Button>
                     </ModalFooter> */}
-            </Modal>
+                </Modal>
 
-        </>
-    );
+            </div >
+        );
+    }
 }
 
 const mapDispatchToProps = dispatch => ({
@@ -614,7 +599,7 @@ const mapDispatchToProps = dispatch => ({
     SaveWorkInfo: (SaveParams, msg) => {
         return dispatch(WorkActions_action.SaveWorkInfo(SaveParams, msg));
     },
-
+  
 
 
 
