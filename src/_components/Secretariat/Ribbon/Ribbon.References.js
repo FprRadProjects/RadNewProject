@@ -606,7 +606,9 @@ function RibbonReferences(props, context) {
             {referenceViewermodal && <ReferenceViewer modal={referenceViewermodal}
                 toggle={toggleReferenceViewer}
                 Params={props.Params} RefreshParentForm={props.FetchData}
-                ParentForm={FormInfo.fm_dabir_kartabl_erjaat} />}
+                ParentForm={FormInfo.fm_dabir_kartabl_erjaat}
+                WorkInfo={props.SelectedRow}
+                />}
 
             {historyFlowFormBuilderModal &&
                 <DesignedHistoryFormBuilder modal={historyFlowFormBuilderModal}

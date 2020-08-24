@@ -3,7 +3,9 @@ import { AutoWorkBasicConstant } from "../../../../_constants";
 import { WorkActions_action } from "../../../../_actions";
 import { toast } from 'react-toastify';
 import { paramsService, emptyservice } from "../../../../_webservices";
-
+import {
+    userActions
+} from "../../../User";
 export const WorkBasic_action = {
     GetWorkInfo,
     FetchWorkInfo,
@@ -60,21 +62,27 @@ function FetchGetReviewWorkInfo(peygir_id) {
     }
 }
 function GetWorkInfo(row) {
+
     const peygir_id = row.peygir_id;
     var Params = new FormData();
     Params.append('peygir_id', peygir_id);
     return paramsService.callservice(Params, "WorkInfo").then(
         data => {
             if (data.status) {
+               
                 return data
             }
-            // else {
-
-            //     userActions.logout();
-            //     window.open('/',"_self");
-            // }
+            else if (data.code !== 0) {
+                toast.error(data.error)
+                return data
+            }
+            else {
+                userActions.logout();
+                window.open('/', "_self");
+            }
         }
     );
+
 
     // const peygir_id = row.peygir_id;
     // return dispatch => {
@@ -101,24 +109,45 @@ function GetWorkInfo(row) {
     // }
 }
 function FetchWorkInfo(peygir_id) {
-    return dispatch => {
-        var Params = new FormData();
-        Params.append('peygir_id', peygir_id);
-        paramsService.callservice(Params, "WorkInfo")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(UserGetWorkInfo_Reducer(data.data));
-                    }
-                    else {
-                        toast.error(data.error);
-                    }
-                },
-                error => {
-                    toast.error(error);
-                }
-            );
-    }
+
+    var Params = new FormData();
+    Params.append('peygir_id', peygir_id);
+    return paramsService.callservice(Params, "WorkInfo").then(
+        data => {
+            if (data.status) {
+               
+                return data
+            }
+            else if (data.code !== 0) {
+                toast.error(data.error)
+                return data
+            }
+            else {
+                userActions.logout();
+                window.open('/', "_self");
+            }
+        }
+    );
+
+
+    // return dispatch => {
+    //     var Params = new FormData();
+    //     Params.append('peygir_id', peygir_id);
+    //     paramsService.callservice(Params, "WorkInfo")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(UserGetWorkInfo_Reducer(data.data));
+    //                 }
+    //                 else {
+    //                     toast.error(data.error);
+    //                 }
+    //             },
+    //             error => {
+    //                 toast.error(error);
+    //             }
+    //         );
+    // }
 }
 function FetchLoadingWorkInfo(peygir_id) {
     return dispatch => {
