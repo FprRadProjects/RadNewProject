@@ -49,7 +49,7 @@ function References(props, context) {
     function FetchGridData() {
         let formName = props.lang == "fa" ? FormInfo.fm_dabir_kartabl_erjaat.form_name : FormInfo.fm_dabir_kartabl_erjaat.en_form_name;
         Params.Form = formName;
-        let data = Act_Reference.FetchData(Params).then(
+         Act_Reference.FetchData(Params).then(
             data => {
                 setRows(data.data.rows);
                 setTotalCount(data.data.totalcount);

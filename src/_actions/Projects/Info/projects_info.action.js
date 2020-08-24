@@ -8,22 +8,36 @@ export const ProjectsInfo_action = {
 };
 
 function GetSelectComboProject(params) {
-    return dispatch => {
-        paramsService.callservice(params,"GetSelectProject")
-            .then(
-                data => {
-                    if (data.status) {
-                        dispatch(SelectComboProjectAddRows(data.data.rows));
-                    }
-                    else {
-                        toast.error(data.error);
-                    }
-                },
-                error => {
-                    toast.error(error);
-                }
-            );
-    }
+    return paramsService.callservice(params, "GetSelectProject").then(
+        data => {
+            if (data.status) {
+                return data
+            }
+            else if (data.code !== 0) {
+                toast.error(data.error)
+                return data
+            }
+            
+        }
+    );
+   
+   
+    // return dispatch => {
+    //     paramsService.callservice(params,"GetSelectProject")
+    //         .then(
+    //             data => {
+    //                 if (data.status) {
+    //                     dispatch(SelectComboProjectAddRows(data.data.rows));
+    //                 }
+    //                 else {
+    //                     toast.error(data.error);
+    //                 }
+    //             },
+    //             error => {
+    //                 toast.error(error);
+    //             }
+    //         );
+    // }
 }
 function GetSelectProject(params) {
     return dispatch => {
