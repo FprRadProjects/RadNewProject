@@ -15,6 +15,7 @@ import { toast } from 'react-toastify';
 import { DesignedHistoryFormBuilder } from '../../Flow/FormBuilder/DesignedHistoryFormBuilder';
 import { DesignedFormBuilder } from '../../Flow/FormBuilder/DesignedFormBuilder';
 import ShowWorkViewer from '../RecordsPage/ShowWorkViewer';
+import SetToMark from '../../Frameworks/General/SetToMark';
 
 function RibbonReferences(props, context) {
 
@@ -119,14 +120,18 @@ function RibbonReferences(props, context) {
         props.Params.calendar = "";
         props.FetchData(props.Params);
     }
+
+
     function setToMarkClick() {
         if (props.SelectedRow !== undefined) {
-            WorkActions_action.InsertIntoWorkMark(props.SelectedRow.peygir_id, context.t("msg_Operation_Success")).then(data => {
-                // console.log(data)
-                // if (data.status) {
-                //     props.FetchData(props.Params);
-                // }
-            });
+            // WorkActions_action.InsertIntoWorkMark(props.SelectedRow.peygir_id, context.t("msg_Operation_Success")).then(data => {
+            //     // console.log(data)
+            //     // if (data.status) {
+            //     //     props.FetchData(props.Params);
+            //     // }
+            // });
+            SetToMark(props.SelectedRow.peygir_id, props.FetchData, props.Params);
+
         }
         else
             toast.warn(context.t("msg_No_Select_Row"));
@@ -324,7 +329,7 @@ function RibbonReferences(props, context) {
                                     <RibbonButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id}
                                         DeletedElements={deletedElements}
                                         Id="marking"
-                                        handleClick={setToMarkClick}
+                                        handleClick={() => SetToMark(props.SelectedRow.peygir_id, props.FetchData, props.Params)}
                                         EditedElements={editedElements}
                                         Text="Marking"
                                     />
@@ -551,7 +556,7 @@ function RibbonReferences(props, context) {
                             }
                             else if (shortKeys[keyName].Element === "ShortKeyicon-marking") {
                                 return (
-                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={setToMarkClick}
+                                    <ShortKeyButton FormId={FormInfo.fm_dabir_kartabl_erjaat.id} key={index} handleClick={() => SetToMark(props.SelectedRow.peygir_id, props.FetchData, props.Params)}
                                         ShortKey={shortKeys[keyName]} Id="marking" tooltip={context.t("Marking")} />
                                 )
                             }

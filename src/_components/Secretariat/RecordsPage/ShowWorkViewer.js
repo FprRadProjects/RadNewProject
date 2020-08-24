@@ -135,16 +135,12 @@ const ShowWorkViewer = (props, context) => {
         setCodeText(row != undefined ? row.code !== null ? row.code : "" : "");
         setFileNumberText(row != undefined ? row.shomare !== null ? row.shomare : "" : "");
         setIsOpen(true);
-
     }
 
     const saveWorkHandle = (msg) => {
-        
     }
     const ConfirmationHandle = (e) => {
-        
     }
-
 
     const modalBackDrop = `
     .modal-backdrop {

@@ -345,7 +345,7 @@ const mapDispatchToProps = dispatch => ({
         dispatch(Act_Reference.FetchData(Params))
     },
     GetTemplateForm: (Params) => {
-        dispatch(design_Actions.GetTemplateForm(Params))
+      //  dispatch(design_Actions.GetTemplateForm(Params))
     },
     RebuildWork: (Peygir_id, msg) => {
         return dispatch(WorkActions_action.RebuildWork(Peygir_id, msg))
